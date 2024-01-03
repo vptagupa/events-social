@@ -1,4 +1,4 @@
-import Layout from "./admin";
+import Layout from "./private";
 
 export default function Index(props) {
     return (

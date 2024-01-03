@@ -1,4 +1,4 @@
-import Layout from "@/js/layouts/layout-admin";
+import Layout from "@/js/layouts/admin";
 
 export default function Index() {
     return (

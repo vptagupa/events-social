@@ -24,3 +24,4 @@ Route::name('admin.')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('index');
     });
 });
+

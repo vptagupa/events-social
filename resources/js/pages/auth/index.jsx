@@ -20,40 +20,38 @@ export default function Component() {
 
     return (
         <Layout>
-            <div>
-                <Transition
-                    show={defferTab == "login"}
-                    enter="transition-opacity duration-75"
-                    enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leave="transition-opacity duration-150"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                >
-                    {tab == "login" && <Login setTab={setTab} />}
-                </Transition>
-                <Transition
-                    show={defferTab == "forgot"}
-                    enter="transition-opacity duration-75"
-                    enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leave="transition-opacity duration-150"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                >
-                    {tab == "forgot" && (
-                        <div className="flex flex-col justify-start gap-y-5">
-                            <ForgotPassword />
-                            <p
-                                className="mt-5 text-end cursor-pointer text-sm text-blue-600 hover:text-blue-800"
-                                onClick={(e) => setTab("login")}
-                            >
-                                Back to Login
-                            </p>
-                        </div>
-                    )}
-                </Transition>
-            </div>
+            <Transition
+                show={defferTab == "login"}
+                enter="transition-opacity duration-1000"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="transition-opacity duration-150"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+            >
+                {tab == "login" && <Login setTab={setTab} />}
+            </Transition>
+            <Transition
+                show={defferTab == "forgot"}
+                enter="transition-opacity duration-1000"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="transition-opacity duration-150"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+            >
+                {tab == "forgot" && (
+                    <div className="flex flex-col justify-start gap-y-5">
+                        <ForgotPassword />
+                        <p
+                            className="mt-5 text-end cursor-pointer text-sm text-blue-600 hover:text-blue-800"
+                            onClick={(e) => setTab("login")}
+                        >
+                            Back to Login
+                        </p>
+                    </div>
+                )}
+            </Transition>
         </Layout>
     );
 }

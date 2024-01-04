@@ -1,6 +1,6 @@
 import Base from "./base";
 import { forwardRef } from "react";
 
-export default forwardRef((props, ref) => {
-    return <Base ref={ref} _class="info" {...props} />;
+export default forwardRef(({ className, ...props }, ref) => {
+    return <Base ref={ref} {...props} className={`info ${className}`} />;
 });

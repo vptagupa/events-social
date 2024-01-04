@@ -1,11 +1,7 @@
 import Base from "./base";
 
-const Component = (props) => {
-    return (
-        <>
-            <Base {...props} _class="table" />
-        </>
-    );
+const Component = ({ className, ...props }) => {
+    return <Base {...props} className={`table ${className}`} />;
 };
 
 export default Component;

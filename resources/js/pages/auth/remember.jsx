@@ -1,5 +1,5 @@
 import { PrimarySwitch } from "@/js/components/switch";
 
-export default ({ enabled, setEnabled }) => {
-    return <PrimarySwitch enabled={enabled} setEnabled={setEnabled} />;
+export default ({ checked, handler }) => {
+    return <PrimarySwitch checked={checked} handler={handler} />;
 };

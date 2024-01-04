@@ -1,22 +1,32 @@
 import { Switch } from "@headlessui/react";
 
-export default ({ enabled, setEnabled, colorActive, colorInActive }) => {
+export default function Component({
+    checked,
+    handler,
+    active,
+    inActive,
+    className = "bg-white",
+    posOn = "translate-x-6",
+    posOff = "translate-x-1",
+    size = "h-5 w-10",
+    classSwitch = "h-3 w-3 bg-white",
+    ...props
+}) {
     return (
-        <div>
-            <Switch
-                checked={enabled}
-                onChange={setEnabled}
+        <Switch
+            checked={checked}
+            onChange={handler}
+            className={`${
+                checked ? active : inActive
+            } inline-flex items-center rounded-full ${className} ${size}`}
+            {...props}
+        >
+            <span className="sr-only">Switch action</span>
+            <span
                 className={`${
-                    enabled ? colorActive : colorInActive
-                }  inline-flex h-5 w-10 items-center rounded-full`}
-            >
-                <span className="sr-only">Enable notifications</span>
-                <span
-                    className={`${
-                        enabled ? "translate-x-6" : "translate-x-1"
-                    } inline-block h-3 w-3 transform rounded-full bg-white transition`}
-                />
-            </Switch>
-        </div>
+                    checked ? posOn : posOff
+                } inline-block transform rounded-full transition ${classSwitch}`}
+            />
+        </Switch>
     );
-};
+}

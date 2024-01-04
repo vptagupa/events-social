@@ -1,0 +1,49 @@
+@layer utilities  {
+    .primary {
+        @apply bg-purple-500 text-white;
+    }
+
+    .text-primary {
+        @apply text-purple-500;
+    }
+
+    .secondary {
+        @apply bg-indigo-700 text-white;
+    }
+
+    .text-secondary {
+        @apply text-indigo-700;
+    }
+
+    .success {
+        @apply bg-emerald-500 text-white;
+    }
+
+    .text-success {
+        @apply text-emerald-500;
+    }
+
+    .info {
+        @apply bg-sky-500 text-white;
+    }
+
+    .text-info {
+        @apply text-sky-500;
+    }
+
+    .danger {
+        @apply bg-red-500/80 text-white;
+    }
+
+    .text-danger {
+        @apply text-red-500;
+    }
+
+    .warning {
+        @apply bg-amber-500 text-white;
+    }
+
+    .text-warning {
+        @apply text-amber-500;
+    }
+}

@@ -1,11 +1,12 @@
 import { Button } from "../buttons";
 import PropTypes from "prop-types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    ArrowRightIcon,
-    ArrowLeftIcon,
-    ChevronDoubleLeftIcon,
-    ChevronDoubleRightIcon,
-} from "@heroicons/react/24/solid";
+    faArrowRight,
+    faArrowLeft,
+    faAnglesRight,
+    faAnglesLeft,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Component = ({ pagination, pageInfo }) => {
     return (
@@ -17,7 +18,7 @@ const Component = ({ pagination, pageInfo }) => {
                         disabled={pagination.state.page === 0}
                         onClick={() => pagination.fns.onSetPage(0)}
                     >
-                        <ChevronDoubleLeftIcon className="h-3" />
+                        <FontAwesomeIcon icon={faAnglesLeft} className="h-3" />
                     </Button>
                     <Button
                         className="bg-slate-400 text-white enabled:hover:bg-slate-500"
@@ -26,7 +27,7 @@ const Component = ({ pagination, pageInfo }) => {
                             pagination.fns.onSetPage(pagination.state.page - 1)
                         }
                     >
-                        <ArrowLeftIcon className="h-3" />
+                        <FontAwesomeIcon icon={faArrowLeft} className="h-3" />
                     </Button>
                     <span>
                         {pageInfo.startSize}
@@ -45,7 +46,7 @@ const Component = ({ pagination, pageInfo }) => {
                             pagination.fns.onSetPage(pagination.state.page + 1)
                         }
                     >
-                        <ArrowRightIcon className="h-3" />
+                        <FontAwesomeIcon icon={faArrowRight} className="h-3" />
                     </Button>
                     <Button
                         className="bg-slate-400 text-white enabled:hover:bg-slate-500"
@@ -57,7 +58,7 @@ const Component = ({ pagination, pageInfo }) => {
                             pagination.fns.onSetPage(pageInfo.totalPages - 1)
                         }
                     >
-                        <ChevronDoubleRightIcon className="h-3" />
+                        <FontAwesomeIcon icon={faAnglesRight} className="h-3" />
                     </Button>
                 </div>
             )}

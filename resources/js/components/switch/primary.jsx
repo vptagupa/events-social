@@ -2,12 +2,6 @@ import Base from "./base";
 
 export default (props) => {
     return (
-        <>
-            <Base
-                colorActive="primary"
-                colorInActive="primary bg-opacity-20"
-                {...props}
-            />
-        </>
+        <Base active="primary" inActive="primary bg-opacity-20" {...props} />
     );
 };

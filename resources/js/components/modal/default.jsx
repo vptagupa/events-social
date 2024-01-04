@@ -47,7 +47,7 @@ export default ({
                             <Dialog.Panel
                                 className={`${className} relative transform overflow-hidden text-left shadow-xl transition-all xs:my-8`}
                             >
-                                <div className="p-4">{props.children}</div>
+                                <div>{props.children}</div>
                             </Dialog.Panel>
                         </Transition.Child>
                     </div>

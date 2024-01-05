@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,11 +27,13 @@ Route::controller(AuthController::class)->group(function () {
     })->middleware('guest');
 });
 
-Route::prefix('forgot-password')->name('forgot-password.')->group(function () {
-    Route::post('/', [ForgotPasswordController::class, 'send'])->name('send');
-})->middleware('guest');
-
-Route::prefix('reset-password')->name('password.')->group(function () {
-    Route::get('/{token}', [ResetPasswordController::class, 'index'])->name('reset');
-    Route::post('/', [ResetPasswordController::class, 'update'])->name('update');
-})->middleware('guest');
+Route::middleware('guest')->group(function () {
+    Route::prefix('forgot-password')->name('forgot-password.')->group(function () {
+        Route::post('/', [ForgotPasswordController::class, 'send'])->name('send');
+    });
+    Route::prefix('reset-password')->name('password.')->group(function () {
+        Route::get('/{token}', [ResetPasswordController::class, 'index'])->name('reset');
+        Route::post('/', [ResetPasswordController::class, 'update'])->name('update');
+    });
+    Route::post('/register', [RegisterController::class, 'store'])->name('register');
+});

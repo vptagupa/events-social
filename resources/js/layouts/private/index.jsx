@@ -9,6 +9,7 @@ import {
 import Logo from "@/assets/images/logo.png";
 import Sidebar from "./sidebar";
 import { useState } from "react";
+import { Link } from "@inertiajs/react";
 
 export default function Index(props) {
     const [mobileBar, setMobileBar] = useState(false);
@@ -61,11 +62,13 @@ export default function Index(props) {
                         <div>
                             <ol>
                                 <li className="float-left px-1 flex gap-x-1 items-center cursor-pointer">
-                                    <FontAwesomeIcon
-                                        icon={faRightFromBracket}
-                                        className="h-6 text-slate-400 hover:text-slate-600"
-                                        title="Logout"
-                                    />
+                                    <Link href={route("admin.logout")}>
+                                        <FontAwesomeIcon
+                                            icon={faRightFromBracket}
+                                            className="h-6 text-slate-400 hover:text-slate-600"
+                                            title="Logout"
+                                        />
+                                    </Link>
                                 </li>
                             </ol>
                         </div>

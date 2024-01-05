@@ -2,8 +2,6 @@ import { Form, Input } from "@/js/components/form";
 import { Button } from "@/js/components/buttons";
 import { useForm } from "laravel-precognition-react-inertia";
 import { AlertDanger } from "@/js/components/alerts";
-import Remember from "./remember";
-import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faFacebook,
@@ -15,12 +13,10 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 
 export default function Component({ setTab }) {
-    const [remember, setRemember] = useState(false);
-
-    const form = useForm("post", route("login.auth"), {
-        email: "victortagupa@gmail.com",
-        password: "secret",
-        remember: remember,
+    const form = useForm("post", route("register"), {
+        email: "",
+        name: "",
+        password: "",
     });
 
     const submit = (e) => {
@@ -30,12 +26,13 @@ export default function Component({ setTab }) {
         form.submit({
             preserveState: true,
             preserveScroll: true,
+            onSuccess: () => {
+                form.clearErrors();
+                form.reset();
+                setTab("login");
+            },
         });
     };
-
-    useEffect(() => {
-        form.setData("remember", remember);
-    }, [remember]);
 
     return (
         <>
@@ -54,6 +51,21 @@ export default function Component({ setTab }) {
                         <div>
                             <Input
                                 type="text"
+                                placeholder="Name"
+                                value={form.data.name}
+                                onChange={(e) =>
+                                    form.setData("name", e.target.value)
+                                }
+                            />
+                            {form.invalid("name") && (
+                                <span className="text-danger text-xs">
+                                    {form.errors.name}
+                                </span>
+                            )}
+                        </div>
+                        <div>
+                            <Input
+                                type="text"
                                 placeholder="Email"
                                 value={form.data.email}
                                 onChange={(e) =>
@@ -61,10 +73,8 @@ export default function Component({ setTab }) {
                                 }
                             />
                             {form.invalid("email") && (
-                                <span className="relative text-danger text-[0.65rem]">
-                                    <p className="absolute">
-                                        {form.errors.email}
-                                    </p>
+                                <span className="text-danger text-xs">
+                                    {form.errors.email}
                                 </span>
                             )}
                         </div>
@@ -78,33 +88,19 @@ export default function Component({ setTab }) {
                                 }
                             />
                             {form.invalid("password") && (
-                                <span className="relative text-danger text-[0.65rem]">
-                                    <p className="absolute">
-                                        {form.errors.password}
-                                    </p>
+                                <span className="text-danger text-xs">
+                                    {form.errors.password}
                                 </span>
                             )}
                         </div>
-                        <div className="flex items-center space-x-2 text-sm">
-                            <Remember
-                                handler={setRemember}
-                                checked={remember}
-                            />{" "}
-                            <span>Remember me</span>
-                        </div>
+
                         <div className="text-center !mt-10">
                             <Button
                                 progress={form.processing}
                                 className="flex justify-center w-full text-center text-white font-bold uppercase bg-gradient-to-r  from-purple-400 to-indigo-400"
                             >
-                                <span>Login</span>
+                                <span>Signup</span>
                             </Button>
-                            <p
-                                className="mt-2 text-end cursor-pointer text-xs text-blue-400 hover:text-blue-800"
-                                onClick={(e) => setTab("forgot")}
-                            >
-                                Forgot password
-                            </p>
                         </div>
                         <div className="flex flex-col gap-y-2">
                             <div className="flex gap-x-2">

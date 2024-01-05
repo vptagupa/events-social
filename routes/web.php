@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 
@@ -16,11 +17,12 @@ use App\Http\Controllers\Admin\DashboardController;
 
 Route::name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/users', [DashboardController::class, 'index'])->name('users');
     Route::get('/config', [DashboardController::class, 'index'])->name('config');
     Route::get('/audits', [DashboardController::class, 'index'])->name('audits');
 
-    Route::name('setup.')->group(function () {
+    Route::name('setup.')->prefix('setup')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('index');
     });
 });

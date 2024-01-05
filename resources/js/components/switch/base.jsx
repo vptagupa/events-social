@@ -9,7 +9,7 @@ export default function Component({
     posOn = "translate-x-6",
     posOff = "translate-x-1",
     size = "h-4 w-10",
-    classSwitch = "h-3 w-3 bg-white",
+    classSwitch = "h-2 w-2 bg-white",
     ...props
 }) {
     return (

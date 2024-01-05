@@ -1,7 +1,7 @@
 import { Form, Input } from "@/js/components/form";
 import { Button } from "@/js/components/buttons";
 import { useForm } from "laravel-precognition-react-inertia";
-import { AlertDanger, AlertSuccess } from "@/js/components/alerts";
+import { AlertDanger } from "@/js/components/alerts";
 import Remember from "./remember";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -76,7 +76,7 @@ export default function Component({ setTab }) {
                             </span>
                         )}
                     </div>
-                    <div className="flex space-x-2 text-sm">
+                    <div className="flex items-center space-x-2 text-sm">
                         <Remember handler={setRemember} checked={remember} />{" "}
                         <span>Remember me</span>
                     </div>
@@ -91,7 +91,7 @@ export default function Component({ setTab }) {
                             className="mt-2 text-end cursor-pointer text-xs text-blue-400 hover:text-blue-800"
                             onClick={(e) => setTab("forgot")}
                         >
-                            Forgot Password
+                            Forgot password
                         </p>
                     </div>
                     <div className="flex flex-col gap-y-2">

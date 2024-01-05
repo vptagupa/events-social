@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\RegisterRequest;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 
+// 
 class RegisterController extends Controller
 {
     public function __construct(private UserRepository $user)

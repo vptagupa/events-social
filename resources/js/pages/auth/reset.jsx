@@ -1,4 +1,4 @@
-import Layout from "@/js/layouts/layout.auth";
+import Layout from "@/js/layouts/public";
 import { Form, Input } from "@/js/components/form";
 import { Button } from "@/js/components/buttons";
 import { useForm } from "laravel-precognition-react-inertia";
@@ -11,6 +11,8 @@ export default () => {
 
     const submit = (e) => {
         e.preventDefault();
+        if (form.processing) return;
+
         form.submit({
             preserveState: true,
             preserveScroll: true,
@@ -20,6 +22,17 @@ export default () => {
     return (
         <Layout>
             <div>
+                <div className="relative">
+                    <div
+                        className={`${
+                            form.errors.message ? "opacity-100" : "opacity-0"
+                        } transition ease-out delay-200 absolute -top-10 w-full`}
+                    >
+                        <AlertDanger className="!text-xs">
+                            {form.errors.message}
+                        </AlertDanger>
+                    </div>
+                </div>
                 <div>
                     <p>You are using a default password. </p>
                     <p>Change your password to access your account.</p>
@@ -27,13 +40,6 @@ export default () => {
                 <div>
                     <Form onSubmit={submit}>
                         <div className="flex flex-col space-y-4">
-                            <div>
-                                {form.errors.message && (
-                                    <AlertDanger>
-                                        {form.errors.message}
-                                    </AlertDanger>
-                                )}
-                            </div>
                             <div>
                                 <Input
                                     type="password"

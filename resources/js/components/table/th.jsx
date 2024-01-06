@@ -2,7 +2,7 @@ import { HeaderCell } from "@table-library/react-table-library/table";
 import { forwardRef } from "react";
 import Base from "../base";
 
-export default forwardRef(({ className, ...props }, ref) => {
+export default forwardRef(({ className = "", ...props }, ref) => {
     return (
         <Base
             render={<HeaderCell />}

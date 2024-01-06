@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 
-export default forwardRef(({ className, ...props }, ref) => {
+export default forwardRef(({ className = "", ...props }, ref) => {
     return (
         <div
             ref={ref}

@@ -2,7 +2,7 @@ import { Dialog } from "@headlessui/react";
 import Base from "@/js/components/base";
 import { forwardRef } from "react";
 
-export default forwardRef(({ className, ...props }, ref) => {
+export default forwardRef(({ className = "", ...props }, ref) => {
     return (
         <Base
             render={<Dialog.Title />}

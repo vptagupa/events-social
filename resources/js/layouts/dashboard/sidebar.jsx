@@ -1,7 +1,7 @@
 import menu from "@/js/constants/menu";
 import { usePage } from "@inertiajs/react";
 import { canAccess } from "@/js/helpers/access";
-import MenuNav from "./menunav";
+import MenuNav from "./menu";
 
 export default () => {
     const { user } = usePage().props;

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\Password;
-use App\Rules\UserName;
+use Illuminate\Support\Facades\Hash;
 
-class RegisterRequest extends FormRequest
+class UpdatePasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,17 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => UserName::ensure(),
-            'email' => 'required|unique:App\Models\User,email',
-            'password' => ['required', ...Password::ensure()]
+            'current_password' => 'required|current_password',
+            'password' => ['required', 'confirmed', ...Password::ensure()],
+            'password_confirmation' => 'required'
         ];
+    }
+
+    /**
+     * Handle updated data after validation
+     */
+    public function passedValidation()
+    {
+        $this->replace(['password' => Hash::make($this->password)]);
     }
 }

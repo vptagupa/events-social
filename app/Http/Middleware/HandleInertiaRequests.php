@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use Auth;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -37,9 +38,32 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
+            ...$this->config(),
+            ...$this->authenticated($request)
+        ]);
+    }
+
+    /**
+     * Set config properties to inertia request
+     */
+    private function config()
+    {
+        return [
             'config' => [
                 'name' => config('app.name')
+            ],
+        ];
+    }
+
+    /**
+     * Set authenticated properties to inertia request
+     */
+    private function authenticated($request)
+    {
+        return [
+            'auth' => [
+                'user' => Auth::check() ? $request->user() : null
             ]
-        ]);
+        ];
     }
 }

@@ -22,6 +22,13 @@ class AuthController extends Controller
         );
     }
 
+    public function profile(Request $request)
+    {
+        return $this->render(
+            view: "auth/profile",
+        );
+    }
+
     public function auth(Request $request)
     {
         $credentials = $request->validate([

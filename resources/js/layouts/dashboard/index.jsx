@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faIgloo,
-    faUser,
     faBars,
     faBarsStaggered,
     faRightFromBracket,
+    faIdCard,
 } from "@fortawesome/free-solid-svg-icons";
 import Logo from "@/assets/images/logo.png";
 import Sidebar from "./sidebar";
@@ -12,6 +12,7 @@ import { useState } from "react";
 import { Link } from "@inertiajs/react";
 
 export default function Index(props) {
+    console.log(route());
     const [mobileBar, setMobileBar] = useState(false);
     return (
         <>
@@ -62,12 +63,23 @@ export default function Index(props) {
                         <div>
                             <ol>
                                 <li className="float-left px-1 flex gap-x-1 items-center cursor-pointer">
-                                    <Link href={route("admin.logout")}>
+                                    <Link href={route("admin.user.profile")}>
                                         <FontAwesomeIcon
-                                            icon={faRightFromBracket}
-                                            className="h-6 text-slate-400 hover:text-slate-600"
+                                            icon={faIdCard}
+                                            className="h-5 text-purple-400 hover:text-purple-600"
                                             title="Logout"
                                         />
+                                        <div className="sr-only">Profile</div>
+                                    </Link>
+                                </li>
+                                <li className="float-left px-1 flex gap-x-1 items-center cursor-pointer">
+                                    <Link href={route("logout")}>
+                                        <FontAwesomeIcon
+                                            icon={faRightFromBracket}
+                                            className="h-5 text-slate-400 hover:text-slate-600"
+                                            title="Logout"
+                                        />
+                                        <div className="sr-only">Logout</div>
                                     </Link>
                                 </li>
                             </ol>

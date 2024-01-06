@@ -11,6 +11,8 @@ export default memo(function Component() {
 
     const submit = (e) => {
         e.preventDefault();
+        if (form.processing) return;
+
         form.submit({
             only: ["errors"],
             preserveState: true,
@@ -23,41 +25,55 @@ export default memo(function Component() {
     };
 
     return (
-        <Form onSubmit={submit} className="">
-            <div className="flex flex-col space-y-4">
-                <div>
+        <>
+            <div className="relative">
+                <div
+                    className={`${
+                        form.errors.email || form.recentlySuccessful
+                            ? "opacity-100"
+                            : "opacity-0"
+                    } transition ease-out delay-200 absolute -top-10 w-full`}
+                >
                     {form.errors.email && (
-                        <AlertDanger>{form.errors.email}</AlertDanger>
+                        <AlertDanger className="!text-xs">
+                            {form.errors.email}
+                        </AlertDanger>
                     )}
                     {form.recentlySuccessful && (
-                        <AlertSuccess>
+                        <AlertSuccess className="!text-xs">
                             A password reset link was sent to your email
                             address.
                         </AlertSuccess>
                     )}
                 </div>
-                <div>
-                    <Input
-                        type="text"
-                        placeholder="Email"
-                        value={form.data.email}
-                        onChange={(e) => form.setData("email", e.target.value)}
-                    />
-                    {form.invalid("email") && (
-                        <span className="text-danger text-xs">
-                            {form.errors.email}
-                        </span>
-                    )}
-                </div>
-                <div className="text-center !mt-10">
-                    <Button
-                        progress={form.processing}
-                        className="flex justify-center w-full text-center text-white font-bold uppercase bg-gradient-to-r  from-purple-400 to-indigo-400"
-                    >
-                        Send
-                    </Button>
-                </div>
             </div>
-        </Form>
+            <Form onSubmit={submit} className="">
+                <div className="flex flex-col space-y-4">
+                    <div>
+                        <Input
+                            type="text"
+                            placeholder="Email"
+                            value={form.data.email}
+                            onChange={(e) =>
+                                form.setData("email", e.target.value)
+                            }
+                        />
+                        {form.invalid("email") && (
+                            <span className="relative text-danger text-xs">
+                                <p className="absolute">{form.errors.email}</p>
+                            </span>
+                        )}
+                    </div>
+                    <div className="text-center !mt-10">
+                        <Button
+                            progress={form.processing}
+                            className="flex justify-center w-full text-center text-white font-bold uppercase bg-gradient-to-r  from-purple-400 to-indigo-400"
+                        >
+                            Send
+                        </Button>
+                    </div>
+                </div>
+            </Form>
+        </>
     );
 });

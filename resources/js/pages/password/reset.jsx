@@ -1,4 +1,4 @@
-import Layout from "@/js/layouts/layout.auth";
+import Layout from "@/js/layouts/public";
 import { Form, Input } from "@/js/components/form";
 import { Button } from "@/js/components/buttons";
 import { useForm } from "laravel-precognition-react-inertia";
@@ -18,6 +18,8 @@ export default function Component({ token, status }) {
 
     const submit = (e) => {
         e.preventDefault();
+        if (form.processing) return;
+
         form.submit({
             only: ["errors", "status"],
             preserveState: true,
@@ -46,11 +48,19 @@ export default function Component({ token, status }) {
     return (
         <Layout>
             <div className="flex flex-col justify-start gap-y-5">
+                <div className="relative">
+                    <div
+                        className={`${
+                            status ? "opacity-100" : "opacity-0"
+                        } transition ease-out delay-200 absolute -top-10 w-full`}
+                    >
+                        <AlertSuccess className="!text-xs">
+                            {status}
+                        </AlertSuccess>
+                    </div>
+                </div>
                 <Form onSubmit={submit}>
                     <div className="flex flex-col space-y-4">
-                        <div>
-                            {status && <AlertSuccess>{status}</AlertSuccess>}
-                        </div>
                         <div>
                             <Input
                                 type="text"
@@ -89,7 +99,7 @@ export default function Component({ token, status }) {
                                 onChange={(e) =>
                                     form.setData(
                                         "password_confirmation",
-                                        e.target.value,
+                                        e.target.value
                                     )
                                 }
                             />

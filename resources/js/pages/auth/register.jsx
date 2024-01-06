@@ -42,7 +42,9 @@ export default function Component({ setTab }) {
                         form.errors.message ? "opacity-100" : "opacity-0"
                     } transition ease-out delay-200 absolute -top-10 w-full`}
                 >
-                    <AlertDanger>{form.errors.message}</AlertDanger>
+                    <AlertDanger className="!text-xs">
+                        {form.errors.message}
+                    </AlertDanger>
                 </div>
             </div>
             <div className="flex flex-col space-y-4">
@@ -58,8 +60,10 @@ export default function Component({ setTab }) {
                                 }
                             />
                             {form.invalid("name") && (
-                                <span className="text-danger text-xs">
-                                    {form.errors.name}
+                                <span className="relative text-danger text-xs">
+                                    <p className="absolute">
+                                        {form.errors.name}
+                                    </p>
                                 </span>
                             )}
                         </div>
@@ -73,8 +77,10 @@ export default function Component({ setTab }) {
                                 }
                             />
                             {form.invalid("email") && (
-                                <span className="text-danger text-xs">
-                                    {form.errors.email}
+                                <span className="relative text-danger text-xs">
+                                    <p className="absolute">
+                                        {form.errors.email}
+                                    </p>
                                 </span>
                             )}
                         </div>
@@ -88,8 +94,10 @@ export default function Component({ setTab }) {
                                 }
                             />
                             {form.invalid("password") && (
-                                <span className="text-danger text-xs">
-                                    {form.errors.password}
+                                <span className="relative text-danger text-xs">
+                                    <p className="absolute">
+                                        {form.errors.password}
+                                    </p>
                                 </span>
                             )}
                         </div>

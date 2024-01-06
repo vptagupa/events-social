@@ -24,17 +24,17 @@ export default function Component() {
 
     return (
         <Layout>
-            <div className="h-screen w-screen p-4 text-slate-500 flex items-center justify-center bg-gradient-to-r from-indigo-400  to-purple-400">
+            <div className="h-screen w-screen md:p-4 text-slate-500 flex items-center justify-center bg-gradient-to-r from-indigo-400  to-purple-400">
                 <div className="hidden lg:visible lg:w-[60%] xl:w-[72%] lg:flex flex-col items-center justify-start">
                     <div className="text-center p-10 w-full h-full backdrop-saturate-125 bg-white/30">
                         <h1 className="text-9xl">Project Elis</h1>
                     </div>
                 </div>
                 <div
-                    className={`w-[85%] p-1 md:p-2 lg:p-4 md:w-[50%] lg:w-[40%] xl:w-[28%]  flex items-center justify-center`}
+                    className={`w-[90%] p-2 md:p-2 lg:p-4 md:w-[50%] lg:w-[40%] xl:w-[28%]  flex items-center justify-center`}
                 >
                     <div className="w-full pb-2 px-2 lg:px-4 bg-white rounded-2xl">
-                        <div className="flex flex-col space-y-1 text-center mb-10 mt-4">
+                        <div className="flex flex-col space-y-1 text-center mb-5 mt-4">
                             <span>
                                 <img className="h-[3rem] inline" src={Logo} />
                             </span>
@@ -43,7 +43,7 @@ export default function Component() {
                         <div
                             className={`${(() => {
                                 if (defferTab == "login") {
-                                    return "h-[370px]";
+                                    return "h-[400px]";
                                 } else if (defferTab == "forgot") {
                                     return "h-[175px]";
                                 } else if (defferTab == "registration") {

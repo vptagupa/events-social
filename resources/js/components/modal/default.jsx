@@ -1,12 +1,12 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
-export default ({
+export default function Model({
     open = false,
     onClose,
-    className = "xs:w-[90%] xs:max-w-lg bg-white rounded-lg",
+    className = "xs:w-[90%] xs:max-w-lg p-3",
     ...props
-}) => {
+}) {
     const cancelButtonRef = useRef(null);
     let _onClose = onClose;
     if (!_onClose) {
@@ -45,7 +45,7 @@ export default ({
                             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                         >
                             <Dialog.Panel
-                                className={`${className} relative transform overflow-hidden text-left shadow-xl transition-all xs:my-8`}
+                                className={`${className} relative transform overflow-hidden text-left shadow-xl transition-all xs:my-8 bg-white rounded-lg`}
                             >
                                 <div>{props.children}</div>
                             </Dialog.Panel>
@@ -55,4 +55,4 @@ export default ({
             </Dialog>
         </Transition.Root>
     );
-};
+}

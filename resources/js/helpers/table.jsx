@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useState, useCallback, useEffect, useRef } from "react";
 import { usePagination } from "@table-library/react-table-library/pagination";
-import { router } from "@inertiajs/react";
-import Event from "@/js/helpers/event";
+import Event from "./event";
 
 export const useTable = ({ initialParams, listRoute: _listRoute, name }) => {
     const [routes, setRoutes] = useState({
@@ -40,7 +39,7 @@ export const useTable = ({ initialParams, listRoute: _listRoute, name }) => {
                 endSize: result.data.meta.to,
                 total: result.data.meta.total,
                 totalPages: Math.ceil(
-                    result.data.meta.total / initialParams.perPage,
+                    result.data.meta.total / initialParams.perPage
                 ),
             },
         });
@@ -61,7 +60,7 @@ export const useTable = ({ initialParams, listRoute: _listRoute, name }) => {
         },
         {
             isServer: true,
-        },
+        }
     );
 
     useEffect(() => {
@@ -82,15 +81,6 @@ export const useTable = ({ initialParams, listRoute: _listRoute, name }) => {
         }, 500);
     };
 
-    const deleteHandler = async (url, data) => {
-        router.delete(url, {
-            preserveScroll: true,
-            preserveState: false,
-            only: ["errors"],
-            data: data,
-        });
-    };
-
     useEffect(() => {
         Event.on(
             (name ? name + "." : "") + "reload",
@@ -100,7 +90,7 @@ export const useTable = ({ initialParams, listRoute: _listRoute, name }) => {
                     page: initialParams.page,
                 });
             },
-            this,
+            this
         );
 
         return () => Event.off((name ? name + "." : "") + "reload");
@@ -111,7 +101,6 @@ export const useTable = ({ initialParams, listRoute: _listRoute, name }) => {
         search,
         setSearch,
         pagination,
-        deleteHandler,
         searchHandler,
         setListRoute,
     };

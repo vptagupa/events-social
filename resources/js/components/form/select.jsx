@@ -7,7 +7,7 @@ export default forwardRef(({ className = "", ...props }, ref) => {
             render={<select />}
             ref={ref}
             {...props}
-            className={`p-2 w-full shadow-sm border text-sm rounded-lg ${className}`}
+            className={`p-2 w-full shadow-sm border text-sm rounded-lg focus:outline-purple-300 ${className}`}
         />
     );
 });

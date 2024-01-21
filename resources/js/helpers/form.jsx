@@ -1,12 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm as hookForm } from "laravel-precognition-react-inertia";
 
 export const useForm = ({ method, route, data }) => {
-    const [routes, setRoute] = useState(route ?? "");
     const [open, setOpen] = useState(false);
-    const [completed, setCompleted] = useState(false);
     const form = hookForm(method, route, data);
-    const [formData, setFormData] = useState(form.data);
 
     const closeForm = () => {
         if (form.processing) return;
@@ -20,19 +17,11 @@ export const useForm = ({ method, route, data }) => {
         form.reset();
     };
 
-    useEffect(() => {
-        setFormData(data);
-    }, [form.data]);
-
     return {
-        formData,
         open,
-        setOpen,
         form,
+        setOpen,
         closeForm,
-        completed,
-        setCompleted,
-        setRoute,
         clearForm,
     };
 };

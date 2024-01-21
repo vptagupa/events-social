@@ -1,4 +1,4 @@
-import Layout from "./dashboard";
+import Layout from "./admin/backend";
 
 export default function Index(props) {
     return (

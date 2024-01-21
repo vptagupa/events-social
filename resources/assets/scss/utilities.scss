@@ -7,12 +7,20 @@
         @apply text-purple-500;
     }
 
+    .border-primary {
+        @apply border border-purple-500;
+    }
+
     .secondary {
         @apply bg-indigo-700 text-white;
     }
 
     .text-secondary {
         @apply text-indigo-700;
+    }
+
+    .border-secondary {
+        @apply border border-indigo-500;
     }
 
     .success {
@@ -23,12 +31,20 @@
         @apply text-emerald-500;
     }
 
+    .border-success {
+        @apply border border-emerald-500;
+    }
+
     .info {
         @apply bg-sky-500 text-white;
     }
 
     .text-info {
         @apply text-sky-500;
+    }
+
+    .border-info {
+        @apply border border-sky-500;
     }
 
     .danger {
@@ -39,11 +55,19 @@
         @apply text-red-500;
     }
 
+    .border-danger {
+        @apply border border-red-500;
+    }
+
     .warning {
         @apply bg-amber-500 text-white;
     }
 
     .text-warning {
         @apply text-amber-500;
+    }
+
+    .border-warning {
+        @apply border border-amber-500;
     }
 }

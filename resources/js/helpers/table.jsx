@@ -8,6 +8,7 @@ export const useTable = ({ initialParams, listRoute: _listRoute, name }) => {
         listRoute: _listRoute,
     });
     const [search, setSearch] = useState(initialParams.search);
+    const [searching, setSearching] = useState(false);
     const [data, setData] = useState({
         nodes: [],
         pageInfo: {
@@ -43,6 +44,7 @@ export const useTable = ({ initialParams, listRoute: _listRoute, name }) => {
                 ),
             },
         });
+        setSearching(false);
     }, []);
 
     const pagination = usePagination(
@@ -70,10 +72,10 @@ export const useTable = ({ initialParams, listRoute: _listRoute, name }) => {
     }, []);
 
     const timeout = useRef();
-
     const searchHandler = () => {
         if (timeout.current) clearTimeout(timeout.current);
         timeout.current = setTimeout(() => {
+            setSearching(true);
             fetchData({
                 search: search,
                 page: initialParams.page,
@@ -99,8 +101,9 @@ export const useTable = ({ initialParams, listRoute: _listRoute, name }) => {
     return {
         data,
         search,
-        setSearch,
+        searching,
         pagination,
+        setSearch,
         searchHandler,
         setListRoute,
     };

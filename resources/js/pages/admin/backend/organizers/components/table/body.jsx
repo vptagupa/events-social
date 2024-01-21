@@ -31,6 +31,7 @@ const Component = ({
     handleDelete,
     ...props
 }) => {
+    console.log(searching);
     return (
         <>
             <div className="flex justify-end space-x-2 p-2">
@@ -65,7 +66,6 @@ const Component = ({
                             <TrH>
                                 <Th>Name</Th>
                                 <Th>Email</Th>
-                                <Th>Role</Th>
                                 <Th>Last Login Date</Th>
                                 <Th>Action</Th>
                             </TrH>
@@ -91,9 +91,7 @@ const Component = ({
                                                 )}
                                             </div>
                                         </Td>
-
                                         <Td>{item.email}</Td>
-                                        <Td>{item.role}</Td>
                                         <Td>{item.login_at}</Td>
                                         <Td>
                                             <div className="flex space-x-2 justify-end">
@@ -114,11 +112,9 @@ const Component = ({
                             })}
                             {tableList.length <= 0 && (
                                 <Tr>
-                                    <Td colSpan="6" className="text-center">
+                                    <Td colSpan="3" className="text-center">
                                         No records
                                     </Td>
-                                    <Td>&nbsp;</Td>
-                                    <Td>&nbsp;</Td>
                                     <Td>&nbsp;</Td>
                                     <Td>&nbsp;</Td>
                                     <Td>&nbsp;</Td>

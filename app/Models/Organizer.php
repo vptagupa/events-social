@@ -21,6 +21,7 @@ class Organizer extends Authenticatable
         'name',
         'email',
         'password',
+        'active'
     ];
 
     /**
@@ -41,5 +42,6 @@ class Organizer extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'active' => 'boolean'
     ];
 }

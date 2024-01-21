@@ -10,7 +10,9 @@ import { faPenNib, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 export default function Edit({ value, ...props }) {
     const { open, setOpen, form, closeForm } = useForm({
         method: "patch",
-        route: route("admin.backend.users.update", { admin: value.id }),
+        route: route("admin.backend.organizers.update", {
+            organizer: value.id,
+        }),
         data: {
             id: value.id,
             name: value.name,

@@ -7,13 +7,13 @@ export default function Users(props) {
         <>
             <Layout>
                 <div className="xs:p-2 md:px-4">
-                    <div className="font-bold text-lg">Admins</div>
+                    <div className="font-bold text-lg">Organizers</div>
                     <div className="mb-2">
-                        <New roles={props.roles} />
+                        <New />
                     </div>
                     <div className="rounded-2xl shadow-sm bg-white pt-2 pb-3">
                         <div className="rounded-2xl">
-                            <Table roles={props.roles} />
+                            <Table />
                         </div>
                     </div>
                 </div>

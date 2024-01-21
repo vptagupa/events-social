@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', array_map(fn($role) => $role->value, Role::cases()))->length(35);
+            $table->boolean('active')->default(false);
             $table->timestamp('login_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

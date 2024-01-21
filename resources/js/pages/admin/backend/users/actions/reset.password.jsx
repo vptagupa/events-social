@@ -32,7 +32,7 @@ export default function Reset({ id }) {
             >
                 <FontAwesomeIcon
                     icon={faUnlock}
-                    className="h-5 text-purple-300 hover:text-purple-500 hover:scale-105 transition-all duration-100"
+                    className="h-5 text-purple-300 hover:text-purple-600 hover:scale-105 transition-all duration-100"
                 />
             </div>
             <Confirm

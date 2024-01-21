@@ -29,12 +29,12 @@ class Repository
         $model->save();
     }
 
-    public function delete($id)
+    public function delete(int $id)
     {
         return $this->model->destroy($id);
     }
 
-    public function find($id)
+    public function find(int $id)
     {
         return $this->model->find($id);
     }

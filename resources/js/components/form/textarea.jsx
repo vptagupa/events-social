@@ -7,7 +7,7 @@ export default forwardRef(({ className = "", ...props }, ref) => {
             render={<textarea />}
             ref={ref}
             {...props}
-            className={`p-2 w-full shadow-sm border text-sm rounded-lg ${className}`}
+            className={`p-2 w-full shadow-sm border-0 ring-1 ring-slate-300 text-sm rounded-lg ${className}`}
         >
             {props.children}
         </Base>

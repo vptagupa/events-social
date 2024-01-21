@@ -7,7 +7,11 @@ export default forwardRef(({ className = "", ...props }, ref) => {
             render={<input type="checkbox" />}
             ref={ref}
             {...props}
-            className={`p-0 w-4 h-4 appearance-none border border-solid rounded-sm border-slate-400 bg-white  checked:text-slate-300 checked:bg-[url('@/assets/images/check.svg')] ${className}`}
+            className={`p-0 w-4 h-4 appearance-none border-0 rounded-full 
+            ring-1 ring-slate-400
+            checked:bg-[url('@/assets/images/icons/check.svg')] 
+          checked:ring-green-500 checked:outline-none
+            bg-no-repeat bg-center bg-[length:0.8rem_0.8rem] ${className}`}
         />
     );
 });

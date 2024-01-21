@@ -10,7 +10,7 @@ export default forwardRef(
                 render={<button />}
                 ref={ref}
                 {...props}
-                className={`flex items-center justify-center transition ease-in-out delay-75 hover:scale-105 duration-300 rounded-lg shadow-md px-5 py-2 text-sm ${className}`}
+                className={`flex items-center justify-center outline-none transition ease-in-out delay-75 hover:scale-105 duration-300 rounded-lg shadow-md px-5 py-2 text-sm ${className}`}
             >
                 {processing && (
                     <FontAwesomeIcon

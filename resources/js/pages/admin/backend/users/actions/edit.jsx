@@ -55,7 +55,7 @@ export default function Edit({ user, ...props }) {
             >
                 <FontAwesomeIcon
                     icon={faPenNib}
-                    className="h-5 text-green-300 hover:text-green-500 hover:scale-105 transition-all duration-100"
+                    className="h-5 text-green-300 hover:text-green-600 hover:scale-105 transition-all duration-100"
                 />
             </div>
             <Modal open={open}>

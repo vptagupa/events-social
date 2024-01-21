@@ -38,6 +38,7 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::controller(UsersController::class)->prefix('users')->name('users.')->group(function () {
             Route::post('/list', 'list')->name('list');
             Route::patch('/reset-password/{admin}', 'resetPassword')->name('reset-password');
+            Route::patch('/active/{admin}', 'activate')->name('activate');
         });
         Route::resource('users', UsersController::class)->parameters([
             'users' => 'admin'

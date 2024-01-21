@@ -34,7 +34,7 @@ export default function Delete({ id }) {
             >
                 <FontAwesomeIcon
                     icon={faCircleMinus}
-                    className="h-5 text-pink-300 hover:text-pink-500 hover:scale-105 transition-all duration-100"
+                    className="h-5 text-pink-300 hover:text-pink-600 hover:scale-105 transition-all duration-100"
                 />
             </div>
             <Confirm

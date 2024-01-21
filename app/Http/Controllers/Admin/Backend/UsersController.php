@@ -82,6 +82,14 @@ class UsersController extends Controller
     }
 
     /**
+     * Activate user
+     */
+    public function activate(Admin $admin)
+    {
+        $this->repository->activate($admin->id);
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(Admin $admin)

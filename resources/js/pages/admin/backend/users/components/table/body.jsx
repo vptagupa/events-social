@@ -13,6 +13,7 @@ import { SecondaryButton } from "@/js/components/buttons";
 import PropTypes from "prop-types";
 import Edit from "../../actions/edit";
 import Delete from "../../actions/confirm.delete";
+import Activate from "../../actions/activate";
 import ResetPassword from "../../actions/reset.password";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -93,6 +94,10 @@ const Component = ({
                                         <Td>{item.login_at}</Td>
                                         <Td>
                                             <div className="flex space-x-2 justify-end">
+                                                <Activate
+                                                    id={item.id}
+                                                    active={item.active}
+                                                />
                                                 <ResetPassword id={item.id} />
                                                 <Edit
                                                     user={item}

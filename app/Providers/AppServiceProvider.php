@@ -23,8 +23,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Route::model('admin', Admin::class);
-        Route::model('organizer', Organizer::class);
-        Route::model('participant', Participant::class);
+        // Route::model('admin', Admin::class);
+        // Route::model('organizer', Organizer::class);
+        // Route::model('participant', Participant::class);
     }
 }

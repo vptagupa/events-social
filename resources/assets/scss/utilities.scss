@@ -3,12 +3,20 @@
         @apply bg-purple-500 text-white;
     }
 
+    .primary-less {
+        @apply bg-purple-500/80;
+    }
+
     .text-primary {
         @apply text-purple-500;
     }
 
     .border-primary {
         @apply border border-purple-500;
+    }
+
+    .ring-primary {
+        @apply ring-purple-500;
     }
 
     .secondary {
@@ -27,6 +35,10 @@
         @apply bg-emerald-500 text-white;
     }
 
+    .success-less {
+        @apply bg-emerald-500/80;
+    }
+
     .text-success {
         @apply text-emerald-500;
     }
@@ -37,6 +49,10 @@
 
     .info {
         @apply bg-sky-500 text-white;
+    }
+
+    .info-less {
+        @apply bg-sky-500/80;
     }
 
     .text-info {

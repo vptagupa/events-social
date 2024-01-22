@@ -7,18 +7,20 @@ import FooterForm from "../components/form.footer";
 import { useForm } from "@/js/helpers/form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import Close from "../components/close";
+import moment from "moment";
+import { dateFormat } from "@/js/components/calendar";
 
 export default function New(props) {
     const { open, setOpen, form, closeForm } = useForm({
         method: "post",
-        route: route("admin.backend.organizers.store"),
+        route: route("organizer.events.store"),
         data: {
-            name: "",
-            email: "",
-            role: "",
-            password: "",
-            nickname: "",
-            default_checked_password: true,
+            organizer_id: "",
+            title: "",
+            description: "",
+            start_at: moment(new Date(), dateFormat).format(dateFormat),
+            end_at: moment(new Date(), dateFormat).format(dateFormat),
         },
     });
 
@@ -45,6 +47,7 @@ export default function New(props) {
                 <span>Add New</span>
             </Button>
             <Modal open={open}>
+                <Close click={(e) => setOpen(false)} />
                 <Title>Add New</Title>
                 <Form form={form} />
                 <Footer>

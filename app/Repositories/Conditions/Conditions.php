@@ -38,4 +38,11 @@ trait Conditions
             $builder->where('name', 'like', '%' . $query['name'] . '%');
         });
     }
+
+    public function titleCondition(&$builder, $query)
+    {
+        return $builder->when(isset($query['title']) && $query['title'], function ($builder) use ($query) {
+            $builder->where('title', 'like', '%' . $query['title'] . '%');
+        });
+    }
 }

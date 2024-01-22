@@ -12,9 +12,9 @@ return new class extends Migration {
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->string('code', 25);
             $table->string('slug', 25);
             $table->string('title', 125);
+            $table->string('description', 250);
             $table->dateTime('expected_start_at');
             $table->dateTime('expected_end_at');
             $table->dateTime('actual_started_at')->nullable();

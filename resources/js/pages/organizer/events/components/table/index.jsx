@@ -6,7 +6,7 @@ const INITIAL_PARAMS = { search: "", filter: false, page: 0, perPage: 10 };
 const Component = (props) => {
     const { data, searching, setSearch, pagination, searchHandler } = useTable({
         initialParams: INITIAL_PARAMS,
-        listRoute: route("admin.backend.organizers.list"),
+        listRoute: route("organizer.events.list"),
     });
 
     return (

@@ -14,12 +14,10 @@ import PropTypes from "prop-types";
 import Edit from "../../actions/edit";
 import Delete from "../../actions/confirm.delete";
 import Activate from "../../actions/activate";
-import ResetPassword from "../../actions/reset.password";
-import NewEvent from "../../actions/event";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faMagnifyingGlass,
     faUserCircle,
+    faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 
 const Component = ({
@@ -38,7 +36,7 @@ const Component = ({
                 <div className="flex items-center">
                     <Input
                         type="text"
-                        placeholder="Search by name"
+                        placeholder="Search by title"
                         className="border-r-0 rounded-r-none lg:w-96"
                         onChange={(e) => setSearch(e.target.value)}
                     />
@@ -64,9 +62,12 @@ const Component = ({
                     <>
                         <Theader>
                             <TrH>
-                                <Th>Name</Th>
-                                <Th>Email</Th>
-                                <Th>Last Login Date</Th>
+                                <Th>Organizer</Th>
+                                <Th>Title</Th>
+                                <Th>Description</Th>
+                                <Th>Start At</Th>
+                                <Th>End At</Th>
+                                <Th>Offer Price</Th>
                                 <Th>Action</Th>
                             </TrH>
                         </Theader>
@@ -80,19 +81,24 @@ const Component = ({
                                                     className="h-5 border border-solid border-slate-300 rounded-2xl primary"
                                                     icon={faUserCircle}
                                                 />
-                                                <span>{item.name}</span>
+                                                <span>
+                                                    {item.organizer.name}
+                                                </span>
                                             </div>
                                         </Td>
-                                        <Td>{item.email}</Td>
-                                        <Td>{item.login_at}</Td>
+                                        <Td>{item.title}</Td>
+                                        <Td>{item.description}</Td>
+                                        <Td>{item.expected_start_at}</Td>
+                                        <Td>{item.expected_end_at}</Td>
+                                        <Td className="text-center">
+                                            P10.00 - P100.00
+                                        </Td>
                                         <Td>
                                             <div className="flex space-x-2 justify-end">
-                                                <NewEvent organizer={item} />
                                                 <Activate
                                                     id={item.id}
                                                     active={item.active}
                                                 />
-                                                <ResetPassword id={item.id} />
                                                 <Edit
                                                     value={item}
                                                     roles={roles}
@@ -108,6 +114,9 @@ const Component = ({
                                     <Td colSpan="3" className="text-center">
                                         No records
                                     </Td>
+                                    <Td>&nbsp;</Td>
+                                    <Td>&nbsp;</Td>
+                                    <Td>&nbsp;</Td>
                                     <Td>&nbsp;</Td>
                                     <Td>&nbsp;</Td>
                                     <Td>&nbsp;</Td>

@@ -1,33 +1,32 @@
 import Form from "../components/form";
 import { Modal, Title, Footer } from "@/js/components/modal";
-import { Button } from "@/js/components/buttons";
 import { useEffect } from "react";
 import Event from "@/js/helpers/event";
 import FooterForm from "../components/form.footer";
 import { useForm } from "@/js/helpers/form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPenNib, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import Close from "../components/close";
 
-export default function New(props) {
+export default function Edit({ value, ...props }) {
     const { open, setOpen, form, closeForm } = useForm({
-        method: "post",
-        route: route("admin.backend.organizers.store"),
+        method: "patch",
+        route: route("organizer.events.update", {
+            event: value.id,
+        }),
         data: {
-            name: "",
-            email: "",
-            role: "",
-            password: "",
-            nickname: "",
-            default_checked_password: true,
+            organizer_id: value.organizer.id,
+            title: value.title,
+            description: value.description,
+            start_at: value.expected_start_at,
+            end_at: value.expected_end_at,
         },
     });
 
     const submit = (e) => {
-        if (form.processing) return;
-
         form.submit({
             preseverScroll: true,
-            preserveState: true,
+            preserveState: false,
             onSuccess: () => {
                 Event.emit("reload");
                 closeForm();
@@ -37,15 +36,20 @@ export default function New(props) {
 
     return (
         <>
-            <Button
+            <div
+                className="cursor-pointer"
+                title="Edit"
                 onClick={(e) => setOpen(true)}
-                className="space-x-1 bg-none shadow-none text-purple-500 font-bold btn-sm"
             >
-                <FontAwesomeIcon icon={faPlus} className="h-4" />
-                <span>Add New</span>
-            </Button>
+                <FontAwesomeIcon
+                    icon={faPenNib}
+                    className="h-5 text-green-300 hover:text-green-600 hover:scale-105 transition-all duration-100"
+                />
+            </div>
+
             <Modal open={open}>
-                <Title>Add New</Title>
+                <Close click={(e) => setOpen(false)} />
+                <Title>Update</Title>
                 <Form form={form} />
                 <Footer>
                     <FooterForm

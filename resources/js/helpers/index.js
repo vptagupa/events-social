@@ -51,3 +51,24 @@ export const createObjectUrl = (file) => {
 
     return file;
 };
+
+export const fullDateTimeString = (date) => {
+    const twoDigit = (v) =>
+        v > 9 ? v : v.toString().length <= 1 ? "0" + v : v;
+
+    return (
+        twoDigit(date.getMonth() + 1) +
+        "/" +
+        twoDigit(date.getDate()) +
+        "/" +
+        date.getFullYear() +
+        " " +
+        twoDigit(
+            date.getHours() > 12 ? date.getHours() - 12 : date.getHours()
+        ) +
+        ":" +
+        twoDigit(date.getMinutes()) +
+        " " +
+        (date.getHours() > 12 ? "PM" : "AM")
+    );
+};

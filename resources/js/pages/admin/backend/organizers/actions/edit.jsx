@@ -57,7 +57,7 @@ export default function Edit({ value, ...props }) {
                     onClick={(e) => closeForm()}
                 />
                 <Title>Update</Title>
-                <Form form={form} roles={props.roles} />
+                <Form form={form} />
                 <Footer>
                     <FooterForm
                         form={form}

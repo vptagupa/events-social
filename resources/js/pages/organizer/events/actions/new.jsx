@@ -1,17 +1,17 @@
 import Form from "../components/form";
 import { Modal, Title, Footer } from "@/js/components/modal";
 import { Button } from "@/js/components/buttons";
-import { useEffect } from "react";
 import Event from "@/js/helpers/event";
-import FooterForm from "../components/form.footer";
+import FooterForm from "../components/form/form.footer";
 import { useForm } from "@/js/helpers/form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Close from "../components/close";
 import moment from "moment";
 import { dateFormat } from "@/js/components/calendar";
+import { memo } from "react";
 
-export default function New(props) {
+export default memo(function New() {
     const { open, setOpen, form, closeForm } = useForm({
         method: "post",
         route: route("organizer.events.store"),
@@ -60,4 +60,4 @@ export default function New(props) {
             </Modal>
         </>
     );
-}
+});

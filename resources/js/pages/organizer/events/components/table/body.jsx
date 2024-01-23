@@ -14,6 +14,7 @@ import PropTypes from "prop-types";
 import Edit from "../../actions/edit";
 import Delete from "../../actions/confirm.delete";
 import Activate from "../../actions/activate";
+import Manage from "../../actions/manage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faUserCircle,
@@ -99,10 +100,8 @@ const Component = ({
                                                     id={item.id}
                                                     active={item.active}
                                                 />
-                                                <Edit
-                                                    value={item}
-                                                    roles={roles}
-                                                />
+                                                <Manage value={item} />
+                                                <Edit value={item} />
                                                 <Delete id={item.id} />
                                             </div>
                                         </Td>

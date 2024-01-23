@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Organizer\EventsController;
+use App\Http\Controllers\Organizer\RegistrationFormController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +20,7 @@ Route::name('organizer.')->prefix('organizer')->group(function () {
         Route::post('/list', 'list')->name('list');
         Route::patch('/active/{event}', 'activate')->name('activate');
     });
-    Route::resource('events', EventsController::class)->except(['create', 'edit', 'show']);
+    Route::resource('events', EventsController::class)->except(['create', 'edit']);
+    Route::resource('events.registration-form', RegistrationFormController::class)->except(['create', 'edit', 'show', 'destroy']);
 });
 

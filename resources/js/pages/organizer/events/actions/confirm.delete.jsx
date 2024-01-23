@@ -4,8 +4,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleMinus } from "@fortawesome/free-solid-svg-icons";
 import { router } from "@inertiajs/react";
 import Event from "@/js/helpers/event";
+import { memo } from "react";
 
-export default function Delete({ id }) {
+export default memo(function Delete({ id }) {
     const [open, setOpen] = useState(false);
     const [processing, setProcessing] = useState(false);
 
@@ -47,4 +48,4 @@ export default function Delete({ id }) {
             />
         </>
     );
-}
+});

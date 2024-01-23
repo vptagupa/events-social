@@ -18,13 +18,16 @@ class EventsController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display the default page of the resource.
      */
     public function index()
     {
         return $this->render('organizer/events/index');
     }
 
+    /**
+     * Display a listing of the resource.
+     */
     public function list(Request $request)
     {
         return EventResource::collection(
@@ -37,6 +40,16 @@ class EventsController extends Controller
                 perPage: $request->get('per_page'),
             )
         );
+    }
+
+    /**
+     * Display the manage page of the resource.
+     */
+    public function show(Event $event)
+    {
+        return $this->render('organizer/events/manage/index', [
+            'event' => $event
+        ]);
     }
 
     /**

@@ -1,14 +1,14 @@
 import Form from "../components/form";
 import { Modal, Title, Footer } from "@/js/components/modal";
-import { useEffect } from "react";
 import Event from "@/js/helpers/event";
-import FooterForm from "../components/form.footer";
+import FooterForm from "../components/form/form.footer";
 import { useForm } from "@/js/helpers/form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenNib, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { faPenNib } from "@fortawesome/free-solid-svg-icons";
 import Close from "../components/close";
+import { memo } from "react";
 
-export default function Edit({ value, ...props }) {
+export default memo(function Edit({ value }) {
     const { open, setOpen, form, closeForm } = useForm({
         method: "patch",
         route: route("organizer.events.update", {
@@ -38,7 +38,7 @@ export default function Edit({ value, ...props }) {
         <>
             <div
                 className="cursor-pointer"
-                title="Edit"
+                title="Basic Edit"
                 onClick={(e) => setOpen(true)}
             >
                 <FontAwesomeIcon
@@ -61,4 +61,4 @@ export default function Edit({ value, ...props }) {
             </Modal>
         </>
     );
-}
+});

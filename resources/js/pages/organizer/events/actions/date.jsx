@@ -9,8 +9,9 @@ import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import Close from "../components/close";
 import moment from "moment";
+import { memo } from "react";
 
-export default function Date({ value, onChange }) {
+export default memo(function Date({ value, onChange }) {
     const [open, setOpen] = useState(false);
     const [tab, setTab] = useState("date");
 
@@ -74,4 +75,4 @@ export default function Date({ value, onChange }) {
             </Modal>
         </>
     );
-}
+});

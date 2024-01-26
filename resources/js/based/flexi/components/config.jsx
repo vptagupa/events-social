@@ -2,34 +2,7 @@ import Text from "./config/text";
 import Check from "./config/checkbox";
 import Conditions from "./config/conditions";
 import Select from "./config/select";
-import { useState } from "react";
-
-const conditions = [
-    {
-        title: "Equal",
-        expression: "==",
-    },
-    {
-        title: "Not equal",
-        expression: "!=",
-    },
-    {
-        title: "Greater than",
-        expression: ">",
-    },
-    {
-        title: "Greater than and equal",
-        expression: ">=",
-    },
-    {
-        title: "Less than",
-        expression: "<",
-    },
-    {
-        title: "Less than and equal",
-        expression: "<=",
-    },
-];
+import { conditions } from "./constants";
 
 export default function Config({
     change,
@@ -38,35 +11,31 @@ export default function Config({
     selectRemove,
     value,
 }) {
-    const [options, setOptions] = useState([]);
+    console.log(value);
     return (
-        <div
-            className={`grid ${
-                value.type == "select" ? "grid-cols-3" : "grid-cols-2"
-            } gap-3 text-xs`}
-        >
+        <div className={`flex gap-3 text-xs`}>
             <div>
                 <Text
                     title={"Name"}
                     value={value.config["name"] ?? ""}
-                    onChange={(e) => change(value, "name", e.target.value)}
+                    onChange={(e) => change("name", e.target.value)}
                 />
 
                 <Text
                     title={"Label"}
                     value={value.config["label"] ?? ""}
-                    onChange={(e) => change(value, "label", e.target.value)}
+                    onChange={(e) => change("label", e.target.value)}
                 />
 
                 <Text
                     title={"Class"}
                     value={value.config["class"] ?? ""}
-                    onChange={(e) => change(value, "class", e.target.value)}
+                    onChange={(e) => change("class", e.target.value)}
                 />
                 <Text
                     title={"Style"}
                     value={value.config["style"] ?? ""}
-                    onChange={(e) => change(value, "style", e.target.value)}
+                    onChange={(e) => change("style", e.target.value)}
                 />
             </div>
             <div className="">
@@ -75,45 +44,35 @@ export default function Config({
                     conditions={conditions}
                     expression={value.config["condition.expression"] ?? ""}
                     value={value.config["condition.value"] ?? ""}
-                    onChangeExpr={(val) =>
-                        change(value, "condition.expression", val)
-                    }
-                    onChangeValue={(val) =>
-                        change(value, "condition.value", val)
-                    }
+                    onChangeExpr={(val) => change("condition.expression", val)}
+                    onChangeValue={(val) => change("condition.value", val)}
                 />
 
                 <Text
                     title={"Placeholder"}
                     value={value.config["placeholder"] ?? ""}
-                    onChange={(e) =>
-                        change(value, "placeholder", e.target.value)
-                    }
+                    onChange={(e) => change("placeholder", e.target.value)}
                 />
                 <Text
                     title={"Default Value"}
                     value={value.config["defaultValue"] ?? ""}
-                    onChange={(e) =>
-                        change(value, "defaultValue", e.target.value)
-                    }
+                    onChange={(e) => change("defaultValue", e.target.value)}
                 />
                 <Check
                     title=" Is Required"
                     value={value.config["is_required"] ?? ""}
                     checked={value.config["is_required"] ?? false}
-                    onChange={(e) =>
-                        change(value, "is_required", e.target.checked)
-                    }
+                    onChange={(e) => change("is_required", e.target.checked)}
                 />
             </div>
             {value.type == "select" && (
                 <Select
                     title={"Options"}
-                    change={(option, name, val) =>
-                        selectChange(value, option, name, val)
+                    change={(option, name, value) =>
+                        selectChange(option, name, value)
                     }
-                    add={(val, text) => selectAdd(value, val, text)}
-                    remove={(option) => selectRemove(value, option)}
+                    add={(value, text) => selectAdd(value, text)}
+                    remove={(option) => selectRemove(option)}
                     options={value.config["options"] ?? []}
                 />
             )}

@@ -8,11 +8,11 @@ export default function Select({ title, change, add, remove, options = [] }) {
     const [value, setValue] = useState("");
     const [text, setText] = useState("");
     return (
-        <div>
+        <div className="">
             <div className="block p-1 border-b border-slate-300 mb-2">
                 <label>{title}</label>
                 <div className="mt-2">
-                    <div className="grid grid-cols-3 gap-x-2">
+                    <div className="flex gap-x-2">
                         <div>
                             <label>Value</label>
                             <Input
@@ -35,7 +35,7 @@ export default function Select({ title, change, add, remove, options = [] }) {
                             <PrimaryButton
                                 type="button"
                                 onClick={(e) => {
-                                    if (value && text) {
+                                    if (text) {
                                         add(value, text);
                                         setValue("");
                                         setText("");

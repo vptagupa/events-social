@@ -2,7 +2,7 @@ import Text from "./config/text";
 import Check from "./config/checkbox";
 import Conditions from "./config/conditions";
 import Select from "./config/select";
-import { conditions } from "./constants";
+import { conditions } from "../constants";
 
 export default function Config({
     change,
@@ -11,7 +11,6 @@ export default function Config({
     selectRemove,
     value,
 }) {
-    console.log(value);
     return (
         <div className={`flex gap-3 text-xs`}>
             <div>

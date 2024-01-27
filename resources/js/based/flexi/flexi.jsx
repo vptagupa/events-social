@@ -1,17 +1,9 @@
 import { uid } from "uid";
 import { useState } from "react";
-import {
-    step,
-    column as constColumn,
-    attribute,
-    grid as constGrid,
-} from "./constants";
-
-const findIndex = (data, value, key) =>
-    data.findIndex((a) => a[key] == value[key]);
+import { flexs, attribute } from "./constants";
 
 export const useFlexi = () => {
-    const [data, set] = useState(step);
+    const [data, set] = useState(flexs);
 
     const addGrid = (flex) => {
         flex.grids = flex.grids.concat({
@@ -66,12 +58,20 @@ export const useFlexi = () => {
             addCompon(column, component);
         }
 
-        set([...data]);
+        set({ ...data });
     };
 
-    const switchComponent = (column, component) => {};
+    const moveComponent = (flex, grid, column, component, from) => {
+        set({ ...data });
+    };
 
     const componentRemove = (flex, grid, column, component) => {
+        if (!component) {
+            data.flexis = data.flexis.filter((f) => f.flex != flex.flex);
+
+            set({ ...data });
+            return;
+        }
         // Remove grid
         if (component?.grid >= 0) {
             flex.grids = flex.grids.filter((g) => g.grid != component.grid);
@@ -87,13 +87,13 @@ export const useFlexi = () => {
             );
         }
 
-        set([...data]);
+        set({ ...data });
     };
 
     const componentChange = (flex, grid, column, component, value) => {
         component.config.defaultValue = value;
 
-        set([...data]);
+        set({ ...data });
     };
 
     const componentSelectChange = (
@@ -112,7 +112,7 @@ export const useFlexi = () => {
             return o;
         });
 
-        set([...data]);
+        set({ ...data });
     };
 
     const componentSelectRemove = (flex, grid, column, component, option) => {
@@ -120,7 +120,7 @@ export const useFlexi = () => {
             (o) => o.id != option.id
         );
 
-        set([...data]);
+        set({ ...data });
     };
 
     const componentSelectAdd = (flex, grid, column, component, value, text) => {
@@ -129,22 +129,45 @@ export const useFlexi = () => {
             value,
             text,
         });
-        set([...data]);
+
+        set({ ...data });
     };
 
     const changeConfig = (flex, grid, column, component, name, value) => {
         component.config[name] = value;
-        set([...data]);
+
+        set({ ...data });
     };
 
     const configActive = (flex, grid, column, component) => {
         component.config.active = !component.config.active;
-        set([...data]);
+
+        set({ ...data });
+    };
+
+    const plusFlex = () => {
+        data.flexis = data.flexis.concat({
+            flex: data.flexis.length,
+            grids: [],
+        });
+
+        set({ ...data });
+    };
+
+    const minusFlex = () => {
+        if (data.flexis.length > 0) {
+            data.flexis.pop();
+
+            set({ ...data });
+        }
     };
 
     return {
         data,
+        plusFlex,
+        minusFlex,
         addComponent,
+        moveComponent,
         componentRemove,
         componentChange,
         componentSelectChange,

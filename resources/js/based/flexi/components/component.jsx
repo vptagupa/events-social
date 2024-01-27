@@ -12,6 +12,7 @@ export default function Component({
     grid,
     column,
     component,
+    move,
     add,
     change,
     remove,
@@ -23,14 +24,20 @@ export default function Component({
 }) {
     return (
         <Drop
-            onDrop={(e) =>
-                add(
-                    flex,
-                    grid,
-                    column,
-                    JSON.parse(e.dataTransfer.getData("data"))
-                )
-            }
+            onDrop={(e) => {
+                var data;
+                if ((data = e.dataTransfer.getData("data"))) {
+                    add(flex, grid, column, JSON.parse(data));
+                } else if ((data = e.dataTransfer.getData("move"))) {
+                    data = JSON.parse(data);
+                    move(data.flex, data.grid, data.column, data.component, {
+                        flex,
+                        grid,
+                        column,
+                        component,
+                    });
+                }
+            }}
         >
             <div className="flex component">
                 <div className="grow">
@@ -54,7 +61,20 @@ export default function Component({
                     {component.type == "textarea" && <Textarea />}
                 </div>
                 <div className="w-20 flex items-center justify-center ml-2 p-1 border-l border-solid border-slate-300">
-                    <Move />
+                    <Move
+                        draggable={true}
+                        onDragStart={(e) =>
+                            e.dataTransfer.setData(
+                                "move",
+                                JSON.stringify({
+                                    flex,
+                                    grid,
+                                    column,
+                                    component,
+                                })
+                            )
+                        }
+                    />
                     <ConfigAction
                         active={component.config.active}
                         click={(e) =>

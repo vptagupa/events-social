@@ -15,6 +15,7 @@ export default function Column({ grid, column, flex, ...flexia }) {
                 column={column}
                 component={component}
                 add={flexia.addComponent}
+                move={flexia.moveComponent}
                 change={flexia.componentChange}
                 remove={flexia.componentRemove}
                 selectChange={flexia.componentSelectChange}

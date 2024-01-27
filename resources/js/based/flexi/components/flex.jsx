@@ -6,7 +6,7 @@ export default function Flex({ flex, flexia }) {
     return (
         <>
             {flex.grids.map((grid) => (
-                <div key={grid.grid} className="flex flex-col">
+                <div key={grid.grid} className="flex flex-col --grid">
                     <div className="relative">
                         <div className="absolute -bottom-4 right-0">
                             <Remove

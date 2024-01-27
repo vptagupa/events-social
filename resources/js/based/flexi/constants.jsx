@@ -1,5 +1,3 @@
-import { uid } from "uid";
-
 export const config = {
     active: false,
     options: [],
@@ -10,6 +8,7 @@ export const attribute = {
     title: "",
     type: "",
     value: "",
+    draggable: true,
     attr: [],
     config,
 };
@@ -24,20 +23,24 @@ export const grid = {
     columns: [{ ...column }],
 };
 
-export const step = [
-    {
-        flex: 0,
-        grids: [{ ...grid }],
-    },
-];
+export const flexs = {
+    flexis: [
+        {
+            flex: 0,
+            grids: [],
+        },
+    ],
+    properties: { flex: 1 },
+};
 
 export const attributes = [
     {
         ...attribute,
-        title: "Stepper",
-        type: "value",
+        title: "Steps",
+        type: "flex",
         value: 1,
         attr: { maxLength: 1 },
+        draggable: false,
     },
 
     {

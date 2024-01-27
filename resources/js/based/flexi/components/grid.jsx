@@ -6,7 +6,7 @@ import Remove from "../actions/remove";
 export default function Grid({ flex, grid, ...flexia }) {
     if (grid.columns.length > 0)
         return grid.columns.map((column) => (
-            <div key={column.column} className="flex flex-col w-full">
+            <div key={column.column} className="flex flex-col w-full --column">
                 <div className="relative">
                     <div className="absolute -bottom-4 right-0">
                         <Remove

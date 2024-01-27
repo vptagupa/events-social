@@ -1,344 +1,147 @@
 import { uid } from "uid";
 import { useState } from "react";
-import { step, column } from "./constants";
+import {
+    step,
+    column as constColumn,
+    attribute,
+    grid as constGrid,
+} from "./constants";
 
 const findIndex = (data, value, key) =>
     data.findIndex((a) => a[key] == value[key]);
 
-var flexIndex = 0;
-var gridIndex = 0;
-var columnIndex = 0;
-var componentIndex = 0;
-var tree = [];
-var prop = null;
-
 export const useFlexi = () => {
     const [data, set] = useState(step);
 
+    const addGrid = (flex) => {
+        flex.grids = flex.grids.concat({
+            grid: flex.grids.length,
+            columns: [],
+        });
+
+        return flex.grids;
+    };
+
+    const addColumn = (grid) => {
+        grid.columns = grid.columns.concat({
+            column: grid.columns.length,
+            components: [],
+        });
+
+        return grid.columns;
+    };
+
+    const addCompon = (column, component) => {
+        column.components = column.components.concat({
+            ...component,
+            id: uid(),
+        });
+    };
+
     const addComponent = (flex, grid, column, component) => {
-        console.log({ flex, grid, column, component });
+        if (flex.grids.length <= 0) {
+            grid = addGrid(flex)[0];
+        }
 
         if (component.type == "column") {
-            grid.columns = grid.columns.concat({
-                ...component,
-                column: grid.columns.length,
-                tree: column.tree,
-                components: [],
-            });
+            addColumn(grid);
         } else if (component.type == "grid") {
-            column.components = column.components.concat({
-                ...component,
-                id: uid(),
-                type: "grid",
-                grids: [
-                    {
-                        grid: 0,
-                        columns: [
-                            {
-                                ...column,
-                                column: 0,
-                                tree: [...column.tree, { grid: grid.grid }],
-                            },
-                        ],
-                    },
-                ],
-            });
-        } else {
-            column.components = column.components.concat({
-                ...component,
-                id: uid(),
-                components: [],
-            });
-        }
-
-        flexIndex = findIndex(data, column.tree[0], "flex");
-        gridIndex = findIndex(data[flexIndex].grids, column.tree[1], "grid");
-        if (column.tree[2]) {
-            columnIndex = findIndex(
-                data[flexIndex].grids[gridIndex].columns,
-                column.tree[2],
-                "column"
-            );
-        } else {
-            columnIndex = findIndex(
-                data[flexIndex].grids[gridIndex].columns,
-                column,
-                "column"
-            );
-        }
-
-        prop = data[flexIndex].grids[gridIndex].columns[columnIndex];
-
-        var tempProp = { ...prop };
-        var index = null;
-        var columnTree = [...column.tree];
-
-        columnTree.splice(0, 3);
-
-        if (columnTree.length > 0) {
-            for (let value of columnTree) {
-                if (value?.component && value.component != "") {
-                    index = findIndex(
-                        tempProp.components,
-                        { id: value.component },
-                        "id"
-                    );
-                    tree.push({
-                        componentIndex: index,
-                    });
-                    tempProp = tempProp.components[index];
-                }
-                if (value?.grid && value.grid != "") {
-                    index = findIndex(tempProp.grids, value, "grid");
-                    tree.push({
-                        gridIndex: index,
-                    });
-                    tempProp = tempProp.grids[index];
-                }
-                if (value?.column && value.column != "") {
-                    index = findIndex(tempProp.columns, value, "column");
-                    tree.push({
-                        columnIndex: index,
-                    });
-                    tempProp = tempProp.columns[index];
-                }
+            if (column) {
+                addCompon(column, {
+                    ...attribute,
+                    type: "grid",
+                    grids: [
+                        {
+                            grid: 0,
+                            columns: [],
+                        },
+                    ],
+                });
             }
-        }
-
-        for (index of tree) {
-            if (index.componentIndex) {
-                prop = prop.components[index.componentIndex];
-            } else if (index.gridIndex) {
-                prop = prop.grids[index.gridIndex];
-            } else if (index.columnIndex) {
-                prop = prop.columns[index.columnIndex];
+        } else {
+            if (grid.columns.length <= 0) {
+                column = addColumn(grid)[0];
             }
+
+            addCompon(column, component);
         }
 
-        if (prop?.grid) {
-            prop.columns = grid.columns;
-            data[flexIndex].grids[gridIndex].columns = grid.columns;
-        } else if (prop?.column) {
-            data[flexIndex].grids[gridIndex].columns[columnIndex].components =
-                column.components;
-        }
-        console.log(data);
         set([...data]);
-
-        return;
-        set(
-            data.map((f) => {
-                if (f.step === flex.step) {
-                    // If not a grid, then append the component to the column.
-                    // Otherwise, add a new grid
-
-                    f.grids = f.grids.map((g) => {
-                        if (g.grid == grid.grid) {
-                            // If not a column, then append the new commponent.
-                            // otherwise, Add a new column to the grid
-                            if (component.type != "column") {
-                                g.columns = g.columns.map((c) => {
-                                    if (c.column == column.column) {
-                                        c.components =
-                                            c.components.concat(component);
-                                    }
-                                    return c;
-                                });
-                            } else {
-                                g.columns = g.columns.concat({
-                                    column: f.columns.length,
-                                    components: [
-                                        {
-                                            id: uid(),
-                                            ...component,
-                                        },
-                                    ],
-                                });
-                            }
-                        }
-
-                        return g;
-                    });
-                }
-
-                return f;
-            })
-        );
     };
 
-    const componentRemove = (flex, column, component) => {
-        set(
-            data.map((f) => {
-                if (f.step === flex.step) {
-                    f.columns = f.columns.map((c) => {
-                        if (c.column == column.column) {
-                            c.components = c.components.filter(
-                                (a) => a.id != component.id
-                            );
-                        }
-                        return c;
-                    });
-                }
+    const switchComponent = (column, component) => {};
 
-                return f;
-            })
-        );
+    const componentRemove = (flex, grid, column, component) => {
+        // Remove grid
+        if (component?.grid >= 0) {
+            flex.grids = flex.grids.filter((g) => g.grid != component.grid);
+        }
+        // Remove column
+        else if (component?.column >= 0) {
+            grid.columns = grid.columns.filter(
+                (c) => c.column != component.column
+            );
+        } else {
+            column.components = column.components.filter(
+                (c) => c.id != component.id
+            );
+        }
+
+        set([...data]);
     };
 
-    const componentChange = (flex, column, component, value) => {
-        set(
-            data.map((f) => {
-                if (f.step === flex.step) {
-                    f.columns = f.columns.map((c) => {
-                        if (c.column == column.column) {
-                            const index = c.components.findIndex(
-                                (a) => a.id == component.id
-                            );
-                            if (index !== -1) {
-                                c.components[index].config.defaultValue = value;
-                            }
-                        }
-                        return c;
-                    });
-                }
+    const componentChange = (flex, grid, column, component, value) => {
+        component.config.defaultValue = value;
 
-                return f;
-            })
-        );
+        set([...data]);
     };
 
     const componentSelectChange = (
         flex,
+        grid,
         column,
         component,
         option,
         name,
         value
     ) => {
-        console.log(value);
-        set(
-            data.map((f) => {
-                if (f.step === flex.step) {
-                    f.columns = f.columns.map((c) => {
-                        if (c.column == column.column) {
-                            c.components = c.components.map((a) => {
-                                if (a.id == component.id) {
-                                    const index = findIndex(
-                                        a.config.options,
-                                        option,
-                                        "id"
-                                    );
-                                    if (index !== -1) {
-                                        a.config.options[index][name] = value;
-                                    }
-                                }
-                                return a;
-                            });
-                        }
-                        return c;
-                    });
-                }
+        component.config.options.map((o) => {
+            if (o.id == option.id) {
+                o[name] = value;
+            }
+            return o;
+        });
 
-                return f;
-            })
-        );
+        set([...data]);
     };
 
-    const componentSelectRemove = (flex, column, component, option) => {
-        set(
-            data.map((f) => {
-                if (f.step === flex.step) {
-                    f.columns = f.columns.map((c) => {
-                        if (c.column == column.column) {
-                            c.components = c.components.map((a) => {
-                                if (a.id == component.id) {
-                                    a.config.options = a.config.options.filter(
-                                        (o) => o.id != option.id
-                                    );
-                                }
-                                return a;
-                            });
-                        }
-                        return c;
-                    });
-                }
-
-                return f;
-            })
+    const componentSelectRemove = (flex, grid, column, component, option) => {
+        component.config.options = component.config.options.filter(
+            (o) => o.id != option.id
         );
+
+        set([...data]);
     };
 
-    const componentSelectAdd = (flex, column, component, value, text) => {
-        set(
-            data.map((f) => {
-                if (f.step === flex.step) {
-                    f.columns = f.columns.map((c) => {
-                        if (c.column == column.column) {
-                            c.components = c.components.map((a) => {
-                                if (a.id == component.id) {
-                                    a.config.options = a.config.options.concat({
-                                        id: uid(),
-                                        value,
-                                        text,
-                                    });
-                                }
-                                return a;
-                            });
-                        }
-                        return c;
-                    });
-                }
-
-                return f;
-            })
-        );
+    const componentSelectAdd = (flex, grid, column, component, value, text) => {
+        component.config.options = component.config.options.concat({
+            id: uid(),
+            value,
+            text,
+        });
+        set([...data]);
     };
 
-    const changeConfig = (flex, column, component, name, value) => {
-        console.log([flex, column, component, name, value]);
-        set(
-            data.map((f) => {
-                if (f.step === flex.step) {
-                    f.columns = f.columns.map((c) => {
-                        if (c.column == column.column) {
-                            c.components = c.components.map((a) => {
-                                if (a.id == component.id) {
-                                    a.config[name] = value;
-                                }
-                                return a;
-                            });
-                        }
-                        return c;
-                    });
-                }
-
-                return f;
-            })
-        );
+    const changeConfig = (flex, grid, column, component, name, value) => {
+        component.config[name] = value;
+        set([...data]);
     };
 
-    const configActive = (flex, column, component) => {
-        set(
-            data.map((f) => {
-                if (f.step === flex.step) {
-                    f.columns = f.columns.map((c) => {
-                        if (c.column == column.column) {
-                            c.components = c.components.map((a) => {
-                                if (a.id == component.id) {
-                                    a.config.active = !a.config.active;
-                                }
-                                return a;
-                            });
-                        }
-                        return c;
-                    });
-                }
-
-                return f;
-            })
-        );
+    const configActive = (flex, grid, column, component) => {
+        component.config.active = !component.config.active;
+        set([...data]);
     };
-    console.log(data);
+
     return {
         data,
         addComponent,

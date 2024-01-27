@@ -23,19 +23,6 @@ export default function Component({
 }) {
     return (
         <Drop
-            id={component.id}
-            className=""
-            onDragOver={(e) => {
-                e.preventDefault();
-                e.target.classList.remove("border-slate-300");
-                e.target.classList.remove("border-green-600");
-                e.target.classList.add("border-green-600");
-            }}
-            onDragLeave={(e) => {
-                e.preventDefault();
-                e.target.classList.add("border-slate-300");
-                e.target.classList.remove("border-green-600");
-            }}
             onDrop={(e) =>
                 add(
                     flex,
@@ -45,13 +32,19 @@ export default function Component({
                 )
             }
         >
-            <div className="flex">
+            <div className="flex component">
                 <div className="grow">
-                    {component.type == "text" && (
+                    {["text", "notes"].includes(component.type) && (
                         <Text
                             value={component.config.defaultValue}
                             onChange={(e) =>
-                                change(flex, column, component, e.target.value)
+                                change(
+                                    flex,
+                                    grid,
+                                    column,
+                                    component,
+                                    e.target.value
+                                )
                             }
                         />
                     )}
@@ -64,9 +57,13 @@ export default function Component({
                     <Move />
                     <ConfigAction
                         active={component.config.active}
-                        click={(e) => configActive(flex, column, component)}
+                        click={(e) =>
+                            configActive(flex, grid, column, component)
+                        }
                     />
-                    <Remove click={(e) => remove(flex, column, component)} />
+                    <Remove
+                        click={(e) => remove(flex, grid, column, component)}
+                    />
                 </div>
             </div>
             {component.config.active && (
@@ -74,11 +71,19 @@ export default function Component({
                     <Config
                         value={component}
                         change={(name, value) =>
-                            changeConfig(flex, column, component, name, value)
+                            changeConfig(
+                                flex,
+                                grid,
+                                column,
+                                component,
+                                name,
+                                value
+                            )
                         }
                         selectChange={(option, name, value) =>
                             selectChange(
                                 flex,
+                                grid,
                                 column,
                                 component,
                                 option,
@@ -87,10 +92,17 @@ export default function Component({
                             )
                         }
                         selectAdd={(value, text) =>
-                            selectAdd(flex, column, component, value, text)
+                            selectAdd(
+                                flex,
+                                grid,
+                                column,
+                                component,
+                                value,
+                                text
+                            )
                         }
                         selectRemove={(option) =>
-                            selectRemove(flex, column, component, option)
+                            selectRemove(flex, grid, column, component, option)
                         }
                     />
                 </div>

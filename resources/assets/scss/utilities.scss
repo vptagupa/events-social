@@ -87,4 +87,8 @@
         @apply border border-amber-500;
     }
 
+    .drop-over {
+        @apply transform translate-y-3 transition-all ease-in-out duration-150;
+    }
+
 }

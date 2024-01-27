@@ -18,71 +18,16 @@ export const column = {
     column: 0,
     components: [],
 };
-const id = uid();
+
 export const grid = {
     grid: 0,
-    tree: { flex: 0 },
-    columns: [
-        {
-            ...column,
-            column: 0,
-            tree: [{ flex: 0 }, { grid: 0 }],
-            components: [
-                {
-                    ...attribute,
-                    type: "grid",
-                    id,
-                    tree: [{ flex: 0 }, { grid: 0 }, { column: 0 }],
-                    grids: [
-                        {
-                            grid: 0,
-                            tree: [
-                                { flex: 0 },
-                                { grid: 0 },
-                                { column: 0 },
-                                { component: id },
-                            ],
-                            columns: [
-                                {
-                                    ...column,
-                                    column: 0,
-                                    tree: [
-                                        { flex: 0 },
-                                        { grid: 0 },
-                                        { column: 0 },
-                                        { component: id },
-                                        { grid: 0 },
-                                    ],
-                                },
-                                {
-                                    ...column,
-                                    tree: [
-                                        { flex: 0 },
-                                        { grid: 0 },
-                                        { column: 0 },
-                                        { component: id },
-                                        { grid: 0 },
-                                    ],
-                                    column: 1,
-                                },
-                            ],
-                        },
-                    ],
-                },
-                {
-                    ...attribute,
-                    type: "text",
-                    id: uid(),
-                },
-            ],
-        },
-    ],
+    columns: [{ ...column }],
 };
 
 export const step = [
     {
         flex: 0,
-        grids: [grid],
+        grids: [{ ...grid }],
     },
 ];
 
@@ -119,6 +64,11 @@ export const attributes = [
         ...attribute,
         title: "Textarea",
         type: "textarea",
+    },
+    {
+        ...attribute,
+        title: "Notes",
+        type: "notes",
     },
 ];
 

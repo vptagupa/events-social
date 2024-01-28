@@ -1,7 +1,21 @@
+import { uid } from "uid";
+
 export const config = {
     active: false,
     options: [],
     defaultValue: "",
+    class: "",
+    form: [
+        "name",
+        "label",
+        "class",
+        "style",
+        "condition",
+        "placeholder",
+        "default value",
+        "is required",
+        "select",
+    ],
 };
 
 export const attribute = {
@@ -10,27 +24,47 @@ export const attribute = {
     value: "",
     draggable: true,
     attr: [],
-    config,
+    config: {
+        ...config,
+        class: "bg-slate-100",
+    },
 };
 
 export const column = {
     column: 0,
     components: [],
+    config: { class: "bg-slate-200" },
 };
 
 export const grid = {
     grid: 0,
-    columns: [{ ...column }],
+    config: { class: "bg-slate-100" },
+    columns: [],
+};
+
+export const flex = {
+    flex: uid(),
+    grids: [],
+    active: true,
+    config: {
+        name: "Step",
+        active: false,
+        form: ["name", "class", "style", "next button", "prev button"],
+        class: "bg-slate-200",
+    },
 };
 
 export const flexs = {
     flexis: [
         {
-            flex: 0,
-            grids: [],
+            ...flex,
+            config: {
+                ...flex.config,
+                name: flex.config.name + " 1",
+            },
         },
     ],
-    properties: { flex: 1 },
+    properties: { maxFlex: 5 },
 };
 
 export const attributes = [

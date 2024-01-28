@@ -8,15 +8,7 @@ export default function Attributes(props) {
             className="p-2 border-2 border-dotted border-slate-400 rounded-md shadow-sm cursor-move"
             draggable={attribute.draggable}
             onDragStart={(e) =>
-                e.dataTransfer.setData(
-                    "data",
-                    JSON.stringify({
-                        ...attribute,
-                        config: {
-                            ...config,
-                        },
-                    })
-                )
+                e.dataTransfer.setData("data", JSON.stringify(attribute))
             }
         >
             {attribute.type == "flex" && (

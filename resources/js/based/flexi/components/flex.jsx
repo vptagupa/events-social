@@ -18,10 +18,13 @@ export default function Flex({ flex, flexia }) {
                                         grid
                                     )
                                 }
+                                title="Remove Grid"
                             />
                         </div>
                     </div>
-                    <div className="flex items-center gap-3 p-4 bg-slate-200 --grid">
+                    <div
+                        className={`flex items-center gap-3 p-4 ${grid.config.class} --grid`}
+                    >
                         <Grid flex={flex} grid={grid} {...flexia} />
                     </div>
                     <Caption

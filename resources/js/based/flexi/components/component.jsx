@@ -24,6 +24,7 @@ export default function Component({
 }) {
     return (
         <Drop
+            className={`${component.config.class}`}
             onDrop={(e) => {
                 var data;
                 if ((data = e.dataTransfer.getData("data"))) {
@@ -40,7 +41,7 @@ export default function Component({
             }}
         >
             <div className="flex component">
-                <div className="grow">
+                <div className={`grow`}>
                     {["text", "notes"].includes(component.type) && (
                         <Text
                             value={component.config.defaultValue}
@@ -56,7 +57,19 @@ export default function Component({
                         />
                     )}
                     {component.type == "select" && (
-                        <Select values={component.config.options} />
+                        <Select
+                            values={component.config.options}
+                            value={component.config.defaultValue}
+                            onChange={(e) =>
+                                change(
+                                    flex,
+                                    grid,
+                                    column,
+                                    component,
+                                    e.target.value
+                                )
+                            }
+                        />
                     )}
                     {component.type == "textarea" && <Textarea />}
                 </div>
@@ -83,6 +96,7 @@ export default function Component({
                     />
                     <Remove
                         click={(e) => remove(flex, grid, column, component)}
+                        title={`Remove ${component.type}`}
                     />
                 </div>
             </div>

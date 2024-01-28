@@ -18,10 +18,13 @@ export default function Grid({ flex, grid, ...flexia }) {
                                     column
                                 )
                             }
+                            title="Remove Column"
                         />
                     </div>
                 </div>
-                <div className="flex flex-col gap-3 p-4 bg-slate-100 --column">
+                <div
+                    className={`flex flex-col gap-3 p-4 ${column.config.class} --column`}
+                >
                     <Column
                         flex={flex}
                         grid={grid}

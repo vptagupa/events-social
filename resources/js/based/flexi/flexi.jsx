@@ -1,23 +1,31 @@
 import { uid } from "uid";
 import { useState } from "react";
-import { flexs, attribute } from "./constants";
+import {
+    flexs,
+    flex as flexRaw,
+    grid as gridRaw,
+    column as columnRaw,
+    attribute as attributeRaw,
+} from "./constants";
 
 export const useFlexi = () => {
     const [data, set] = useState(flexs);
 
     const addGrid = (flex) => {
+        const grid = { ...gridRaw };
         flex.grids = flex.grids.concat({
-            grid: flex.grids.length,
-            columns: [],
+            ...grid,
+            grid: uid(),
         });
 
         return flex.grids;
     };
 
     const addColumn = (grid) => {
+        const column = { ...columnRaw };
         grid.columns = grid.columns.concat({
-            column: grid.columns.length,
-            components: [],
+            ...column,
+            column: uid(),
         });
 
         return grid.columns;
@@ -39,13 +47,15 @@ export const useFlexi = () => {
             addColumn(grid);
         } else if (component.type == "grid") {
             if (column) {
+                const attribute = { ...attributeRaw };
+                const grid = { ...gridRaw };
                 addCompon(column, {
                     ...attribute,
                     type: "grid",
                     grids: [
                         {
-                            grid: 0,
-                            columns: [],
+                            ...grid,
+                            grid: uid(),
                         },
                     ],
                 });
@@ -66,22 +76,22 @@ export const useFlexi = () => {
     };
 
     const componentRemove = (flex, grid, column, component) => {
-        if (!component) {
-            data.flexis = data.flexis.filter((f) => f.flex != flex.flex);
-
-            set({ ...data });
-            return;
+        // Remove flex
+        if (component?.flex) {
+            data.flexis = data.flexis.filter((f) => f.flex != component.flex);
+            showTheNextFlex(component);
         }
         // Remove grid
-        if (component?.grid >= 0) {
+        else if (component?.grid) {
             flex.grids = flex.grids.filter((g) => g.grid != component.grid);
         }
         // Remove column
-        else if (component?.column >= 0) {
+        else if (component?.column) {
             grid.columns = grid.columns.filter(
                 (c) => c.column != component.column
             );
         } else {
+            // Remove component
             column.components = column.components.filter(
                 (c) => c.id != component.id
             );
@@ -145,22 +155,45 @@ export const useFlexi = () => {
         set({ ...data });
     };
 
-    const plusFlex = () => {
-        data.flexis = data.flexis.concat({
-            flex: data.flexis.length,
-            grids: [],
+    const flexToggleShow = (flex) => {
+        data.flexis.map((f) => {
+            f.active = false;
+            if (f.flex == flex.flex) {
+                f.active = true;
+            }
+            return f;
         });
+
+        set({ ...data });
+    };
+
+    const plusFlex = () => {
+        if (data.flexis.length >= data.properties.maxFlex) return;
+
+        const flex = {
+            ...flexRaw,
+            flex: uid(),
+            active: data.flexis.length <= 0 ? true : false,
+            config: {
+                ...flexRaw.config,
+                name: flexRaw.config.name + " " + (data.flexis.length + 1),
+            },
+        };
+
+        data.flexis = data.flexis.concat(flex);
 
         set({ ...data });
     };
 
     const minusFlex = () => {
         if (data.flexis.length > 0) {
-            data.flexis.pop();
-
-            set({ ...data });
+            showTheNextFlex(data.flexis.pop());
         }
+
+        set({ ...data });
     };
+
+    const showTheNextFlex = (flex) => {};
 
     return {
         data,
@@ -175,5 +208,6 @@ export const useFlexi = () => {
         componentSelectAdd,
         changeConfig,
         configActive,
+        flexToggleShow,
     };
 };

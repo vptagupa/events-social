@@ -1,5 +1,5 @@
-import { Checkbox } from "@/js/components/form";
+import { Checkbox as Check } from "@/js/components/form";
 
 export default function Checkbox() {
-    return <Checkbox />;
+    return <Check />;
 }

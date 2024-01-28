@@ -6,6 +6,9 @@ import Config from "./config";
 import Text from "./form/text";
 import Select from "./form/select";
 import Textarea from "./form/textarea";
+import File from "./form/file";
+import Checkbox from "./form/checkbox";
+import Radio from "./form/radio";
 
 export default function Component({
     flex,
@@ -71,7 +74,58 @@ export default function Component({
                             }
                         />
                     )}
-                    {component.type == "textarea" && <Textarea />}
+                    {component.type == "textarea" && (
+                        <Textarea
+                            onChange={(e) =>
+                                change(
+                                    flex,
+                                    grid,
+                                    column,
+                                    component,
+                                    e.target.value
+                                )
+                            }
+                        />
+                    )}
+                    {component.type == "file" && (
+                        <File
+                            onChange={(e) =>
+                                change(
+                                    flex,
+                                    grid,
+                                    column,
+                                    component,
+                                    e.target.value
+                                )
+                            }
+                        />
+                    )}
+                    {component.type == "radio" && (
+                        <Radio
+                            onChange={(e) =>
+                                change(
+                                    flex,
+                                    grid,
+                                    column,
+                                    component,
+                                    e.target.value
+                                )
+                            }
+                        />
+                    )}
+                    {component.type == "checkbox" && (
+                        <Checkbox
+                            onChange={(e) =>
+                                change(
+                                    flex,
+                                    grid,
+                                    column,
+                                    component,
+                                    e.target.value
+                                )
+                            }
+                        />
+                    )}
                 </div>
                 <div className="w-20 flex items-center justify-center ml-2 p-1 border-l border-solid border-slate-300">
                     <Move

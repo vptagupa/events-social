@@ -104,6 +104,21 @@ export const attributes = [
     },
     {
         ...attribute,
+        title: "Checkbox",
+        type: "checkbox",
+    },
+    {
+        ...attribute,
+        title: "Radio",
+        type: "radio",
+    },
+    {
+        ...attribute,
+        title: "File",
+        type: "file",
+    },
+    {
+        ...attribute,
         title: "Notes",
         type: "notes",
     },

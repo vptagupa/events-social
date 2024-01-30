@@ -33,14 +33,29 @@ export default function Grid({ flex, grid, ...flexia }) {
                     />
                     <Drop
                         className="text-center flex items-center justify-center"
-                        onDrop={(e) =>
-                            flexia.addComponent(
-                                flex,
-                                grid,
-                                column,
-                                JSON.parse(e.dataTransfer.getData("data"))
-                            )
-                        }
+                        onDrop={(e) => {
+                            var data;
+                            if ((data = e.dataTransfer.getData("data"))) {
+                                flexia.addComponent(
+                                    flex,
+                                    grid,
+                                    column,
+                                    JSON.parse(data)
+                                );
+                            } else if (
+                                (data = e.dataTransfer.getData("move"))
+                            ) {
+                                flexia.moveComponent(
+                                    {
+                                        flex,
+                                        grid,
+                                        column,
+                                        column,
+                                    },
+                                    JSON.parse(data)
+                                );
+                            }
+                        }}
                     >
                         Drop here
                     </Drop>

@@ -33,13 +33,15 @@ export default function Component({
                 if ((data = e.dataTransfer.getData("data"))) {
                     add(flex, grid, column, JSON.parse(data));
                 } else if ((data = e.dataTransfer.getData("move"))) {
-                    data = JSON.parse(data);
-                    move(data.flex, data.grid, data.column, data.component, {
-                        flex,
-                        grid,
-                        column,
-                        component,
-                    });
+                    move(
+                        {
+                            flex,
+                            grid,
+                            column,
+                            component,
+                        },
+                        JSON.parse(data)
+                    );
                 }
             }}
         >

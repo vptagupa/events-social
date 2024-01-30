@@ -6,7 +6,7 @@ export default function Move(props) {
         <FontAwesomeIcon
             {...props}
             icon={faUpDownLeftRight}
-            className="w-1/2 p-1 cursor-pointer text-slate-500/60 hover:text-slate-500 hover:scale-125 transform hover:rotate-180 transition-all duration-200"
+            className="w-1/2 p-1 cursor-move text-slate-500/60 hover:text-slate-500 hover:scale-125 transform hover:rotate-180 transition-all duration-200"
         />
     );
 }

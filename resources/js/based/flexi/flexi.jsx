@@ -71,7 +71,69 @@ export const useFlexi = () => {
         set({ ...data });
     };
 
-    const moveComponent = (flex, grid, column, component, from) => {
+    const moveComponent = (target, from) => {
+        const movable = (flexis, target, source) => {
+            flexis.map((flex) => {
+                if (flex.flex === target.flex.flex) {
+                    flex.grids = griddable(flex.grids, target, source);
+                }
+                return flex;
+            });
+
+            return flexis;
+        };
+
+        const griddable = (grids, target, source) => {
+            return grids.map((grid) => {
+                if (grid.grid === target.grid.grid) {
+                    // Replace target grid with source grid
+                    if (source.component?.grid) {
+                        grid = source.grid;
+                    } else {
+                        grid.columns = grid.columns.map((column) => {
+                            if (column.column === target.column.column) {
+                                // Replace target column with source column
+                                if (source.component?.column) {
+                                    column = source.column;
+                                } else {
+                                    column.components = column.components.map(
+                                        (component) => {
+                                            if (component.type == "grid") {
+                                                component.grids = griddable(
+                                                    component.grids,
+                                                    target,
+                                                    source
+                                                );
+                                            } else {
+                                                if (
+                                                    component.id ===
+                                                    target.component.id
+                                                ) {
+                                                    component = {
+                                                        ...source.component,
+                                                        id: component.id,
+                                                    };
+                                                }
+                                            }
+
+                                            return component;
+                                        }
+                                    );
+                                }
+                            }
+                            return column;
+                        });
+                    }
+                }
+
+                return grid;
+            });
+        };
+
+        // Move component to target and vice versa
+        movable(data.flexis, target, from);
+        movable(data.flexis, from, target);
+
         set({ ...data });
     };
 

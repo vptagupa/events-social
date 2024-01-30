@@ -39,30 +39,40 @@ export const useFlexi = () => {
     };
 
     const addComponent = (flex, grid, column, component) => {
-        if (flex.grids.length <= 0) {
-            grid = addGrid(flex)[0];
-        }
-
         if (component.type == "column") {
+            if (!grid) {
+                grid = addGrid(flex)[flex.grids.length - 1];
+            }
+
             addColumn(grid);
-        } else if (component.type == "grid") {
+        } else if (component.type == "grid" && !column) {
+            addGrid(flex);
+        } else if (component.type == "grid" && column?.column) {
             if (column) {
-                const attribute = { ...attributeRaw };
-                const grid = { ...gridRaw };
-                addCompon(column, {
-                    ...attribute,
-                    type: "grid",
-                    grids: [
-                        {
-                            ...grid,
-                            grid: uid(),
-                        },
-                    ],
-                });
+                const cgrid = column.components.filter((c) => c.type == "grid");
+                if (cgrid.length > 0) {
+                    addGrid(cgrid[0]);
+                } else {
+                    const attribute = { ...attributeRaw };
+                    const grid = { ...gridRaw };
+                    addCompon(column, {
+                        ...attribute,
+                        type: "grid",
+                        grids: [
+                            {
+                                ...grid,
+                                grid: uid(),
+                            },
+                        ],
+                    });
+                }
             }
         } else {
-            if (grid.columns.length <= 0) {
-                column = addColumn(grid)[0];
+            if (!grid) {
+                grid = addGrid(flex)[flex.grids.length - 1];
+            }
+            if (!column) {
+                column = addColumn(grid)[grid.columns.length - 1];
             }
 
             addCompon(column, component);
@@ -71,8 +81,11 @@ export const useFlexi = () => {
         set({ ...data });
     };
 
-    const columable = (target, source) => {
+    const flexible = (target, source) => {
         addComponent(target.flex, target.grid, target.column, target.component);
+
+        // Skip when the purpose is add components only
+        if (!source) return;
 
         const truth = sourceTruth(
             source.flex,
@@ -340,7 +353,7 @@ export const useFlexi = () => {
         data,
         plusFlex,
         minusFlex,
-        columable,
+        flexible,
         addComponent,
         moveComponent,
         componentRemove,

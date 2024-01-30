@@ -9,7 +9,7 @@ import Drop from "./components/drop";
 
 export default function Flexi() {
     const flexia = useFlexi();
-
+    console.log(flexia.data.flexis);
     return (
         <div className="flex grow min-h-[30rem]">
             <div className="w-[80%] m-2 flex flex-col gap-y-2">
@@ -29,7 +29,7 @@ export default function Flexi() {
                     </ol>
                 </div>
                 <div className="relative">
-                    {flexia.data.flexis.map((flex) => (
+                    {flexia.data.flexis.map((flex, idx) => (
                         <div
                             key={flex.flex}
                             className={`w-full flex flex-col border-2 border-dotted border-slate-300 rounded-md gap-3 p-2 --flex
@@ -84,33 +84,30 @@ export default function Flexi() {
                                     />
                                 </div>
                             )}
-                            <div className={`p-4 --flex ${flex.config.class}`}>
+                            <div
+                                className={`p-4 flex flex-col gap-3 --flex ${flex.config.class}`}
+                            >
                                 <Flex flex={flex} flexia={flexia} />
-                                {flex.grids.length <= 0 && (
-                                    <Drop
-                                        className="text-center flex items-center justify-center"
-                                        onDrop={(e) =>
-                                            flexia.addComponent(
-                                                flex,
-                                                null,
-                                                null,
-                                                JSON.parse(
-                                                    e.dataTransfer.getData(
-                                                        "data"
-                                                    )
-                                                )
+                                <Drop
+                                    className="text-center flex flex-col items-center justify-center"
+                                    onDrop={(e) =>
+                                        flexia.addComponent(
+                                            flex,
+                                            null,
+                                            null,
+                                            JSON.parse(
+                                                e.dataTransfer.getData("data")
                                             )
-                                        }
-                                    >
-                                        Drop here
-                                    </Drop>
-                                )}
+                                        )
+                                    }
+                                >
+                                    Drop here
+                                    <Caption
+                                        title={`Step ${idx + 1}`}
+                                        className="text-center uppercase"
+                                    />
+                                </Drop>
                             </div>
-
-                            <Caption
-                                title={`Step ${flex.flex}`}
-                                className="text-center"
-                            />
                         </div>
                     ))}
                 </div>

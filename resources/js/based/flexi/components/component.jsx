@@ -104,6 +104,8 @@ export default function Component({
                     )}
                     {component.type == "radio" && (
                         <Radio
+                            value={component.config?.defaultValue ?? ""}
+                            title={component.config?.name ?? "Configure name"}
                             onChange={(e) =>
                                 change(
                                     flex,
@@ -117,6 +119,8 @@ export default function Component({
                     )}
                     {component.type == "checkbox" && (
                         <Checkbox
+                            value={component.config?.defaultValue ?? ""}
+                            title={component.config?.name ?? "Configure name"}
                             onChange={(e) =>
                                 change(
                                     flex,

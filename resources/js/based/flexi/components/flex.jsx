@@ -45,10 +45,7 @@ export default function Flex({ flex, flexia }) {
                             }
                         >
                             Drop here
-                            <Caption
-                                title={`Grid ${idx + 1}`}
-                                className="text-center"
-                            />
+                            <Caption title={`Grid`} className="text-center" />
                         </Drop>
                     </div>
                 </div>

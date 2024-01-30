@@ -49,23 +49,18 @@ export const useFlexi = () => {
             addGrid(flex);
         } else if (component.type == "grid" && column?.column) {
             if (column) {
-                const cgrid = column.components.filter((c) => c.type == "grid");
-                if (cgrid.length > 0) {
-                    addGrid(cgrid[0]);
-                } else {
-                    const attribute = { ...attributeRaw };
-                    const grid = { ...gridRaw };
-                    addCompon(column, {
-                        ...attribute,
-                        type: "grid",
-                        grids: [
-                            {
-                                ...grid,
-                                grid: uid(),
-                            },
-                        ],
-                    });
-                }
+                const attribute = { ...attributeRaw };
+                const grid = { ...gridRaw };
+                addCompon(column, {
+                    ...attribute,
+                    type: "grid",
+                    grids: [
+                        {
+                            ...grid,
+                            grid: uid(),
+                        },
+                    ],
+                });
             }
         } else {
             if (!grid) {
@@ -94,25 +89,7 @@ export const useFlexi = () => {
             source.component
         );
 
-        const props = (prev, next) => {
-            if (next?.component) {
-                return props(next, next?.component);
-            }
-            return prev;
-        };
-
-        var args = {
-            flex: truth.flex,
-            column: truth.column,
-            grid: truth.grid,
-            component: truth.component,
-        };
-
-        if (truth.component?.component) {
-            args = props(truth.component, truth.component?.component);
-        }
-
-        componentRemove(args.flex, args.grid, args.column, args.component);
+        componentRemove(truth.flex, truth.grid, truth.column, truth.component);
     };
 
     const sourceTruth = (flex, grid, column, component) => {
@@ -148,83 +125,64 @@ export const useFlexi = () => {
                 }
             }
         };
-        for (var f of data.flexis) {
-            var props = griddable(f.grids);
-            if (props) {
-                return { flex: f, ...props };
+
+        const truth = () => {
+            for (var f of data.flexis) {
+                var props = griddable(f.grids);
+                if (props) {
+                    return { flex: f, ...props };
+                }
             }
+        };
+
+        const truty = (prev, next) => {
+            if (next?.component) {
+                return truty(next, next?.component);
+            }
+            return prev;
+        };
+
+        var args = truth();
+
+        // Get the last oomponent in the tree
+        if (args.component?.component) {
+            args = truty(args.component, args.component?.component);
         }
+
+        return args;
     };
 
     const moveComponent = (target, from) => {
-        const movable = (flexis, target, source) => {
-            flexis.map((flex) => {
-                if (flex.flex === target.flex.flex) {
-                    flex.grids = griddable(flex.grids, target, source);
-                }
-                return flex;
-            });
+        // Replace target from the source
+        target.column.components = target.column.components.map((c) => {
+            if (c.id === target.component.id) {
+                c = {
+                    ...from.component,
+                    id: c.id,
+                };
+            }
 
-            return flexis;
-        };
+            return c;
+        });
 
-        const griddable = (grids, target, source) => {
-            return grids.map((grid) => {
-                if (grid.grid === target.grid.grid) {
-                    // Replace target grid with source grid
-                    if (source.component?.grid) {
-                        grid = source.grid;
-                    } else {
-                        grid.columns = columable(grid.columns, target, source);
-                    }
-                }
+        const truth = sourceTruth(
+            from.flex,
+            from.grid,
+            from.column,
+            from.component
+        );
 
-                return grid;
-            });
-        };
+        // Replace source from target
+        truth.column.components = truth.column.components.map((c) => {
+            if (c.id === from.component.id) {
+                c = {
+                    ...target.component,
+                    id: c.id,
+                };
+            }
 
-        const columable = (columns, target, source) => {
-            return columns.map((column) => {
-                if (column.column === target.column.column) {
-                    // Replace target column with source column
-                    if (source.component?.column) {
-                        column = source.column;
-                    } else {
-                        column.components = compnenable(
-                            column.components,
-                            target,
-                            source
-                        );
-                    }
-                }
-                return column;
-            });
-        };
-
-        const compnenable = (components, target, source) => {
-            return components.map((component) => {
-                if (component.type == "grid") {
-                    component.grids = griddable(
-                        component.grids,
-                        target,
-                        source
-                    );
-                } else {
-                    if (component.id === target.component.id) {
-                        component = {
-                            ...source.component,
-                            id: component.id,
-                        };
-                    }
-                }
-
-                return component;
-            });
-        };
-
-        // Move component to target and vice versa
-        movable(data.flexis, target, from);
-        movable(data.flexis, from, target);
+            return c;
+        });
 
         set({ ...data });
     };

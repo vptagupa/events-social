@@ -71,6 +71,78 @@ export const useFlexi = () => {
         set({ ...data });
     };
 
+    const columable = (target, source) => {
+        addComponent(target.flex, target.grid, target.column, target.component);
+
+        const truth = sourceTruth(
+            source.flex,
+            source.grid,
+            source.column,
+            source.component
+        );
+
+        const props = (prev, next) => {
+            if (next?.component) {
+                return props(next, next?.component);
+            }
+            return prev;
+        };
+
+        var args = {
+            flex: truth.flex,
+            column: truth.column,
+            grid: truth.grid,
+            component: truth.component,
+        };
+
+        if (truth.component?.component) {
+            args = props(truth.component, truth.component?.component);
+        }
+
+        componentRemove(args.flex, args.grid, args.column, args.component);
+    };
+
+    const sourceTruth = (flex, grid, column, component) => {
+        const griddable = (grids) => {
+            for (var g of grids) {
+                var props = columable(g.columns);
+                if (props) {
+                    return { grid: g, ...props };
+                }
+            }
+        };
+
+        const columable = (columns) => {
+            for (var col of columns) {
+                var props = componetable(col.components);
+                if (props) {
+                    return { column: col, component: props };
+                }
+            }
+        };
+
+        const componetable = (components) => {
+            for (var c of components) {
+                if (c.type != "grid") {
+                    if (c.id === component.id) {
+                        return c;
+                    }
+                } else {
+                    var props = griddable(c.grids);
+                    if (props) {
+                        return { flex: c, ...props };
+                    }
+                }
+            }
+        };
+        for (var f of data.flexis) {
+            var props = griddable(f.grids);
+            if (props) {
+                return { flex: f, ...props };
+            }
+        }
+    };
+
     const moveComponent = (target, from) => {
         const movable = (flexis, target, source) => {
             flexis.map((flex) => {
@@ -90,43 +162,50 @@ export const useFlexi = () => {
                     if (source.component?.grid) {
                         grid = source.grid;
                     } else {
-                        grid.columns = grid.columns.map((column) => {
-                            if (column.column === target.column.column) {
-                                // Replace target column with source column
-                                if (source.component?.column) {
-                                    column = source.column;
-                                } else {
-                                    column.components = column.components.map(
-                                        (component) => {
-                                            if (component.type == "grid") {
-                                                component.grids = griddable(
-                                                    component.grids,
-                                                    target,
-                                                    source
-                                                );
-                                            } else {
-                                                if (
-                                                    component.id ===
-                                                    target.component.id
-                                                ) {
-                                                    component = {
-                                                        ...source.component,
-                                                        id: component.id,
-                                                    };
-                                                }
-                                            }
-
-                                            return component;
-                                        }
-                                    );
-                                }
-                            }
-                            return column;
-                        });
+                        grid.columns = columable(grid.columns, target, source);
                     }
                 }
 
                 return grid;
+            });
+        };
+
+        const columable = (columns, target, source) => {
+            return columns.map((column) => {
+                if (column.column === target.column.column) {
+                    // Replace target column with source column
+                    if (source.component?.column) {
+                        column = source.column;
+                    } else {
+                        column.components = compnenable(
+                            column.components,
+                            target,
+                            source
+                        );
+                    }
+                }
+                return column;
+            });
+        };
+
+        const compnenable = (components, target, source) => {
+            return components.map((component) => {
+                if (component.type == "grid") {
+                    component.grids = griddable(
+                        component.grids,
+                        target,
+                        source
+                    );
+                } else {
+                    if (component.id === target.component.id) {
+                        component = {
+                            ...source.component,
+                            id: component.id,
+                        };
+                    }
+                }
+
+                return component;
             });
         };
 
@@ -261,6 +340,7 @@ export const useFlexi = () => {
         data,
         plusFlex,
         minusFlex,
+        columable,
         addComponent,
         moveComponent,
         componentRemove,

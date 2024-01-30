@@ -45,14 +45,15 @@ export default function Grid({ flex, grid, ...flexia }) {
                             } else if (
                                 (data = e.dataTransfer.getData("move"))
                             ) {
-                                flexia.moveComponent(
+                                data = JSON.parse(data);
+                                flexia.columable(
                                     {
                                         flex,
                                         grid,
                                         column,
-                                        column,
+                                        component: data.component,
                                     },
-                                    JSON.parse(data)
+                                    data
                                 );
                             }
                         }}

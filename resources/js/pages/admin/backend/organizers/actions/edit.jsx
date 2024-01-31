@@ -1,6 +1,5 @@
 import Form from "../components/form";
 import { Modal, Title, Footer } from "@/js/components/modal";
-import { useEffect } from "react";
 import Event from "@/js/helpers/event";
 import FooterForm from "../components/form.footer";
 import { useForm } from "@/js/helpers/form";

@@ -1,17 +1,36 @@
 import Drop from "./drop";
 import Remove from "../actions/remove";
+import View from "../actions/view";
 import Caption from "./caption";
 import Components from "./components";
 
-export default function Column({ idx, column, flex, grid, flexia }) {
+export default function Column({
+    idx,
+    column,
+    flex,
+    grid,
+    flexia,
+    view = true,
+}) {
     return (
         <div className="flex flex-col w-full --column">
             <div className="relative">
-                <div className="absolute -bottom-4 right-0">
+                <div className="absolute -bottom-3 right-0 flex items-center gap-x-1">
                     <Remove
                         click={(e) => flexia.remove(flex, grid, column, column)}
                         title="Remove Column"
                     />
+                    {view && (
+                        <View
+                            title="Expand Column"
+                            caption="Column"
+                            idx={idx}
+                            column={column}
+                            flex={flex}
+                            grid={grid}
+                            flexia={flexia}
+                        />
+                    )}
                 </div>
             </div>
             <div className={`flex flex-col gap-3 p-4 ${column.class} --column`}>

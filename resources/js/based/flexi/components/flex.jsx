@@ -1,50 +1,67 @@
-import Grid from "./grid";
 import Caption from "./caption";
 import Remove from "../actions/remove";
-import Drop from "./drop";
+import Config from "../actions/config";
+import ConfigComponent from "./config";
 
-export default function Flex({ flex, flexia }) {
+import Drop from "./drop";
+import Grids from "./grids";
+
+export default function Flex({ flexia, flex }) {
     return (
-        <>
-            {flex.grids.map((grid, idx) => (
-                <div
-                    key={grid.grid}
-                    id={idx + 1}
-                    className="flex flex-col --grid"
-                >
-                    <div className="relative">
-                        <div className="absolute -bottom-4 right-0">
-                            <Remove
-                                click={(e) =>
-                                    flexia.remove(flex, grid, null, grid)
-                                }
-                                title="Remove Grid"
-                            />
-                        </div>
-                    </div>
-                    <div
-                        className={`flex flex-col items-center gap-3 p-4 ${grid.class} --grid`}
-                    >
-                        <div className="flex w-full gap-3">
-                            <Grid flex={flex} grid={grid} {...flexia} />
-                        </div>
-                        <Drop
-                            className="text-center flex flex-col items-center justify-center"
-                            onDrop={(e) =>
-                                flexia.add(
-                                    flex,
-                                    grid,
-                                    null,
-                                    JSON.parse(e.dataTransfer.getData("data"))
-                                )
-                            }
-                        >
-                            Drop here
-                            <Caption title={`Grid`} className="text-center" />
-                        </Drop>
-                    </div>
+        <div
+            className={`w-full flex flex-col border-2 border-dotted border-slate-300 rounded-md gap-3 p-2 --flex
+            transition-all ease-in-out duration-150`}
+        >
+            <div
+                className={`relative flex items-center justify-center w-full mt-2`}
+            >
+                <div className="flex items-center justify-center absolute">
+                    <Remove
+                        click={(e) => flexia.remove(flex, null, null, flex)}
+                        title="Remove Step"
+                    />
+                    <Config
+                        click={(e) =>
+                            flexia.configActive(flex, null, null, flex)
+                        }
+                        active={flex.config.active}
+                    />
                 </div>
-            ))}
-        </>
+            </div>
+            {flex.config.active && (
+                <div className="flex justify-center m-10">
+                    <ConfigComponent
+                        value={flex}
+                        change={(name, value) =>
+                            flexia.changeConfig(
+                                flex,
+                                null,
+                                null,
+                                flex,
+                                name,
+                                value
+                            )
+                        }
+                    />
+                </div>
+            )}
+            <div className={`p-4 flex flex-col gap-3 --flex ${flex.class}`}>
+                <Grids flex={flex} grids={flex.grids} flexia={flexia} />
+                <Drop
+                    className="text-center flex flex-col items-center justify-center"
+                    onDrop={(e) =>
+                        flexia.add(
+                            flex,
+                            null,
+                            null,
+                            JSON.parse(e.dataTransfer.getData("data"))
+                        )
+                    }
+                >
+                    Drop here
+                    <Caption title={`Step`} className="text-center uppercase" />
+                </Drop>
+            </div>
+        </div>
     );
 }

@@ -1,12 +1,8 @@
-import Flex from "./components/flex";
-import Caption from "./components/caption";
-import Remove from "./actions/remove";
-import Config from "./actions/config";
-import ConfigComponent from "./components/config";
 import Attributes from "./components/attributes";
+import Flex from "./components/flex";
 import { useFlexi } from "./flexi";
-import Drop from "./components/drop";
 import { useEffect } from "react";
+import { Transition } from "@headlessui/react";
 
 export default function Flexi({ event }) {
     const flexia = useFlexi();
@@ -29,7 +25,7 @@ export default function Flexi({ event }) {
     }, [flexia.data]);
 
     return (
-        <div className="flex grow min-h-[30rem]">
+        <div className="flex grow min-h-[30rem] text-xs md:text-sm">
             <div className="w-[80%] m-2 flex flex-col gap-y-2">
                 <div className="flex items-center justify-center">
                     <ol>
@@ -37,8 +33,8 @@ export default function Flexi({ event }) {
                             <li
                                 key={flex.flex}
                                 className={`float-left px-3 py-1 m-1 cursor-pointer last:border-r-0 border-r border-slate-200
-                                hover:bg-slate-100/50
-                                ${flex.active ? "bg-slate-100/50" : ""}`}
+                                hover:bg-slate-200
+                                ${flex.active ? "bg-slate-200" : ""}`}
                                 onClick={(e) => flexia.flexToggleShow(flex)}
                             >
                                 {flex.config.name}
@@ -48,85 +44,18 @@ export default function Flexi({ event }) {
                 </div>
                 <div className="relative">
                     {flexia.data.flexis.map((flex, idx) => (
-                        <div
-                            key={flex.flex}
-                            className={`w-full flex flex-col border-2 border-dotted border-slate-300 rounded-md gap-3 p-2 --flex
-                            transition-all ease-in-out duration-150 ${
-                                flex.active
-                                    ? "opacity-100 visible relative"
-                                    : "opacity-0 invisible absolute"
-                            }`}
+                        <Transition
+                            show={flex.active}
+                            className="absolute w-full"
+                            enter="transition-opacity duration-75"
+                            enterFrom="opacity-0"
+                            enterTo="opacity-100"
+                            leave="transition-opacity duration-150"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
                         >
-                            <div
-                                className={`relative flex items-center justify-center w-full mt-2`}
-                            >
-                                <div className="flex items-center justify-center absolute">
-                                    <Remove
-                                        click={(e) =>
-                                            flexia.remove(
-                                                flex,
-                                                null,
-                                                null,
-                                                flex
-                                            )
-                                        }
-                                        title="Remove Step"
-                                    />
-                                    <Config
-                                        click={(e) =>
-                                            flexia.configActive(
-                                                flex,
-                                                null,
-                                                null,
-                                                flex
-                                            )
-                                        }
-                                        active={flex.config.active}
-                                    />
-                                </div>
-                            </div>
-                            {flex.config.active && (
-                                <div className="flex justify-center m-10">
-                                    <ConfigComponent
-                                        value={flex}
-                                        change={(name, value) =>
-                                            flexia.changeConfig(
-                                                flex,
-                                                null,
-                                                null,
-                                                flex,
-                                                name,
-                                                value
-                                            )
-                                        }
-                                    />
-                                </div>
-                            )}
-                            <div
-                                className={`p-4 flex flex-col gap-3 --flex ${flex.class}`}
-                            >
-                                <Flex flex={flex} flexia={flexia} />
-                                <Drop
-                                    className="text-center flex flex-col items-center justify-center"
-                                    onDrop={(e) =>
-                                        flexia.add(
-                                            flex,
-                                            null,
-                                            null,
-                                            JSON.parse(
-                                                e.dataTransfer.getData("data")
-                                            )
-                                        )
-                                    }
-                                >
-                                    Drop here
-                                    <Caption
-                                        title={`Step`}
-                                        className="text-center uppercase"
-                                    />
-                                </Drop>
-                            </div>
-                        </div>
+                            <Flex key={flex.flex} flex={flex} flexia={flexia} />
+                        </Transition>
                     ))}
                 </div>
             </div>

@@ -19,8 +19,12 @@ Route::name('organizer.')->prefix('organizer')->group(function () {
     Route::controller(EventsController::class)->prefix('events')->name('events.')->group(function () {
         Route::post('/list', 'list')->name('list');
         Route::patch('/active/{event}', 'activate')->name('activate');
+        Route::controller(RegistrationFormController::class)->name('registration-form.')->prefix('{event}/registration-form')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::post('/', 'store')->name('store');
+            Route::delete('/', 'destroy')->name('destroy');
+        });
     });
     Route::resource('events', EventsController::class)->except(['create', 'edit']);
-    Route::resource('events.registration-form', RegistrationFormController::class)->except(['create', 'edit', 'show', 'destroy']);
 });
 

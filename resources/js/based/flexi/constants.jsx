@@ -24,21 +24,19 @@ export const attribute = {
     value: "",
     draggable: true,
     attr: [],
-    config: {
-        ...config,
-        class: "bg-slate-100",
-    },
+    class: "bg-slate-100",
+    config,
 };
 
 export const column = {
     column: 0,
     components: [],
-    config: { class: "bg-slate-200" },
+    class: "bg-slate-200",
 };
 
 export const grid = {
     grid: 0,
-    config: { class: "bg-slate-100" },
+    class: "bg-slate-100",
     columns: [],
 };
 
@@ -46,11 +44,11 @@ export const flex = {
     flex: uid(),
     grids: [],
     active: true,
+    class: "bg-slate-200",
     config: {
         name: "Step",
         active: false,
         form: ["name", "class", "style", "next button", "prev button"],
-        class: "bg-slate-200",
     },
 };
 

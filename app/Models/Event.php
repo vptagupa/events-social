@@ -63,4 +63,9 @@ class Event extends Model
     {
         return $this->hasOne(File::class, 'official_receipt_file_id');
     }
+
+    public function registrationForm()
+    {
+        return $this->hasOne(RegistrationForm::class);
+    }
 }

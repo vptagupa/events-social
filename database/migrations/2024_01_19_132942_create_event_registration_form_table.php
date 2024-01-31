@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('event_registration_form', function (Blueprint $table) {
+        Schema::create('event_registration_forms', function (Blueprint $table) {
             $table->id();
             $table->foreignId('event_id')->constrained('events');
             $table->json('schema');
@@ -23,6 +23,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('event_registration_form');
+        Schema::dropIfExists('event_registration_forms');
     }
 };

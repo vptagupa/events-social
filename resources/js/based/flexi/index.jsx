@@ -6,10 +6,28 @@ import ConfigComponent from "./components/config";
 import Attributes from "./components/attributes";
 import { useFlexi } from "./flexi";
 import Drop from "./components/drop";
+import { useEffect } from "react";
 
-export default function Flexi() {
+export default function Flexi({ event }) {
     const flexia = useFlexi();
-    console.log(flexia.data.flexis);
+
+    useEffect(() => {
+        // Auto save to database when change
+        const controller = new AbortController();
+        const save = async () => {
+            await axios.post(
+                route("organizer.events.registration-form.store", event.id),
+                {
+                    schema: flexia.data,
+                }
+            );
+        };
+
+        save();
+
+        return () => controller.abort();
+    }, [flexia.data]);
+
     return (
         <div className="flex grow min-h-[30rem]">
             <div className="w-[80%] m-2 flex flex-col gap-y-2">
@@ -45,7 +63,7 @@ export default function Flexi() {
                                 <div className="flex items-center justify-center absolute">
                                     <Remove
                                         click={(e) =>
-                                            flexia.componentRemove(
+                                            flexia.remove(
                                                 flex,
                                                 null,
                                                 null,
@@ -85,13 +103,13 @@ export default function Flexi() {
                                 </div>
                             )}
                             <div
-                                className={`p-4 flex flex-col gap-3 --flex ${flex.config.class}`}
+                                className={`p-4 flex flex-col gap-3 --flex ${flex.class}`}
                             >
                                 <Flex flex={flex} flexia={flexia} />
                                 <Drop
                                     className="text-center flex flex-col items-center justify-center"
                                     onDrop={(e) =>
-                                        flexia.addComponent(
+                                        flexia.add(
                                             flex,
                                             null,
                                             null,
@@ -103,7 +121,7 @@ export default function Flexi() {
                                 >
                                     Drop here
                                     <Caption
-                                        title={`Step ${idx + 1}`}
+                                        title={`Step`}
                                         className="text-center uppercase"
                                     />
                                 </Drop>

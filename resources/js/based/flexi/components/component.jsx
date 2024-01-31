@@ -27,7 +27,7 @@ export default function Component({
 }) {
     return (
         <Drop
-            className={`${component.config.class}`}
+            className={`${component.class}`}
             onDrop={(e) => {
                 var data;
                 if ((data = e.dataTransfer.getData("data"))) {

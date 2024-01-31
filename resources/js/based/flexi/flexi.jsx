@@ -38,7 +38,7 @@ export const useFlexi = () => {
         });
     };
 
-    const addComponent = (flex, grid, column, component) => {
+    const add = (flex, grid, column, component) => {
         if (component.type == "column") {
             if (!grid) {
                 grid = addGrid(flex)[flex.grids.length - 1];
@@ -77,82 +77,22 @@ export const useFlexi = () => {
     };
 
     const flexible = (target, source) => {
-        addComponent(target.flex, target.grid, target.column, target.component);
+        add(target.flex, target.grid, target.column, target.component);
 
-        // Skip when the purpose is add components only
+        // Skip when purpose is to add components only
         if (!source) return;
 
-        const truth = sourceTruth(
+        const truth = truty(
             source.flex,
             source.grid,
             source.column,
             source.component
         );
 
-        componentRemove(truth.flex, truth.grid, truth.column, truth.component);
+        remove(truth.flex, truth.grid, truth.column, truth.component);
     };
 
-    const sourceTruth = (flex, grid, column, component) => {
-        const griddable = (grids) => {
-            for (var g of grids) {
-                var props = columable(g.columns);
-                if (props) {
-                    return { grid: g, ...props };
-                }
-            }
-        };
-
-        const columable = (columns) => {
-            for (var col of columns) {
-                var props = componetable(col.components);
-                if (props) {
-                    return { column: col, component: props };
-                }
-            }
-        };
-
-        const componetable = (components) => {
-            for (var c of components) {
-                if (c.type != "grid") {
-                    if (c.id === component.id) {
-                        return c;
-                    }
-                } else {
-                    var props = griddable(c.grids);
-                    if (props) {
-                        return { flex: c, ...props };
-                    }
-                }
-            }
-        };
-
-        const truth = () => {
-            for (var f of data.flexis) {
-                var props = griddable(f.grids);
-                if (props) {
-                    return { flex: f, ...props };
-                }
-            }
-        };
-
-        const truty = (prev, next) => {
-            if (next?.component) {
-                return truty(next, next?.component);
-            }
-            return prev;
-        };
-
-        var args = truth();
-
-        // Get the last oomponent in the tree
-        if (args.component?.component) {
-            args = truty(args.component, args.component?.component);
-        }
-
-        return args;
-    };
-
-    const moveComponent = (target, from) => {
+    const move = (target, from) => {
         // Replace target from the source
         target.column.components = target.column.components.map((c) => {
             if (c.id === target.component.id) {
@@ -165,12 +105,7 @@ export const useFlexi = () => {
             return c;
         });
 
-        const truth = sourceTruth(
-            from.flex,
-            from.grid,
-            from.column,
-            from.component
-        );
+        const truth = truty(from.flex, from.grid, from.column, from.component);
 
         // Replace source from target
         truth.column.components = truth.column.components.map((c) => {
@@ -187,7 +122,7 @@ export const useFlexi = () => {
         set({ ...data });
     };
 
-    const componentRemove = (flex, grid, column, component) => {
+    const remove = (flex, grid, column, component) => {
         // Remove flex
         if (component?.flex) {
             data.flexis = data.flexis.filter((f) => f.flex != component.flex);
@@ -212,13 +147,13 @@ export const useFlexi = () => {
         set({ ...data });
     };
 
-    const componentChange = (flex, grid, column, component, value) => {
+    const change = (flex, grid, column, component, value) => {
         component.config.defaultValue = value;
 
         set({ ...data });
     };
 
-    const componentSelectChange = (
+    const selectChange = (
         flex,
         grid,
         column,
@@ -237,7 +172,7 @@ export const useFlexi = () => {
         set({ ...data });
     };
 
-    const componentSelectRemove = (flex, grid, column, component, option) => {
+    const selectRemove = (flex, grid, column, component, option) => {
         component.config.options = component.config.options.filter(
             (o) => o.id != option.id
         );
@@ -245,7 +180,7 @@ export const useFlexi = () => {
         set({ ...data });
     };
 
-    const componentSelectAdd = (flex, grid, column, component, value, text) => {
+    const selectAdd = (flex, grid, column, component, value, text) => {
         component.config.options = component.config.options.concat({
             id: uid(),
             value,
@@ -307,18 +242,78 @@ export const useFlexi = () => {
 
     const showTheNextFlex = (flex) => {};
 
+    const truty = (flex, grid, column, component) => {
+        const griddable = (grids) => {
+            for (var g of grids) {
+                var props = columable(g.columns);
+                if (props) {
+                    return { grid: g, ...props };
+                }
+            }
+        };
+
+        const columable = (columns) => {
+            for (var col of columns) {
+                var props = componetable(col.components);
+                if (props) {
+                    return { column: col, component: props };
+                }
+            }
+        };
+
+        const componetable = (components) => {
+            for (var c of components) {
+                if (c.type != "grid") {
+                    if (c.id === component.id) {
+                        return c;
+                    }
+                } else {
+                    var props = griddable(c.grids);
+                    if (props) {
+                        return { flex: c, ...props };
+                    }
+                }
+            }
+        };
+
+        const truth = () => {
+            for (var f of data.flexis) {
+                var props = griddable(f.grids);
+                if (props) {
+                    return { flex: f, ...props };
+                }
+            }
+        };
+
+        const truthful = (prev, next) => {
+            if (next?.component) {
+                return truthful(next, next?.component);
+            }
+            return prev;
+        };
+
+        var args = truth();
+
+        // Get the last oomponent in the tree
+        if (args.component?.component) {
+            args = truthful(args.component, args.component?.component);
+        }
+
+        return args;
+    };
+
     return {
         data,
         plusFlex,
         minusFlex,
         flexible,
-        addComponent,
-        moveComponent,
-        componentRemove,
-        componentChange,
-        componentSelectChange,
-        componentSelectRemove,
-        componentSelectAdd,
+        add,
+        move,
+        remove,
+        change,
+        selectChange,
+        selectRemove,
+        selectAdd,
         changeConfig,
         configActive,
         flexToggleShow,

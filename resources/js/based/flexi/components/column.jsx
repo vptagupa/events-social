@@ -14,13 +14,13 @@ export default function Column({ grid, column, flex, ...flexia }) {
                 grid={grid}
                 column={column}
                 component={component}
-                add={flexia.addComponent}
-                move={flexia.moveComponent}
-                change={flexia.componentChange}
-                remove={flexia.componentRemove}
-                selectChange={flexia.componentSelectChange}
-                selectAdd={flexia.componentSelectAdd}
-                selectRemove={flexia.componentSelectRemove}
+                add={flexia.add}
+                move={flexia.move}
+                change={flexia.change}
+                remove={flexia.remove}
+                selectChange={flexia.selectChange}
+                selectAdd={flexia.selectAdd}
+                selectRemove={flexia.selectRemove}
                 configActive={flexia.configActive}
                 changeConfig={flexia.changeConfig}
             />

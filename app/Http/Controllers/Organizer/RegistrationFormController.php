@@ -4,10 +4,18 @@ namespace App\Http\Controllers\Organizer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use App\Models\RegistrationForm;
 use Illuminate\Http\Request;
+use App\Repositories\EventRepository;
 
 class RegistrationFormController extends Controller
 {
+
+    public function __construct(private EventRepository $repository)
+    {
+        // 
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -19,50 +27,39 @@ class RegistrationFormController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Event $event)
     {
-        //
-    }
+        if (!$event->registrationForm) {
+            $request->validate([
+                'schema' => 'required'
+            ]);
+            $event->registrationForm()->save(new RegistrationForm($request->only('schema')));
+            return;
+        }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        $this->update($request, $event);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Event $event)
     {
-        //
+        $request->validate([
+            'schema' => 'required'
+        ]);
+
+        $event->registrationForm->schema = $request->schema;
+        $event->registrationForm->save();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Event $event)
     {
-        //
+        $event->registrationForm->delete();
     }
 }

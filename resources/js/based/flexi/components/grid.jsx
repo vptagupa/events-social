@@ -9,16 +9,12 @@ export default function Grid({ flex, grid, ...flexia }) {
             <div className="relative">
                 <div className="absolute -bottom-4 right-0">
                     <Remove
-                        click={(e) =>
-                            flexia.componentRemove(flex, grid, column, column)
-                        }
+                        click={(e) => flexia.remove(flex, grid, column, column)}
                         title="Remove Column"
                     />
                 </div>
             </div>
-            <div
-                className={`flex flex-col gap-3 p-4 ${column.config.class} --column`}
-            >
+            <div className={`flex flex-col gap-3 p-4 ${column.class} --column`}>
                 <Column flex={flex} grid={grid} column={column} {...flexia} />
                 <Drop
                     className="text-center flex flex-col items-center justify-center"

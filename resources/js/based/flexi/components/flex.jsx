@@ -16,19 +16,14 @@ export default function Flex({ flex, flexia }) {
                         <div className="absolute -bottom-4 right-0">
                             <Remove
                                 click={(e) =>
-                                    flexia.componentRemove(
-                                        flex,
-                                        grid,
-                                        null,
-                                        grid
-                                    )
+                                    flexia.remove(flex, grid, null, grid)
                                 }
                                 title="Remove Grid"
                             />
                         </div>
                     </div>
                     <div
-                        className={`flex flex-col items-center gap-3 p-4 ${grid.config.class} --grid`}
+                        className={`flex flex-col items-center gap-3 p-4 ${grid.class} --grid`}
                     >
                         <div className="flex w-full gap-3">
                             <Grid flex={flex} grid={grid} {...flexia} />
@@ -36,7 +31,7 @@ export default function Flex({ flex, flexia }) {
                         <Drop
                             className="text-center flex flex-col items-center justify-center"
                             onDrop={(e) =>
-                                flexia.addComponent(
+                                flexia.add(
                                     flex,
                                     grid,
                                     null,

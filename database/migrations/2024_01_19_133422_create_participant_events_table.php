@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->foreignId('participant_id')->constrained('participants');
             $table->string('uid', 15);
             $table->foreignId('package_id')->constrained('event_packages');
-            $table->foreignId('registration_form_id')->constrained('event_registration_form');
+            $table->foreignId('registration_form_id')->constrained('event_registration_forms');
             $table->dateTime('notified_at');
             $table->dateTime('confirmed_at')->nullable();
             $table->dateTime('validated_at')->nullable();

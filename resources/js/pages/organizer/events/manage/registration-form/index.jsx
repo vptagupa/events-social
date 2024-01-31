@@ -12,7 +12,7 @@ export default function RegistrationForm({ event }) {
                         <Sidebar event={event} />
                     </div>
                     <div className="grow">
-                        <Flexi />
+                        <Flexi event={event} />
                     </div>
                 </div>
             </div>

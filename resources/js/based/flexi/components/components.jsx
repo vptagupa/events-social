@@ -1,10 +1,17 @@
 import Component from "./component";
-import Flex from "./flex";
+import Grids from "./grids";
 
 export default function Components({ components, flex, grid, column, flexia }) {
     return components.map((component) => {
         if (component.type == "grid") {
-            return <Flex key={component.id} flex={component} flexia={flexia} />;
+            return (
+                <Grids
+                    grids={component.grids}
+                    key={component.id}
+                    flex={component}
+                    flexia={flexia}
+                />
+            );
         }
 
         return (

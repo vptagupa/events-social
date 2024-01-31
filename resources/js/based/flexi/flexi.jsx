@@ -8,8 +8,8 @@ import {
     attribute as attributeRaw,
 } from "./constants";
 
-export const useFlexi = () => {
-    const [data, set] = useState(flexs);
+export const useFlexi = (schema) => {
+    const [data, set] = useState(schema || flexs);
 
     const addGrid = (flex) => {
         const grid = { ...gridRaw };
@@ -93,31 +93,46 @@ export const useFlexi = () => {
     };
 
     const move = (target, from) => {
-        // Replace target from the source
-        target.column.components = target.column.components.map((c) => {
-            if (c.id === target.component.id) {
-                c = {
-                    ...from.component,
-                    id: c.id,
-                };
-            }
+        if (!target.flex) return;
 
-            return c;
-        });
+        // Add a new component when any of the following are empty
+        if (!target?.grid || !target?.column) {
+            add(target.flex, target?.grid, target?.column, from.component);
+        }
+
+        // Replace target from the source when all conditions are supplied
+        if (target?.flex && target?.column && from?.component) {
+            target.column.components = target.column.components.map((c) => {
+                if (c.id === target.component.id) {
+                    c = {
+                        ...from.component,
+                        id: c.id,
+                    };
+                }
+
+                return c;
+            });
+        }
 
         const truth = truty(from.flex, from.grid, from.column, from.component);
 
-        // Replace source from target
-        truth.column.components = truth.column.components.map((c) => {
-            if (c.id === from.component.id) {
-                c = {
-                    ...target.component,
-                    id: c.id,
-                };
-            }
+        // Replace source from target, or remove a component
+        if (target.component) {
+            truth.column.components = truth.column.components.map((c) => {
+                if (c.id === from.component.id) {
+                    c = {
+                        ...target.component,
+                        id: c.id,
+                    };
+                }
 
-            return c;
-        });
+                return c;
+            });
+        } else {
+            truth.column.components = truth.column.components.filter(
+                (c) => c.id != from.component.id
+            );
+        }
 
         set({ ...data });
     };
@@ -240,6 +255,10 @@ export const useFlexi = () => {
         set({ ...data });
     };
 
+    const update = (data) => {
+        set({ ...data });
+    };
+
     const showTheNextFlex = (flex) => {};
 
     const truty = (flex, grid, column, component) => {
@@ -304,6 +323,7 @@ export const useFlexi = () => {
 
     return {
         data,
+        update,
         plusFlex,
         minusFlex,
         flexible,

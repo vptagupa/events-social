@@ -49,14 +49,24 @@ export default function Flex({ flexia, flex }) {
                 <Grids flex={flex} grids={flex.grids} flexia={flexia} />
                 <Drop
                     className="text-center flex flex-col items-center justify-center"
-                    onDrop={(e) =>
-                        flexia.add(
-                            flex,
-                            null,
-                            null,
-                            JSON.parse(e.dataTransfer.getData("data"))
-                        )
-                    }
+                    onDrop={(e) => {
+                        var data;
+                        if ((data = e.dataTransfer.getData("data"))) {
+                            data = JSON.parse(data);
+                            flexia.add(flex, null, null, data);
+                        } else if ((data = e.dataTransfer.getData("move"))) {
+                            data = JSON.parse(data);
+                            flexia.move(
+                                {
+                                    flex,
+                                    grid: null,
+                                    column: null,
+                                    component: null,
+                                },
+                                data
+                            );
+                        }
+                    }}
                 >
                     Drop here
                     <Caption title={`Step`} className="text-center uppercase" />

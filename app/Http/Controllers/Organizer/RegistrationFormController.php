@@ -22,7 +22,7 @@ class RegistrationFormController extends Controller
     public function index(Event $event)
     {
         return $this->render('organizer/events/manage/registration-form/index', [
-            'event' => $event
+            'event' => $event->load('registrationForm')
         ]);
     }
 

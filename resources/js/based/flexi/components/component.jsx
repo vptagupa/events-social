@@ -49,7 +49,7 @@ export default function Component({
                 <div className={`grow`}>
                     {["text", "notes"].includes(component.type) && (
                         <Text
-                            value={component.config.defaultValue}
+                            value={component.config?.defaultValue ?? ""}
                             onChange={(e) =>
                                 change(
                                     flex,
@@ -64,7 +64,7 @@ export default function Component({
                     {component.type == "select" && (
                         <Select
                             values={component.config.options}
-                            value={component.config.defaultValue}
+                            value={component.config?.defaultValue ?? ""}
                             onChange={(e) =>
                                 change(
                                     flex,
@@ -105,6 +105,7 @@ export default function Component({
                     {component.type == "radio" && (
                         <Radio
                             value={component.config?.defaultValue ?? ""}
+                            checked={component.config?.defaultValue ?? false}
                             title={component.config?.name ?? "Configure name"}
                             onChange={(e) =>
                                 change(
@@ -112,7 +113,7 @@ export default function Component({
                                     grid,
                                     column,
                                     component,
-                                    e.target.value
+                                    e.target.checked
                                 )
                             }
                         />
@@ -120,6 +121,7 @@ export default function Component({
                     {component.type == "checkbox" && (
                         <Checkbox
                             value={component.config?.defaultValue ?? ""}
+                            checked={component.config?.defaultValue ?? false}
                             title={component.config?.name ?? "Configure name"}
                             onChange={(e) =>
                                 change(
@@ -127,7 +129,7 @@ export default function Component({
                                     grid,
                                     column,
                                     component,
-                                    e.target.value
+                                    e.target.checked
                                 )
                             }
                         />

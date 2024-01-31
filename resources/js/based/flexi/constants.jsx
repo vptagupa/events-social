@@ -4,7 +4,6 @@ export const config = {
     active: false,
     options: [],
     defaultValue: "",
-    class: "",
     form: [
         "name",
         "label",

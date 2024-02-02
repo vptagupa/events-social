@@ -1,0 +1,118 @@
+@layer components  {
+    .bg-primary {
+        @apply bg-purple-500;
+    }
+
+    .primary {
+        @apply bg-primary text-white;
+    }
+
+    .primary-less {
+        @apply bg-purple-500/80;
+    }
+
+    .text-primary {
+        @apply text-purple-500;
+    }
+
+    .border-primary {
+        @apply border border-purple-500;
+    }
+
+    .ring-primary {
+        @apply ring-purple-500;
+    }
+
+    .bg-secondary {
+        @apply bg-indigo-700;
+    }   
+
+    .secondary {
+        @apply bg-secondary text-white;
+    }
+    
+    .text-secondary {
+        @apply text-indigo-700;
+    }
+
+    .border-secondary {
+        @apply border border-indigo-500;
+    }
+
+    .bg-success {
+        @apply bg-success text-white;
+    }
+
+    .success {
+        @apply bg-emerald-500 text-white;
+    }
+
+    .success-less {
+        @apply bg-emerald-500/80;
+    }
+
+    .text-success {
+        @apply text-emerald-500;
+    }
+
+    .border-success {
+        @apply border border-emerald-500;
+    }
+
+    .bg-info {
+        @apply bg-sky-500;
+    }
+
+    .info {
+        @apply bg-info text-white;
+    }
+
+    .info-less {
+        @apply bg-sky-500/80;
+    }
+
+    .text-info {
+        @apply text-sky-500;
+    }
+
+    .border-info {
+        @apply border border-sky-500;
+    }
+
+    .bg-danger {
+        @apply bg-red-500/80;
+    }
+
+    .danger {
+        @apply bg-danger text-white;
+    }
+
+    .text-danger {
+        @apply text-red-500;
+    }
+
+    .border-danger {
+        @apply border border-red-500;
+    }
+
+    .bg-warning {
+        @apply bg-amber-500;
+    }
+
+    .warning {
+        @apply bg-warning text-white;
+    }
+
+    .text-warning {
+        @apply text-amber-500;
+    }
+
+    .border-warning {
+        @apply border border-amber-500;
+    }
+
+    .drop-over {
+        @apply transform translate-y-3 transition-all ease-in-out duration-150;
+    }
+
+}

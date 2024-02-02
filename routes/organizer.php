@@ -25,6 +25,6 @@ Route::name('organizer.')->prefix('organizer')->group(function () {
             Route::delete('/', 'destroy')->name('destroy');
         });
     });
-    Route::resource('events', EventsController::class)->except(['create', 'edit']);
+    Route::resource('events', EventsController::class)->except(['create']);
 });
 

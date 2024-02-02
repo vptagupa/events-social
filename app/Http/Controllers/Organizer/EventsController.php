@@ -53,6 +53,16 @@ class EventsController extends Controller
     }
 
     /**
+     * Edit the specific resource
+     */
+    public function edit(Event $event)
+    {
+        return $this->render('organizer/events/manage/edit/index', [
+            'event' => $event->load('organizer')
+        ]);
+    }
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreEventRequest $request)

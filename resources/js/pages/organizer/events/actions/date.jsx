@@ -28,7 +28,7 @@ export default memo(function Date({ value, onChange }) {
             </span>
             <Modal
                 open={open}
-                className={`flex items-center justify-center w-auto text-sm
+                className={`flex items-center justify-center w-auto text-sm p-2
                 `}
             >
                 <Close click={(e) => setOpen(false)} />
@@ -53,25 +53,23 @@ export default memo(function Date({ value, onChange }) {
                     </div>
                 </Title>
 
-                <div
-                    className={`transition-all ease-in-out
-                ${tab == "date" ? "h-[18rem]" : "h-[33rem]"}`}
-                >
-                    {tab == "date" && (
-                        <CalendarDate
+                {tab == "date" && (
+                    <CalendarDate
+                        onChange={(e) => {
+                            onChange(e);
+                            setTab("time");
+                        }}
+                        date={moment(value, dateFormat).toDate()}
+                    />
+                )}
+                {tab == "time" && (
+                    <div className="mt-0">
+                        <CalendarTime
                             onChange={onChange}
-                            date={moment(value, dateFormat).toDate()}
+                            value={moment(value, dateFormat)}
                         />
-                    )}
-                    {tab == "time" && (
-                        <div className="mt-0">
-                            <CalendarTime
-                                onChange={onChange}
-                                value={moment(value, dateFormat)}
-                            />
-                        </div>
-                    )}
-                </div>
+                    </div>
+                )}
             </Modal>
         </>
     );

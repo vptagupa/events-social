@@ -15,7 +15,7 @@ export default function Column({
     return (
         <div className="flex flex-col w-full --column">
             <div className="relative">
-                <div className="absolute -bottom-3 right-0 flex items-center gap-x-1">
+                <div className="absolute -bottom-3 right-5 flex items-center gap-x-1">
                     <Remove
                         click={(e) => flexia.remove(flex, grid, column, column)}
                         title="Remove Column"

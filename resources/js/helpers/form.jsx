@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useForm as hookForm } from "laravel-precognition-react-inertia";
+import { router } from "@inertiajs/react";
 
 export const useForm = ({ method, route, data }) => {
     const [open, setOpen] = useState(false);

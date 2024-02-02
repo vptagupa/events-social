@@ -10,12 +10,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('system_charges', function (Blueprint $table) {
+        Schema::create('system_fees', function (Blueprint $table) {
             $table->id();
             $table->string('name', 25);
             $table->decimal('price');
-            $table->boolean('is_active')->default(false);
-            $table->foreignId('updated_admin_id')->constrained('admins');
+            $table->boolean('active')->default(false);
+            $table->foreignId('updated_admin_id')->nullable()->constrained('admins');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('system_charges');
+        Schema::dropIfExists('system_fees');
     }
 };

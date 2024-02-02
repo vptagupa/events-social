@@ -10,11 +10,35 @@ export default [
         permission: "EVENTS",
     },
     {
+        id: "fees",
+        name: "Fees",
+        icon: <FontAwesomeIcon icon={faUser} className="h-[0.60rem]" />,
+        route: "organizer.fees.default",
+        permission: "FEES",
+    },
+    {
         id: "organizers",
         name: "Organizers",
         icon: <FontAwesomeIcon icon={faUser} className="h-[0.60rem]" />,
         route: "admin.backend.organizers.index",
         permission: "ORGANIZERS",
+    },
+
+    {
+        id: "setup",
+        name: "Setup",
+        icon: <FontAwesomeIcon icon={faUser} className="h-[0.60rem]" />,
+        route: "admin.backend.setup.*",
+        permission: "SETUP",
+        children: [
+            {
+                id: "fees",
+                name: "Fees",
+                icon: <FontAwesomeIcon icon={faUser} className="h-[0.60rem]" />,
+                route: "admin.backend.setup.fees.index",
+                permission: "FEES",
+            },
+        ],
     },
     {
         id: "users",

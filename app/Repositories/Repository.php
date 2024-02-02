@@ -6,8 +6,6 @@ class Repository
 {
     use Conditions\Conditions;
 
-    protected $model;
-
     public function model()
     {
         return $this->model;
@@ -15,12 +13,12 @@ class Repository
 
     public function create(array $data)
     {
-        return $this->model->create($data);
+        return $this->model()->create($data);
     }
 
     public function update(array $data, $id, $key = 'id')
     {
-        $model = $this->model->where($key, $id)->first();
+        $model = $this->model()->where($key, $id)->first();
 
         foreach ($data as $key => $value) {
             $model->$key = $value;
@@ -31,17 +29,17 @@ class Repository
 
     public function delete(int $id)
     {
-        return $this->model->destroy($id);
+        return $this->model()->destroy($id);
     }
 
     public function find(int $id)
     {
-        return $this->model->find($id);
+        return $this->model()->find($id);
     }
 
     public function all($columns = ["*"])
     {
-        return $this->model;
+        return $this->model();
     }
 
     public function list(
@@ -54,7 +52,7 @@ class Repository
         $limit = null,
         array $orderBy = []
     ) {
-        $builder = $this->model->newQuery();
+        $builder = $this->model()->newQuery();
         if ($columns[0] != '*') {
             $builder->select($columns);
         }

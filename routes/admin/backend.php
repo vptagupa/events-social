@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\Admin\Backend\OrganizersController;
+use App\Http\Controllers\Admin\Backend\SystemFeesController;
 use App\Http\Controllers\Admin\Backend\UsersController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Backend\UserController;
 use App\Http\Controllers\Admin\Backend\DashboardController;
+
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,7 +50,16 @@ Route::name('admin.')->prefix('admin')->group(function () {
             Route::patch('/reset-password/{organizer}', 'resetPassword')->name('reset-password');
             Route::patch('/active/{organizer}', 'activate')->name('activate');
         });
+
         Route::resource('organizers', OrganizersController::class)->except(['create', 'edit', 'show']);
+
+        Route::name('setup.')->prefix('setup')->group(function () {
+            Route::controller(SystemFeesController::class)->prefix('fees')->name('fees.')->group(function () {
+                Route::post('/list', 'list')->name('list');
+                Route::patch('/active/{fee}', 'activate')->name('activate');
+            });
+            Route::resource('fees', SystemFeesController::class)->except(['create', 'edit', 'show']);
+        });
     });
 });
 

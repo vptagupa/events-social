@@ -16,6 +16,7 @@ import Delete from "../../actions/confirm.delete";
 import Activate from "../../actions/activate";
 import ResetPassword from "../../actions/reset.password";
 import NewEvent from "../../actions/event";
+import Fee from "../../actions/fee";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faMagnifyingGlass,
@@ -88,6 +89,7 @@ const Component = ({
                                         <Td>
                                             <div className="flex space-x-2 justify-end">
                                                 <NewEvent organizer={item} />
+                                                <Fee value={item.id} />
                                                 <Activate
                                                     id={item.id}
                                                     active={item.active}

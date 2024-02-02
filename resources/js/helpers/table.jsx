@@ -83,14 +83,18 @@ export const useTable = ({ initialParams, listRoute: _listRoute, name }) => {
         }, 500);
     };
 
+    const reload = () => {
+        fetchData({
+            search: search,
+            page: initialParams.page,
+        });
+    };
+
     useEffect(() => {
         Event.on(
             (name ? name + "." : "") + "reload",
             (data) => {
-                fetchData({
-                    search: search,
-                    page: initialParams.page,
-                });
+                reload();
             },
             this
         );
@@ -106,5 +110,6 @@ export const useTable = ({ initialParams, listRoute: _listRoute, name }) => {
         setSearch,
         searchHandler,
         setListRoute,
+        reload,
     };
 };

@@ -44,4 +44,9 @@ class Organizer extends Authenticatable
         'password' => 'hashed',
         'active' => 'boolean'
     ];
+
+    public function fees()
+    {
+        return $this->hasMany(OrganizerFee::class);
+    }
 }

@@ -10,7 +10,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const menuIconClasses =
-    "h-8 hover:scale-125 hover:text-primary hover:transform hover:-rotate-45 transition ease-in-out duration-200";
+    "h-8 hover:scale-110 hover:text-primary hover:transform hover:-rotate-45 transition ease-in-out duration-200";
 
 export const menus = [
     {

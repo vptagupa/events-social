@@ -7,9 +7,9 @@ use App\Models\Organizer;
 class OrganizerRepository extends Repository
 {
 
-    public function __construct(Organizer $model)
+    public function __construct(protected Organizer $model)
     {
-        $this->model = $model;
+        // 
     }
 
     public function create(array $data)

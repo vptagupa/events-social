@@ -7,9 +7,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenNib } from "@fortawesome/free-solid-svg-icons";
 import Close from "../components/close";
 import { memo } from "react";
+import { router } from "@inertiajs/react";
 
 export default memo(function Edit({ value }) {
-    const { open, setOpen, form, closeForm } = useForm({
+    const { open, setOpen, form, closeForm, reload } = useForm({
         method: "patch",
         route: route("organizer.events.update", {
             event: value.id,
@@ -26,10 +27,9 @@ export default memo(function Edit({ value }) {
     const submit = (e) => {
         form.submit({
             preseverScroll: true,
-            preserveState: false,
+            preserveState: true,
             onSuccess: () => {
-                Event.emit("reload");
-                closeForm();
+                reload();
             },
         });
     };

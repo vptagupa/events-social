@@ -1,0 +1,55 @@
+import Form from "../components/form";
+import { Modal, Title, Footer } from "@/js/components/modal";
+import { Button } from "@/js/components/buttons";
+import Event from "@/js/helpers/event";
+import FooterForm from "../components/form.footer";
+import { useForm } from "@/js/helpers/form";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+
+export default function New(props) {
+    const { open, setOpen, form, closeForm } = useForm({
+        method: "post",
+        route: route("admin.backend.setup.fees.store"),
+        data: {
+            name: "",
+            price: "",
+            active: true,
+        },
+    });
+
+    const submit = (e) => {
+        if (form.processing) return;
+
+        form.submit({
+            preseverScroll: true,
+            preserveState: false,
+            onSuccess: () => {
+                closeForm();
+            },
+        });
+    };
+
+    return (
+        <>
+            <Button
+                onClick={(e) => setOpen(true)}
+                className="space-x-1 bg-none shadow-none text-purple-500 font-bold btn-sm"
+            >
+                <FontAwesomeIcon icon={faPlus} className="h-4" />
+                <span>Add New</span>
+            </Button>
+            <Modal open={open}>
+                <Title>Add New</Title>
+                <Form form={form} />
+                <Footer>
+                    <FooterForm
+                        form={form}
+                        closeForm={closeForm}
+                        submit={submit}
+                    />
+                </Footer>
+            </Modal>
+        </>
+    );
+}

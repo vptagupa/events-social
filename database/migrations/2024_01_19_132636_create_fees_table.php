@@ -10,11 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('event_related_charges', function (Blueprint $table) {
+        Schema::create('fees', function (Blueprint $table) {
             $table->id();
             $table->foreignId('event_id')->constrained('events');
-            $table->string('model', 35);
-            $table->unsignedBigInteger('model_id');
+            $table->morphs('model');
             $table->timestamps();
         });
     }
@@ -24,6 +23,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('event_related_charges');
+        Schema::dropIfExists('fees');
     }
 };

@@ -5,7 +5,7 @@ export default function Component({
     handler,
     active,
     inActive,
-    className = "bg-white",
+    className = "",
     posOn = "translate-x-6",
     posOff = "translate-x-1",
     size = "h-4 w-10",
@@ -18,7 +18,7 @@ export default function Component({
             onChange={handler}
             className={`${
                 checked ? active : inActive
-            } inline-flex items-center rounded-full ${className} ${size}`}
+            } inline-flex items-center rounded-full outline-none ${className} ${size}`}
             {...props}
         >
             <span className="sr-only">Switch action</span>

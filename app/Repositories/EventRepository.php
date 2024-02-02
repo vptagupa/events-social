@@ -8,9 +8,9 @@ class EventRepository extends Repository
 {
     use Conditions\EventConditions;
 
-    public function __construct(Event $model)
+    public function __construct(protected Event $model)
     {
-        $this->model = $model;
+        // 
     }
 
     public function activate($id)

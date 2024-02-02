@@ -8,9 +8,9 @@ use App\Models\Admin;
 class AdminRepository extends Repository
 {
 
-    public function __construct(Admin $model)
+    public function __construct(protected Admin $model)
     {
-        $this->model = $model;
+        // 
     }
 
     public function create(array $data)

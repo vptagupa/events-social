@@ -8,7 +8,6 @@ import moment from "moment";
 import { dateFormat } from "@/js/components/calendar";
 
 export default function Form({ form, submit }) {
-    console.log(form);
     return (
         <FormComponent className="text-sm" onSubmit={submit}>
             <div>
@@ -16,8 +15,8 @@ export default function Form({ form, submit }) {
                     <AlertSuccess>Successfully save.</AlertSuccess>
                 </Transition>
             </div>
-            <div className="flex items-start justify-between w-full gap-x-10">
-                <div className="w-2/5">
+            <div className="flex xs:flex-col  md:flex-row items-start justify-between w-full gap-x-10">
+                <div className="xs:w-full md:w-2/5">
                     <div className="block p-2">
                         <span className="font-medium text-gray-600">Title</span>
                         <Input
@@ -72,8 +71,8 @@ export default function Form({ form, submit }) {
                         </PrimaryButton>
                     </div>
                 </div>
-                <div className="grow flex items-start justify-center gap-x-2">
-                    <div className="w-1/2 p-2">
+                <div className="grow flex xs:flex-col md:flex-row items-start justify-center gap-x-2">
+                    <div className="xs:w-full md:w-1/2 p-2">
                         <div className="flex flex-col">
                             <div className="flex justify-between mb-5">
                                 <span className="font-medium text-gray-600">
@@ -106,7 +105,7 @@ export default function Form({ form, submit }) {
                             </span>
                         )}
                     </div>
-                    <div className="w-1/2 p-2">
+                    <div className="xs:w-full md:w-1/2 p-2">
                         <div className="flex flex-col">
                             <div className="flex justify-between mb-5">
                                 <span className="font-medium text-gray-600">

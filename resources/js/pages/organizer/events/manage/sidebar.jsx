@@ -3,7 +3,7 @@ import { menus } from "./constants";
 export default function Sidebar({ event }) {
     return (
         <>
-            <ol>
+            <ol className="p-3 bg-slate-200 rounded-md">
                 {menus.map((menu, idx) => (
                     <li key={idx} className="cursor-pointer text-center p-1">
                         <Link
@@ -11,8 +11,8 @@ export default function Sidebar({ event }) {
                             className="flex gap-x-1 w-full items-center justify-center group"
                         >
                             {menu.icon}
-                            <span className="relative flex items-center group-hover:visible transition-all ease-in-out duration-75 invisible">
-                                <span className="w-32 absolute text-start ml-2">
+                            <span className="relative flex items-center invisible group-hover:visible transition-all ease-in-out duration-75">
+                                <span className="w-40 py-2 rounded-tr-md rounded-br-md ml-1 bg-slate-200 absolute text-start group-hover:pl-4">
                                     {menu.title}
                                 </span>
                             </span>

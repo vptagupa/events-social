@@ -10,12 +10,13 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('event_charges', function (Blueprint $table) {
+        Schema::create('organizer_fees', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('event_id')->constrained('events');
+            $table->foreignId('organizer_id')->constrained('organizers');
             $table->string('name', 25);
             $table->decimal('price');
-            $table->foreignId('updated_organizer_id')->constrained('organizers');
+            $table->boolean('active')->default(false);
+            $table->foreignId('updated_organizer_id')->nullable()->constrained('organizers');
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('event_charges');
+        Schema::dropIfExists('organizer_fees');
     }
 };

@@ -7,16 +7,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenNib } from "@fortawesome/free-solid-svg-icons";
 import Close from "../components/close";
 import { memo } from "react";
-import { router } from "@inertiajs/react";
 
-export default memo(function Edit({ value }) {
-    const { open, setOpen, form, closeForm, reload } = useForm({
+export default memo(function Edit({ value, url }) {
+    const { open, setOpen, form, closeForm } = useForm({
         method: "patch",
-        route: route("organizer.events.update", {
-            event: value.id,
-        }),
+        route: url,
         data: {
-            organizer_id: value.organizer.id,
             title: value.title,
             description: value.description,
             start_at: value.expected_start_at,
@@ -29,7 +25,8 @@ export default memo(function Edit({ value }) {
             preseverScroll: true,
             preserveState: true,
             onSuccess: () => {
-                reload();
+                Event.emit("reload");
+                closeForm();
             },
         });
     };

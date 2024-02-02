@@ -15,7 +15,7 @@ import Edit from "../../actions/edit";
 import Delete from "../../actions/confirm.delete";
 import Activate from "../../actions/activate";
 import ResetPassword from "../../actions/reset.password";
-import NewEvent from "../../actions/event";
+import Event from "../../actions/event";
 import Fee from "../../actions/fee";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -88,7 +88,7 @@ const Component = ({
                                         <Td>{item.login_at}</Td>
                                         <Td>
                                             <div className="flex space-x-2 justify-end">
-                                                <NewEvent organizer={item} />
+                                                <Event value={item.id} />
                                                 <Fee value={item.id} />
                                                 <Activate
                                                     id={item.id}

@@ -6,24 +6,19 @@ import { router } from "@inertiajs/react";
 import Event from "@/js/helpers/event";
 import { memo } from "react";
 
-export default memo(function Delete({ id }) {
+export default memo(function Delete({ url }) {
     const [open, setOpen] = useState(false);
     const [processing, setProcessing] = useState(false);
 
     const handleDelete = (event) => {
-        router.delete(
-            route("organizer.events.destroy", {
-                event,
-            }),
-            {
-                onBefore: () => setProcessing(true),
-                onFinish: () => {
-                    setProcessing(false);
-                    setOpen(false);
-                    Event.emit("reload");
-                },
-            }
-        );
+        router.delete(url, {
+            onBefore: () => setProcessing(true),
+            onFinish: () => {
+                setProcessing(false);
+                setOpen(false);
+                Event.emit("reload");
+            },
+        });
     };
 
     return (
@@ -43,7 +38,7 @@ export default memo(function Delete({ id }) {
                 title="Delete"
                 description="Are you sure you want to delete?"
                 processing={processing}
-                yes={(e) => handleDelete(id)}
+                yes={(e) => handleDelete()}
                 no={(e) => setOpen(false)}
             />
         </>

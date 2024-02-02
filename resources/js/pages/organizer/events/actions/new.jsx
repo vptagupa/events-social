@@ -11,12 +11,11 @@ import moment from "moment";
 import { dateFormat } from "@/js/components/calendar";
 import { memo } from "react";
 
-export default memo(function New() {
+export default memo(function New({ url }) {
     const { open, setOpen, form, closeForm } = useForm({
         method: "post",
-        route: route("organizer.events.store"),
+        route: url,
         data: {
-            organizer_id: "",
             title: "",
             description: "",
             start_at: moment(new Date(), dateFormat).format(dateFormat),

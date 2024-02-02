@@ -1,13 +1,14 @@
 import { Link } from "@inertiajs/react";
 import { menus } from "./constants";
 export default function Sidebar({ event }) {
+    console.log(event);
     return (
         <>
             <ol className="p-3 bg-slate-200 rounded-md">
                 {menus.map((menu, idx) => (
                     <li key={idx} className="cursor-pointer text-center p-1">
                         <Link
-                            href={menu.url(event.id)}
+                            href={menu.url(event.organizer_id, event.id)}
                             className="flex gap-x-1 w-full items-center justify-center group"
                         >
                             {menu.icon}

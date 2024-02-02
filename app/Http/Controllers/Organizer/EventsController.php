@@ -7,6 +7,7 @@ use App\Http\Requests\Event\StoreEventRequest;
 use App\Http\Requests\Event\UpdateEventRequest;
 use App\Http\Resources\Event\EventResource;
 use App\Models\Event;
+use App\Models\Organizer;
 use App\Repositories\EventRepository;
 use Illuminate\Http\Request;
 
@@ -20,15 +21,43 @@ class EventsController extends Controller
     /**
      * Display the default page of the resource.
      */
-    public function index()
+    public function any()
     {
         return $this->render('organizer/events/index');
     }
 
     /**
+     * Display the default page of the resource.
+     */
+    public function index(Organizer $organizer)
+    {
+        return $this->render('organizer/events/index', [
+            'organizer' => $organizer
+        ]);
+    }
+
+    /**
      * Display a listing of the resource.
      */
-    public function list(Request $request)
+    public function list(Request $request, Organizer $organizer)
+    {
+        return EventResource::collection(
+            $this->repository->list(
+                query: [
+                    'title' => $request->get('query'),
+                    'organizer' => true,
+                    'organizer_id' => $organizer->id
+                ],
+                paginate: true,
+                perPage: $request->get('per_page'),
+            )
+        );
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function anyList(Request $request)
     {
         return EventResource::collection(
             $this->repository->list(
@@ -55,7 +84,7 @@ class EventsController extends Controller
     /**
      * Edit the specific resource
      */
-    public function edit(Event $event)
+    public function edit(Organizer $organizer, Event $event)
     {
         return $this->render('organizer/events/manage/edit/index', [
             'event' => $event->load('organizer')
@@ -65,8 +94,9 @@ class EventsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreEventRequest $request)
+    public function store(StoreEventRequest $request, Organizer $organizer)
     {
+        $request->merge(['organizer_id' => $organizer->id]);
         $this->repository->create($request->only([
             'organizer_id',
             'slug',
@@ -81,8 +111,9 @@ class EventsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateEventRequest $request, Event $event)
+    public function update(UpdateEventRequest $request, Organizer $organizer, Event $event)
     {
+        $request->merge(['organizer_id' => $organizer->id]);
         $this->repository->update($request->only([
             'organizer_id',
             'slug',
@@ -105,7 +136,7 @@ class EventsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Event $event)
+    public function destroy(Organizer $organizer, Event $event)
     {
         $this->repository->delete($event->id);
     }

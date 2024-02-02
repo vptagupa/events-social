@@ -18,18 +18,22 @@ use Illuminate\Support\Facades\Route;
 
 Route::name('organizer.')->prefix('organizer')->group(function () {
     Route::controller(EventsController::class)->prefix('events')->name('events.')->group(function () {
-        Route::post('/list', 'list')->name('list');
-        Route::patch('/active/{event}', 'activate')->name('activate');
+        Route::get('/', 'any')->name('any');
+        Route::post('/list', 'anyList')->name('anyList');
         Route::controller(RegistrationFormController::class)->name('registration-form.')->prefix('{event}/registration-form')->group(function () {
             Route::get('/', 'index')->name('index');
             Route::post('/', 'store')->name('store');
             Route::delete('/', 'destroy')->name('destroy');
         });
     });
-    Route::resource('events', EventsController::class)->except(['create']);
+    Route::controller(EventsController::class)->prefix('{organizer}/events')->name('events.')->group(function () {
+        Route::post('/list', 'list')->name('list');
+        Route::patch('/active/{event}', 'activate')->name('activate');
+    });
+    Route::resource('{organizer}/events', EventsController::class)->except(['create']);
     Route::controller(FeesController::class)->prefix('fees')->name('fees.')->group(function () {
-        Route::get('/', 'default')->name('default');
-        Route::post('/list', 'list')->name('anylist');
+        Route::get('/', 'any')->name('any');
+        Route::post('/list', 'anyList')->name('anyList');
     });
     Route::controller(FeesController::class)->prefix('{organizer}/fees')->name('fees.')->group(function () {
         Route::post('/list', 'list')->name('list');

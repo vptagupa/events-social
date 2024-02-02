@@ -26,13 +26,12 @@ export default function Fees({ organizer, ...props }) {
                         <div className="rounded-2xl">
                             <Table
                                 route={{
-                                    list: (id) =>
-                                        route(
-                                            organizer
-                                                ? "organizer.fees.list"
-                                                : "organizer.fees.anylist",
-                                            organizer?.id ?? ""
-                                        ),
+                                    list: route(
+                                        organizer
+                                            ? "organizer.fees.list"
+                                            : "organizer.fees.anyList",
+                                        organizer?.id ?? ""
+                                    ),
                                     activate: (organizer, fee, active) =>
                                         route(
                                             "organizer.fees.activate",

@@ -43,6 +43,7 @@ class UpdateEventRequest extends FormRequest
             'slug' => str($this->title)->slug(),
             'expected_start_at' => $this->start_at,
             'expected_end_at' => $this->end_at,
+            'organizer_id' => $this->organizer->id
         ]);
     }
 

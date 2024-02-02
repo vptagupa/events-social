@@ -21,7 +21,7 @@ class FeesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function default()
+    public function any()
     {
         return $this->render('organizer/fees/index');
     }
@@ -36,7 +36,22 @@ class FeesController extends Controller
         ]);
     }
 
-    public function list(Request $request)
+    public function list(Request $request, Organizer $organizer)
+    {
+        return FeeResource::collection(
+            $this->repository->list(
+                query: [
+                    'name' => $request->get('query'),
+                    'organizer' => true,
+                    'organizer_id' => $organizer->id
+                ],
+                paginate: true,
+                perPage: $request->get('per_page'),
+            )
+        );
+    }
+
+    public function anyList(Request $request)
     {
         return FeeResource::collection(
             $this->repository->list(
@@ -90,7 +105,7 @@ class FeesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(OrganizerFee $fee)
+    public function destroy(Organizer $organizer, OrganizerFee $fee)
     {
         $this->repository->delete($fee->id);
     }

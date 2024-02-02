@@ -27,7 +27,8 @@ export const menus = [
     },
     {
         title: "Details",
-        url: (event) => route("organizer.events.edit", event),
+        url: (organizer, event) =>
+            route("organizer.events.edit", { organizer, event }),
         icon: (
             <FontAwesomeIcon
                 icon={faCircleInfo}

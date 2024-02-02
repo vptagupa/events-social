@@ -7,9 +7,9 @@ export default function Edit({ event }) {
         method: "patch",
         route: route("organizer.events.update", {
             event: event.id,
+            organizer: event.organizer.id,
         }),
         data: {
-            organizer_id: event.organizer.id,
             title: event.title,
             description: event.description,
             start_at: event.expected_start_at,

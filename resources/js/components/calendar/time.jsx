@@ -37,6 +37,7 @@ export default function Time({ onChange, value: moment }) {
                             const _is = is(hour, minute);
                             return (
                                 <div
+                                    key={minute}
                                     className={`${boxClass} ${
                                         _is
                                             ? "border-none bg-blue-500 text-white"

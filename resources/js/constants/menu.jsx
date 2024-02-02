@@ -6,14 +6,14 @@ export default [
         id: "events",
         name: "Events",
         icon: <FontAwesomeIcon icon={faUser} className="h-[0.60rem]" />,
-        route: "organizer.events.index",
+        route: "organizer.events.any",
         permission: "EVENTS",
     },
     {
         id: "fees",
         name: "Fees",
         icon: <FontAwesomeIcon icon={faUser} className="h-[0.60rem]" />,
-        route: "organizer.fees.default",
+        route: "organizer.fees.any",
         permission: "FEES",
     },
     {

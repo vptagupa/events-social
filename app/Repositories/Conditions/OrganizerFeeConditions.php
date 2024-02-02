@@ -10,4 +10,11 @@ trait OrganizerFeeConditions
             $builder->with('organizer');
         });
     }
+
+    public function organizerIdCondition(&$builder, $query)
+    {
+        return $builder->when(isset($query['organizer_id']) && $query['organizer_id'], function ($builder) use ($query) {
+            $builder->where('organizer_id', $query['organizer_id']);
+        });
+    }
 }

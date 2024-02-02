@@ -2,14 +2,12 @@ import { Checkbox } from "@/js/components/form";
 import { useState } from "react";
 import { router } from "@inertiajs/react";
 
-export default function Activate({ id, active = false }) {
+export default function Activate({ url, active = false }) {
     const [processing, setProcessing] = useState(false);
     const [_active, setActive] = useState(active);
     const handleClick = async (checked) => {
         router.patch(
-            route("organizer.events.activate", {
-                event: id,
-            }),
+            url,
             {},
             {
                 onBefore: () => setProcessing(true),

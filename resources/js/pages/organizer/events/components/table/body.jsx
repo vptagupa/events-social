@@ -23,7 +23,7 @@ import {
 
 const Component = ({
     data,
-    roles,
+    route,
     searching,
     pagination,
     setSearch,
@@ -97,12 +97,26 @@ const Component = ({
                                         <Td>
                                             <div className="flex space-x-2 justify-end">
                                                 <Activate
-                                                    id={item.id}
+                                                    url={route.activate(
+                                                        item.organizer.id,
+                                                        item.id
+                                                    )}
                                                     active={item.active}
                                                 />
                                                 <Manage value={item} />
-                                                <Edit value={item} />
-                                                <Delete id={item.id} />
+                                                <Edit
+                                                    value={item}
+                                                    url={route.update(
+                                                        item.organizer.id,
+                                                        item.id
+                                                    )}
+                                                />
+                                                <Delete
+                                                    url={route.delete(
+                                                        item.organizer.id,
+                                                        item.id
+                                                    )}
+                                                />
                                             </div>
                                         </Td>
                                     </Tr>

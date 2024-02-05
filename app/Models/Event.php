@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
+    use Relations\EventSetting;
     use HasFactory;
 
     /**
@@ -22,12 +23,12 @@ class Event extends Model
         'expected_end_at',
         'actual_started_at',
         'actual_ended_at',
-        'is_offer_package',
         'banner_id',
         'certificate_file_id',
         'official_receipt_file_id',
         'organizer_id',
-        'active'
+        'active',
+        'price'
     ];
 
     /**
@@ -42,6 +43,14 @@ class Event extends Model
         'expected_end_at' => 'date:m/d/Y h:i A',
         'actual_started_at' => 'date:m/d/Y h:i A',
         'actual_ended_at' => 'date:m/d/Y h:i A',
+        'price' => 'decimal:2'
+    ];
+
+    protected $appends = [
+        'is_offer_package',
+        'is_free',
+        'is_allowed_upload_proof_payment',
+        'is_allowed_payment_integration'
     ];
 
     public function organizer()
@@ -67,5 +76,30 @@ class Event extends Model
     public function registrationForm()
     {
         return $this->hasOne(RegistrationForm::class);
+    }
+
+    public function offers()
+    {
+        return $this->hasMany(Offer::class);
+    }
+
+    public function fees()
+    {
+        return $this->hasMany(Fee::class);
+    }
+
+    public function organizerFees()
+    {
+        return $this->fees()->whereModelType(OrganizerFee::class);
+    }
+
+    public function systemFees()
+    {
+        return $this->fees()->whereModelType(SystemFee::class);
+    }
+
+    public function settings()
+    {
+        return $this->hasMany(EventSetting::class);
     }
 }

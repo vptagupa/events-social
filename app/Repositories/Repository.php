@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use Illuminate\Database\Eloquent\Model;
+
 class Repository
 {
     use Conditions\Conditions;
@@ -11,12 +13,12 @@ class Repository
         return $this->model;
     }
 
-    public function create(array $data)
+    public function create(array $data): Model
     {
         return $this->model()->create($data);
     }
 
-    public function update(array $data, $id, $key = 'id')
+    public function update(array $data, $id, $key = 'id'): Model
     {
         $model = $this->model()->where($key, $id)->first();
 
@@ -25,6 +27,8 @@ class Repository
         }
 
         $model->save();
+
+        return $model;
     }
 
     public function delete(int $id)
@@ -32,7 +36,7 @@ class Repository
         return $this->model()->destroy($id);
     }
 
-    public function find(int $id)
+    public function find(int $id): Model
     {
         return $this->model()->find($id);
     }
@@ -50,7 +54,8 @@ class Repository
         $get = false,
         $columns = ['*'],
         $limit = null,
-        array $orderBy = []
+        array $orderBy = [],
+        $pageName = 'page'
     ) {
         $builder = $this->model()->newQuery();
         if ($columns[0] != '*') {
@@ -68,7 +73,10 @@ class Repository
         }
 
         if ($paginate) {
-            return $builder->paginate($perPage);
+            return $builder->paginate(
+                $perPage,
+                pageName: $pageName
+            );
         }
 
         if ($first) {

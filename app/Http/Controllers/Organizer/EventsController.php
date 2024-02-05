@@ -6,14 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Event\StoreEventRequest;
 use App\Http\Requests\Event\UpdateEventRequest;
 use App\Http\Resources\Event\EventResource;
+use App\Http\Resources\SettingResource;
 use App\Models\Event;
 use App\Models\Organizer;
 use App\Repositories\EventRepository;
+use App\Repositories\SettingRepository;
 use Illuminate\Http\Request;
 
 class EventsController extends Controller
 {
-    public function __construct(private EventRepository $repository)
+    public function __construct(private EventRepository $repository, private SettingRepository $settings)
     {
         // 
     }
@@ -96,7 +98,6 @@ class EventsController extends Controller
      */
     public function store(StoreEventRequest $request, Organizer $organizer)
     {
-        $request->merge(['organizer_id' => $organizer->id]);
         $this->repository->create($request->only([
             'organizer_id',
             'slug',
@@ -113,7 +114,6 @@ class EventsController extends Controller
      */
     public function update(UpdateEventRequest $request, Organizer $organizer, Event $event)
     {
-        $request->merge(['organizer_id' => $organizer->id]);
         $this->repository->update($request->only([
             'organizer_id',
             'slug',
@@ -121,6 +121,18 @@ class EventsController extends Controller
             'description',
             'expected_start_at',
             'expected_end_at'
+        ]), $event->id);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function offer(Request $request, Organizer $organizer, Event $event)
+    {
+        $request->validate(['offer_package' => 'required|boolean']);
+
+        $this->repository->update($request->only([
+            'offer_package',
         ]), $event->id);
     }
 

@@ -85,7 +85,6 @@ class FeesController extends Controller
      */
     public function update(UpdateOrganizerFeeRequest $request, Organizer $organizer, OrganizerFee $fee)
     {
-        $request->merge(['organizer_id' => $organizer->id]);
         $this->repository->update($request->safe()->only([
             'organizer_id',
             'name',

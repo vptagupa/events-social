@@ -16,7 +16,7 @@ export default function Index(props) {
     return (
         <>
             <div className="bg-slate-100 text-slate-500 w-screen h-screen flex xs:max-sm:pl-4 md:pl-6 pt-4 pr-4">
-                <div className="md:w-[13%] flex flex-col">
+                <div className="md:w-[13%] flex flex-col z-[99999]">
                     <div className="xs:max-sm:hidden h-12 flex gap-x-3 items-center justify-center text-xs">
                         <img src={Logo} className="h-6 w-6" />{" "}
                         {import.meta.env.VITE_APP_NAME}
@@ -29,12 +29,12 @@ export default function Index(props) {
                             mobileBar
                                 ? "xs:max-sm:translate-x-[0%]"
                                 : "xs:max-sm:-translate-x-[100%]"
-                        } xs:max-sm:absolute xs:max-sm:shadow-md xs:max-sm:z-10 xs:max-sm:mt-7 xs:max-sm:-ml-4 xs:max-sm:bg-slate-200 transform transition-transform delay-100 grow py-4 overflow-hidden hover:overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-gray-300 scrollbar-track-gray-200`}
+                        }  xs:max-sm:absolute xs:max-sm:shadow-md xs:max-sm:z-10 xs:max-sm:mt-7 xs:max-sm:-ml-4 xs:max-sm:bg-slate-200 transform transition-transform delay-100 grow py-4 overflow-hidden hover:overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-gray-300 scrollbar-track-gray-200`}
                     >
                         <Sidebar />
                     </div>
                 </div>
-                <div className="grow flex flex-col">
+                <div className="w-[97%] flex flex-col">
                     <div className="w-full flex items-center justify-between h-6 text-xs">
                         <div className="md:hidden flex gap-x-3 items-center justify-center text-xs">
                             <FontAwesomeIcon

@@ -24,4 +24,14 @@ class OrganizerFee extends Model
     {
         return $this->belongsTo(Organizer::class);
     }
+
+    public function scopeActive($query, $active = true)
+    {
+        return $query->whereActive($active);
+    }
+
+    public function eventFee()
+    {
+        return $this->morphMany(Fee::class, 'model');
+    }
 }

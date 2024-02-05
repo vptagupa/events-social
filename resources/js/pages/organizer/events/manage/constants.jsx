@@ -4,8 +4,9 @@ import {
     faCertificate,
     faCircleInfo,
     faFileInvoice,
+    faFileInvoiceDollar,
     faPerson,
-    faUsers,
+    faUserClock,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -38,24 +39,14 @@ export const menus = [
         ),
     },
     {
-        title: "Upload Banner",
-        url: () => "",
+        title: "Pricing",
+        url: (organizer, event) =>
+            route("organizer.events.pricing.index", { event }),
         icon: (
             <FontAwesomeIcon
-                icon={faImage}
-                title="Upload Banner"
-                className={`${menuIconClasses}`}
-            />
-        ),
-    },
-    {
-        title: "Members",
-        url: () => "",
-        icon: (
-            <FontAwesomeIcon
-                icon={faUsers}
-                title="Members"
-                className={`${menuIconClasses} hover:!scale-110`}
+                icon={faFileInvoiceDollar}
+                title="Pricing"
+                className={`${menuIconClasses} hover:!scale-105`}
             />
         ),
     },
@@ -67,6 +58,28 @@ export const menus = [
                 icon={faPerson}
                 title="Participants"
                 className={`${menuIconClasses} !h-7`}
+            />
+        ),
+    },
+    {
+        title: "Members",
+        url: () => "",
+        icon: (
+            <FontAwesomeIcon
+                icon={faUserClock}
+                title="Members"
+                className={`${menuIconClasses} hover:!scale-105`}
+            />
+        ),
+    },
+    {
+        title: "Upload Banner",
+        url: () => "",
+        icon: (
+            <FontAwesomeIcon
+                icon={faImage}
+                title="Upload Banner"
+                className={`${menuIconClasses}`}
             />
         ),
     },

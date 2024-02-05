@@ -10,12 +10,11 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('event_packages', function (Blueprint $table) {
+        Schema::create('event_settings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('event_id')->constrained('events');
-            $table->string('name', 25);
-            $table->string('description')->nullable();
-            $table->decimal('price');
+            $table->foreignId('setting_id')->constrained('settings');
+            $table->string('value', 35);
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('event_packages');
+        Schema::dropIfExists('event_settings');
     }
 };

@@ -1,6 +1,7 @@
 import { Input } from "@/js/components/form";
+import { memo } from "react";
 
-export default function Time({ onChange, value: moment }) {
+export default memo(function Time({ onChange, value: moment }) {
     const minutes = ["01", "15", "30", "45"];
     const isHour = (hour) => moment.format("h") == hour;
     const is = (hour, minute) =>
@@ -11,7 +12,7 @@ export default function Time({ onChange, value: moment }) {
 
     const boxClass =
         "p-1 cursor-pointer border text-center border-slate-200 w-7 group-hover/item:bg-white group-hover/item:text-black group-hover/item:border-blue-500 transition-all ease-out duration-150 delay-100";
-
+    console.log("t");
     return (
         <div className="flex flex-col gap-1 text-xs">
             {new Array(12).fill(minutes, 0, 12).map((minutes, hourIdx) => {
@@ -22,7 +23,7 @@ export default function Time({ onChange, value: moment }) {
                 const _isPM = isA(hour, "pm");
 
                 return (
-                    <div className="flex gap-x-1 group/item">
+                    <div key={hourIdx} className="flex gap-x-1 group/item">
                         <div
                             className={`${boxClass} ${
                                 _isHour
@@ -33,11 +34,11 @@ export default function Time({ onChange, value: moment }) {
                             {hour}
                         </div>
                         <div className="text-center w-2">:</div>
-                        {minutes.map((minute) => {
+                        {minutes.map((minute, idx) => {
                             const _is = is(hour, minute);
                             return (
                                 <div
-                                    key={minute}
+                                    key={idx}
                                     className={`${boxClass} ${
                                         _is
                                             ? "border-none bg-blue-500 text-white"
@@ -96,4 +97,4 @@ export default function Time({ onChange, value: moment }) {
             })}
         </div>
     );
-}
+});

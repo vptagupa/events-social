@@ -40,7 +40,7 @@ class StoreEventRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'slug' => str($this->title)->slug(),
+            'slug' => str($this->slug)->slug(),
             'expected_start_at' => $this->start_at,
             'expected_end_at' => $this->end_at,
             'organizer_id' => $this->organizer->id
@@ -54,7 +54,7 @@ class StoreEventRequest extends FormRequest
     {
         $this->replace([
             ...$this->all(),
-            'slug' => str($this->title)->slug(),
+            'slug' => str($this->slug)->slug(),
             'expected_start_at' => Carbon::parse($this->start_at)->format('Y-m-d H:i:s'),
             'expected_end_at' => Carbon::parse($this->end_at)->format('Y-m-d H:i:s'),
         ]);

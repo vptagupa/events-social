@@ -45,4 +45,11 @@ trait Conditions
             $builder->where('title', 'like', '%' . $query['title'] . '%');
         });
     }
+
+    public function activeCondition(&$builder, $query)
+    {
+        return $builder->when(isset($query['active']) && !is_null($query['active']), function ($builder) use ($query) {
+            $builder->where($this->model()->getTable() . '.active', $query['active']);
+        });
+    }
 }

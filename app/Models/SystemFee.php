@@ -18,4 +18,9 @@ class SystemFee extends Model
     protected $casts = [
         'active' => 'boolean'
     ];
+
+    public function eventFee()
+    {
+        return $this->morphMany(Fee::class, 'model');
+    }
 }

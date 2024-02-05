@@ -6,9 +6,9 @@ export default function Component({
     active,
     inActive,
     className = "",
-    posOn = "translate-x-6",
+    posOn = "translate-x-5",
     posOff = "translate-x-1",
-    size = "h-4 w-10",
+    size = "h-4 w-8",
     classSwitch = "h-2 w-2 bg-white",
     ...props
 }) {

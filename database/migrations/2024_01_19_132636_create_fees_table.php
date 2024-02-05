@@ -14,6 +14,8 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('event_id')->constrained('events');
             $table->morphs('model');
+            $table->decimal('price');
+            $table->boolean('active')->default(false);
             $table->timestamps();
         });
     }

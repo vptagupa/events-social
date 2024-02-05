@@ -14,6 +14,16 @@ class FeeResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        $data = parent::toArray($request);
+
+        if (isset($data['select_active'])) {
+            $data['select_active'] = $data['select_active'] == '1' ? true : false;
+        }
+
+        if (isset($data['select_price'])) {
+            $data['select_price'] = (float) $data['select_price'];
+        }
+
+        return $data;
     }
 }

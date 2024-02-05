@@ -22,20 +22,9 @@ class UpdateOrganizerFeeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'organizer_id' => "required|integer",
             'name' => 'required|max:25',
             'price' => 'required|numeric',
             'active' => 'required|boolean'
         ];
-    }
-
-    /**
-     * Prepare inputs for validation
-     */
-    public function prepareForValidation(): void
-    {
-        $this->merge([
-            'organizer_id' => $this->organizer->id
-        ]);
     }
 }

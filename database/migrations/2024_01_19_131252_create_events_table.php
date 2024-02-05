@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('slug', 25);
             $table->string('title', 125);
             $table->string('description', 250);
+            $table->decimal('price')->nullable();
             $table->dateTime('expected_start_at');
             $table->dateTime('expected_end_at');
             $table->dateTime('actual_started_at')->nullable();

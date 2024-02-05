@@ -10,7 +10,7 @@ import { memo } from "react";
 
 export default memo(function Calendar({ value, onChange }) {
     const [tab, setTab] = useState("date");
-
+    console.log("date");
     return (
         <>
             <div className="flex items-center justify-start w-full gap-2 uppercase mb-5">
@@ -34,8 +34,8 @@ export default memo(function Calendar({ value, onChange }) {
 
             {tab == "date" && (
                 <CalendarDate
-                    onChange={(e) => {
-                        onChange(e);
+                    onChange={(date) => {
+                        onChange(date);
                         setTab("time");
                     }}
                     date={moment(value, dateFormat).toDate()}

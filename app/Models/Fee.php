@@ -12,6 +12,18 @@ class Fee extends Model
     protected $fillable = [
         'model_type',
         'model_id',
-        'event_id'
+        'event_id',
+        'active',
+        'price'
     ];
+
+    protected $casts = [
+        'active' => 'boolean',
+        'price' => 'decimal:2'
+    ];
+
+    public function model()
+    {
+        return $this->morphTo();
+    }
 }

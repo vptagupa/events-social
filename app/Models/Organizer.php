@@ -49,4 +49,9 @@ class Organizer extends Authenticatable
     {
         return $this->hasMany(OrganizerFee::class);
     }
+
+    public function activeFees()
+    {
+        return $this->fees()->active();
+    }
 }

@@ -4,7 +4,7 @@ import { PrimarySwitch } from "@/js/components/switch";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { memo } from "react";
-import Breadown from "./components/price/breakdown";
+import Breadown from "../price/breakdown";
 
 export default memo(function Offer({
     event,

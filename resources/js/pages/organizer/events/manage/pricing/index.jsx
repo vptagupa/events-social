@@ -5,8 +5,8 @@ import { faFloppyDisk } from "@fortawesome/free-regular-svg-icons";
 import { useState, useEffect, useMemo, useCallback } from "react";
 
 import { useControl } from "./control";
-import Offers from "./offers";
-import Price from "./price";
+import Offers from "./components/offers";
+import Price from "./components/price";
 import Sidebar from "./sidebar";
 import { router } from "@inertiajs/react";
 

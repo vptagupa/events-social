@@ -140,7 +140,7 @@ class EventsController extends Controller
     /**
      * Activate the specified resource from storage
      */
-    public function activate(Event $event)
+    public function activate(Organizer $organizer, Event $event)
     {
         $this->repository->activate($event->id);
     }

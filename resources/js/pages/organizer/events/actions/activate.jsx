@@ -23,10 +23,10 @@ export default function Activate({ url, active = false }) {
                 className="cursor-pointer flex items-center"
             >
                 <Checkbox
-                    className={`cursor-pointer h-5 w-5 bg-blue-300 ring-0 hover:scale-105 transition-all duration-100
+                    className={`cursor-pointer h-5 w-5 bg-purple-300 ring-0 hover:scale-105 transition-all duration-100
                     ${
                         _active
-                            ? "checked:bg-blue-500/80 checked:hover:bg-blue-600 checked:ring-0"
+                            ? "checked:bg-purple-500/80 checked:hover:bg-purple-600 checked:ring-0"
                             : ""
                     }
                     ${processing ? "animate-bounce" : ""}`}

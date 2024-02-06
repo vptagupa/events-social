@@ -7,7 +7,10 @@ export default function Sidebar({ event }) {
                 {menus.map((menu, idx) => (
                     <li key={idx} className="cursor-pointer text-center p-1">
                         <Link
-                            href={menu.url(event.organizer_id, event.id)}
+                            href={menu.url({
+                                organizer: event.organizer_id,
+                                event: event.id,
+                            })}
                             className="flex gap-x-1 w-full items-center justify-center group"
                         >
                             {menu.icon}

@@ -6,7 +6,7 @@ export default memo(function Breakdown({ event, price }) {
 
     useEffect(() => {
         const controller = new AbortController();
-        const get = async (price) => {
+        const get = async (price = 0) => {
             const res = await axios.post(
                 route("organizer.events.pricing.payment", {
                     event: event.id,

@@ -23,4 +23,9 @@ class SystemFee extends Model
     {
         return $this->morphMany(Fee::class, 'model');
     }
+
+    public function scopeActive($query)
+    {
+        $query->whereActive(1);
+    }
 }

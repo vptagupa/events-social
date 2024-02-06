@@ -13,7 +13,7 @@ class AdminRepository extends Repository
         // 
     }
 
-    public function create(array $data)
+    public function create(array $data): Admin
     {
         if (!isset($data['password'])) {
             $data['password'] = bcrypt(config('auth.password_default'));

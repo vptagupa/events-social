@@ -30,6 +30,8 @@ export default function Edit({ event }) {
 
     const submit = (e) => {
         e.preventDefault();
+        if (processing) return;
+        
         form.submit({
             preseverScroll: true,
             preserveState: true,

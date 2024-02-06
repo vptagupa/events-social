@@ -27,9 +27,10 @@ trait OrganizerFeeConditions
                 \DB::raw('organizer_fees.*'),
                 \DB::raw('IFNULL(fees.price, organizer_fees.price) as select_price'),
                 \DB::raw('fees.active as select_active'),
-            ])->leftJoin('fees', function ($builder) {
+            ])->leftJoin('fees', function ($builder) use ($query) {
                 $builder->on('fees.model_id', '=', 'organizer_fees.id')
-                    ->where('model_type', OrganizerFee::class);
+                    ->where('model_type', OrganizerFee::class)
+                    ->where('event_id', $query['event_id']);
             });
         });
     }

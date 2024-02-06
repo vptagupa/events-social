@@ -16,7 +16,7 @@ const menuIconClasses =
 export const menus = [
     {
         title: "Registration Form",
-        url: (event) =>
+        url: ({ event }) =>
             route("organizer.events.registration-form.index", event),
         icon: (
             <FontAwesomeIcon
@@ -28,7 +28,7 @@ export const menus = [
     },
     {
         title: "Details",
-        url: (organizer, event) =>
+        url: ({ organizer, event }) =>
             route("organizer.events.edit", { organizer, event }),
         icon: (
             <FontAwesomeIcon
@@ -40,7 +40,7 @@ export const menus = [
     },
     {
         title: "Pricing",
-        url: (organizer, event) =>
+        url: ({ organizer, event }) =>
             route("organizer.events.pricing.index", { event }),
         icon: (
             <FontAwesomeIcon

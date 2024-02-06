@@ -53,6 +53,23 @@ class Event extends Model
         'is_allowed_payment_integration'
     ];
 
+    public static function booted()
+    {
+        static::created(function (Event $event) {
+            $fees = SystemFee::active()->get();
+            $event->systemFees()->saveMany($fees->map(function (SystemFee $fee) {
+                return new Fee(
+                    [
+                        'model_type' => SystemFee::class,
+                        'model_id' => $fee->id,
+                        'price' => $fee->price,
+                        'active' => 1
+                    ]
+                );
+            }));
+        });
+    }
+
     public function organizer()
     {
         return $this->belongsTo(Organizer::class);

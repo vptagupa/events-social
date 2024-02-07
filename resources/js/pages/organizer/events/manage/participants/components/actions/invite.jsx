@@ -23,11 +23,7 @@ export default memo(function Invite({ event }) {
         form.submit({
             preseverScroll: true,
             preserveState: true,
-            onSuccess: () => {
-                setSuccess(true);
-                Event.emit("reload");
-            },
-            onError: () => setSuccess(false),
+            onSuccess: () => Event.emit("reload"),
         });
     };
 
@@ -58,10 +54,10 @@ export default memo(function Invite({ event }) {
                         className={`h-5 ${
                             form.processing
                                 ? "animate-bounce text-amber-300"
-                                : success !== null
-                                ? success === true
-                                    ? "text-success"
-                                    : "text-danger"
+                                : form.recentlySuccessful
+                                ? "text-success"
+                                : form.hasErrors
+                                ? "text-danger"
                                 : ""
                         }`}
                     />

@@ -76,6 +76,8 @@ class Participant extends Authenticatable
 
     public function scopeWorkshop($query, int $event)
     {
-        return $query->whereEventId($event);
+        return $query->whereHas('workshops', function ($builder) use ($event) {
+            $builder->whereEventId($event);
+        });
     }
 }

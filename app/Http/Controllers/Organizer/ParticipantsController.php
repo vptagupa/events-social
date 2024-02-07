@@ -43,6 +43,7 @@ class ParticipantsController extends Controller
                     'query' => $request->get('query'),
                     'event_id' => $event->id
                 ],
+                orderBy: ['id', 'desc'],
                 paginate: true,
                 perPage: $request->get('per_page'),
             )

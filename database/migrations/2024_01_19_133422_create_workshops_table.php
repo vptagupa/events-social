@@ -13,6 +13,7 @@ return new class extends Migration {
     {
         Schema::create('workshops', function (Blueprint $table) {
             $table->id();
+            $table->uuid();
             $table->string('code', 15);
             $table->foreignId('event_id')->constrained('events');
             $table->foreignId('participant_id')->constrained('participants');

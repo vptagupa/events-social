@@ -20,6 +20,9 @@ class EventsSeeder extends Seeder
                 "title" => "Event",
                 'slug' => 'event',
                 'description' => 'Event',
+                'place' => 'SMX',
+                'address' => 'Mall of Asia',
+                'map' => "",
                 'expected_start_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'expected_end_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'organizer_id' => Organizer::first()->id

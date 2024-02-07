@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Frontend\ParticipantController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 
@@ -30,4 +31,12 @@ use App\Http\Controllers\Admin\DashboardController;
 //         Route::get('/', [DashboardController::class, 'index'])->name('index');
 //     });
 // });
+
+Route::controller(ParticipantController::class)->group(function () {
+    Route::name('invitation.')->prefix('invitation')->group(function () {
+        Route::get('/accepted/{workshop:uuid}', 'accepted')->name('accepted');
+    });
+
+    Route::get('/registration/{workshop:uuid}', 'registration')->name('registration');
+});
 

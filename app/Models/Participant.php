@@ -16,6 +16,7 @@ use Laravel\Sanctum\HasApiTokens;
 class Participant extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    use Notifications\ParticipantNotification;
 
     /**
      * The attributes that are mass assignable.
@@ -73,12 +74,8 @@ class Participant extends Authenticatable
         return $this->hasMany(Workshop::class);
     }
 
-    public function workshop(?int $event = null): HasOne
+    public function scopeWorkshop($query, int $event)
     {
-        return $this->workshops()->one()->ofMany(['id' => 'max'], function ($builder) use ($event) {
-            if (!is_null($event)) {
-                $builder->whereEventId($event);
-            }
-        });
+        return $query->whereEventId($event);
     }
 }

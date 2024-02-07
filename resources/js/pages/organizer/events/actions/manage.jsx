@@ -8,7 +8,7 @@ export default function Manage({ value }) {
             <div className="cursor-pointer" title="Manage" onClick={(e) => {}}>
                 <Link
                     href={route(
-                        "organizer.events.registration-form.index",
+                        "organizer.events.participants.index",
                         value.id
                     )}
                 >

@@ -3,7 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\PaymentStatus;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -20,7 +25,9 @@ class Participant extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'confirmed_at',
         'password',
+        'login_at',
     ];
 
     /**
@@ -41,5 +48,37 @@ class Participant extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'confirmed_at' => 'datetime',
+        'login_at' => 'datetime',
     ];
+
+    protected $appends = [
+        'is_confirmed'
+    ];
+
+    public function isConfirmed(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->confirmed_at ? true : false
+        );
+    }
+
+    public function event(): BelongsTo
+    {
+        return $this->belongsTo(Event::class);
+    }
+
+    public function workshops(): HasMany
+    {
+        return $this->hasMany(Workshop::class);
+    }
+
+    public function workshop(?int $event = null): HasOne
+    {
+        return $this->workshops()->one()->ofMany(['id' => 'max'], function ($builder) use ($event) {
+            if (!is_null($event)) {
+                $builder->whereEventId($event);
+            }
+        });
+    }
 }

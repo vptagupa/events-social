@@ -10,9 +10,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('participant_certificates', function (Blueprint $table) {
+        Schema::create('certificates', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('participant_event_id')->constrained('events');
+            $table->foreignId('workshop_id')->constrained('workshops');
             $table->string('url');
             $table->unsignedInteger('downloads');
             $table->timestamps();
@@ -24,6 +24,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('participant_certificates');
+        Schema::dropIfExists('certificates');
     }
 };

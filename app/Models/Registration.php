@@ -5,20 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RegistrationForm extends Model
+class Registration extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'schema'
+        'workshop_id',
+        'name',
+        'value'
     ];
 
-    protected $casts = [
-        'schema' => 'array'
-    ];
-
-    public function event()
+    public function workshop()
     {
-        return $this->belongsTo(Event::class);
+        return $this->belongsTo(Workshop::class);
     }
 }

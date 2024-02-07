@@ -15,6 +15,18 @@ const menuIconClasses =
 
 export const menus = [
     {
+        title: "Participants",
+        url: ({ event }) =>
+            route("organizer.events.participants.index", { event }),
+        icon: (
+            <FontAwesomeIcon
+                icon={faPerson}
+                title="Participants"
+                className={`${menuIconClasses} !h-7`}
+            />
+        ),
+    },
+    {
         title: "Registration Form",
         url: ({ event }) =>
             route("organizer.events.registration-form.index", event),
@@ -51,24 +63,13 @@ export const menus = [
         ),
     },
     {
-        title: "Participants",
-        url: () => "",
-        icon: (
-            <FontAwesomeIcon
-                icon={faPerson}
-                title="Participants"
-                className={`${menuIconClasses} !h-7`}
-            />
-        ),
-    },
-    {
         title: "Members",
         url: () => "",
         icon: (
             <FontAwesomeIcon
                 icon={faUserClock}
                 title="Members"
-                className={`${menuIconClasses} hover:!scale-105`}
+                className={`${menuIconClasses} !h-6 hover:!scale-105`}
             />
         ),
     },

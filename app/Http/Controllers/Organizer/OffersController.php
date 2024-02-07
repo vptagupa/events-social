@@ -36,7 +36,6 @@ class OffersController extends Controller
      */
     public function store(StorePricingRequest $request, Event $event)
     {
-        \Log::info($request->get('offers'));
         $this->event->saveOffers($event->id, $request->only([
             'price'
         ]), $request->get('offers'));
@@ -47,7 +46,11 @@ class OffersController extends Controller
      */
     public function payment(Request $request, Event $event)
     {
-        return Payment::calculate($event->id, $request->get('price'), config('payment.tax'));
+        return Payment::calculate(
+            $event->id,
+            $request->get('price'),
+            config('system.include_tax') ? config('system.tax') : 0
+        );
     }
 
     /**

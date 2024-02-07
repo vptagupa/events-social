@@ -13,12 +13,12 @@ class Repository
         return $this->model;
     }
 
-    public function create(array $data): Model
+    public function create(array $data): ?Model
     {
         return $this->model()->create($data);
     }
 
-    public function update(array $data, $id, $key = 'id'): Model
+    public function update(array $data, $id, $key = 'id'): ?Model
     {
         $model = $this->model()->where($key, $id)->first();
 

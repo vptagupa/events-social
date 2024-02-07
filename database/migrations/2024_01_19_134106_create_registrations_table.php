@@ -10,10 +10,11 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('event_registration_forms', function (Blueprint $table) {
+        Schema::create('registrations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('event_id')->constrained('events');
-            $table->json('schema');
+            $table->foreignId('workshop_id')->constrained('workshops');
+            $table->string('name', 35);
+            $table->string('value');
             $table->timestamps();
         });
     }
@@ -23,6 +24,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('event_registration_forms');
+        Schema::dropIfExists('registrations');
     }
 };

@@ -116,7 +116,7 @@
     }
 
     .hover-pointer {
-        @apply hover:scale-125 transition-all ease-in-out delay-75 duration-150;
+        @apply cursor-pointer hover:scale-125 transition-all ease-in-out delay-75 duration-150;
     }
 
 }

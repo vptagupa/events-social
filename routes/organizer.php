@@ -6,6 +6,7 @@ use App\Http\Controllers\Organizer\FeesController;
 use App\Http\Controllers\Organizer\FeeController;
 use App\Http\Controllers\Organizer\EventsController;
 use App\Http\Controllers\Organizer\OffersController;
+use App\Http\Controllers\Organizer\ParticipantsController;
 use App\Http\Controllers\Organizer\RegistrationFormController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,29 +25,37 @@ Route::name('organizer.')->prefix('organizer')->group(function () {
     Route::controller(EventsController::class)->prefix('events')->name('events.')->group(function () {
         Route::get('/', 'any')->name('any');
         Route::post('/list', 'anyList')->name('anyList');
-        Route::controller(RegistrationFormController::class)->name('registration-form.')->prefix('{event}/registration-form')->group(function () {
-            Route::get('/', 'index')->name('index');
-            Route::post('/', 'store')->name('store');
-            Route::delete('/', 'destroy')->name('destroy');
-        });
-        Route::controller(OffersController::class)->name('pricing.')->prefix('{event}/pricing')->group(function () {
-            Route::get('/', 'index')->name('index');
-            Route::post('/store', 'store')->name('store');
-            Route::post('/payment', 'payment')->name('payment');
-            Route::delete('/', 'destroy')->name('destroy');
-        });
 
-        Route::controller(EventSettingController::class)->name('settings.')->prefix('{event}/settings')->group(function () {
-            Route::post('/', 'list')->name('list');
-            Route::patch('{setting}/', 'update')->name('update');
-        });
-        Route::controller(FeeController::class)->name('fees.')->prefix('{event}/fees')->group(function () {
-            Route::post('/', 'list')->name('list');
-            Route::patch('{fee}/', 'update')->name('update');
-        });
-        Route::controller(SystemFeeController::class)->name('sysfees.')->prefix('{event}/sysfees')->group(function () {
-            Route::post('/', 'list')->name('list');
-            Route::patch('{fee}/', 'update')->name('update');
+        Route::prefix('{event}')->group(function () {
+            Route::controller(RegistrationFormController::class)->name('registration-form.')->prefix('registration-form')->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::post('/', 'store')->name('store');
+                Route::delete('/', 'destroy')->name('destroy');
+            });
+            Route::controller(OffersController::class)->name('pricing.')->prefix('pricing')->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::post('/store', 'store')->name('store');
+                Route::post('/payment', 'payment')->name('payment');
+                Route::delete('/', 'destroy')->name('destroy');
+            });
+            Route::controller(EventSettingController::class)->name('settings.')->prefix('settings')->group(function () {
+                Route::post('/', 'list')->name('list');
+                Route::patch('{setting}/', 'update')->name('update');
+            });
+            Route::controller(FeeController::class)->name('fees.')->prefix('fees')->group(function () {
+                Route::post('/', 'list')->name('list');
+                Route::patch('{fee}/', 'update')->name('update');
+            });
+            Route::controller(SystemFeeController::class)->name('sysfees.')->prefix('sysfees')->group(function () {
+                Route::post('/', 'list')->name('list');
+                Route::patch('{fee}/', 'update')->name('update');
+            });
+            Route::controller(ParticipantsController::class)->name('participants.')->prefix('participants')->group(function () {
+                Route::post('/list', 'list')->name('list');
+                Route::post('/invite', 'invite')->name('invite');
+                Route::post('{participant}/upload-proof-of-payment', 'uploadProofOfPayment')->name('upp');
+            });
+            Route::resource('participants', ParticipantsController::class)->except(['create', 'edit']);
         });
     });
     Route::controller(EventsController::class)->prefix('{organizer}/events')->name('events.')->group(function () {

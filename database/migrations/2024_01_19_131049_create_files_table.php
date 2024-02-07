@@ -14,11 +14,10 @@ return new class extends Migration {
             $table->id();
             $table->string('filename');
             $table->string('orig_filename');
-            $table->string('uri');
             $table->string('path');
             $table->string('type');
+            $table->string('uri')->nullable();
             $table->string('size')->nullable();
-            $table->morphs('created');
             $table->timestamps();
         });
     }

@@ -67,8 +67,6 @@ trait EventSetting
 
         Cache::forget($key);
 
-        $cache = $cache($name, $data);
-
         return $this->hasSetting($name);
     }
 }

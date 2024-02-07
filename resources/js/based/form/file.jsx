@@ -12,12 +12,13 @@ export default function File({
     title,
     error,
     remove,
+    value,
     className = "",
     classNameIcon = "",
     ...props
 }) {
     const file = useRef();
-    const media = file.current?.files[0];
+    const media = file.current?.files[0] || value;
     return (
         <>
             <div className="block text-center text-xs">{title}</div>

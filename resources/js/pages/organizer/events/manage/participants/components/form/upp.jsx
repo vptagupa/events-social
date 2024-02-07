@@ -3,7 +3,7 @@ import { File } from "@/js/based/form";
 import { AlertSuccess, AlertDanger } from "@/js/components/alerts";
 import { Transition } from "@headlessui/react";
 
-export default function Component({ form, file, handleRemove }) {
+export default function Component({ form, handleRemove }) {
     return (
         <Form className="text-sm">
             <div className="mb-2">
@@ -19,8 +19,9 @@ export default function Component({ form, file, handleRemove }) {
                 title={
                     "Upload proof of payment in image format (jpg and png only)."
                 }
-                value={form.data.upp}
+                value={form.data?.file ?? ""}
                 onChange={(e) => {
+                    console.log(e.target.files[0]);
                     form.setData("file", e.target.files[0]);
                 }}
                 accept=" .jpg, .jpeg, .png, .mp4"

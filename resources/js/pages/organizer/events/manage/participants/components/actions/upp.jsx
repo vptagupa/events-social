@@ -6,10 +6,9 @@ import { useForm } from "@/js/helpers/form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileArrowUp } from "@fortawesome/free-solid-svg-icons";
 import Close from "../close";
-import { memo, useRef } from "react";
+import { memo } from "react";
 
 export default memo(function Upp({ value }) {
-    const file = useRef();
     const { open, setOpen, form, closeForm } = useForm({
         method: "post",
         route: route("organizer.events.participants.upp", {
@@ -58,7 +57,7 @@ export default memo(function Upp({ value }) {
                     Upload Proof of Payment for{" "}
                     {value?.name ?? "code " + value.workshops[0].code}
                 </Title>
-                <UppForm form={form} file={file} handleRemove={handleRemove} />
+                <UppForm form={form} handleRemove={handleRemove} />
                 <Footer>
                     <FooterForm
                         form={form}

@@ -67,9 +67,7 @@ class ParticipantRepository extends Repository
             $workshop = $workshop();
 
             if ($data['file'] instanceof UploadedFile) {
-                $file = $this->saveFile($data['file']);
-
-                $transaction->file()->associate($file);
+                $transaction->file()->associate($this->saveFile($data['file']));
                 $transaction->save();
 
                 $workshop->payment_status = PaymentStatus::SUBMITTED;
@@ -83,6 +81,7 @@ class ParticipantRepository extends Repository
      * @param array $data
      * @expected $data {email, event_id}
      * @sideEffect send invitation email
+     * @throws \Exception
      */
     public function sendInvitation(array $data)
     {

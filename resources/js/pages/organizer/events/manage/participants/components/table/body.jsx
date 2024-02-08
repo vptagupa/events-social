@@ -20,8 +20,7 @@ import {
 import Invite from "../actions/invite";
 import Edit from "../actions/edit";
 import Upp from "../actions/upp";
-import Delete from "../actions/delete";
-import RegForm from "../actions/reg";
+import Registration from "../actions/registration";
 import More from "../actions/more";
 
 const Component = ({
@@ -99,7 +98,7 @@ const Component = ({
 
                                         <Td>
                                             <div className="flex space-x-2 justify-end">
-                                                <RegForm value={item} />
+                                                <Registration value={item} />
                                                 <Edit value={item} />
                                                 <Upp value={item} />
                                                 <More value={item} />

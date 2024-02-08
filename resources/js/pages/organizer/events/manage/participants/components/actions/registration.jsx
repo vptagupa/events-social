@@ -6,11 +6,9 @@ import { faWpforms } from "@fortawesome/free-brands-svg-icons";
 export default memo(function RegistrationForm({ value }) {
     return (
         <>
-            <Link
-                href={route("organizer.events.participants.show", {
-                    event: value.workshops[0].event_id,
-                    participant: value.id,
-                })}
+            <a
+                href={route("registration", value.workshops[0].uuid)}
+                target="_blank"
                 title="Registration Form"
                 className="cursor-pointer"
             >
@@ -18,7 +16,7 @@ export default memo(function RegistrationForm({ value }) {
                     icon={faWpforms}
                     className="h-5 text-pink-300 hover:text-pink-600 hover:scale-105 transition-all duration-100"
                 />
-            </Link>
+            </a>
         </>
     );
 });

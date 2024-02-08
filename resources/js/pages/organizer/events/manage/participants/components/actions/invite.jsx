@@ -8,7 +8,7 @@ import { memo, useState } from "react";
 
 export default memo(function Invite({ event }) {
     const [success, setSuccess] = useState(null);
-    const { form } = useForm({
+    const { form, clearForm } = useForm({
         method: "post",
         route: route("organizer.events.participants.invite", event.id),
         data: {
@@ -23,7 +23,12 @@ export default memo(function Invite({ event }) {
         form.submit({
             preseverScroll: true,
             preserveState: true,
-            onSuccess: () => Event.emit("reload"),
+            onSuccess: () => {
+                setTimeout(() => {
+                    clearForm();
+                }, 2000);
+                Event.emit("reload");
+            },
         });
     };
 
@@ -42,6 +47,7 @@ export default memo(function Invite({ event }) {
                     type="text"
                     placeholder="Type email address to invite"
                     className="border-r-0 rounded-r-none lg:w-96"
+                    value={form.data.email}
                     onChange={(e) => form.setData("email", e.target.value)}
                 />
                 <Button

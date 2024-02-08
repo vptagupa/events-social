@@ -31,14 +31,16 @@ export default memo(function Delete({ value }) {
         <>
             <div
                 title="Remove"
-                className="cursor-pointer"
+                className="cursor-pointer flex items-center justify-start gap-x-2 "
                 onClick={(e) => setOpen(true)}
             >
                 <FontAwesomeIcon
                     icon={faCircleMinus}
-                    className="h-5 text-pink-300 hover:text-pink-600 hover:scale-105 transition-all duration-100"
+                    className="h-5 text-primary hover-pointer group-hover:text-slate-200"
                 />
+                Delete
             </div>
+
             <Confirm
                 open={open}
                 title="Delete"

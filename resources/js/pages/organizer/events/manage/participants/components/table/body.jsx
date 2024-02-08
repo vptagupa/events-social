@@ -22,6 +22,7 @@ import Edit from "../actions/edit";
 import Upp from "../actions/upp";
 import Delete from "../actions/delete";
 import RegForm from "../actions/reg";
+import More from "../actions/more";
 
 const Component = ({
     event,
@@ -101,7 +102,7 @@ const Component = ({
                                                 <RegForm value={item} />
                                                 <Edit value={item} />
                                                 <Upp value={item} />
-                                                <Delete value={item} />
+                                                <More value={item} />
                                             </div>
                                         </Td>
                                     </Tr>

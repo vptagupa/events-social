@@ -24,6 +24,7 @@ export default function Component({
     selectRemove,
     changeConfig,
     configActive,
+    changeProperty,
 }) {
     return (
         <Drop
@@ -47,7 +48,9 @@ export default function Component({
         >
             <div className="flex component">
                 <div className={`grow`}>
-                    {["text", "notes"].includes(component.type) && (
+                    {["text", "notes", "label", "heading"].includes(
+                        component.type
+                    ) && (
                         <Text
                             placeholder={component.config?.placeholder}
                             value={component.config?.defaultValue ?? ""}
@@ -198,6 +201,16 @@ export default function Component({
                                 component,
                                 value,
                                 text
+                            )
+                        }
+                        changeProperty={(type, value) =>
+                            changeProperty(
+                                flex,
+                                grid,
+                                column,
+                                component,
+                                type,
+                                value
                             )
                         }
                         selectRemove={(option) =>

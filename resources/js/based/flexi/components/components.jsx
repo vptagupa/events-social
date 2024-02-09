@@ -30,6 +30,7 @@ export default function Components({ components, flex, grid, column, flexia }) {
                 selectRemove={flexia.selectRemove}
                 configActive={flexia.configActive}
                 changeConfig={flexia.changeConfig}
+                changeProperty={flexia.changeProperty}
             />
         );
     });

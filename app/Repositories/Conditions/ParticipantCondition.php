@@ -12,7 +12,10 @@ trait ParticipantCondition
                 'workshops' => function ($builder) use ($query) {
                     $builder->where('event_id', $query['event_id']);
                 }
-            ]);
+            ])
+                ->whereHas('workshops', function ($builder) use ($query) {
+                    $builder->where('event_id', $query['event_id']);
+                });
         });
     }
 

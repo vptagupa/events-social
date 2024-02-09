@@ -168,6 +168,18 @@ export const useFlexi = (schema) => {
         set({ ...data });
     };
 
+    const changeProperty = (flex, grid, column, component, type, value) => {
+        component.config = {
+            ...component.config,
+            properties: {
+                ...component.config.properties,
+                [type]: value,
+            },
+        };
+
+        set({ ...data });
+    };
+
     const selectChange = (
         flex,
         grid,
@@ -337,5 +349,6 @@ export const useFlexi = (schema) => {
         changeConfig,
         configActive,
         flexToggleShow,
+        changeProperty,
     };
 };

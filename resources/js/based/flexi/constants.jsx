@@ -6,7 +6,6 @@ export const config = {
     defaultValue: "",
     form: [
         "name",
-        "label",
         "class",
         "style",
         "condition",
@@ -14,6 +13,8 @@ export const config = {
         "default value",
         "is required",
         "select",
+        "is number",
+        "file types",
     ],
 };
 
@@ -81,13 +82,13 @@ export const attributes = [
     },
     {
         ...attribute,
-        title: "Columns",
+        title: "Column",
         type: "column",
     },
     {
         ...attribute,
         title: "Text",
-        type: "text",
+        type: "Input",
     },
     {
         ...attribute,
@@ -118,6 +119,34 @@ export const attributes = [
         ...attribute,
         title: "Notes",
         type: "notes",
+        config: {
+            ...attribute.config,
+            form: ["class", "style", "default value"],
+            properties: {
+                types: ["info", "success", "danger", "warning"],
+            },
+        },
+    },
+    {
+        ...attribute,
+        title: "Label",
+        type: "label",
+        config: {
+            ...attribute.config,
+            form: ["class", "style", "default value"],
+        },
+    },
+    {
+        ...attribute,
+        title: "Heading",
+        type: "heading",
+        config: {
+            ...attribute.config,
+            form: ["class", "style", "default value"],
+            properties: {
+                types: ["h1", "h2", "h3"],
+            },
+        },
     },
 ];
 

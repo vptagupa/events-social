@@ -12,7 +12,7 @@ export default function Index({ children, props }) {
                         {import.meta.env.VITE_APP_NAME}
                     </div>
                     <div className="box-border border-0 border-red-600 flex items-center justify-center">
-                        <div className="m-2 p-4 w-full rounded-md bg-gradient-to-r from-rose-500 to-rose-600 text-white text-md">
+                        <div className="m-2 p-4 w-full rounded-md bg-gradient-to-r from-slate-500 to-slate-600 text-white text-md">
                             <ol>
                                 {topMenu.map((menu, idx) => (
                                     <li key={idx} className="float-left px-2">
@@ -30,9 +30,7 @@ export default function Index({ children, props }) {
                         {children}
                     </div>
                 </div>
-                <div className="box-border min-h-[200px] border-0 border-blue-900 w-full p-2">
-                    Footer
-                </div>
+                <div className="box-border min-h-[200px] border-0 border-blue-900 w-full p-2"></div>
             </div>
         </>
     );

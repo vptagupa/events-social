@@ -7,27 +7,41 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRef } from "react";
 import LoadFile from "./media/load";
+import { useState } from "react";
 
 export default function File({
     title,
     error,
     remove,
     value,
+    label,
+    onChange,
     className = "",
     classNameIcon = "",
     ...props
 }) {
-    const file = useRef();
-    const media = file.current?.files[0] || value;
+    const [file, setFile] = useState(value);
+    const ref = useRef();
+
     return (
-        <>
-            <div className="block text-center text-xs">{title}</div>
-            {!media && (
+        <div
+            className="p-4 w-full shadow-sm border-0 ring-1 ring-slate-300
+        text-sm rounded-lg focus:outline-purple-300
+        disabled:bg-slate-300 my-2"
+        >
+            <div className="block text-center">{title}</div>
+            {label && <div className="block text-center text-xs">{label}</div>}
+
+            {!file && (
                 <div className="block p-1">
                     <Input
-                        ref={file}
+                        ref={ref}
                         type="file"
                         className={`hidden ${className}`}
+                        onChange={(e) => {
+                            setFile(e.target.files[0]);
+                            onChange(e.target.files[0]);
+                        }}
                         {...props}
                     />
                     <div className="flex items-center justify-center m-3">
@@ -35,26 +49,23 @@ export default function File({
                             title={title}
                             icon={faArrowUpFromBracket}
                             className={`h-8 text-slate-300 hover-pointer ${classNameIcon}`}
-                            onClick={(e) => file.current.click()}
+                            onClick={(e) => ref.current.click()}
                         />
                     </div>
-
-                    {error && (
-                        <span className="block text-danger text-xs text-center">
-                            {error}
-                        </span>
-                    )}
                 </div>
             )}
-            {media && (
+            {file && (
                 <div className="flex flex-col gap-y-2 items-center justify-center p-4">
                     <div className="w-[80%] md:w-[70%] text-center bg-slate-200/70 border border-slate-200 rounded-md p-2">
-                        <LoadFile file={media} />
+                        <LoadFile file={file} />
                     </div>
                     <div>
                         <span
                             className="flex items-center gap-x-1 underline hover-pointer  text-xs float-right"
-                            onClick={remove}
+                            onClick={(e) => {
+                                setFile(null);
+                                if (remove) remove();
+                            }}
                         >
                             <FontAwesomeIcon
                                 title="Remove"
@@ -66,6 +77,11 @@ export default function File({
                     </div>
                 </div>
             )}
-        </>
+            {error && (
+                <div className="block text-danger text-xs text-center">
+                    {error}
+                </div>
+            )}
+        </div>
     );
 }

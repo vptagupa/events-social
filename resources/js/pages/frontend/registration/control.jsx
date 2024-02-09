@@ -62,7 +62,6 @@ export const useControl = (flexis) => {
                         (component.config?.name ? "The " : "This") +
                         (component.config?.name ?? "") +
                         " field is required.";
-                    console.log(component);
                 }
             }
         };
@@ -70,7 +69,7 @@ export const useControl = (flexis) => {
         griddable(form.grids);
 
         setData([...data]);
-        console.log(data);
+
         return valid;
     };
 

@@ -1,4 +1,14 @@
-import { Input, Select, Textarea, Check } from "@/js/based/form";
+import {
+    Input,
+    Select,
+    Textarea,
+    Check,
+    File,
+    Radio,
+    Label,
+    Notes,
+    Heading,
+} from "@/js/based/form";
 import { ControlContext } from "../context";
 import { useContext } from "react";
 
@@ -10,6 +20,8 @@ export default function Component({ value }) {
         placeholder: value.config?.placeholder ?? "Enter text here",
         value: value.config?.defaultValue ?? "",
         error: value?.error,
+        className: value.config?.class ?? "",
+        // style: value.config?.style ?? "",
     };
 
     if (value?.value) {
@@ -22,6 +34,7 @@ export default function Component({ value }) {
     if (value.type == "text") {
         return (
             <Input
+                type={value.config?.is_number ? "number" : "text"}
                 {...props}
                 onChange={(e) => control.handleChange(value, e.target.value)}
             />
@@ -56,10 +69,44 @@ export default function Component({ value }) {
         );
     } else if (value.type == "radio") {
         return (
-            <Check
+            <Radio
                 {...props}
                 checked={value?.value ?? false}
                 onChange={(e) => control.handleChange(value, e.target.checked)}
+            />
+        );
+    } else if (value.type == "file") {
+        return (
+            <File
+                {...props}
+                accept={(value.config?.file_types ?? "")
+                    .split(",")
+                    .map((type) => (type[0] == "." ? type : "." + type))
+                    .join(",")}
+                label={
+                    "Acceptable format: " + value.config?.file_types ??
+                    "any files"
+                }
+                remove={(e) => control.handleChange(value, null)}
+                onChange={(file) => control.handleChange(value, file)}
+            />
+        );
+    } else if (value.type == "label") {
+        return <Label value={props.value} />;
+    } else if (value.type == "notes") {
+        return (
+            <Notes
+                className={props.className}
+                value={props.value}
+                type={value.config?.properties?.type}
+            />
+        );
+    } else if (value.type == "heading") {
+        return (
+            <Heading
+                className={props.className}
+                value={props.value}
+                type={value.config?.properties?.type}
             />
         );
     }

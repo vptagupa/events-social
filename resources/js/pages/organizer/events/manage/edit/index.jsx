@@ -23,6 +23,9 @@ export default function Edit({ event }) {
             title: event.title,
             slug: event.slug,
             description: event.description,
+            place: value.place,
+            address: value.address,
+            map: value.map,
             start_at: event.expected_start_at,
             end_at: event.expected_end_at,
         },
@@ -31,7 +34,7 @@ export default function Edit({ event }) {
     const submit = (e) => {
         e.preventDefault();
         if (processing) return;
-        
+
         form.submit({
             preseverScroll: true,
             preserveState: true,

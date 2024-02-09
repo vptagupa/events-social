@@ -15,6 +15,9 @@ export default memo(function Edit({ value, url }) {
         data: {
             title: value.title,
             description: value.description,
+            place: value.place,
+            address: value.address,
+            map: value.map,
             start_at: value.expected_start_at,
             end_at: value.expected_end_at,
         },

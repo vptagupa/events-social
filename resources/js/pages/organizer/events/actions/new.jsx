@@ -18,6 +18,9 @@ export default memo(function New({ url }) {
         data: {
             title: "",
             description: "",
+            place: "",
+            address: "",
+            map: "",
             start_at: moment(new Date(), dateFormat).format(dateFormat),
             end_at: moment(new Date(), dateFormat).format(dateFormat),
         },

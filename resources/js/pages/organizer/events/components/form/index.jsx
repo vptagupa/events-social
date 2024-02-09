@@ -52,6 +52,61 @@ export default function Component({ form }) {
                     </span>
                 )}
             </div>
+            <div className="block p-2">
+                <span className="font-medium text-gray-600">Place</span>
+                <Input
+                    type="text"
+                    name="place"
+                    value={form.data.place}
+                    maxLength="125"
+                    className={`${
+                        form.invalid("place") ? "border-danger" : ""
+                    } my-2`}
+                    onChange={(e) => form.setData("place", e.target.value)}
+                />
+                {form.invalid("place") && (
+                    <span className="text-danger text-xs">
+                        {form.errors.place}
+                    </span>
+                )}
+            </div>
+            <div className="block p-2">
+                <span className="font-medium text-gray-600">Address</span>
+                <Textarea
+                    name="address"
+                    maxLength="250"
+                    className={`${
+                        form.invalid("address") ? "border-danger" : ""
+                    } my-2`}
+                    value={form.data.address}
+                    onChange={(e) => form.setData("address", e.target.value)}
+                >
+                    {form.data.address}
+                </Textarea>
+                {form.invalid("address") && (
+                    <span className="text-danger text-xs">
+                        {form.errors.address}
+                    </span>
+                )}
+            </div>
+            <div className="block p-2">
+                <span className="font-medium text-gray-600">Map Address</span>
+                <Input
+                    type="text"
+                    name="map"
+                    value={form.data.map}
+                    maxLength="125"
+                    className={`${
+                        form.invalid("map") ? "border-danger" : ""
+                    } my-2`}
+                    onChange={(e) => form.setData("map", e.target.value)}
+                />
+                {form.invalid("map") && (
+                    <span className="text-danger text-xs">
+                        {form.errors.map}
+                    </span>
+                )}
+            </div>
             <div className="p-2">
                 <div className="flex justify-between ">
                     <span className="font-medium text-gray-600">

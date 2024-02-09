@@ -24,8 +24,14 @@ class ParticipantController extends Controller
     /**
      * Show resource for registration
      */
-    public function registration(Workshop $workshop)
+    public function registration(Request $request, Workshop $workshop)
     {
+        if (!$workshop->event->registrationForm->is_live) {
+            return $this->render('frontend/registration/error', [
+                'message' => 'The registration has not yet been activated. Please ask your organizer to assist you.'
+            ]);
+        }
 
+        return $this->render('frontend/registration/index');
     }
 }

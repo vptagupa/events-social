@@ -34,7 +34,7 @@ export default function Index(props) {
                         <Sidebar />
                     </div>
                 </div>
-                <div className="w-[97%] flex flex-col">
+                <div className="w-full flex flex-col">
                     <div className="w-full flex items-center justify-between h-6 text-xs">
                         <div className="md:hidden flex gap-x-3 items-center justify-center text-xs">
                             <FontAwesomeIcon

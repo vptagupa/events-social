@@ -35,7 +35,7 @@ export const column = {
 
 export const grid = {
     grid: 0,
-    class: "bg-slate-100",
+    class: "bg-slate-300",
     columns: [],
 };
 

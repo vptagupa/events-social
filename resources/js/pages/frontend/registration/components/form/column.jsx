@@ -6,7 +6,7 @@ export default function Column({ value }) {
         <div>
             {value.components.map((component) => {
                 if (component.type == "grid") {
-                    return <Grids value={component.grids} />;
+                    return <Grids key={component.id} value={component.grids} />;
                 }
 
                 return <Component key={component.id} value={component} />;

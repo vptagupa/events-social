@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Organizer;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\RegistrationForm;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Repositories\EventRepository;
 
@@ -33,9 +34,16 @@ class RegistrationFormController extends Controller
     {
         if (!$event->registrationForm) {
             $request->validate([
-                'schema' => 'required'
+                'schema' => 'required',
             ]);
-            $event->registrationForm()->save(new RegistrationForm($request->only('schema')));
+
+            if ($request->published == true) {
+                $request->merge([
+                    'published_at' => Carbon::now()
+                ]);
+            }
+
+            $event->registrationForm()->save(new RegistrationForm($request->only(['schema', 'published_at'])));
             return;
         }
 
@@ -48,8 +56,12 @@ class RegistrationFormController extends Controller
     public function update(Request $request, Event $event)
     {
         $request->validate([
-            'schema' => 'required'
+            'schema' => 'required',
         ]);
+
+        if ($request->published == true) {
+            $event->registrationForm->published_at = Carbon::now();
+        }
 
         $event->registrationForm->schema = $request->schema;
         $event->registrationForm->save();

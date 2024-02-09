@@ -49,6 +49,7 @@ export default function Component({
                 <div className={`grow`}>
                     {["text", "notes"].includes(component.type) && (
                         <Text
+                            placeholder={component.config?.placeholder}
                             value={component.config?.defaultValue ?? ""}
                             onChange={(e) =>
                                 change(
@@ -63,6 +64,7 @@ export default function Component({
                     )}
                     {component.type == "select" && (
                         <Select
+                            placeholder={component.config?.placeholder}
                             values={component.config.options}
                             value={component.config?.defaultValue ?? ""}
                             onChange={(e) =>
@@ -78,6 +80,7 @@ export default function Component({
                     )}
                     {component.type == "textarea" && (
                         <Textarea
+                            placeholder={component.config?.placeholder}
                             onChange={(e) =>
                                 change(
                                     flex,

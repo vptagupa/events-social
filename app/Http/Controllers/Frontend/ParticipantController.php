@@ -32,8 +32,8 @@ class ParticipantController extends Controller
             ]);
         }
 
-
-
-        return $this->render('frontend/registration/index');
+        return $this->render('frontend/registration/index', [
+            'workshop' => $workshop
+        ]);
     }
 }

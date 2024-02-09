@@ -29,6 +29,7 @@ return new class extends Migration {
             $table->foreignId('official_receipt_file_id')->nullable()->constrained('files');
             $table->foreignId('organizer_id')->constrained('organizers');
             $table->boolean('active')->default(false);
+            $table->dateTime('published_at')->nullable();
             $table->timestamps();
         });
     }

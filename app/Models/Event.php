@@ -32,7 +32,8 @@ class Event extends Model
         'official_receipt_file_id',
         'organizer_id',
         'active',
-        'price'
+        'price',
+        'live_at'
     ];
 
     /**
@@ -47,14 +48,16 @@ class Event extends Model
         'expected_end_at' => 'date:m/d/Y h:i A',
         'actual_started_at' => 'date:m/d/Y h:i A',
         'actual_ended_at' => 'date:m/d/Y h:i A',
-        'price' => 'decimal:2'
+        'price' => 'decimal:2',
+        'live_at' => 'datetime: Y-m-d H:i:s a'
     ];
 
     protected $appends = [
         'is_offer_package',
         'is_free',
         'is_allowed_upload_proof_payment',
-        'is_allowed_payment_integration'
+        'is_allowed_payment_integration',
+        'is_live'
     ];
 
     public static function booted()
@@ -72,6 +75,13 @@ class Event extends Model
                 );
             }));
         });
+    }
+
+    public function isLive(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->live_at ? true : false
+        );
     }
 
     public function organizer()

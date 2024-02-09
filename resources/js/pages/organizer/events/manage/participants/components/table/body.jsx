@@ -71,6 +71,7 @@ const Component = ({
                                 <Th>Code</Th>
                                 <Th>Name</Th>
                                 <Th>Email</Th>
+                                <Th>Accepted</Th>
                                 <Th>Confirmed</Th>
                                 <Th>Payment Status</Th>
                                 <Th>Action</Th>
@@ -93,6 +94,7 @@ const Component = ({
                                         </Td>
                                         <Td>{item.name}</Td>
                                         <Td>{item.email}</Td>
+                                        <Td>{item.workshops[0].is_accepted}</Td>
                                         <Td>{item.is_confirmed}</Td>
                                         <Td>{item.workshops.payment_status}</Td>
 

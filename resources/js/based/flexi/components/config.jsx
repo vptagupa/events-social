@@ -134,7 +134,7 @@ export default function Config({
 
     return (
         <div>
-            <div className="block text-center font-bold text-lg mb-10">
+            <div className="block text-center font-bold text-lg mb-10 mt-10">
                 {value.title}
             </div>
             <div className={`grid grid-cols-2 gap-3 text-xs`}>

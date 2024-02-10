@@ -46,7 +46,7 @@ export default function Grid({ flex, grid, flexia }) {
                     />
                 </div>
                 <Drop
-                    className="text-center flex flex-col items-center justify-center"
+                    className="text-center flex flex-col items-center justify-center !border-slate-200"
                     onDrop={(e) => {
                         var data;
                         if ((data = e.dataTransfer.getData("data"))) {

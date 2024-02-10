@@ -23,9 +23,20 @@ export const useControl = (flexis) => {
 
     const hasPrev = useCallback(() => tab > 0, [tab]);
 
-    const handleChange = (component, value) => {
+    const handleChange = (column, component, value) => {
+        // Change all radio value to false in favor for the selected radio
+        if (component.type == "radio") {
+            column.components
+                .filter((c) => c.type == "radio")
+                .map((c) => {
+                    c.value = false;
+                    return c;
+                });
+        }
+
         component.value = value;
 
+        console.log({ component, data });
         setData([...data]);
     };
 

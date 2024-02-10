@@ -32,7 +32,7 @@ export default function Component({ value, column }) {
     let props = {
         title: value.config.name,
         placeholder: value.config?.placeholder ?? "Enter text here",
-        value: value.config?.defaultValue ?? "",
+        value: value?.value ?? value.config?.defaultValue ?? "",
         error: value?.error,
         className: value.config?.class ?? "",
         name: name(),
@@ -45,19 +45,21 @@ export default function Component({ value, column }) {
         };
     }
 
-    if (value.type == "input") {
-        return (
+    const handleChange = (component, value) =>
+        control.handleChange(column, component, value);
+
+    const components = {
+        input: (value) => (
             <Input
                 type={value.config?.is_number ? "number" : "text"}
                 {...props}
-                onChange={(e) => control.handleChange(value, e.target.value)}
+                onChange={(e) => handleChange(value, e.target.value)}
             />
-        );
-    } else if (value.type == "select") {
-        return (
+        ),
+        select: (value) => (
             <Select
                 {...props}
-                onChange={(e) => control.handleChange(value, e.target.value)}
+                onChange={(e) => handleChange(value, e.target.value)}
             >
                 {value.config.options.map((option) => (
                     <option key={option.id} value={option.value}>
@@ -65,32 +67,28 @@ export default function Component({ value, column }) {
                     </option>
                 ))}
             </Select>
-        );
-    } else if (value.type == "textarea") {
-        return (
+        ),
+        textarea: (value) => (
             <Textarea
                 {...props}
-                onChange={(e) => control.handleChange(value, e.target.value)}
+                onChange={(e) => handleChange(value, e.target.value)}
             />
-        );
-    } else if (value.type == "checkbox") {
-        return (
+        ),
+        checkbox: (value) => (
             <Check
                 {...props}
                 checked={value?.value ?? false}
-                onChange={(e) => control.handleChange(value, e.target.checked)}
+                onChange={(e) => handleChange(value, e.target.checked)}
             />
-        );
-    } else if (value.type == "radio") {
-        return (
+        ),
+        radio: (value) => (
             <Radio
                 {...props}
                 checked={value?.value ?? false}
-                onChange={(e) => control.handleChange(value, e.target.checked)}
+                onChange={(e) => handleChange(value, e.target.checked)}
             />
-        );
-    } else if (value.type == "file") {
-        return (
+        ),
+        file: (value) => (
             <File
                 {...props}
                 accept={(value.config?.file_types ?? "")
@@ -101,27 +99,26 @@ export default function Component({ value, column }) {
                     "Acceptable format: " + value.config?.file_types ??
                     "any files"
                 }
-                remove={(e) => control.handleChange(value, null)}
-                onChange={(file) => control.handleChange(value, file)}
+                remove={(e) => handleChange(value, null)}
+                onChange={(file) => handleChange(value, file)}
             />
-        );
-    } else if (value.type == "label") {
-        return <Label value={props.value} />;
-    } else if (value.type == "notes") {
-        return (
+        ),
+        label: (value) => <Label value={props.value} />,
+        notes: (value) => (
             <Notes
                 className={props.className}
                 value={props.value}
                 type={value.config?.properties?.type}
             />
-        );
-    } else if (value.type == "heading") {
-        return (
+        ),
+        heading: (value) => (
             <Heading
                 className={props.className}
                 value={props.value}
                 type={value.config?.properties?.type}
             />
-        );
-    }
+        ),
+    };
+
+    return components[value.type](value);
 }

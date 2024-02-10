@@ -2,7 +2,6 @@ import Component from "./component";
 import Grids from "./grids";
 
 export default function Column({ value }) {
-    console.log(value);
     return (
         <div>
             {value.components.map((component) => {

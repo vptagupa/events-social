@@ -12,8 +12,22 @@ import {
 import { ControlContext } from "../context";
 import { useContext } from "react";
 
-export default function Component({ value }) {
+export default function Component({ value, column }) {
     const control = useContext(ControlContext);
+
+    const name = () => {
+        if (value.type != "radio") {
+            return (
+                column.column +
+                "_" +
+                (value.config?.name
+                    ? value.config?.name.replace(/\s+/g, "_")
+                    : value.id)
+            );
+        }
+
+        return column.column;
+    };
 
     let props = {
         title: value.config.name,
@@ -21,7 +35,7 @@ export default function Component({ value }) {
         value: value.config?.defaultValue ?? "",
         error: value?.error,
         className: value.config?.class ?? "",
-        // style: value.config?.style ?? "",
+        name: name(),
     };
 
     if (value?.value) {

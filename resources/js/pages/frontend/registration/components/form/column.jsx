@@ -2,6 +2,7 @@ import Component from "./component";
 import Grids from "./grids";
 
 export default function Column({ value }) {
+    console.log(value);
     return (
         <div>
             {value.components.map((component) => {
@@ -9,8 +10,17 @@ export default function Column({ value }) {
                     return <Grids key={component.id} value={component.grids} />;
                 }
 
-                return <Component key={component.id} value={component} />;
+                return (
+                    <Component
+                        column={value}
+                        key={component.id}
+                        value={component}
+                    />
+                );
             })}
+            {value?.error && (
+                <div className="block p-1 text-danger">{value.error}</div>
+            )}
         </div>
     );
 }

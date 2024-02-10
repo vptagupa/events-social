@@ -36,17 +36,69 @@ export const useControl = (flexis) => {
     };
 
     const validateForm = (form) => {
-        let valid = true;
+        const ensureRequiredRadios = (_valid, column, components) => {
+            let valid = _valid;
 
-        const griddable = (grids) => {
-            for (let grid of grids) {
-                for (let column of grid.columns) {
-                    componentable(column.components);
+            // Tag the column as error when any of the required radios are unchecked
+            let requiredRadios = components.filter(
+                (c) => c.type == "radio" && c.config?.is_required == true
+            );
+
+            let requiredNotRadios = components.filter(
+                (c) =>
+                    c.type != "radio" &&
+                    c.config?.is_required == true &&
+                    c?.error
+            );
+
+            // Ensure to check the validations of multiple radios after when all the other components are valid
+            if (
+                !valid &&
+                requiredRadios.length > 1 &&
+                requiredNotRadios.length <= 0
+            ) {
+                const checkedRequiredRadios = requiredRadios.filter(
+                    (c) => !c?.error
+                );
+
+                if (checkedRequiredRadios.length <= 0) {
+                    column.error =
+                        "Please check at least one (1) of any of the radio boxes.";
                 }
+                requiredRadios.map((component) => {
+                    component.error = null;
+                    return component;
+                });
+
+                // ensure that the valid var is always false when the radios have no check
+                valid = column?.error ? false : true;
             }
+
+            return valid;
         };
 
-        const componentable = (components) => {
+        const griddable = (grids) => {
+            let truth = true;
+            for (let grid of grids) {
+                for (let column of grid.columns) {
+                    let valid = componentable(column, column.components);
+                    valid = [
+                        ensureRequiredRadios(valid, column, column.components),
+                    ];
+                    for (var v of valid) {
+                        if (!v) {
+                            truth = false;
+                        }
+                    }
+                }
+            }
+
+            return truth;
+        };
+
+        const componentable = (column, components) => {
+            let valid = true;
+            column.error = null;
             for (let component of components) {
                 if (component.type == "grid") {
                     return griddable(component.grids);
@@ -64,9 +116,11 @@ export const useControl = (flexis) => {
                         " field is required.";
                 }
             }
+
+            return valid;
         };
 
-        griddable(form.grids);
+        let valid = griddable(form.grids);
 
         setData([...data]);
 

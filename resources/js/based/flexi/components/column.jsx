@@ -16,7 +16,7 @@ export default function Column({
     return (
         <div className="flex flex-col w-full --column">
             <div className="relative flex items-center justify-center">
-                <div className="absolute -bottom-3  flex items-center gap-x-1">
+                <div className="absolute -bottom-[0.4rem] flex items-center gap-x-1">
                     <Elipses>
                         <Remove
                             click={(e) =>

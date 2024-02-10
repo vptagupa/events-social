@@ -24,6 +24,8 @@ export default function Components({ components, flex, grid, column, flexia }) {
                 add={flexia.add}
                 move={flexia.move}
                 change={flexia.change}
+                up={flexia.up}
+                down={flexia.down}
                 remove={flexia.remove}
                 selectChange={flexia.selectChange}
                 selectAdd={flexia.selectAdd}

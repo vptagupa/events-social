@@ -8,7 +8,7 @@ export default function Grid({ flex, grid, flexia }) {
     return (
         <div className="flex flex-col --grid">
             <div className="relative">
-                <div className="absolute -bottom-3 left-0">
+                <div className="absolute -bottom-2 left-0">
                     <Elipses>
                         <Remove
                             click={(e) => flexia.remove(flex, grid, null, grid)}

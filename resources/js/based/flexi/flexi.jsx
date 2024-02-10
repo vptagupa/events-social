@@ -267,6 +267,74 @@ export const useFlexi = (schema) => {
         set({ ...data });
     };
 
+    const up = (flex, grid, column, component) => {
+        if (component?.id) {
+            const index = column.components.findIndex(
+                (c) => c.id == component.id
+            );
+
+            if (index > 0) {
+                const other = column.components[index - 1];
+                column.components[index - 1] = component;
+                column.components[index] = other;
+            }
+        } else if (component?.column) {
+            const index = grid.columns.findIndex(
+                (c) => c.column == component.column
+            );
+
+            if (index > 0) {
+                const other = grid.columns[index - 1];
+                grid.columns[index - 1] = component;
+                grid.columns[index] = other;
+            }
+        } else if (component?.grid) {
+            const index = flex.grids.findIndex((c) => c.grid == component.grid);
+
+            if (index > 0) {
+                const other = flex.grids[index - 1];
+                flex.grids[index - 1] = component;
+                flex.grids[index] = other;
+            }
+        }
+
+        set({ ...data });
+    };
+
+    const down = (flex, grid, column, component) => {
+        if (component?.id) {
+            const index = column.components.findIndex(
+                (c) => c.id == component.id
+            );
+
+            if (index < column.components.length - 1) {
+                const other = column.components[index + 1];
+                column.components[index + 1] = component;
+                column.components[index] = other;
+            }
+        } else if (component?.column) {
+            const index = grid.columns.findIndex(
+                (c) => c.column == component.column
+            );
+
+            if (index > grid.columns.length - 1) {
+                const other = grid.columns[index + 1];
+                grid.columns[index + 1] = component;
+                grid.columns[index] = other;
+            }
+        } else if (component?.grid) {
+            const index = flex.grids.findIndex((c) => c.grid == component.grid);
+
+            if (index > flex.grids.length - 1) {
+                const other = flex.grids[index + 1];
+                flex.grids[index + 1] = component;
+                flex.grids[index] = other;
+            }
+        }
+
+        set({ ...data });
+    };
+
     const update = (data) => {
         set({ ...data });
     };
@@ -341,6 +409,8 @@ export const useFlexi = (schema) => {
         flexible,
         add,
         move,
+        up,
+        down,
         remove,
         change,
         selectChange,

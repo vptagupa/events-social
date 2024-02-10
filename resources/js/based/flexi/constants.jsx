@@ -15,6 +15,7 @@ export const config = {
         "select",
         "is number",
         "file types",
+        "minimum fields required as number",
     ],
 };
 
@@ -87,8 +88,8 @@ export const attributes = [
     },
     {
         ...attribute,
-        title: "Text",
-        type: "Input",
+        title: "Input",
+        type: "input",
     },
     {
         ...attribute,

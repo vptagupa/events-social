@@ -48,7 +48,7 @@ export default function Component({
         >
             <div className="flex component">
                 <div className={`grow`}>
-                    {["text", "notes", "label", "heading"].includes(
+                    {["input", "notes", "label", "heading"].includes(
                         component.type
                     ) && (
                         <Text

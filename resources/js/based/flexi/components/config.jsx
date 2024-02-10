@@ -111,7 +111,7 @@ export default function Config({
                         }
                     />
                 )}
-                {value.type == "text" &&
+                {value.type == "input" &&
                     value.config.form.includes("is number") && (
                         <Check
                             title=" Is Number"
@@ -135,6 +135,24 @@ export default function Config({
                             </option>
                         ))}
                     </FormSelect>
+                )}
+
+                {value.config.form.includes(
+                    "minimum fields required as number"
+                ) && (
+                    <Text
+                        title="Minimum number of fields to require"
+                        value={
+                            value.config["minimum_fields_required_as_number"] ??
+                            ""
+                        }
+                        onChange={(e) =>
+                            change(
+                                "minimum_fields_required_as_number",
+                                e.target.value
+                            )
+                        }
+                    />
                 )}
 
                 {value.config.form.includes("select") &&

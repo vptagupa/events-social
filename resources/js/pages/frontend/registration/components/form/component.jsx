@@ -45,7 +45,7 @@ export default function Component({ value, column }) {
         };
     }
 
-    if (value.type == "text") {
+    if (value.type == "input") {
         return (
             <Input
                 type={value.config?.is_number ? "number" : "text"}

@@ -39,6 +39,7 @@ export const useFlexi = (schema) => {
     };
 
     const add = (flex, grid, column, component) => {
+        console.log(component);
         if (component.type == "column") {
             if (!grid) {
                 grid = addGrid(flex)[flex.grids.length - 1];
@@ -77,6 +78,7 @@ export const useFlexi = (schema) => {
     };
 
     const flexible = (target, source) => {
+        console.log(target);
         add(target.flex, target.grid, target.column, target.component);
 
         // Skip when purpose is to add components only
@@ -163,6 +165,15 @@ export const useFlexi = (schema) => {
     };
 
     const change = (flex, grid, column, component, value) => {
+        if (component.type == "radio") {
+            column.components
+                .filter((c) => c.type == "radio")
+                .map((c) => {
+                    c.config.defaultValue = false;
+                    return c;
+                });
+        }
+
         component.config.defaultValue = value;
 
         set({ ...data });
@@ -317,7 +328,7 @@ export const useFlexi = (schema) => {
                 (c) => c.column == component.column
             );
 
-            if (index > grid.columns.length - 1) {
+            if (index < grid.columns.length - 1) {
                 const other = grid.columns[index + 1];
                 grid.columns[index + 1] = component;
                 grid.columns[index] = other;
@@ -325,7 +336,7 @@ export const useFlexi = (schema) => {
         } else if (component?.grid) {
             const index = flex.grids.findIndex((c) => c.grid == component.grid);
 
-            if (index > flex.grids.length - 1) {
+            if (index < flex.grids.length - 1) {
                 const other = flex.grids[index + 1];
                 flex.grids[index + 1] = component;
                 flex.grids[index] = other;

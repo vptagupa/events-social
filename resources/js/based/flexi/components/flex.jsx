@@ -17,7 +17,7 @@ export default function Flex({ flexia, flex }) {
                 className={`relative flex items-center justify-center w-full mt-2`}
             >
                 <div className="flex items-center justify-center absolute">
-                    <Elipses>
+                    <Elipses active={flex.config.active}>
                         <Remove
                             click={(e) => flexia.remove(flex, null, null, flex)}
                             title="Remove Step"

@@ -96,8 +96,8 @@ export default function Component({ value, column }) {
                     .map((type) => (type[0] == "." ? type : "." + type))
                     .join(",")}
                 label={
-                    "Acceptable format: " + value.config?.file_types ??
-                    "any files"
+                    "Acceptable format: " +
+                    (value.config?.file_types ?? "any files")
                 }
                 remove={(e) => handleChange(value, null)}
                 onChange={(file) => handleChange(value, file)}

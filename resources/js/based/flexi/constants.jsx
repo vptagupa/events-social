@@ -14,8 +14,6 @@ export const config = {
         "is required",
         "select",
         "is number",
-        "file types",
-        "minimum fields required as number",
     ],
 };
 
@@ -33,6 +31,11 @@ export const column = {
     column: 0,
     components: [],
     class: "bg-slate-200",
+    title: "Column Configuration",
+    config: {
+        active: false,
+        form: ["class", "minimum fields required as number"],
+    },
 };
 
 export const grid = {
@@ -46,6 +49,7 @@ export const flex = {
     grids: [],
     active: true,
     class: "bg-slate-200",
+    title: "Step Configuration",
     config: {
         name: "Step",
         active: false,

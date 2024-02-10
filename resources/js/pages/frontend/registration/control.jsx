@@ -36,7 +36,6 @@ export const useControl = (flexis) => {
 
         component.value = value;
 
-        console.log({ component, data });
         setData([...data]);
     };
 
@@ -88,6 +87,22 @@ export const useControl = (flexis) => {
             return valid;
         };
 
+        const ensureGroupRequired = (column, components) => {
+            column.error = null;
+
+            if ((column.config?.minimum_fields_required ?? 0) > 0) {
+                if (
+                    components.filter((c) => c.value != "" && c?.value).length <
+                    column.config?.minimum_fields_required
+                ) {
+                    column.error = `Require at least ${column.config?.minimum_fields_required} minimum of required fields.`;
+                    return false;
+                }
+            }
+
+            return true;
+        };
+
         const griddable = (grids) => {
             let truth = true;
             for (let grid of grids) {
@@ -95,6 +110,7 @@ export const useControl = (flexis) => {
                     let valid = componentable(column, column.components);
                     valid = [
                         ensureRequiredRadios(valid, column, column.components),
+                        ensureGroupRequired(column, column.components),
                     ];
                     for (var v of valid) {
                         if (!v) {

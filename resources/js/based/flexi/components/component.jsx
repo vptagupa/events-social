@@ -176,9 +176,19 @@ export default function Component({
                             />
                         )}
                     </div>
-                    <div className="relative w-2 group hover:w-24 flex gap-x-2 items-center justify-center p-1 border-0 border-solid border-slate-300">
+                    <div
+                        className={`relative ${
+                            component.config?.active ? "w-24" : "w-2"
+                        } group hover:w-24 flex gap-x-2 items-center justify-center p-1 border-0 border-solid border-slate-300`}
+                    >
                         <div className="absolute flex gap-x-2 items-center justify-center -right-1">
-                            <div className="group-hover:visible invisible trasition-all ease-in delay-75 duration-75 flex item-center justify-center">
+                            <div
+                                className={`group-hover:visible ${
+                                    component.config.active
+                                        ? "visible"
+                                        : "invisible"
+                                } trasition-all ease-in delay-75 duration-75 flex item-center justify-center`}
+                            >
                                 <Move
                                     draggable={true}
                                     onDragStart={(e) =>
@@ -221,7 +231,7 @@ export default function Component({
                     </div>
                 </div>
                 {component.config.active && (
-                    <div className="flex justify-center m-10">
+                    <div className="flex justify-center">
                         <Config
                             value={component}
                             change={(name, value) =>

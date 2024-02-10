@@ -9,6 +9,8 @@ import Textarea from "./form/textarea";
 import File from "./form/file";
 import Checkbox from "./form/checkbox";
 import Radio from "./form/radio";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 
 export default function Component({
     flex,
@@ -47,7 +49,9 @@ export default function Component({
             }}
         >
             <div className="flex component">
-                <div className={`grow`}>
+                <div
+                    className={`grow transition-all ease-in-out delay-75 duration-150`}
+                >
                     {["input", "notes", "label", "heading"].includes(
                         component.type
                     ) && (
@@ -141,31 +145,43 @@ export default function Component({
                         />
                     )}
                 </div>
-                <div className="w-20 flex items-center justify-center ml-2 p-1 border-l border-solid border-slate-300">
-                    <Move
-                        draggable={true}
-                        onDragStart={(e) =>
-                            e.dataTransfer.setData(
-                                "move",
-                                JSON.stringify({
-                                    flex,
-                                    grid,
-                                    column,
-                                    component,
-                                })
-                            )
-                        }
-                    />
-                    <ConfigAction
-                        active={component.config.active}
-                        click={(e) =>
-                            configActive(flex, grid, column, component)
-                        }
-                    />
-                    <Remove
-                        click={(e) => remove(flex, grid, column, component)}
-                        title={`Remove ${component.type}`}
-                    />
+                <div className="group relative w-2 hover:w-24 flex items-center justify-center p-1 border-0 border-solid border-slate-300">
+                    <div className="absolute flex gap-x-2 items-center justify-center -right-2">
+                        <div className="group-hover:visible invisible trasition-all ease-in delay-75 duration-75 flex item-center justify-center">
+                            <Move
+                                draggable={true}
+                                onDragStart={(e) =>
+                                    e.dataTransfer.setData(
+                                        "move",
+                                        JSON.stringify({
+                                            flex,
+                                            grid,
+                                            column,
+                                            component,
+                                        })
+                                    )
+                                }
+                            />
+                            <ConfigAction
+                                active={component.config.active}
+                                click={(e) =>
+                                    configActive(flex, grid, column, component)
+                                }
+                            />
+                            <Remove
+                                click={(e) =>
+                                    remove(flex, grid, column, component)
+                                }
+                                title={`Remove ${component.type}`}
+                            />
+                        </div>
+                        <div>
+                            <FontAwesomeIcon
+                                icon={faEllipsisV}
+                                className="h-6 cursor-pointer text-slate-600/60 group-hover:text-lg group-hover:text-slate-800"
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
             {component.config.active && (

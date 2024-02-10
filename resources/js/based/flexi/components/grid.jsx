@@ -1,5 +1,6 @@
 import Caption from "./caption";
 import Remove from "../actions/remove";
+import Elipses from "../actions/elipses";
 import Drop from "./drop";
 import Columns from "./columns";
 
@@ -7,11 +8,13 @@ export default function Grid({ flex, grid, flexia }) {
     return (
         <div className="flex flex-col --grid">
             <div className="relative">
-                <div className="absolute -bottom-4 right-0">
-                    <Remove
-                        click={(e) => flexia.remove(flex, grid, null, grid)}
-                        title="Remove Grid"
-                    />
+                <div className="absolute -bottom-3 left-0">
+                    <Elipses>
+                        <Remove
+                            click={(e) => flexia.remove(flex, grid, null, grid)}
+                            title="Remove Grid"
+                        />
+                    </Elipses>
                 </div>
             </div>
             <div

@@ -1,6 +1,7 @@
 import Drop from "./drop";
 import Remove from "../actions/remove";
 import View from "../actions/view";
+import Elipses from "../actions/elipses";
 import Caption from "./caption";
 import Components from "./components";
 
@@ -14,23 +15,27 @@ export default function Column({
 }) {
     return (
         <div className="flex flex-col w-full --column">
-            <div className="relative">
-                <div className="absolute -bottom-3 right-5 flex items-center gap-x-1">
-                    <Remove
-                        click={(e) => flexia.remove(flex, grid, column, column)}
-                        title="Remove Column"
-                    />
-                    {view && (
-                        <View
-                            title="Expand Column"
-                            caption="Column"
-                            idx={idx}
-                            column={column}
-                            flex={flex}
-                            grid={grid}
-                            flexia={flexia}
+            <div className="relative flex items-center justify-center">
+                <div className="absolute -bottom-3  flex items-center gap-x-1">
+                    <Elipses>
+                        <Remove
+                            click={(e) =>
+                                flexia.remove(flex, grid, column, column)
+                            }
+                            title="Remove Column"
                         />
-                    )}
+                        {view && (
+                            <View
+                                title="Expand Column"
+                                caption="Column"
+                                idx={idx}
+                                column={column}
+                                flex={flex}
+                                grid={grid}
+                                flexia={flexia}
+                            />
+                        )}
+                    </Elipses>
                 </div>
             </div>
             <div className={`flex flex-col gap-3 p-4 ${column.class} --column`}>

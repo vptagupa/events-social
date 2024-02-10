@@ -6,7 +6,7 @@ export default function Config({ click, active }) {
         <FontAwesomeIcon
             onClick={click}
             icon={faWrench}
-            className={`w-1/2 p-1 cursor-pointer hover:text-slate-500 transform  hover:scale-125 transition-all duration-200
+            className={`text-xl p-1 cursor-pointer hover:text-slate-500 transform  hover:scale-125 transition-all duration-200
                 ${
                     active
                         ? "rotate-180 text-slate-500 scale-125 hover:rotate-0"

@@ -4,12 +4,10 @@ import Flex from "./components/flex";
 import { Transition } from "@headlessui/react";
 
 export default function Flexi({ flexia }) {
-    console.log(flexia);
     return (
         <>
             <div className="w-[80%] flex flex-col gap-y-2 min-h-[30rem] text-xs md:text-sm">
-                <div className="flex items-center justify-between">
-                    <div></div>
+                <div className="flex items-center justify-end">
                     <ol>
                         {flexia.data.flexis.map((flex) => (
                             <li
@@ -43,7 +41,7 @@ export default function Flexi({ flexia }) {
                 </div>
             </div>
 
-            <div className="w-[15%] fixed right-6 grid grid-cols-2 gap-x-2 gap-y-2 min-h-[10rem] box-border border-l border-slate-300 p-2 bg-slate-200 rounded-tl-md rounded-bl-md">
+            <div className="w-[15%] fixed right-6 grid md:grid-cols-2 gap-x-2 gap-y-2 min-h-[10rem] box-border border-l border-slate-300 p-2 bg-slate-200 rounded-tl-md rounded-bl-md">
                 <Attributes {...flexia} />
             </div>
         </>

@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { Tab } from "@headlessui/react";
 import TabContainer from "./tab";
-import { ControlContext } from "../context";
+import { ControlContext } from "../../context";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(" ");

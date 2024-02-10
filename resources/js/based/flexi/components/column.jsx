@@ -48,7 +48,7 @@ export default function Column({
                 </div>
             </div>
             {column.config.active && (
-                <div className="flex justify-center m-10">
+                <div className="flex justify-center">
                     <ConfigComponent
                         value={column}
                         change={(name, value) =>

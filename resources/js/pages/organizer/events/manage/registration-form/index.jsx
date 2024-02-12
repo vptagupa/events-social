@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFloppyDisk } from "@fortawesome/free-regular-svg-icons";
 import { Transition } from "@headlessui/react";
+import { faCheck, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import { router } from "@inertiajs/react";
 
 export default function RegistrationForm({ event }) {
     const flexia = useFlexi(event.registration_form?.schema);
@@ -19,38 +21,27 @@ export default function RegistrationForm({ event }) {
         flexia.update(event.registration_form?.schema || flexs);
     }, [event.registration_form?.schema]);
 
-    const controller = new AbortController();
     const save = async (published = false) => {
-        setProcessing({
-            regular: !published,
-            published,
-        });
-        try {
-            await axios.post(
-                route("organizer.events.registration-form.store", event.id),
-                {
-                    schema: flexia.data,
-                    published: published,
-                },
-                { signal: controller.signal }
-            );
-        } catch (error) {
-        } finally {
-            setProcessing({
-                regular: false,
-                published: false,
-            });
-        }
+        router.post(
+            route("organizer.events.registration-form.store", event.id),
+            {
+                schema: flexia.data,
+                published: published,
+            },
+            {
+                onBefore: () =>
+                    setProcessing({
+                        regular: !published,
+                        published,
+                    }),
+                onFinish: () =>
+                    setProcessing({
+                        regular: false,
+                        published: false,
+                    }),
+            }
+        );
     };
-
-    useEffect(() => {
-        // Auto save to database when change
-        // save();
-
-        return () => {
-            controller.abort();
-        };
-    }, [flexia.data]);
 
     const Action = () => (
         <div className="flex gap-x-2 items-center">
@@ -75,12 +66,10 @@ export default function RegistrationForm({ event }) {
                     processing={processing.published}
                     type="button"
                     className="flex items-center gap-x-1"
-                    onClick={(e) =>
-                        save(!event.registration_form?.is_published)
-                    }
+                    onClick={(e) => save(!event.is_published)}
                 >
-                    <FontAwesomeIcon icon={faFloppyDisk} />{" "}
-                    {event.registration_form?.is_published ? "Draft" : "Live"}
+                    <FontAwesomeIcon icon={faCheckCircle} />{" "}
+                    {event.is_published ? "Draft" : "Publish"}
                 </SecondaryButton>
             </div>
         </div>

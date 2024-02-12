@@ -94,9 +94,13 @@ const Component = ({
                                         </Td>
                                         <Td>{item.name}</Td>
                                         <Td>{item.email}</Td>
-                                        <Td>{item.workshops[0].is_accepted}</Td>
-                                        <Td>{item.is_confirmed}</Td>
-                                        <Td>{item.workshops.payment_status}</Td>
+                                        <Td>{item.workshops[0].accepted_at}</Td>
+                                        <Td>
+                                            {item.workshops[0].confirmed_at}
+                                        </Td>
+                                        <Td>
+                                            {item.workshops[0].payment_status}
+                                        </Td>
 
                                         <Td>
                                             <div className="flex space-x-2 justify-end">

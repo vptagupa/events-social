@@ -42,6 +42,7 @@ Route::controller(ParticipantController::class)->group(function () {
         Route::post('/', 'register')->name('register');
         Route::post('/form', 'form')->name('store');
         Route::get('/accept', 'accept')->name('accept');
+        Route::post('/accept', 'accepted')->name('accepted');
         Route::get('/offer', 'offer')->name('offer');
         Route::post('/offer/{offer}', 'offerSelect')->name('offerSelect');
         Route::get('/pay', 'pay')->name('pay');

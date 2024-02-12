@@ -55,7 +55,7 @@ export default function File({
             )}
             {file && (
                 <div className="flex flex-col gap-y-2 items-center justify-center p-4">
-                    <div className="w-[80%] md:w-[70%] text-center bg-slate-200/70 border border-slate-200 rounded-md p-2">
+                    <div className="w-[80%] md:w-1/2 text-center bg-slate-200/70 border border-slate-200 rounded-md p-2">
                         <LoadFile file={file} />
                     </div>
                     <div>

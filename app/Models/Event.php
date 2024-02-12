@@ -34,7 +34,7 @@ class Event extends Model
         'organizer_id',
         'active',
         'price',
-        'live_at'
+        'published_at'
     ];
 
     /**
@@ -50,7 +50,7 @@ class Event extends Model
         'actual_started_at' => 'date:m/d/Y h:i A',
         'actual_ended_at' => 'date:m/d/Y h:i A',
         'price' => 'decimal:2',
-        'live_at' => 'datetime: Y-m-d H:i:s a'
+        'published_at' => 'datetime: Y-m-d H:i:s a'
     ];
 
     protected $appends = [
@@ -58,7 +58,8 @@ class Event extends Model
         'is_free',
         'is_allowed_upload_proof_payment',
         'is_allowed_payment_integration',
-        'is_live'
+        'is_published',
+        'start_at'
     ];
 
     /**
@@ -88,10 +89,17 @@ class Event extends Model
         });
     }
 
-    public function isLive(): Attribute
+    public function isPublished(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->live_at ? true : false
+            get: fn() => $this->published_at ? true : false
+        );
+    }
+
+    public function startAt(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->expected_start_at->format('F j, Y, h:i a')
         );
     }
 

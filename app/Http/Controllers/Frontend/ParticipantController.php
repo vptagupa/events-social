@@ -8,6 +8,7 @@ use App\Models\Offer;
 use App\Models\Workshop;
 use App\Repositories\ParticipantRepository;
 use App\Services\Payment;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ParticipantController extends Controller
@@ -139,6 +140,17 @@ class ParticipantController extends Controller
         return $this->render('frontend/registration/accept/index', [
             'workshop' => $workshop
         ]);
+    }
+
+    /**
+     * Accept the invitation
+     */
+    public function accepted(Workshop $workshop)
+    {
+        $workshop->accepted_at = Carbon::now();
+        $workshop->save();
+
+        return redirect(route('registration.index', $workshop));
     }
 
     /**

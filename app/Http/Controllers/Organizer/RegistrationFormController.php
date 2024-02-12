@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Organizer;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Event\StoreRegistrationForm;
 use App\Models\Event;
 use App\Models\RegistrationForm;
 use Carbon\Carbon;
@@ -30,20 +31,15 @@ class RegistrationFormController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Event $event)
+    public function store(StoreRegistrationForm $request, Event $event)
     {
+        $now = Carbon::now();
         if (!$event->registrationForm) {
-            $request->validate([
-                'schema' => 'required',
-            ]);
+            $event->registrationForm()->save(new RegistrationForm($request->only(['schema'])));
 
-            if ($request->published == true) {
-                $request->merge([
-                    'published_at' => Carbon::now()
-                ]);
-            }
+            $event->published_at = $request->published == true ? $now : null;
+            $event->save();
 
-            $event->registrationForm()->save(new RegistrationForm($request->only(['schema', 'published_at'])));
             return;
         }
 
@@ -53,18 +49,14 @@ class RegistrationFormController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Event $event)
+    public function update(StoreRegistrationForm $request, Event $event)
     {
-        $request->validate([
-            'schema' => 'required',
-        ]);
-
-        if ($request->published == true) {
-            $event->registrationForm->published_at = Carbon::now();
-        }
-
+        $now = Carbon::now();
         $event->registrationForm->schema = $request->schema;
         $event->registrationForm->save();
+
+        $event->published_at = $request->published == true ? $now : null;
+        $event->save();
     }
 
     /**

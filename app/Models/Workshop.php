@@ -24,7 +24,8 @@ class Workshop extends Model
         'accepted_at',
         'submitted_at',
         'payment_at',
-        'confirmed_at'
+        'confirmed_at',
+        'invited_at'
     ];
 
     protected $casts = [
@@ -42,7 +43,7 @@ class Workshop extends Model
         'has_submitted',
         'is_invited',
         'is_confirmed',
-        'price'
+        'price',
     ];
 
     /**
@@ -65,6 +66,7 @@ class Workshop extends Model
             $model->participant->sendInvitation($model);
         });
     }
+
 
     public function hasAccepted(): Attribute
     {

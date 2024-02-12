@@ -9,7 +9,7 @@ function classNames(...classes) {
 
 export default function Tabs() {
     const control = useContext(ControlContext);
-    console.log(control.data.length);
+
     return (
         <div className="w-full px-2 py-16 sm:px-0">
             <Tab.Group selectedIndex={control.tab}>

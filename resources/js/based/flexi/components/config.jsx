@@ -45,7 +45,7 @@ export default function Config({
         file_types: (value) =>
             value.config.form.includes("file types") && (
                 <Text
-                    title={"File Types"}
+                    title={"File types"}
                     label="E.g: pdf, jpg, jpeg, png, mp4"
                     value={value.config["file_types"] ?? ""}
                     onChange={(e) => change("file_types", e.target.value)}
@@ -53,14 +53,14 @@ export default function Config({
             ),
         next_button: (value) => (
             <Text
-                title={"Next Button Title"}
+                title={"Next button title"}
                 value={value.config["next.title"] ?? ""}
                 onChange={(e) => change("next.title", e.target.value)}
             />
         ),
         prev_button: (value) => (
             <Text
-                title={"Previous Button Title"}
+                title={"Previous button title"}
                 value={value.config["prev.title"] ?? ""}
                 onChange={(e) => change("prev.title", e.target.value)}
             />
@@ -84,17 +84,27 @@ export default function Config({
         ),
         default_value: (value) => (
             <Text
-                title={"Default Value"}
+                title={"Default value"}
                 value={value.config["defaultValue"] ?? ""}
                 onChange={(e) => change("defaultValue", e.target.value)}
             />
         ),
         is_required: (value) => (
             <Check
-                title=" Is Required"
+                title=" Is required"
                 value={value.config["is_required"] ?? ""}
                 checked={value.config["is_required"] ?? false}
                 onChange={(e) => change("is_required", e.target.checked)}
+            />
+        ),
+        is_options_required: (value) => (
+            <Check
+                title=" Is options required"
+                value={value.config["is_options_required"] ?? ""}
+                checked={value.config["is_options_required"] ?? false}
+                onChange={(e) =>
+                    change("is_options_required", e.target.checked)
+                }
             />
         ),
         is_number: (value) =>
@@ -116,6 +126,7 @@ export default function Config({
                 }
             />
         ),
+
         select: (value) => {
             if (value.type == "select")
                 return (
@@ -152,13 +163,13 @@ export default function Config({
                         <div key={idx}>{component}</div>
                     ))}
 
-                {value.config?.properties?.types.length > 0 && (
+                {value?.properties?.types.length > 0 && (
                     <FormSelect
                         title="Types"
-                        value={value.config?.properties?.type ?? ""}
+                        value={value?.properties?.type ?? ""}
                         onChange={(e) => changeProperty("type", e.target.value)}
                     >
-                        {value.config.properties.types.map((type, idx) => (
+                        {value.properties.types.map((type, idx) => (
                             <option key={idx} value={type}>
                                 {type}
                             </option>

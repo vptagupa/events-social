@@ -78,7 +78,6 @@ export const useFlexi = (schema) => {
     };
 
     const flexible = (target, source) => {
-        console.log(target);
         add(target.flex, target.grid, target.column, target.component);
 
         // Skip when purpose is to add components only
@@ -180,12 +179,9 @@ export const useFlexi = (schema) => {
     };
 
     const changeProperty = (flex, grid, column, component, type, value) => {
-        component.config = {
-            ...component.config,
-            properties: {
-                ...component.config.properties,
-                [type]: value,
-            },
+        component.properties = {
+            ...component.properties,
+            [type]: value,
         };
 
         set({ ...data });

@@ -11,8 +11,8 @@ export const config = {
         "condition",
         "placeholder",
         "default value",
-        "is required",
         "select",
+        "is required",
         "is number",
     ],
 };
@@ -34,7 +34,11 @@ export const column = {
     title: "Column Configuration",
     config: {
         active: false,
-        form: ["class", "minimum fields required as number"],
+        form: [
+            "class",
+            "minimum fields required as number",
+            "is options required",
+        ],
     },
 };
 
@@ -94,6 +98,10 @@ export const attributes = [
         ...attribute,
         title: "Input",
         type: "input",
+        properties: {
+            type: "text",
+            types: ["Text", "Email", "Number", "Date"],
+        },
     },
     {
         ...attribute,
@@ -127,9 +135,9 @@ export const attributes = [
         config: {
             ...attribute.config,
             form: ["class", "style", "default value"],
-            properties: {
-                types: ["info", "success", "danger", "warning"],
-            },
+        },
+        properties: {
+            types: ["info", "success", "danger", "warning"],
         },
     },
     {
@@ -148,9 +156,9 @@ export const attributes = [
         config: {
             ...attribute.config,
             form: ["class", "style", "default value"],
-            properties: {
-                types: ["h1", "h2", "h3"],
-            },
+        },
+        properties: {
+            types: ["h1", "h2", "h3"],
         },
     },
 ];

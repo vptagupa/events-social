@@ -31,7 +31,7 @@ export default function Component({ value, column }) {
 
     let props = {
         title: value.config.name,
-        placeholder: value.config?.placeholder ?? "Enter text here",
+        placeholder: value.config?.placeholder ?? "Type here",
         value: value?.value ?? value.config?.defaultValue ?? "",
         error: value?.error,
         className: value.config?.class ?? "",
@@ -51,8 +51,8 @@ export default function Component({ value, column }) {
     const components = {
         input: (value) => (
             <Input
-                type={value.config?.is_number ? "number" : "text"}
                 {...props}
+                type={value?.properties?.type}
                 onChange={(e) => handleChange(value, e.target.value)}
             />
         ),
@@ -108,14 +108,14 @@ export default function Component({ value, column }) {
             <Notes
                 className={props.className}
                 value={props.value}
-                type={value.config?.properties?.type}
+                type={value?.properties?.type}
             />
         ),
         heading: (value) => (
             <Heading
                 className={props.className}
                 value={props.value}
-                type={value.config?.properties?.type}
+                type={value?.properties?.type}
             />
         ),
     };

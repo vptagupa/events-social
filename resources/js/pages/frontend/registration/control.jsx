@@ -1,4 +1,11 @@
 import { useState, useCallback } from "react";
+import {
+    ensureGroupRequiredRadios,
+    ensureGroupRequired,
+    ensureConditionExpression,
+    ensureRequired,
+    ensureBasic,
+} from "./validations";
 
 export const useControl = (flexis) => {
     const [data, setData] = useState(flexis);
@@ -40,154 +47,31 @@ export const useControl = (flexis) => {
     };
 
     const submit = (form) => {
+        console.log(validateForm(form));
         if (validateForm(form)) {
             console.log("submit!");
         }
     };
 
     const validateForm = (form) => {
-        const ensureRequiredRadios = (_valid, column, components) => {
-            let valid = _valid;
-
-            // Tag the column as error when any of the required radios are unchecked
-            let requiredRadios = components.filter(
-                (c) => c.type == "radio" && c.config?.is_required == true
-            );
-
-            let requiredNotRadios = components.filter(
-                (c) =>
-                    c.type != "radio" &&
-                    c.config?.is_required == true &&
-                    c?.error
-            );
-
-            // Ensure to check the validations of multiple radios after when all the other components are valid
-            if (
-                !valid &&
-                requiredRadios.length > 1 &&
-                requiredNotRadios.length <= 0
-            ) {
-                const checkedRequiredRadios = requiredRadios.filter(
-                    (c) => !c?.error
-                );
-
-                if (checkedRequiredRadios.length <= 0) {
-                    column.error =
-                        "Please check at least one (1) of any of the radio boxes.";
-                }
-                requiredRadios.map((component) => {
-                    component.error = null;
-                    return component;
-                });
-
-                // ensure that the valid var is always false when the radios have no check
-                valid = column?.error ? false : true;
-            }
-
-            return valid;
-        };
-
-        const ensureGroupRequired = (column, components) => {
-            if ((column.config?.minimum_fields_required ?? 0) > 0) {
-                if (
-                    components.filter((c) => c.value != "" && c?.value).length <
-                    column.config?.minimum_fields_required
-                ) {
-                    column.error = `Require at least ${column.config?.minimum_fields_required} minimum of required fields.`;
-                    return false;
-                }
-            }
-
-            return true;
-        };
-
-        const ensureConditionExpression = (component) => {
-            let valid = true;
-            if (component.config["condition.expression"]) {
-                const expression = component.config["condition.expression"];
-                const value = component.config["condition.value"];
-
-                if (expression == "==") {
-                    if (component.value != value) {
-                        valid = false;
-                        component.error =
-                            "The value did not match the condition. It is not equal to " +
-                            value +
-                            ".";
-                    }
-                } else if (expression == ">") {
-                    if (parseFloat(component.value) <= parseFloat(value)) {
-                        valid = false;
-                        component.error =
-                            "The value did not match the condition. It is not greater than to " +
-                            value +
-                            ".";
-                    }
-                } else if (expression == ">=") {
-                    if (parseFloat(component.value) < parseFloat(value)) {
-                        valid = false;
-                        component.error =
-                            "The value did not match the condition. It is not greater than or equal to " +
-                            value +
-                            ".";
-                    }
-                } else if (expression == "<") {
-                    if (parseFloat(component.value) >= parseFloat(value)) {
-                        valid = false;
-                        component.error =
-                            "The value did not match the condition. It is not less than to " +
-                            value +
-                            ".";
-                    }
-                } else if (expression == "<=") {
-                    if (parseFloat(component.value) > parseFloat(value)) {
-                        valid = false;
-                        component.error =
-                            "The value did not match the condition. It is not less than or equal to " +
-                            value +
-                            ".";
-                    }
-                } else if (expression == "!=") {
-                    if (component.value == value) {
-                        valid = false;
-                        component.error =
-                            "The value did not match the condition. It should not equal to " +
-                            value +
-                            ".";
-                    }
-                }
-            }
-
-            return valid;
-        };
-
-        const ensureRequired = (component) => {
-            let valid = true;
-            component.error = null;
-            if (
-                component.config?.is_required == true &&
-                (component?.value == null || component?.value == "")
-            ) {
-                valid = false;
-                component.error =
-                    (component.config?.name ? "The " : "This") +
-                    (component.config?.name ?? "") +
-                    " field is required.";
-            }
-
-            return valid;
-        };
-
         const griddable = (grids) => {
             let truth = true;
             for (let grid of grids) {
                 for (let column of grid.columns) {
                     column.error = null;
+
                     let valid = componentable(column, column.components);
+                    if (!valid) {
+                        truth = false;
+                    }
                     valid = [
-                        ensureRequiredRadios(valid, column, column.components),
+                        ensureGroupRequiredRadios(column, column.components),
                         ensureGroupRequired(column, column.components),
                     ];
+                    console.log({
+                        column,
+                        valid,
+                    });
                     for (let v of valid) {
                         if (!v) {
                             truth = false;
@@ -209,8 +93,9 @@ export const useControl = (flexis) => {
                 }
 
                 const valid = [
-                    ensureRequired(component),
                     ensureConditionExpression(component),
+                    ensureBasic(component),
+                    ensureRequired(component),
                 ];
 
                 for (let v of valid) {

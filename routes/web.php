@@ -37,6 +37,23 @@ Route::controller(ParticipantController::class)->group(function () {
         Route::get('/accepted/{workshop:uuid}', 'accepted')->name('accepted');
     });
 
-    Route::get('/registration/{workshop:uuid}', 'registration')->name('registration');
+    Route::name('registration.')->prefix('registration/{workshop:uuid}')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/', 'register')->name('register');
+        Route::post('/form', 'form')->name('store');
+        Route::get('/accept', 'accept')->name('accept');
+        Route::get('/offer', 'offer')->name('offer');
+        Route::post('/offer/{offer}', 'offerSelect')->name('offerSelect');
+        Route::get('/pay', 'pay')->name('pay');
+        Route::post('/pay', 'payCreate')->name('payCreate');
+        Route::get('/status', 'status')->name('status');
+        Route::get('/confirmed', 'confirmed')->name('confirmed');
+        Route::get('/price-breakdown', 'priceBreakdown')->name('priceBreakdown');
+    });
+
+    Route::name('event.')->prefix('event')->group(function () {
+        Route::get('/{event:slug}', 'index')->name('index');
+    });
+
 });
 

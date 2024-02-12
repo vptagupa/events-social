@@ -18,6 +18,7 @@ export default function File({
     onChange,
     className = "",
     classNameIcon = "",
+    classNameContainer = "ring-1 ring-slate-300 focus:outline-purple-300 disabled:bg-slate-300",
     ...props
 }) {
     const [file, setFile] = useState(value);
@@ -25,9 +26,7 @@ export default function File({
 
     return (
         <div
-            className="p-4 w-full shadow-sm border-0 ring-1 ring-slate-300
-        text-sm rounded-lg focus:outline-purple-300
-        disabled:bg-slate-300 my-2"
+            className={`p-4 w-full shadow-sm border-0  my-2  text-sm rounded-lg  ${classNameContainer}`}
         >
             <div className="block text-center">{title}</div>
             {label && <div className="block text-center text-xs">{label}</div>}

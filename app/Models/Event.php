@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
+    use HasFactory, HasUuids;
     use Relations\EventSetting;
-    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -59,6 +60,16 @@ class Event extends Model
         'is_allowed_payment_integration',
         'is_live'
     ];
+
+    /**
+     * Get the columns that should receive a unique identifier.
+     *
+     * @return array<int, string>
+     */
+    public function uniqueIds(): array
+    {
+        return ['uuid'];
+    }
 
     public static function booted()
     {

@@ -6,6 +6,7 @@ export default function Input({
     value,
     onChange,
     className = "",
+    info,
     error,
     ...props
 }) {
@@ -14,13 +15,14 @@ export default function Input({
             <label>{title}</label>
             <Base
                 type={type}
-                className={`my-2 ${className}`}
+                className={`mt-2 ${className}`}
                 value={value}
                 onChange={onChange}
                 {...props}
             />
+            {info && <span className="block text-end text-xs">{info}</span>}
             {error && (
-                <span className="block text-danger text-xs">{error}</span>
+                <span className="block text-danger text-xs mt-2">{error}</span>
             )}
         </div>
     );

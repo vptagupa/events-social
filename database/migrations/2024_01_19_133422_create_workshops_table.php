@@ -25,8 +25,10 @@ return new class extends Migration {
                     PaymentStatus::cases()
                 )
             )->length(35)->nullable();
+            $table->dateTime('invited_at')->nullable();
             $table->dateTime('notified_at')->nullable();
             $table->dateTime('submitted_at')->nullable();
+            $table->dateTime('payment_at')->nullable();
             $table->dateTime('confirmed_at')->nullable();
             $table->timestamps();
         });

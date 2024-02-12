@@ -7,7 +7,7 @@ export default memo(function RegistrationForm({ value }) {
     return (
         <>
             <a
-                href={route("registration", value.workshops[0].uuid)}
+                href={route("registration.index", value.workshops[0].uuid)}
                 target="_blank"
                 title="Registration Form"
                 className="cursor-pointer"

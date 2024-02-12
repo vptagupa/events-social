@@ -7,6 +7,7 @@ use App\Models\Organizer;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Carbon\CArbon;
+use Illuminate\Support\Str;
 
 class EventsSeeder extends Seeder
 {
@@ -17,6 +18,7 @@ class EventsSeeder extends Seeder
     {
         $data = [
             [
+                'uuid' => Str::uuid(),
                 "title" => "Event",
                 'slug' => 'event',
                 'description' => 'Event',

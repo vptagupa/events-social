@@ -7,21 +7,28 @@ import {
     ensureBasic,
 } from "./validations";
 
-export const useControl = (flexis) => {
+export const useControl = ({ flexis, onNext, onPrev, onSubmit }) => {
     const [data, setData] = useState(flexis);
     const [tab, setTab] = useState(0);
 
     const next = useCallback(
         (form) => {
-            if (validateForm(form))
-                if (tab < flexis.length - 1) setTab(tab + 1);
+            if (validateForm(form) && hasNext()) {
+                setTab(tab + 1);
+                if (onNext) onNext(form);
+                return true;
+            }
         },
         [tab]
     );
 
     const prev = useCallback(
         (form) => {
-            if (tab > 0) setTab(tab - 1);
+            if (hasPrev()) {
+                setTab(tab - 1);
+                if (onPrev) onPrev(form);
+                return true;
+            }
         },
         [tab]
     );
@@ -29,6 +36,8 @@ export const useControl = (flexis) => {
     const isFinal = useCallback(() => tab >= flexis.length - 1, [tab]);
 
     const hasPrev = useCallback(() => tab > 0, [tab]);
+
+    const hasNext = useCallback(() => tab < flexis.length - 1, [tab, flexis]);
 
     const handleChange = (column, component, value) => {
         // Change all radio value to false in favor for the selected radio
@@ -47,9 +56,8 @@ export const useControl = (flexis) => {
     };
 
     const submit = (form) => {
-        console.log(validateForm(form));
         if (validateForm(form)) {
-            console.log("submit!");
+            if (onSubmit) onSubmit(form);
         }
     };
 
@@ -68,10 +76,7 @@ export const useControl = (flexis) => {
                         ensureGroupRequiredRadios(column, column.components),
                         ensureGroupRequired(column, column.components),
                     ];
-                    console.log({
-                        column,
-                        valid,
-                    });
+
                     for (let v of valid) {
                         if (!v) {
                             truth = false;

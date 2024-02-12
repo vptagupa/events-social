@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\PaymentStatus;
+use App\Services\Payment;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -14,7 +15,6 @@ class Workshop extends Model
     use Generators\WorkshopGenerator;
 
     protected $fillable = [
-        'uuid',
         'code',
         'event_id',
         'participant_id',
@@ -23,6 +23,7 @@ class Workshop extends Model
         'notified_at',
         'accepted_at',
         'submitted_at',
+        'payment_at',
         'confirmed_at'
     ];
 
@@ -31,12 +32,28 @@ class Workshop extends Model
         'notified_at' => 'datetime:Y-m-d H:is',
         'submitted_at' => 'datetime:Y-m-d H:is',
         'confirmed_at' => 'datetime:Y-m-d H:is',
+        'payment_at' => 'datetime:Y-m-d H:is',
         'accepted_at' => 'datetime:Y-m-d H:is',
     ];
 
     protected $appends = [
-        'is_accepted'
+        'has_accepted',
+        'has_notified',
+        'has_submitted',
+        'is_invited',
+        'is_confirmed',
+        'price'
     ];
+
+    /**
+     * Get the columns that should receive a unique identifier.
+     *
+     * @return array<int, string>
+     */
+    public function uniqueIds(): array
+    {
+        return ['uuid'];
+    }
 
     public static function booted()
     {
@@ -49,22 +66,48 @@ class Workshop extends Model
         });
     }
 
-    /**
-     * Get the columns that should receive a unique identifier.
-     *
-     * @return array<int, string>
-     */
-    public function uniqueIds(): array
-    {
-        return ['uuid'];
-    }
-
-    public function isAccepted(): Attribute
+    public function hasAccepted(): Attribute
     {
         return Attribute::make(
             get: fn() => $this->accepted_at ? true : false
         );
     }
+
+    public function hasSubmitted(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->submitted_at ? true : false
+        );
+    }
+
+    public function hasNotified(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->notified_at ? true : false
+        );
+    }
+
+    public function isInvited(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->invited_at ? true : false
+        );
+    }
+
+    public function hasPayment(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->payment_at ? true : false
+        );
+    }
+
+    public function isConfirmed(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->confirmed_at ? true : false
+        );
+    }
+
 
     public function participant()
     {
@@ -84,5 +127,28 @@ class Workshop extends Model
     public function offer()
     {
         return $this->belongsTo(Offer::class);
+    }
+
+    public function registrations()
+    {
+        return $this->hasMany(Registration::class);
+    }
+
+    public function price(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->event->is_offer_package ? $this->offer?->price ?? 0 : $this->event->price
+        );
+    }
+
+    public function priceBreakdown(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => Payment::calculate(
+                $this->event_id,
+                $this->price,
+                config('system.tax_include') ? config('system.tax') : 0
+            )
+        );
     }
 }

@@ -30,11 +30,11 @@ class Workshop extends Model
 
     protected $casts = [
         'payment_status' => PaymentStatus::class,
-        'notified_at' => 'datetime:Y-m-d H:is',
-        'submitted_at' => 'datetime:Y-m-d H:is',
-        'confirmed_at' => 'datetime:Y-m-d H:is',
-        'payment_at' => 'datetime:Y-m-d H:is',
-        'accepted_at' => 'datetime:Y-m-d H:is',
+        'notified_at' => 'datetime:Y-m-d H:i:s',
+        'submitted_at' => 'datetime:Y-m-d H:i:s',
+        'confirmed_at' => 'datetime:Y-m-d H:i:s',
+        'payment_at' => 'datetime:Y-m-d H:i:s',
+        'accepted_at' => 'datetime:Y-m-d H:i:s',
     ];
 
     protected $appends = [

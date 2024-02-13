@@ -70,7 +70,7 @@ export default function Index(props) {
                                     >
                                         <FontAwesomeIcon
                                             icon={faIdCard}
-                                            className="h-5 text-purple-400 hover:text-purple-600"
+                                            className="h-5 text-slate-400 hover:text-slate-600"
                                             title="Logout"
                                         />
                                         <div className="sr-only">Profile</div>

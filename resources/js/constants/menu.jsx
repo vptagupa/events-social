@@ -5,6 +5,7 @@ import {
     faCalendar,
     faFileInvoiceDollar,
     faHammer,
+    faUserGroup,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default [
@@ -30,6 +31,13 @@ export default [
         icon: <FontAwesomeIcon icon={faUserCircle} className="text-lg" />,
         route: "admin.backend.organizers.index",
         permission: "ORGANIZERS",
+    },
+    {
+        id: "participants",
+        name: "Participants",
+        icon: <FontAwesomeIcon icon={faUserGroup} className="text-lg" />,
+        route: "admin.backend.participants.index",
+        permission: "PARTICIPANTS",
     },
 
     {

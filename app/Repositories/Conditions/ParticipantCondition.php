@@ -19,6 +19,24 @@ trait ParticipantCondition
         });
     }
 
+    public function eventCondition(&$builder, $query)
+    {
+        return $builder->when(isset($query['event']) && $query['event'], function ($builder) use ($query) {
+            $builder->with([
+                'workshops.event'
+            ]);
+        });
+    }
+
+    public function eventOrganizerCondition(&$builder, $query)
+    {
+        return $builder->when(isset($query['eventOrganizer']) && $query['eventOrganizer'], function ($builder) use ($query) {
+            $builder->with([
+                'workshops.event.organizer'
+            ]);
+        });
+    }
+
     public function queryCondition(&$builder, $query)
     {
         return $builder->when(isset($query['query']) && $query['query'], function ($builder) use ($query) {

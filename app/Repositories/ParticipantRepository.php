@@ -209,7 +209,7 @@ class ParticipantRepository extends Repository
             $model = $this->find($id);
             $workshop = $model->workshops()->where('event_id', $data['event_id'])->first();
 
-            $breakdown = $workshop->price_breakdown;
+            $breakdown = $workshop->priceBreakdown();
 
             $file = null;
             if ($data['file'] instanceof UploadedFile) {

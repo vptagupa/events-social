@@ -24,9 +24,9 @@ class ProofPaymentRequest extends FormRequest
         return [
             function (validator $validator) {
                 if (
-                    !$this->participant->workshop(
+                    !$this->participant->currentWorkshop(
                         $this->event_id
-                    )->first()?->submitted_at
+                    )->submitted_at
                 ) {
                     $validator->errors()->add(
                         'registration',

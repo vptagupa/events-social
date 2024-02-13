@@ -47,7 +47,7 @@ export default memo(function Breakdown({ event, price }) {
             {breakdown.map((item, idx) => (
                 <div
                     key={idx}
-                    className={`flex items-center justify-between text-xs py-1 px-2 border border-slate-200 rounded-md
+                    className={`flex items-center justify-between text-sm py-1 px-2 border border-slate-300 rounded-md
                     ${item?.className ?? ""}
                     `}
                 >

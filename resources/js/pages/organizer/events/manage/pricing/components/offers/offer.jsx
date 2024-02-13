@@ -59,6 +59,7 @@ export default memo(function Offer({
                     title={"Description"}
                     value={value.description}
                     info={"Length: " + (value?.description ?? "").length}
+                    maxLength="120"
                     onChange={(e) => {
                         control.change(value, "description", e.target.value);
                     }}

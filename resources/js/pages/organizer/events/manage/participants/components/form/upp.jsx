@@ -21,7 +21,6 @@ export default function Component({ form, handleRemove }) {
                 }
                 value={form.data?.file ?? ""}
                 onChange={(e) => {
-                    console.log(e.target.files[0]);
                     form.setData("file", e.target.files[0]);
                 }}
                 accept=" .jpg, .jpeg, .png, .mp4"

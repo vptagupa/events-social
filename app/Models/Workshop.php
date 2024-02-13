@@ -146,14 +146,12 @@ class Workshop extends Model
         );
     }
 
-    public function priceBreakdown(): Attribute
+    public function priceBreakdown()
     {
-        return Attribute::make(
-            get: fn() => Payment::calculate(
-                $this->event_id,
-                $this->price,
-                config('system.tax_include') ? config('system.tax') : 0
-            )
+        return Payment::calculate(
+            $this->event_id,
+            $this->price,
+            config('system.include_tax') ? config('system.tax') : 0
         );
     }
 }

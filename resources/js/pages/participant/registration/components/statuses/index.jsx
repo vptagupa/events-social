@@ -12,7 +12,7 @@ export default function Statuses({ workshop }) {
             <Row name="Invited" value={date(workshop.invited_at)} />
             <Row name="Notified" value={date(workshop.notified_at)} />
             <Row name="Invite Accepted" value={date(workshop.accepted_at)} />
-            <Row name="Paid" value={date(workshop.submitted_at)} />
+            <Row name="Paid" value={date(workshop.payment_at)} />
             <Row name="Submitted" value={date(workshop.submitted_at)} />
             <Row name="Payment Status" value={workshop.payment_status} />
             <Row name="Confirmed" value={date(workshop.confirmed_at)} />

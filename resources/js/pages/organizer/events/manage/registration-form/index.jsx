@@ -86,7 +86,7 @@ export default function RegistrationForm({ event, errors }) {
 
     return (
         <Main event={event} action={<Action />}>
-            <div className="flex items-start justify-start min-h-[32rem]">
+            <div className="flex items-start justify-start min-h-[600px]">
                 <Flexi flexia={flexia} />
             </div>
         </Main>

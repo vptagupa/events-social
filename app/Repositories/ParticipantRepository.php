@@ -235,4 +235,34 @@ class ParticipantRepository extends Repository
             $workshop->save();
         });
     }
+
+    /**
+     * Join participant to the event
+     * @param array $data
+     * @expected $data {email, event_id}
+     * @sideEffect send joining email
+     * @throws \Exception
+     */
+    public function join(array $data): Participant
+    {
+        \DB::transaction(function () use ($data) {
+            $model = $this->model()->whereEmail($data['email'])->first();
+            if (!$model) {
+                $model = $this->create([
+                    'email' => $data['email']
+                ]);
+            }
+
+            $model->workshops()->save(
+                new Workshop(
+                    [
+                        'code' => '', // code will be added when created successfully
+                        'event_id' => $data['event_id'],
+                    ]
+                )
+            );
+        }, 2);
+
+        return $this->model()->whereEmail($data['email'])->first();
+    }
 }

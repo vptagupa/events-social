@@ -14,7 +14,7 @@ export default ({ file }) => {
     }
 
     if (url) {
-        return <img src={url} className="w-full" />;
+        return <img src={url} className="w-1/2" />;
     }
 
     return (

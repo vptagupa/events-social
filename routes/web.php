@@ -55,6 +55,7 @@ Route::controller(ParticipantController::class)->group(function () {
 
     Route::controller(EventController::class)->name('event.')->prefix('event')->group(function () {
         Route::get('/{event:slug}', 'index')->name('index');
+        Route::post('/{event:slug}', 'join')->name('join');
     });
 
 });

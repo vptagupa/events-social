@@ -74,6 +74,11 @@ class Participant extends Authenticatable
         return $this->hasMany(Workshop::class);
     }
 
+    public function currentWorkshop(int $event)
+    {
+        return $this->workshops()->where('event_id', $event)->first();
+    }
+
     public function scopeWorkshop($query, int $event)
     {
         return $query->whereHas('workshops', function ($builder) use ($event) {

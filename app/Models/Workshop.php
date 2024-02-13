@@ -62,8 +62,11 @@ class Workshop extends Model
             $model->code = (new self)->generateCode();
             $model->save();
 
-            // Send participant invitation email
-            $model->participant->sendInvitation($model);
+            if ($model->is_invited) {
+                $model->participant->sendInvitation($model);
+            } else {
+                $model->participant->sendTrackingLink($model);
+            }
         });
     }
 

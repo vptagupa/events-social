@@ -10,6 +10,7 @@ import {
 export const useControl = ({ flexis, onNext, onPrev, onSubmit }) => {
     const [data, setData] = useState(flexis);
     const [tab, setTab] = useState(0);
+    const [processing, setProcessing] = useState(false);
 
     const next = useCallback(
         (form) => {
@@ -120,5 +121,16 @@ export const useControl = ({ flexis, onNext, onPrev, onSubmit }) => {
         return valid;
     };
 
-    return { data, tab, next, prev, isFinal, hasPrev, submit, handleChange };
+    return {
+        data,
+        processing,
+        tab,
+        next,
+        prev,
+        isFinal,
+        hasPrev,
+        submit,
+        handleChange,
+        setProcessing,
+    };
 };

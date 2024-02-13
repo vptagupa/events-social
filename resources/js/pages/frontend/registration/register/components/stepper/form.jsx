@@ -21,6 +21,7 @@ export default function Form({ value }) {
                 )}
 
                 <Next
+                    processing={control.processing}
                     className={`!text-[2rem] !h-14 uppercase !pt-0 !pb-1`}
                     title={
                         value.config["next.title"] ??

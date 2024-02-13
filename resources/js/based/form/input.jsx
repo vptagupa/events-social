@@ -20,10 +20,10 @@ export default function Input({
                 onChange={onChange}
                 {...props}
             />
-            {info && <span className="block text-end text-xs">{info}</span>}
             {error && (
-                <span className="block text-danger text-xs mt-2">{error}</span>
+                <span className="block text-danger text-xs">{error}</span>
             )}
+            {info && <span className="block text-end text-xs">{info}</span>}
         </div>
     );
 }

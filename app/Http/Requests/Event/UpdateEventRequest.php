@@ -24,12 +24,12 @@ class UpdateEventRequest extends FormRequest
     {
         return [
             'organizer_id' => 'required|integer',
-            'title' => 'required|max:125',
-            'description' => 'required|max:250',
-            'place' => 'required',
-            'address' => 'required',
-            'map' => 'nullable',
-            'slug' => 'required',
+            'title' => 'required|max:120',
+            'slug' => 'required:max:150',
+            'description' => 'required|max:400',
+            'place' => 'required|max:250',
+            'address' => 'required|max:400',
+            'map' => 'nullable|max:400',
             'start_at' => 'required|date',
             'end_at' => 'required|date',
             'expected_start_at' => 'required|date',

@@ -62,7 +62,7 @@ const Component = ({
             <Table
                 data={data}
                 pagination={pagination}
-                className="rounded-2xl w-full"
+                className="rounded-2xl w-full !overflow-visible"
             >
                 {(tableList) => (
                     <>

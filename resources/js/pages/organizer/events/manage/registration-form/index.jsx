@@ -10,7 +10,7 @@ import { Transition } from "@headlessui/react";
 import { faCheck, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { router } from "@inertiajs/react";
 
-export default function RegistrationForm({ event }) {
+export default function RegistrationForm({ event, errors }) {
     const flexia = useFlexi(event.registration_form?.schema);
     const [processing, setProcessing] = useState({
         regular: false,
@@ -42,11 +42,20 @@ export default function RegistrationForm({ event }) {
             }
         );
     };
-
+    console.log(errors);
     const Action = () => (
         <div className="flex gap-x-2 items-center">
             <Transition
-                show={processing.regular || processing.published}
+                show={Object.keys(errors).length > 0}
+                className="text-xs text-danger"
+            >
+                The form is required before publishing.
+            </Transition>
+            <Transition
+                show={
+                    (processing.regular || processing.published) &&
+                    Object.keys(errors).length <= 0
+                }
                 className="text-xs"
             >
                 Successfully save.

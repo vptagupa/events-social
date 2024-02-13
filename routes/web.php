@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Frontend\EventController;
 use App\Http\Controllers\Frontend\ParticipantController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
@@ -52,7 +53,7 @@ Route::controller(ParticipantController::class)->group(function () {
         Route::get('/price-breakdown', 'priceBreakdown')->name('priceBreakdown');
     });
 
-    Route::name('event.')->prefix('event')->group(function () {
+    Route::controller(EventController::class)->name('event.')->prefix('event')->group(function () {
         Route::get('/{event:slug}', 'index')->name('index');
     });
 

@@ -16,6 +16,7 @@ export default memo(function New({ url }) {
         method: "post",
         route: url,
         data: {
+            slug: "",
             title: "",
             description: "",
             place: "",
@@ -39,6 +40,22 @@ export default memo(function New({ url }) {
         });
     };
 
+    const handleChange = (key, value) => {
+        if (["title"].includes(key)) {
+            form.setData({
+                ...form.data,
+                slug: value
+                    .replace(/[^a-zA-Z0-9\s]+/g, "")
+                    .replace(/\s+/g, "-")
+                    .toLowerCase(),
+                [key]: value,
+            });
+
+            return;
+        }
+        form.setData(key, value);
+    };
+
     return (
         <>
             <Button
@@ -51,7 +68,7 @@ export default memo(function New({ url }) {
             <Modal open={open}>
                 <Close click={(e) => setOpen(false)} />
                 <Title>Add New</Title>
-                <Form form={form} />
+                <Form form={form} handleChange={handleChange} />
                 <Footer>
                     <FooterForm
                         form={form}

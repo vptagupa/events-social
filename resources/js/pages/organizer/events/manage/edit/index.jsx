@@ -47,7 +47,10 @@ export default function Edit({ event }) {
         if (["title"].includes(key)) {
             form.setData({
                 ...form.data,
-                slug: value.replace(/\s+/g, "-").toLowerCase(),
+                slug: value
+                    .replace(/[^a-zA-Z0-9\s]+/g, "")
+                    .replace(/\s+/g, "-")
+                    .toLowerCase(),
                 [key]: value,
             });
 

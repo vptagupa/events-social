@@ -24,7 +24,7 @@ class StoreRegistrationForm extends FormRequest
     {
         return [
             'schema' => 'required_if:published,true',
-            'schema.flexis.*.grids.*.columns.*.components.id' => 'required_if:published,true',
+            'schema.flexis.*.grids.*.columns.*.components.*.id' => 'required_if:published,true',
             'published' => 'nullable',
         ];
     }

@@ -13,6 +13,7 @@ export default memo(function Edit({ value, url }) {
         method: "patch",
         route: url,
         data: {
+            slug: value.slug,
             title: value.title,
             description: value.description,
             place: value.place,
@@ -34,6 +35,22 @@ export default memo(function Edit({ value, url }) {
         });
     };
 
+    const handleChange = (key, value) => {
+        if (["title"].includes(key)) {
+            form.setData({
+                ...form.data,
+                slug: value
+                    .replace(/[^a-zA-Z0-9\s]+/g, "")
+                    .replace(/\s+/g, "-")
+                    .toLowerCase(),
+                [key]: value,
+            });
+
+            return;
+        }
+        form.setData(key, value);
+    };
+
     return (
         <>
             <div
@@ -50,7 +67,7 @@ export default memo(function Edit({ value, url }) {
             <Modal open={open}>
                 <Close click={(e) => setOpen(false)} />
                 <Title>Update</Title>
-                <Form form={form} />
+                <Form form={form} handleChange={handleChange} />
                 <Footer>
                     <FooterForm
                         form={form}

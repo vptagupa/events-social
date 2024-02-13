@@ -42,6 +42,10 @@ class ParticipantController extends Controller
      */
     public function offer(Workshop $workshop)
     {
+        if ($redirect = $this->restrict($workshop)) {
+            return $redirect;
+        }
+
         return $this->render('frontend/registration/offer/index', [
             'workshop' => $workshop->load([
                 'event.offers' => function ($builder) {
@@ -56,6 +60,10 @@ class ParticipantController extends Controller
      */
     public function offerSelect(Workshop $workshop, Offer $offer)
     {
+        if ($redirect = $this->restrict($workshop)) {
+            return $redirect;
+        }
+
         $workshop->offer()->associate($offer);
         $workshop->save();
 
@@ -68,6 +76,11 @@ class ParticipantController extends Controller
      */
     public function pay(Workshop $workshop)
     {
+        if ($redirect = $this->restrict($workshop)) {
+            return $redirect;
+        }
+
+
         return $this->render('frontend/registration/payment/index', [
             'workshop' => $workshop->append('price'),
         ]);
@@ -78,6 +91,10 @@ class ParticipantController extends Controller
      */
     public function payCreate(PayRequest $request, Workshop $workshop)
     {
+        if ($redirect = $this->restrict($workshop)) {
+            return $redirect;
+        }
+
         $request->merge([
             'event_id' => $workshop->event_id
         ]);
@@ -209,5 +226,18 @@ class ParticipantController extends Controller
         ]);
 
         $this->repository->storeForm($request->only(['flex', 'event_id']), $workshop->participant->id);
+    }
+
+    /**
+     * Restrict access to page at certain conditions
+     * @return redirect
+     */
+    public function restrict(Workshop $workshop)
+    {
+        if ($workshop->has_payment) {
+            return redirect(route('registration.confirmed', $workshop));
+        }
+
+        return null;
     }
 }

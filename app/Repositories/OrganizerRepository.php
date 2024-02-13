@@ -12,13 +12,13 @@ class OrganizerRepository extends Repository
         // 
     }
 
-    public function create(array $data): Organizer
+    public function create(array $data): ?Organizer
     {
         if (!isset($data['password'])) {
             $data['password'] = bcrypt(config('auth.password_default'));
         }
 
-        parent::create($data);
+        return parent::create($data);
     }
 
     public function activate($id)

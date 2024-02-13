@@ -44,6 +44,7 @@ class Workshop extends Model
         'is_invited',
         'is_confirmed',
         'price',
+        'has_payment'
     ];
 
     /**

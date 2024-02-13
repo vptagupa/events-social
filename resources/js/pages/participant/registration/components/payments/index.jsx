@@ -22,7 +22,7 @@ export default function Payment({ workshop }) {
                             <div>{currency(parseFloat(trans.price))}</div>
                         </div>
                         <div className="w-full flex items-center justify-between gap-x-2">
-                            <div className="font-bold">Tax {trans.tax}%</div>
+                            <div className="font-bold">Tax {trans.tax}</div>
                             <div>{currency(parseFloat(trans.tax_amount))}</div>
                         </div>
                         <div className="w-full flex items-center justify-between gap-x-2">
@@ -42,6 +42,20 @@ export default function Payment({ workshop }) {
                             <div className="font-bold">Amount Paid</div>
                             <div>
                                 {currency(parseFloat(trans.actual_paid_amount))}
+                            </div>
+                        </div>
+                        <div className="w-full flex items-center justify-between gap-x-2">
+                            <div className="font-bold">Status</div>
+                            <div>
+                                {trans.failed_at && (
+                                    <div
+                                        className="text-danger"
+                                        title={trans.failed_reason}
+                                    >
+                                        Failed
+                                    </div>
+                                )}
+                                {!trans.failed_at && "For Review"}
                             </div>
                         </div>
                     </div>

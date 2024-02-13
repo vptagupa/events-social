@@ -10,7 +10,7 @@ export default () => {
     );
     return (
         <>
-            <ul className="text-xs">
+            <ul className="text-sm">
                 {filteredAccessMenu.map((nav, i) => {
                     return (
                         <li key={i} className={""}>

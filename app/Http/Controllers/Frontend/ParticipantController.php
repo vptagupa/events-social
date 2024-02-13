@@ -8,6 +8,7 @@ use App\Models\Offer;
 use App\Models\Workshop;
 use App\Repositories\ParticipantRepository;
 use App\Services\Payment;
+use App\Services\RegistrationForm;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -165,7 +166,11 @@ class ParticipantController extends Controller
         }
 
         return $this->render('frontend/registration/register/index', [
-            'workshop' => $workshop->load('event.registrationForm')
+            'workshop' => $workshop,
+            'registrationForm' => RegistrationForm::populate(
+                $workshop->participant->id,
+                $workshop->event->id,
+            )
         ]);
     }
 

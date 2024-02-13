@@ -31,4 +31,17 @@ class PayRequest extends FormRequest
             'method' => ['required', Rule::in(['upload', 'gateway'])]
         ];
     }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'file.required_if' => 'Proof of payment is required.',
+            'method.required' => 'Choose payment gateway.',
+        ];
+    }
 }

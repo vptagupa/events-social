@@ -6,9 +6,9 @@ import { ControlContext } from "./context";
 import axios from "axios";
 import { router } from "@inertiajs/react";
 
-export default function Registration({ workshop }) {
+export default function Registration({ workshop, registrationForm }) {
     const control = useControl({
-        flexis: workshop.event.registration_form.schema.flexis,
+        flexis: registrationForm,
         onNext: async (form) => {
             await axios.post(route("registration.store", workshop.uuid), {
                 flex: form,

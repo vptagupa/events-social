@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
+    use HasFactory, HasUuids;
     use Relations\EventSetting;
-    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -32,7 +33,8 @@ class Event extends Model
         'official_receipt_file_id',
         'organizer_id',
         'active',
-        'price'
+        'price',
+        'published_at'
     ];
 
     /**
@@ -47,15 +49,28 @@ class Event extends Model
         'expected_end_at' => 'date:m/d/Y h:i A',
         'actual_started_at' => 'date:m/d/Y h:i A',
         'actual_ended_at' => 'date:m/d/Y h:i A',
-        'price' => 'decimal:2'
+        'price' => 'decimal:2',
+        'published_at' => 'datetime: Y-m-d H:i:s a'
     ];
 
     protected $appends = [
         'is_offer_package',
         'is_free',
         'is_allowed_upload_proof_payment',
-        'is_allowed_payment_integration'
+        'is_allowed_payment_integration',
+        'is_published',
+        'start_at'
     ];
+
+    /**
+     * Get the columns that should receive a unique identifier.
+     *
+     * @return array<int, string>
+     */
+    public function uniqueIds(): array
+    {
+        return ['uuid'];
+    }
 
     public static function booted()
     {
@@ -72,6 +87,20 @@ class Event extends Model
                 );
             }));
         });
+    }
+
+    public function isPublished(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->published_at ? true : false
+        );
+    }
+
+    public function startAt(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->expected_start_at->format('F j, Y, h:i a')
+        );
     }
 
     public function organizer()

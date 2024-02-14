@@ -102,6 +102,9 @@ class EventsController extends Controller
             'organizer_id',
             'slug',
             'title',
+            'place',
+            'address',
+            'map',
             'description',
             'expected_start_at',
             'expected_end_at'
@@ -119,6 +122,9 @@ class EventsController extends Controller
             'slug',
             'title',
             'description',
+            'place',
+            'address',
+            'map',
             'expected_start_at',
             'expected_end_at'
         ]), $event->id);

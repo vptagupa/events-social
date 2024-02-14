@@ -53,6 +53,7 @@ Route::name('organizer.')->prefix('organizer')->group(function () {
             Route::controller(ParticipantsController::class)->name('participants.')->prefix('participants')->group(function () {
                 Route::post('/list', 'list')->name('list');
                 Route::post('/invite', 'invite')->name('invite');
+                Route::post('/stats', 'statistics')->name('statistics');
                 Route::post('{participant}/upload-proof-of-payment', 'uploadProofOfPayment')->name('upp');
             });
             Route::resource('participants', ParticipantsController::class)->except(['create', 'edit']);

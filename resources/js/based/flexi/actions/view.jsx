@@ -1,4 +1,8 @@
-import { faExpand, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+    faExpand,
+    faCircleXmark,
+    faUpRightAndDownLeftFromCenter,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Modal, Title, Footer } from "@/js/components/modal";
 import { useState } from "react";
@@ -11,8 +15,8 @@ export default function View({ click, title, caption, ...props }) {
             <FontAwesomeIcon
                 title={title}
                 onClick={() => setOpen(true)}
-                icon={faExpand}
-                className="w-1/2 p-1 cursor-pointer font-bold text-teal-500/40 hover:text-teal-500 hover:scale-125 transform hover:rotate-180 transition-all duration-200"
+                icon={faUpRightAndDownLeftFromCenter}
+                className="text-xl p-1 cursor-pointer font-bold text-purple-500/40 hover:text-purple-500 hover:scale-125 transform hover:rotate-180 transition-all duration-200"
             />
             <Modal open={open} className="xs:w-[90%] md:w-1/2 p-3">
                 <FontAwesomeIcon

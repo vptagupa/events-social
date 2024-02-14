@@ -6,14 +6,14 @@ export const config = {
     defaultValue: "",
     form: [
         "name",
-        "label",
         "class",
         "style",
         "condition",
         "placeholder",
         "default value",
-        "is required",
         "select",
+        "is required",
+        "is number",
     ],
 };
 
@@ -31,11 +31,20 @@ export const column = {
     column: 0,
     components: [],
     class: "bg-slate-200",
+    title: "Column Configuration",
+    config: {
+        active: false,
+        form: [
+            "class",
+            "minimum fields required as number",
+            "is options required",
+        ],
+    },
 };
 
 export const grid = {
     grid: 0,
-    class: "bg-slate-100",
+    class: "bg-slate-300",
     columns: [],
 };
 
@@ -44,6 +53,7 @@ export const flex = {
     grids: [],
     active: true,
     class: "bg-slate-200",
+    title: "Step Configuration",
     config: {
         name: "Step",
         active: false,
@@ -81,13 +91,17 @@ export const attributes = [
     },
     {
         ...attribute,
-        title: "Columns",
+        title: "Column",
         type: "column",
     },
     {
         ...attribute,
-        title: "Text",
-        type: "text",
+        title: "Input",
+        type: "input",
+        properties: {
+            type: "text",
+            types: ["Text", "Email", "Number", "Date"],
+        },
     },
     {
         ...attribute,
@@ -118,6 +132,34 @@ export const attributes = [
         ...attribute,
         title: "Notes",
         type: "notes",
+        config: {
+            ...attribute.config,
+            form: ["class", "style", "default value"],
+        },
+        properties: {
+            types: ["info", "success", "danger", "warning"],
+        },
+    },
+    {
+        ...attribute,
+        title: "Label",
+        type: "label",
+        config: {
+            ...attribute.config,
+            form: ["class", "style", "default value"],
+        },
+    },
+    {
+        ...attribute,
+        title: "Heading",
+        type: "heading",
+        config: {
+            ...attribute.config,
+            form: ["class", "style", "default value"],
+        },
+        properties: {
+            types: ["h1", "h2", "h3"],
+        },
     },
 ];
 

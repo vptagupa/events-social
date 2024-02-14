@@ -12,12 +12,13 @@ return new class extends Migration {
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->string('slug', 25);
-            $table->string('title', 125);
-            $table->string('description', 250);
+            $table->uuid();
+            $table->string('slug', 150);
+            $table->string('title', 120);
+            $table->string('description', 400);
             $table->string('place', 250);
-            $table->string('address');
-            $table->string('map')->nullable();
+            $table->string('address', 400);
+            $table->string('map', 400)->nullable();
             $table->decimal('price')->nullable();
             $table->dateTime('expected_start_at');
             $table->dateTime('expected_end_at');
@@ -29,6 +30,7 @@ return new class extends Migration {
             $table->foreignId('official_receipt_file_id')->nullable()->constrained('files');
             $table->foreignId('organizer_id')->constrained('organizers');
             $table->boolean('active')->default(false);
+            $table->dateTime('published_at')->nullable();
             $table->timestamps();
         });
     }

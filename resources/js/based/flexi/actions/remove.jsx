@@ -7,7 +7,7 @@ export default function Move({ click, ...props }) {
             {...props}
             onClick={click}
             icon={faMinusCircle}
-            className="w-1/2 p-1 cursor-pointer text-red-500/40 hover:text-red-500 hover:scale-125 transform hover:rotate-180 transition-all duration-200"
+            className="p-1 text-xl cursor-pointer text-red-500/40 hover:text-red-500 hover:scale-125 transform hover:rotate-180 transition-all duration-200"
         />
     );
 }

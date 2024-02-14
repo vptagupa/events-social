@@ -13,8 +13,12 @@ return new class extends Migration {
         Schema::create('registrations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('workshop_id')->constrained('workshops');
-            $table->string('name', 35);
-            $table->string('value');
+            $table->string("flex");
+            $table->string("grid");
+            $table->string("column");
+            $table->string("component");
+            $table->string("name");
+            $table->string("value");
             $table->timestamps();
         });
     }

@@ -11,9 +11,11 @@ import DownloadCert from "./dlcert";
 import ResendInvitation from "./resend-invite";
 import ResendPaymentForm from "./resend-payment";
 import ResetPassword from "./reset";
+import Tracker from "./tracker";
 
 export default function More({ value }) {
     const actions = [
+        <Tracker value={value} />,
         <DownloadCert value={value} />,
         <ResendInvitation value={value} />,
         <ResendPaymentForm value={value} />,

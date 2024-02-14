@@ -117,6 +117,14 @@ class ParticipantsController extends Controller
     }
 
     /**
+     * Show event statistics
+     */
+    public function statistics(Event $event)
+    {
+
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(Event $event, Participant $participant)

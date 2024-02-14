@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\Frontend\Auth\AuthController;
-use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Admin\Frontend\Auth\ForgotPasswordController;
+use App\Http\Controllers\Admin\Frontend\Auth\ResetPasswordController;
+use App\Http\Controllers\Admin\Frontend\Auth\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,13 +35,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 
-// Route::middleware('guest')->group(function () {
-//     Route::prefix('forgot-password')->name('forgot-password.')->group(function () {
-//         Route::post('/', [ForgotPasswordController::class, 'send'])->name('send');
-//     });
-//     Route::prefix('reset-password')->name('password.')->group(function () {
-//         Route::get('/{token}', [ResetPasswordController::class, 'index'])->name('reset');
-//         Route::post('/', [ResetPasswordController::class, 'update'])->name('update');
-//     });
-//     Route::post('/register', [RegisterController::class, 'store'])->name('register');
-// });
+Route::middleware('guest')->group(function () {
+    Route::prefix('forgot-password')->name('forgot-password.')->group(function () {
+        Route::post('/', [ForgotPasswordController::class, 'send'])->name('send');
+    });
+    Route::prefix('reset-password')->name('password.')->group(function () {
+        Route::get('/{token}', [ResetPasswordController::class, 'index'])->name('reset');
+        Route::post('/', [ResetPasswordController::class, 'update'])->name('update');
+    });
+    Route::post('/register', [RegisterController::class, 'store'])->name('register');
+});

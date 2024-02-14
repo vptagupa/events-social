@@ -1,40 +1,61 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+    faUser,
+    faUserCircle,
+    faCalendar,
+    faFileInvoiceDollar,
+    faHammer,
+    faUserGroup,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default [
     {
         id: "events",
         name: "Events",
-        icon: <FontAwesomeIcon icon={faUser} className="h-[0.60rem]" />,
+        icon: <FontAwesomeIcon icon={faCalendar} className="text-lg" />,
         route: "organizer.events.any",
         permission: "EVENTS",
     },
     {
         id: "fees",
         name: "Fees",
-        icon: <FontAwesomeIcon icon={faUser} className="h-[0.60rem]" />,
+        icon: (
+            <FontAwesomeIcon icon={faFileInvoiceDollar} className="text-lg" />
+        ),
         route: "organizer.fees.any",
         permission: "FEES",
     },
     {
         id: "organizers",
         name: "Organizers",
-        icon: <FontAwesomeIcon icon={faUser} className="h-[0.60rem]" />,
+        icon: <FontAwesomeIcon icon={faUserCircle} className="text-lg" />,
         route: "admin.backend.organizers.index",
         permission: "ORGANIZERS",
+    },
+    {
+        id: "participants",
+        name: "Participants",
+        icon: <FontAwesomeIcon icon={faUserGroup} className="text-lg" />,
+        route: "admin.backend.participants.index",
+        permission: "PARTICIPANTS",
     },
 
     {
         id: "setup",
         name: "Setup",
-        icon: <FontAwesomeIcon icon={faUser} className="h-[0.60rem]" />,
+        icon: <FontAwesomeIcon icon={faHammer} className="text-lg" />,
         route: "admin.backend.setup.*",
         permission: "SETUP",
         children: [
             {
                 id: "fees",
                 name: "Fees",
-                icon: <FontAwesomeIcon icon={faUser} className="h-[0.60rem]" />,
+                icon: (
+                    <FontAwesomeIcon
+                        icon={faFileInvoiceDollar}
+                        className="text-lg"
+                    />
+                ),
                 route: "admin.backend.setup.fees.index",
                 permission: "FEES",
             },
@@ -43,7 +64,7 @@ export default [
     {
         id: "users",
         name: "Users",
-        icon: <FontAwesomeIcon icon={faUser} className="h-[0.60rem]" />,
+        icon: <FontAwesomeIcon icon={faUser} className="text-lg" />,
         route: "admin.backend.users.index",
         permission: "USERS",
     },

@@ -11,6 +11,10 @@ class Registration extends Model
 
     protected $fillable = [
         'workshop_id',
+        'flex',
+        'grid',
+        'column',
+        'component',
         'name',
         'value'
     ];

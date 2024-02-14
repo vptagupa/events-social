@@ -34,7 +34,7 @@ export default function Index(props) {
                         <Sidebar />
                     </div>
                 </div>
-                <div className="w-[97%] flex flex-col">
+                <div className="w-full flex flex-col">
                     <div className="w-full flex items-center justify-between h-6 text-xs">
                         <div className="md:hidden flex gap-x-3 items-center justify-center text-xs">
                             <FontAwesomeIcon
@@ -70,7 +70,7 @@ export default function Index(props) {
                                     >
                                         <FontAwesomeIcon
                                             icon={faIdCard}
-                                            className="h-5 text-purple-400 hover:text-purple-600"
+                                            className="h-5 text-slate-400 hover:text-slate-600"
                                             title="Logout"
                                         />
                                         <div className="sr-only">Profile</div>

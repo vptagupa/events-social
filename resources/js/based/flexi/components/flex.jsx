@@ -2,6 +2,7 @@ import Caption from "./caption";
 import Remove from "../actions/remove";
 import Config from "../actions/config";
 import ConfigComponent from "./config";
+import Elipses from "../actions/elipses";
 
 import Drop from "./drop";
 import Grids from "./grids";
@@ -16,16 +17,18 @@ export default function Flex({ flexia, flex }) {
                 className={`relative flex items-center justify-center w-full mt-2`}
             >
                 <div className="flex items-center justify-center absolute">
-                    <Remove
-                        click={(e) => flexia.remove(flex, null, null, flex)}
-                        title="Remove Step"
-                    />
-                    <Config
-                        click={(e) =>
-                            flexia.configActive(flex, null, null, flex)
-                        }
-                        active={flex.config.active}
-                    />
+                    <Elipses active={flex.config.active}>
+                        <Remove
+                            click={(e) => flexia.remove(flex, null, null, flex)}
+                            title="Remove Step"
+                        />
+                        <Config
+                            click={(e) =>
+                                flexia.configActive(flex, null, null, flex)
+                            }
+                            active={flex.config.active}
+                        />
+                    </Elipses>
                 </div>
             </div>
             {flex.config.active && (

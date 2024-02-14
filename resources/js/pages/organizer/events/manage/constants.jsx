@@ -13,16 +13,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const menuIconClasses =
     "h-8 hover:scale-110 hover:text-primary hover:transform hover:-rotate-45 transition ease-in-out duration-200";
 
+const isActive = (name) => (route().current(name) ? true : false);
+
 export const menus = [
     {
         title: "Participants",
         url: ({ event }) =>
             route("organizer.events.participants.index", { event }),
-        icon: (
+        icon: () => (
             <FontAwesomeIcon
                 icon={faPerson}
                 title="Participants"
-                className={`${menuIconClasses} !h-7`}
+                className={`${menuIconClasses} ${
+                    isActive("organizer.events.participants.index")
+                        ? "text-primary transform -rotate-45 scale-110"
+                        : ""
+                } !h-7`}
             />
         ),
     },
@@ -30,11 +36,15 @@ export const menus = [
         title: "Registration Form",
         url: ({ event }) =>
             route("organizer.events.registration-form.index", event),
-        icon: (
+        icon: () => (
             <FontAwesomeIcon
                 icon={faWpforms}
                 title="Registration Form"
-                className={`${menuIconClasses}`}
+                className={`${menuIconClasses} ${
+                    isActive("organizer.events.registration-form.index")
+                        ? "text-primary transform -rotate-45 scale-110"
+                        : ""
+                }`}
             />
         ),
     },
@@ -42,11 +52,15 @@ export const menus = [
         title: "Details",
         url: ({ organizer, event }) =>
             route("organizer.events.edit", { organizer, event }),
-        icon: (
+        icon: () => (
             <FontAwesomeIcon
                 icon={faCircleInfo}
                 title="Detail and Schedule"
-                className={`${menuIconClasses}`}
+                className={`${menuIconClasses} ${
+                    isActive("organizer.events.edit")
+                        ? "text-primary transform -rotate-45 scale-110"
+                        : ""
+                }`}
             />
         ),
     },
@@ -54,18 +68,23 @@ export const menus = [
         title: "Pricing",
         url: ({ organizer, event }) =>
             route("organizer.events.pricing.index", { event }),
-        icon: (
+        icon: () => (
             <FontAwesomeIcon
                 icon={faFileInvoiceDollar}
                 title="Pricing"
-                className={`${menuIconClasses} hover:!scale-105`}
+                className={`${menuIconClasses} ${
+                    isActive("organizer.events.pricing.index")
+                        ? "text-primary transform -rotate-45 scale-105"
+                        : ""
+                } hover:!scale-105`}
             />
         ),
     },
     {
         title: "Members",
         url: () => "",
-        icon: (
+        isActive: () => false,
+        icon: () => (
             <FontAwesomeIcon
                 icon={faUserClock}
                 title="Members"
@@ -76,7 +95,8 @@ export const menus = [
     {
         title: "Upload Banner",
         url: () => "",
-        icon: (
+        isActive: () => false,
+        icon: () => (
             <FontAwesomeIcon
                 icon={faImage}
                 title="Upload Banner"
@@ -87,7 +107,8 @@ export const menus = [
     {
         title: "Certificate",
         url: () => "",
-        icon: (
+        isActive: () => false,
+        icon: () => (
             <FontAwesomeIcon
                 icon={faCertificate}
                 title="Certificate"
@@ -98,7 +119,8 @@ export const menus = [
     {
         title: "Official Receipt",
         url: () => "",
-        icon: (
+        isActive: () => false,
+        icon: () => (
             <FontAwesomeIcon
                 icon={faFileInvoice}
                 title="Official Receipt"

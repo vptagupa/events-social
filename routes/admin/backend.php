@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\Backend\SystemFeesController;
 use App\Http\Controllers\Admin\Backend\UsersController;
 use App\Http\Controllers\Admin\Backend\UserController;
 use App\Http\Controllers\Admin\Backend\DashboardController;
+use App\Http\Controllers\Admin\Backend\ParticipantsController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -60,6 +61,11 @@ Route::name('admin.')->prefix('admin')->group(function () {
             });
             Route::resource('fees', SystemFeesController::class)->except(['create', 'edit', 'show']);
         });
+
+        Route::controller(ParticipantsController::class)->prefix('participants')->name('participants.')->group(function () {
+            Route::post('/list', 'list')->name('list');
+        });
+        Route::resource('participants', ParticipantsController::class)->except(['create', 'edit', 'show']);
     });
 });
 

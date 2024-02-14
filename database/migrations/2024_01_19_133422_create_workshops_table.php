@@ -17,7 +17,6 @@ return new class extends Migration {
             $table->string('code', 15);
             $table->foreignId('event_id')->constrained('events');
             $table->foreignId('participant_id')->constrained('participants');
-            $table->foreignId('registration_form_id')->nullable()->constrained('registration_forms');
             $table->foreignId('offer_id')->nullable()->constrained('event_offers');
             $table->enum(
                 'payment_status',
@@ -26,8 +25,11 @@ return new class extends Migration {
                     PaymentStatus::cases()
                 )
             )->length(35)->nullable();
+            $table->dateTime('invited_at')->nullable();
+            $table->dateTime('accepted_at')->nullable();
             $table->dateTime('notified_at')->nullable();
             $table->dateTime('submitted_at')->nullable();
+            $table->dateTime('payment_at')->nullable();
             $table->dateTime('confirmed_at')->nullable();
             $table->timestamps();
         });

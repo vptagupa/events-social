@@ -58,11 +58,14 @@ export default memo(function Offer({
                     error={error(idx, "description")}
                     title={"Description"}
                     value={value.description}
+                    info={"Length: " + (value?.description ?? "").length}
+                    maxLength="120"
                     onChange={(e) => {
                         control.change(value, "description", e.target.value);
                     }}
                     rows="10"
                 />
+
                 <Input
                     type="number"
                     title={"Price"}

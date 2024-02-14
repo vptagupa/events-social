@@ -39,6 +39,7 @@ export const useFlexi = (schema) => {
     };
 
     const add = (flex, grid, column, component) => {
+        console.log(component);
         if (component.type == "column") {
             if (!grid) {
                 grid = addGrid(flex)[flex.grids.length - 1];
@@ -163,7 +164,25 @@ export const useFlexi = (schema) => {
     };
 
     const change = (flex, grid, column, component, value) => {
+        if (component.type == "radio") {
+            column.components
+                .filter((c) => c.type == "radio")
+                .map((c) => {
+                    c.config.defaultValue = false;
+                    return c;
+                });
+        }
+
         component.config.defaultValue = value;
+
+        set({ ...data });
+    };
+
+    const changeProperty = (flex, grid, column, component, type, value) => {
+        component.properties = {
+            ...component.properties,
+            [type]: value,
+        };
 
         set({ ...data });
     };
@@ -220,11 +239,18 @@ export const useFlexi = (schema) => {
     const flexToggleShow = (flex) => {
         data.flexis.map((f) => {
             f.active = false;
-            if (f.flex == flex.flex) {
-                f.active = true;
-            }
+
             return f;
         });
+        setTimeout(() => {
+            data.flexis.map((f) => {
+                if (f.flex == flex.flex) {
+                    f.active = true;
+                }
+                return f;
+            });
+            set({ ...data });
+        }, 300);
 
         set({ ...data });
     };
@@ -250,6 +276,74 @@ export const useFlexi = (schema) => {
     const minusFlex = () => {
         if (data.flexis.length > 0) {
             showTheNextFlex(data.flexis.pop());
+        }
+
+        set({ ...data });
+    };
+
+    const up = (flex, grid, column, component) => {
+        if (component?.id) {
+            const index = column.components.findIndex(
+                (c) => c.id == component.id
+            );
+
+            if (index > 0) {
+                const other = column.components[index - 1];
+                column.components[index - 1] = component;
+                column.components[index] = other;
+            }
+        } else if (component?.column) {
+            const index = grid.columns.findIndex(
+                (c) => c.column == component.column
+            );
+
+            if (index > 0) {
+                const other = grid.columns[index - 1];
+                grid.columns[index - 1] = component;
+                grid.columns[index] = other;
+            }
+        } else if (component?.grid) {
+            const index = flex.grids.findIndex((c) => c.grid == component.grid);
+
+            if (index > 0) {
+                const other = flex.grids[index - 1];
+                flex.grids[index - 1] = component;
+                flex.grids[index] = other;
+            }
+        }
+
+        set({ ...data });
+    };
+
+    const down = (flex, grid, column, component) => {
+        if (component?.id) {
+            const index = column.components.findIndex(
+                (c) => c.id == component.id
+            );
+
+            if (index < column.components.length - 1) {
+                const other = column.components[index + 1];
+                column.components[index + 1] = component;
+                column.components[index] = other;
+            }
+        } else if (component?.column) {
+            const index = grid.columns.findIndex(
+                (c) => c.column == component.column
+            );
+
+            if (index < grid.columns.length - 1) {
+                const other = grid.columns[index + 1];
+                grid.columns[index + 1] = component;
+                grid.columns[index] = other;
+            }
+        } else if (component?.grid) {
+            const index = flex.grids.findIndex((c) => c.grid == component.grid);
+
+            if (index < flex.grids.length - 1) {
+                const other = flex.grids[index + 1];
+                flex.grids[index + 1] = component;
+                flex.grids[index] = other;
+            }
         }
 
         set({ ...data });
@@ -329,6 +423,8 @@ export const useFlexi = (schema) => {
         flexible,
         add,
         move,
+        up,
+        down,
         remove,
         change,
         selectChange,
@@ -337,5 +433,6 @@ export const useFlexi = (schema) => {
         changeConfig,
         configActive,
         flexToggleShow,
+        changeProperty,
     };
 };

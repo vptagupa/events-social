@@ -23,6 +23,11 @@ class Offer extends Model
         'price' => 'decimal:2'
     ];
 
+    public function scopeActive($query, $active = true)
+    {
+        return $query->whereActive($active);
+    }
+
     protected function event()
     {
         return $this->belongsTo(Event::class);

@@ -3,6 +3,7 @@ import Table from "./components/table";
 import Sidebar from "./sidebar";
 
 export default function Participants({ event, errors }) {
+    console.log(errors);
     return (
         <Main event={event}>
             <div className="min-h-[30rem] flex md:flex-row flex-col gap-y-2 md:gap-x-2 p-2">

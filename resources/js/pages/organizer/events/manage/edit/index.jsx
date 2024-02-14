@@ -23,6 +23,9 @@ export default function Edit({ event }) {
             title: event.title,
             slug: event.slug,
             description: event.description,
+            place: event.place,
+            address: event.address,
+            map: event.map,
             start_at: event.expected_start_at,
             end_at: event.expected_end_at,
         },
@@ -31,7 +34,7 @@ export default function Edit({ event }) {
     const submit = (e) => {
         e.preventDefault();
         if (processing) return;
-        
+
         form.submit({
             preseverScroll: true,
             preserveState: true,
@@ -44,7 +47,10 @@ export default function Edit({ event }) {
         if (["title"].includes(key)) {
             form.setData({
                 ...form.data,
-                slug: value.replace(/\s+/g, "-").toLowerCase(),
+                slug: value
+                    .replace(/[^a-zA-Z0-9\s]+/g, "")
+                    .replace(/\s+/g, "-")
+                    .toLowerCase(),
                 [key]: value,
             });
 

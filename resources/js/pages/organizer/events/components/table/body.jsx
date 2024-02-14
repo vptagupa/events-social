@@ -12,7 +12,7 @@ import { Input } from "@/js/components/form";
 import { SecondaryButton } from "@/js/components/buttons";
 import PropTypes from "prop-types";
 import Edit from "../../actions/edit";
-import Delete from "../../actions/confirm.delete";
+import More from "../../actions/more";
 import Activate from "../../actions/activate";
 import Manage from "../../actions/manage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -57,7 +57,7 @@ const Component = ({
             <Table
                 data={data}
                 pagination={pagination}
-                className="rounded-2xl w-full"
+                className="rounded-2xl w-full !overflow-visible"
             >
                 {(tableList) => (
                     <>
@@ -111,11 +111,10 @@ const Component = ({
                                                         item.id
                                                     )}
                                                 />
-                                                <Delete
-                                                    url={route.delete(
-                                                        item.organizer.id,
-                                                        item.id
-                                                    )}
+
+                                                <More
+                                                    value={item}
+                                                    route={route}
                                                 />
                                             </div>
                                         </Td>

@@ -1,4 +1,4 @@
-import Layout from "@/js/layouts/public";
+import Layout from "@/js/layouts/full";
 import Logo from "@/assets/images/logo.png";
 import Banner from "@/assets/images/banners/1.png";
 import { Button } from "@/js/components/buttons";
@@ -49,7 +49,7 @@ export default function Component() {
                                 } else if (defferTab == "forgot") {
                                     return "h-[175px]";
                                 } else if (defferTab == "registration") {
-                                    return "h-[365px]";
+                                    return "h-[400px]";
                                 }
                             })()} transition-all ease-in-out delay-100`}
                         >

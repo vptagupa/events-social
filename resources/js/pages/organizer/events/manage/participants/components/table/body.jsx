@@ -20,7 +20,7 @@ import {
 import Invite from "../actions/invite";
 import Edit from "../actions/edit";
 import Upp from "../actions/upp";
-import Registration from "../actions/registration";
+import Participant from "../actions/participant";
 import More from "../actions/more";
 
 const Component = ({
@@ -62,7 +62,7 @@ const Component = ({
             <Table
                 data={data}
                 pagination={pagination}
-                className="rounded-2xl w-full"
+                className="rounded-2xl w-full !overflow-visible"
             >
                 {(tableList) => (
                     <>
@@ -71,6 +71,7 @@ const Component = ({
                                 <Th>Code</Th>
                                 <Th>Name</Th>
                                 <Th>Email</Th>
+                                <Th>Accepted</Th>
                                 <Th>Confirmed</Th>
                                 <Th>Payment Status</Th>
                                 <Th>Action</Th>
@@ -93,12 +94,17 @@ const Component = ({
                                         </Td>
                                         <Td>{item.name}</Td>
                                         <Td>{item.email}</Td>
-                                        <Td>{item.is_confirmed}</Td>
-                                        <Td>{item.workshops.payment_status}</Td>
+                                        <Td>{item.workshops[0].accepted_at}</Td>
+                                        <Td>
+                                            {item.workshops[0].confirmed_at}
+                                        </Td>
+                                        <Td>
+                                            {item.workshops[0].payment_status}
+                                        </Td>
 
                                         <Td>
                                             <div className="flex space-x-2 justify-end">
-                                                <Registration value={item} />
+                                                <Participant value={item} />
                                                 <Edit value={item} />
                                                 <Upp value={item} />
                                                 <More value={item} />

@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('registration_forms', function (Blueprint $table) {
             $table->id();
             $table->foreignId('event_id')->constrained('events');
+            $table->dateTime('published_at')->nullable();
             $table->json('schema');
             $table->timestamps();
         });

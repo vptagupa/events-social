@@ -34,7 +34,7 @@ export default function Component({ nav }) {
                     <div className="flex items-center gap-x-2">
                         <div
                             className={
-                                "w-[2rem] h-[1.6rem] flex items-center justify-center rounded-md" +
+                                "w-[20%] px-5 py-2 flex items-center justify-center rounded-md" +
                                 (isActive(nav)
                                     ? " bg-purple-500 text-white"
                                     : " shadow-md shadow-gray-300/100")
@@ -42,9 +42,9 @@ export default function Component({ nav }) {
                         >
                             {nav.icon}
                         </div>
-                        <div className="w-full">{nav.name}</div>
+                        <div className="w-[75%]">{nav.name}</div>
                         {nav.children && (
-                            <div className="w-[2.5rem]">
+                            <div className="w-[5%]">
                                 {open ? (
                                     <FontAwesomeIcon
                                         icon={faChevronUp}

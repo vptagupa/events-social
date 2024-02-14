@@ -2,6 +2,7 @@ import Attributes from "./components/attributes";
 import Flex from "./components/flex";
 
 import { Transition } from "@headlessui/react";
+import { useState } from "react";
 
 export default function Flexi({ flexia }) {
     return (

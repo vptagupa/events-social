@@ -42,7 +42,7 @@ export default function RegistrationForm({ event, errors }) {
             }
         );
     };
-    console.log(errors);
+
     const Action = () => (
         <div className="flex gap-x-2 items-center">
             <Transition

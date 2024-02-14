@@ -239,11 +239,18 @@ export const useFlexi = (schema) => {
     const flexToggleShow = (flex) => {
         data.flexis.map((f) => {
             f.active = false;
-            if (f.flex == flex.flex) {
-                f.active = true;
-            }
+
             return f;
         });
+        setTimeout(() => {
+            data.flexis.map((f) => {
+                if (f.flex == flex.flex) {
+                    f.active = true;
+                }
+                return f;
+            });
+            set({ ...data });
+        }, 300);
 
         set({ ...data });
     };

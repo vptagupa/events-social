@@ -10,8 +10,8 @@ export default function Event({ event, action, children }) {
                         <div className="font-bold text-lg">
                             Manage [{event.title.toUpperCase()}
                             {event.registration_form?.is_published
-                                ? "Published"
-                                : "Draft"}
+                                ? " Published"
+                                : " Draft"}
                             ] event
                         </div>
                     </div>

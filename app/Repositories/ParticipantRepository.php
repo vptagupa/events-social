@@ -265,4 +265,9 @@ class ParticipantRepository extends Repository
 
         return $this->model()->whereEmail($data['email'])->first();
     }
+
+    public function getStatistics()
+    {
+        
+    }
 }

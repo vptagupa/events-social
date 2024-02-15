@@ -92,7 +92,7 @@ class RegistrationForm
             if ($component['type'] == 'grid') {
                 return $this->grids($component);
             } elseif ($value = $componentReg($flex, $grid, $column, $component)) {
-                $component['value'] = $value->value;
+                $component['value'] = $value->newValue($component['type']);
             }
             return $component;
         }, $column['components']);

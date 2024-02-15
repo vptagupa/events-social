@@ -69,7 +69,7 @@ class ParticipantRepository extends Repository
             $workshop = $workshop();
 
             if ($data['file'] instanceof UploadedFile) {
-                $transaction->file()->associate($this->saveFile($data['file']));
+                $transaction->file()->associate($this->saveFile($data['file'], 'payments'));
                 $transaction->save();
 
                 $workshop->payment_status = PaymentStatus::SUBMITTED;
@@ -170,7 +170,7 @@ class ParticipantRepository extends Repository
 
             $registrationValuesParser = function ($registration) {
                 if ($registration['value'] instanceof UploadedFile) {
-                    $registration['value'] = $this->saveFile($registration['value'])->id;
+                    $registration['value'] = $this->saveFile($registration['value'], "participants")->id;
                 }
 
                 return $registration;
@@ -185,7 +185,7 @@ class ParticipantRepository extends Repository
                 unset($where['name'], $where['value']);
 
                 $registraion = $workshop->registrations()->where($where);
-                \Log::info($row);
+
                 if ($registraion->exists()) {
                     $registraion = $registraion->first();
                     $registraion->name = $row['name'];
@@ -222,7 +222,7 @@ class ParticipantRepository extends Repository
 
             $file = null;
             if ($data['file'] instanceof UploadedFile) {
-                $file = $this->saveFile($data['file']);
+                $file = $this->saveFile($data['file'], "payments");
             }
 
             $workshop->transactions()->save(

@@ -11,11 +11,11 @@ class FileRepository extends Repository
 
     }
 
-    public function create($data): ?File
+    public function create($data, $directory = ""): ?File
     {
         $file = $data['file'];
 
-        $path = $file->store('public/files/payments');
+        $path = $file->store('public/files' . (empty($directory) ? '' : '/' . $directory));
 
         return parent::create([
             'filename' => $file->hashName(),

@@ -29,6 +29,7 @@ class File extends Model
         'url',
         'is_image',
         'is_video',
+        'is_audio'
     ];
 
     public static function booted()
@@ -58,6 +59,13 @@ class File extends Model
     {
         return Attribute::make(
             get: fn() => str($this->type)->startsWith('video/')
+        );
+    }
+
+    public function isAudio(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => str($this->type)->startsWith(['audio/'])
         );
     }
 }

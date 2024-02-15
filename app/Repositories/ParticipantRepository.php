@@ -168,15 +168,24 @@ class ParticipantRepository extends Repository
                 $model->refresh();
             }
 
+            $registrationValuesParser = function ($registration) {
+                if ($registration['value'] instanceof UploadedFile) {
+                    $registration['value'] = $this->saveFile($registration['value'])->id;
+                }
+
+                return $registration;
+            };
+
             $workshop = $workshop();
 
             foreach (Registration::generate($data['flex']) as $row) {
                 $where = $row;
+                $row = $registrationValuesParser($row);
 
                 unset($where['name'], $where['value']);
 
                 $registraion = $workshop->registrations()->where($where);
-
+                \Log::info($row);
                 if ($registraion->exists()) {
                     $registraion = $registraion->first();
                     $registraion->name = $row['name'];
@@ -268,6 +277,6 @@ class ParticipantRepository extends Repository
 
     public function getStatistics()
     {
-        
+
     }
 }

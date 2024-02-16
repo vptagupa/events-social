@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Participant;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Validator;
 
 class RegisterRequest extends FormRequest
 {
@@ -26,6 +27,7 @@ class RegisterRequest extends FormRequest
             'flexis.*.grids' => 'required',
             'flexis.*.grids.*.columns' => 'required',
             'flexis.*.grids.*.columns.*.components' => 'required',
+
         ];
     }
 

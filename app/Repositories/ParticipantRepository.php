@@ -171,7 +171,10 @@ class ParticipantRepository extends Repository
             $registrationValuesParser = function ($registration) {
                 if ($registration['value'] instanceof UploadedFile) {
                     $registration['value'] = $this->saveFile($registration['value'], "participants")->id;
+                } elseif (isset($registration['value']['id'])) {
+                    $registration['value'] = $registration['value']['id'];
                 }
+
 
                 return $registration;
             };

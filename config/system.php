@@ -18,5 +18,7 @@ return [
     ],
 
     'include_tax' => env('PAYMENT_INCLUDE_TAX', true),
-    'tax' => env('PAYMENT_TAX', 12)
+    'tax' => env('PAYMENT_TAX', 12),
+
+    'reCaptcha' => env('GOOGLE_SECRET_KEY', ''),
 ];

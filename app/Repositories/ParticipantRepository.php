@@ -131,8 +131,10 @@ class ParticipantRepository extends Repository
         $model = $this->find($id);
         $workshop = $model->workshops()->where('event_id', $data['event_id'])->first();
 
-        $workshop->submitted_at = Carbon::now();
         $workshop->save();
+
+        $model->name = $workshop->primary_name;
+        $model->save();
     }
 
     /**
@@ -244,6 +246,7 @@ class ParticipantRepository extends Repository
 
             $workshop->payment_status = PaymentStatus::SUBMITTED;
             $workshop->payment_at = Carbon::now();
+            $workshop->submitted_at = $workshop->payment_at;
             $workshop->event->organizer->notifySubmission($workshop);
             $workshop->save();
         });

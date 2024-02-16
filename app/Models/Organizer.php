@@ -11,6 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 class Organizer extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    use Notifications\OrganizerNotification;
 
     /**
      * The attributes that are mass assignable.

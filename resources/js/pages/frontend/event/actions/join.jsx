@@ -23,7 +23,7 @@ export default function Join({ event }) {
             preserveState: true,
             preserveScroll: true,
             onError: (errors) => {
-                if (errors.reCaptcha) {
+                if (errors) {
                     reCaptcha.current.reset();
                 }
             },

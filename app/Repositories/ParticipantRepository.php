@@ -244,6 +244,7 @@ class ParticipantRepository extends Repository
 
             $workshop->payment_status = PaymentStatus::SUBMITTED;
             $workshop->payment_at = Carbon::now();
+            $workshop->event->organizer->notifySubmission($workshop);
             $workshop->save();
         });
     }

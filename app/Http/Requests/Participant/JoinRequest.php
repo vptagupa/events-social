@@ -30,6 +30,7 @@ class JoinRequest extends FormRequest
                 }
 
                 $params = sprintF('?secret=%s&response=%s', config('system.reCaptcha'), $this->reCaptcha);
+
                 $response = Http::post('https://www.google.com/recaptcha/api/siteverify' . $params);
 
                 if ($response->successful()) {

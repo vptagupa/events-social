@@ -2,13 +2,13 @@
 
 namespace App\Notifications\Participant;
 
-use App\Models\Workshop;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use App\Models\Workshop;
 
-class Invitation extends Notification
+class Cancelled extends Notification
 {
     use Queueable;
 
@@ -37,14 +37,14 @@ class Invitation extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
+        $name = $this->workshop->primary_name;
+        $salutation = $this->workshop->salutation;
+        $name = !empty($name) ? $name . ' ' : $this->workshop->participant->email . ' ';
+
         return (new MailMessage)
-            ->subject($this->event->title . ' - Invitation.')
-            ->line('You have been invited to participate for this coming event on '
-                . $this->event->expected_start_at->format('F j, Y, h:i a ') . '.')
-            ->line('Event: ' . $this->event->title)
-            ->line('Place: ' . $this->event->place)
-            ->line('Address: ' . $this->event->address)
-            ->action('Accept Invite', url(route('invitation.accepted', $this->workshop->uuid)))
+            ->subject('Your Registration is Cancelled!')
+            ->greeting('Hello!')
+            ->line((empty($salutation) ? '' : $salutation . ' ') . $name . 'your registration has been cancelled.')
             ->line('See you!');
     }
 
@@ -56,7 +56,7 @@ class Invitation extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-
+            //
         ];
     }
 }

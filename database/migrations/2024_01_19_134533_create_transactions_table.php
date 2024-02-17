@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->decimal('price');
             $table->decimal('tax_amount');
             $table->string('tax', 5);
+            $table->string('reference')->nullable();
             $table->dateTime('paid_at')->nullable();
             $table->boolean('is_gateway')->default(false);
             $table->dateTime('failed_at')->nullable();

@@ -131,6 +131,7 @@ class ParticipantRepository extends Repository
         $model = $this->find($id);
         $workshop = $model->workshops()->where('event_id', $data['event_id'])->first();
 
+        $workshop->submitted_at = Carbon::now();
         $workshop->save();
 
         $model->name = $workshop->primary_name;
@@ -214,6 +215,7 @@ class ParticipantRepository extends Repository
      *  event_id as int
      *  file as Illuminate\Http\UploadedFile
      *  method as string
+     *  reference as string
      * }
      * @throws \Exception
      */
@@ -232,6 +234,7 @@ class ParticipantRepository extends Repository
 
             $workshop->transactions()->save(
                 new Transaction([
+                    'reference' => $data['reference'],
                     'expected_price' => $breakdown['total'],
                     'actual_paid_amount' => 0,
                     'charges' => $breakdown['total_fees'],
@@ -246,7 +249,6 @@ class ParticipantRepository extends Repository
 
             $workshop->payment_status = PaymentStatus::SUBMITTED;
             $workshop->payment_at = Carbon::now();
-            $workshop->submitted_at = $workshop->payment_at;
             $workshop->event->organizer->notifySubmission($workshop);
             $workshop->save();
         });
@@ -285,5 +287,34 @@ class ParticipantRepository extends Repository
     public function getStatistics()
     {
 
+    }
+
+    /**
+     * Register participant
+     * @param array $data, int $id
+     * @expected $data {
+     *  event_id as int
+     *  flexis as array (
+     *      flex, grids, columns, components
+     * )
+     * }
+     * @throws \Exception
+     */
+    public function registerUpdate($data, int $id)
+    {
+        foreach ($data['flexis'] as $flex) {
+            $this->storeForm(
+                ['flex' => $flex, 'event_id' => $data['event_id']],
+                $id
+            );
+        }
+
+        $model = $this->find($id);
+        $workshop = $model->workshops()->where('event_id', $data['event_id'])->first();
+        $workshop->note = $data['note'];
+        $workshop->save();
+
+        $model->name = $workshop->primary_name;
+        $model->save();
     }
 }

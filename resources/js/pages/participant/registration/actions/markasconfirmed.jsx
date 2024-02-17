@@ -1,22 +1,22 @@
-import { DangerButton } from "@/js/components/buttons";
-import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
+import { SecondaryButton } from "@/js/components/buttons";
+import { faCircleCheck } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { router } from "@inertiajs/react";
 import { useState } from "react";
 
-export default function MarkAsCancellled({ workshop }) {
+export default function MarkAsConfirmed({ workshop }) {
     const [processing, setProcessing] = useState(false);
 
     return (
-        <DangerButton
+        <SecondaryButton
+            disabled={workshop.is_confirmed}
             processing={processing}
-            disabled={workshop.is_cancelled}
             type="button"
-            className="!px-2 disabled:bg-red-200"
-            title={workshop.is_cancelled ? "Cancelled" : `Mark as Cancelled`}
+            className="!px-2 disabled:bg-blue-300"
+            title={workshop.is_confirmed ? "Confirmed" : `Mark as Confirmed`}
             onClick={(e) => {
                 router.patch(
-                    route("organizer.participant.cancelled", workshop.id),
+                    route("organizer.participant.confirmed", workshop.id),
                     {},
                     {
                         onBefore: () => setProcessing(true),
@@ -25,7 +25,7 @@ export default function MarkAsCancellled({ workshop }) {
                 );
             }}
         >
-            <FontAwesomeIcon icon={faCircleXmark} className="h-7" />
-        </DangerButton>
+            <FontAwesomeIcon icon={faCircleCheck} className="h-7" />
+        </SecondaryButton>
     );
 }

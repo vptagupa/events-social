@@ -42,4 +42,13 @@ trait WorkshopGenerator
                 ->first()?->value
         );
     }
+
+    public function salutation(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->registrations()
+                ->where('name', $this->event->registrationForm->salutation)
+                ->first()?->value
+        );
+    }
 }

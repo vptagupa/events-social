@@ -1,65 +1,62 @@
-import { Link } from "@inertiajs/react";
 import Row from "../row";
-import { currency } from "@/js/helpers";
+import Trans from "./trans";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretLeft, faCaretRight } from "@fortawesome/free-solid-svg-icons";
+import { useState, useEffect } from "react";
 
 export default function Payment({ workshop }) {
-    console.log(workshop);
+    const [data, set] = useState({ data: [] });
+
+    const controller = new AbortController();
+    const get = async (page = 1) => {
+        const result = await axios.post(
+            route("organizer.participant.transactions", workshop.id),
+            {
+                page,
+            },
+            {
+                signal: controller.signal,
+            }
+        );
+        if (result?.data) {
+            set(result.data);
+        }
+    };
+
+    useEffect(() => {
+        get();
+
+        return () => controller.abort();
+    }, [workshop]);
+
     return (
         <div className="flex flex-col gap-y-3">
             <Row name="Payments Logs" value="" />
             <div className="w-full text-xs pl-5 flex flex-col gap-y-2">
-                {workshop.transactions.map((trans) => (
-                    <div
-                        key={trans.id}
-                        className="w-full flex flex-col items-center gap-y-1"
-                    >
-                        <div className="w-full flex items-center justify-between gap-x-2">
-                            <div className="font-bold">Charges</div>
-                            <div>{currency(parseFloat(trans.charges))}</div>
-                        </div>
-                        <div className="w-full flex items-center justify-between gap-x-2">
-                            <div className="font-bold">Price</div>
-                            <div>{currency(parseFloat(trans.price))}</div>
-                        </div>
-                        <div className="w-full flex items-center justify-between gap-x-2">
-                            <div className="font-bold">Tax {trans.tax}</div>
-                            <div>{currency(parseFloat(trans.tax_amount))}</div>
-                        </div>
-                        <div className="w-full flex items-center justify-between gap-x-2">
-                            <div className="font-bold">Method</div>
-                            {trans.is_gateway && "Gateway"}
-                            {!trans.is_gateway && (
-                                <Link className="underline">Upload</Link>
-                            )}
-                        </div>
-                        <div className="w-full flex items-center justify-between gap-x-2">
-                            <div className="font-bold">Total Price</div>
-                            <div>
-                                {currency(parseFloat(trans.expected_price))}
-                            </div>
-                        </div>
-                        <div className="w-full flex items-center justify-between gap-x-2">
-                            <div className="font-bold">Amount Paid</div>
-                            <div>
-                                {currency(parseFloat(trans.actual_paid_amount))}
-                            </div>
-                        </div>
-                        <div className="w-full flex items-center justify-between gap-x-2">
-                            <div className="font-bold">Status</div>
-                            <div>
-                                {trans.failed_at && (
-                                    <div
-                                        className="text-danger"
-                                        title={trans.failed_reason}
-                                    >
-                                        Failed
-                                    </div>
-                                )}
-                                {!trans.failed_at && "For Review"}
-                            </div>
-                        </div>
-                    </div>
+                {data.data.map((trans) => (
+                    <Trans key={trans.id} value={trans} />
                 ))}
+            </div>
+            <div className="flex items-center justify-between">
+                <div className="text-xs">
+                    {data?.links?.next && <>There's more</>}
+                </div>
+                <div className="text-end">
+                    {data?.links?.prev && (
+                        <FontAwesomeIcon
+                            icon={faCaretLeft}
+                            className="h-5 cursor-pointer font-bold hover-pointer text-blue-400"
+                            onClick={(e) => get(data?.meta?.current_page - 1)}
+                        />
+                    )}
+                    {data?.links?.next && (
+                        <FontAwesomeIcon
+                            icon={faCaretRight}
+                            className="h-5 cursor-pointer font-bold hover-pointer text-blue-400"
+                            onClick={(e) => get(data?.meta?.current_page + 1)}
+                        />
+                    )}
+                </div>
             </div>
         </div>
     );

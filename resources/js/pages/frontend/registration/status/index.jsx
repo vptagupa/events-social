@@ -13,8 +13,8 @@ export default function confirmed({ workshop }) {
                 >
                     {workshop.is_confirmed && (
                         <p className="text-3xl">
-                            Congratulations! Your payment has been successfully
-                            confirmed. Your registration for{" "}
+                            Congratulations! Your application has been
+                            successfully confirmed. Your registration for{" "}
                             <Link
                                 href={route("event.index", workshop.event.slug)}
                                 className="underline decoration-pink-500 font-semibold"

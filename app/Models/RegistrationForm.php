@@ -14,6 +14,7 @@ class RegistrationForm extends Model
     protected $fillable = [
         'primary_name',
         'primary_email',
+        'salutation',
         'schema',
         'published_at'
     ];
@@ -36,20 +37,6 @@ class RegistrationForm extends Model
     {
         return Attribute::make(
             get: fn() => $this->published_at ? true : false
-        );
-    }
-
-    public function primaryKeyName(): Attribute
-    {
-        return Attribute::make(
-            get: fn() => $this->getKeyValue($this->primary_name)
-        );
-    }
-
-    public function primaryKeyEmail(): Attribute
-    {
-        return Attribute::make(
-            get: fn() => $this->getKeyValue($this->primary_email)
         );
     }
 }

@@ -32,10 +32,10 @@ class ParticipantController extends Controller
             }
             return $this->pay($workshop);
         } elseif ($workshop->has_payment && !$workshop->is_confirmed) {
-            return $this->status($workshop);
+            return $this->confirmed($workshop);
         }
 
-        return $this->confirmed($workshop);
+        return $this->status($workshop);
     }
 
     /**
@@ -43,7 +43,7 @@ class ParticipantController extends Controller
      */
     public function offer(Workshop $workshop)
     {
-        if ($redirect = $this->restrict($workshop)) {
+        if ($redirect = $this->restrictIfPaid($workshop)) {
             return $redirect;
         }
 
@@ -61,7 +61,7 @@ class ParticipantController extends Controller
      */
     public function offerSelect(Workshop $workshop, Offer $offer)
     {
-        if ($redirect = $this->restrict($workshop)) {
+        if ($redirect = $this->restrictIfPaid($workshop)) {
             return $redirect;
         }
 
@@ -77,7 +77,7 @@ class ParticipantController extends Controller
      */
     public function pay(Workshop $workshop)
     {
-        if ($redirect = $this->restrict($workshop)) {
+        if ($redirect = $this->restrictIfPaid($workshop)) {
             return $redirect;
         }
 
@@ -92,7 +92,7 @@ class ParticipantController extends Controller
      */
     public function payCreate(PayRequest $request, Workshop $workshop)
     {
-        if ($redirect = $this->restrict($workshop)) {
+        if ($redirect = $this->restrictIfPaid($workshop)) {
             return $redirect;
         }
 
@@ -103,7 +103,8 @@ class ParticipantController extends Controller
         $this->repository->pay($request->only(
             'method',
             'file',
-            'event_id'
+            'event_id',
+            'reference'
         ), $workshop->participant->id);
 
         return redirect(route("registration.confirmed", $workshop));
@@ -136,6 +137,10 @@ class ParticipantController extends Controller
      */
     public function confirmed(Workshop $workshop)
     {
+        if ($redirect = $this->restrictIfConfirmed($workshop)) {
+            return $redirect;
+        }
+
         return $this->render('frontend/registration/confirmed/index', [
             'workshop' => $workshop
         ]);
@@ -223,10 +228,23 @@ class ParticipantController extends Controller
      * Restrict access to page at certain conditions
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function restrict(Workshop $workshop)
+    public function restrictIfPaid(Workshop $workshop)
     {
         if ($workshop->has_payment) {
             return redirect(route('registration.confirmed', $workshop));
+        }
+
+        return null;
+    }
+
+    /**
+     * Restrict access to page at certain conditions
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function restrictIfConfirmed(Workshop $workshop)
+    {
+        if ($workshop->is_confirmed) {
+            return redirect(route('registration.status', $workshop));
         }
 
         return null;

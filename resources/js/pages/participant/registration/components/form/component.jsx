@@ -13,7 +13,7 @@ import { ControlContext } from "../../context";
 import { useContext } from "react";
 
 export default function Component({ value, column }) {
-    const control = useContext(ControlContext);
+    const context = useContext(ControlContext);
 
     const name = () => {
         if (value.type != "radio") {
@@ -46,7 +46,7 @@ export default function Component({ value, column }) {
     }
 
     const handleChange = (component, value) =>
-        control.handleChange(column, component, value);
+        context.control.handleChange(column, component, value);
 
     const components = {
         input: (value) => (

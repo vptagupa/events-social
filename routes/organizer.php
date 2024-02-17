@@ -10,6 +10,8 @@ use App\Http\Controllers\Organizer\ParticipantsController;
 use App\Http\Controllers\Organizer\RegistrationFormController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Participant\ParticipantController;
+
 /*
 |--------------------------------------------------------------------------
 | Organizer Routes
@@ -74,5 +76,17 @@ Route::name('organizer.')->prefix('organizer')->group(function () {
         Route::patch('/{fee}/active', 'activate')->name('activate');
     });
     Route::resource('{organizer}/fees', FeesController::class)->except(['create', 'edit', 'show']);
+
+    // Participants routes
+    Route::controller(ParticipantController::class)->group(function () {
+        Route::name('participant.')->prefix('participant/{workshop}')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::post('/', 'update')->name('update');
+            Route::post('/transactions', 'transactions')->name('transactions');
+            Route::post('/registrationForm', 'registrationForm')->name('registrationForm');
+            Route::patch('/cancelled', 'cancelled')->name('cancelled');
+            Route::patch('/confirmed', 'confirmed')->name('confirmed');
+        });
+    });
 });
 

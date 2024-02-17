@@ -43,7 +43,7 @@ class Submission extends Notification
         return (new MailMessage)
             ->subject($name . $this->event->title . ' - Submission.')
             ->line($name . 'has just submitted a registration.')
-            ->action('View', url(route('participant.index', $this->workshop)))
+            ->action('View', url(route('organizer.participant.index', $this->workshop)))
             ->line('Thank you!');
     }
 

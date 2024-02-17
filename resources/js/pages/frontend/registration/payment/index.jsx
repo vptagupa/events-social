@@ -13,7 +13,12 @@ export default function Payment({ workshop }) {
         route: route("registration.payCreate", workshop.uuid),
         data: {
             file: "",
-            method: "",
+            method:
+                workshop.event.is_allowed_upload_proof_payment &&
+                !workshop.event.is_allowed_payment_integration
+                    ? "upload"
+                    : "",
+            reference: "",
         },
     });
 
@@ -26,8 +31,6 @@ export default function Payment({ workshop }) {
             forceFormData: true,
         });
     };
-
-    console.log(form);
 
     return (
         <>
@@ -44,18 +47,9 @@ export default function Payment({ workshop }) {
                             <Breakdown workshop={workshop} />
 
                             <Methods workshop={workshop} form={form} />
-                            {form.hasErrors && (
+                            {form.invalid("method") && (
                                 <AlertDanger>
-                                    {form.errors.file ? (
-                                        <p>{form.errors.file}</p>
-                                    ) : (
-                                        ""
-                                    )}
-                                    {form.errors.method ? (
-                                        <p>{form.errors.method}</p>
-                                    ) : (
-                                        ""
-                                    )}
+                                    <p>{form.errors.method}</p>
                                 </AlertDanger>
                             )}
 

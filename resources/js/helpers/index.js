@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const stringLimit = (str, limit, extra) => {
     const ex = extra == undefined ? "..." : extra;
 
@@ -54,4 +56,8 @@ export const currency = (amount) => {
         style: "currency",
         currency: "PHP",
     });
+};
+
+export const dateDisplay = (date) => {
+    return date ? moment(date).format("MMMM Do YYYY, h:mm a") : "";
 };

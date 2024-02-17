@@ -21,7 +21,7 @@ export default function Status({ name, value }) {
                         })
                     }
                 >
-                    {value}
+                    {context.control.other.note}
                 </Textarea>
             </div>
         </div>

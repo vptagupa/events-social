@@ -17,11 +17,15 @@ export default function Registration({ workshop, errors }) {
                 route("organizer.participant.registrationForm", workshop.id)
             );
             control.setData(res.data);
+            control.setOther({
+                ...control.other,
+                note: workshop.note,
+            });
         };
 
         get();
     }, []);
-    console.log(workshop);
+
     return (
         <>
             <Layout>

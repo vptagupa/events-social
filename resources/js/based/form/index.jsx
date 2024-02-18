@@ -8,6 +8,7 @@ import Radio from "./radio";
 import Notes from "./notes";
 import Label from "./label";
 import Heading from "./heading";
+import Contract from "./contract";
 
 export {
     Input,
@@ -20,4 +21,5 @@ export {
     Notes,
     Label,
     Heading,
+    Contract,
 };

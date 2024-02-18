@@ -1,7 +1,7 @@
 import Layout from "@/js/layouts/public";
 import { ErrorBoundary } from "react-error-boundary";
 
-export default function confirmed({ workshop }) {
+export default function Completed({ workshop }) {
     return (
         <>
             <Layout>

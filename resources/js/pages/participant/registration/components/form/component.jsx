@@ -8,6 +8,7 @@ import {
     Label,
     Notes,
     Heading,
+    Contract,
 } from "@/js/based/form";
 import { ControlContext } from "../../context";
 import { useContext } from "react";
@@ -116,6 +117,15 @@ export default function Component({ value, column }) {
                 className={props.className}
                 value={props.value}
                 type={value?.properties?.type}
+            />
+        ),
+        contract: (value) => (
+            <Contract
+                {...props}
+                checked={value?.value ?? false}
+                title={value.config?.name ?? ""}
+                content={value.config?.content ?? ""}
+                onAgree={(agree) => handleChange(value, agree)}
             />
         ),
     };

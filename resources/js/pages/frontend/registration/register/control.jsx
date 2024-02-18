@@ -36,10 +36,10 @@ export const useControl = ({ flexis, onNext, onPrev, onSubmit }) => {
         async (form) => {
             if (!processing.next && validateForm(form) && hasNext()) {
                 setProcessingStatus("next", true);
-                setTab(tab + 1);
 
                 try {
                     if (onNext) await onNext(form);
+                    setTab(tab + 1);
                 } catch (error) {
                     console.log(error);
                 }
@@ -54,12 +54,12 @@ export const useControl = ({ flexis, onNext, onPrev, onSubmit }) => {
 
     const prev = useCallback(
         async (form) => {
-            if (!processing.next && validateForm(form) && hasPrev()) {
+            if (!processing.prev && validateForm(form) && hasPrev()) {
                 setProcessingStatus("prev", true);
-                setTab(tab + 1);
 
                 try {
                     if (onPrev) await onPrev(form);
+                    setTab(tab - 1);
                 } catch (error) {
                     console.log(error);
                 }
@@ -74,7 +74,7 @@ export const useControl = ({ flexis, onNext, onPrev, onSubmit }) => {
 
     const submit = useCallback(
         async (form) => {
-            if (!processing.next) {
+            if (!processing.next && validateForm(form)) {
                 try {
                     if (onSubmit) await onSubmit(form, setProcessingStatus);
                 } catch (error) {

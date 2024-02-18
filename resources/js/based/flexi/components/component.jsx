@@ -9,6 +9,7 @@ import Textarea from "./form/textarea";
 import File from "./form/file";
 import Checkbox from "./form/checkbox";
 import Radio from "./form/radio";
+import Contract from "./form/contract";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faArrowsUpDown,
@@ -164,6 +165,21 @@ export default function Component({
                                 title={
                                     component.config?.name ?? "Configure name"
                                 }
+                                onChange={(e) =>
+                                    change(
+                                        flex,
+                                        grid,
+                                        column,
+                                        component,
+                                        e.target.checked
+                                    )
+                                }
+                            />
+                        )}
+                        {component.type == "contract" && (
+                            <Contract
+                                checked={component.config?.defaultValue ?? ""}
+                                title={component.config?.name ?? ""}
                                 onChange={(e) =>
                                     change(
                                         flex,

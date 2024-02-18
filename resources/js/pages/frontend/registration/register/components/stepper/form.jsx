@@ -7,7 +7,7 @@ import { useContext } from "react";
 
 export default function Form({ value }) {
     const control = useContext(ControlContext);
-    console.log(control.processing.next);
+
     return (
         <BasedForm>
             <Grids value={value.grids} control={control} />

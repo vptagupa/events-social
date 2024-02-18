@@ -19,7 +19,7 @@ export default function Registration({ workshop, errors }) {
             control.setData(res.data);
             control.setOther({
                 ...control.other,
-                note: workshop.note,
+                note: workshop.note ?? "",
             });
         };
 

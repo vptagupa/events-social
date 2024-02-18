@@ -41,8 +41,9 @@ class RegistrationForm
     private function grids($flex)
     {
         $gridReg = function ($flex, $grid) {
+            \Log::info($flex);
             return $this->workshop->registrations()->where([
-                'flex' => $flex['flex'],
+                'flex' => isset($flex['flex']) ? $flex['flex'] : $flex['id'],
                 'grid' => $grid['grid'],
             ])->exists();
         };
@@ -61,7 +62,7 @@ class RegistrationForm
     {
         $columnReg = function ($flex, $grid, $column) {
             return $this->workshop->registrations()->where([
-                'flex' => $flex['flex'],
+                'flex' => isset($flex['flex']) ? $flex['flex'] : $flex['id'],
                 'grid' => $grid['grid'],
                 'column' => $column['column'],
             ])->exists();
@@ -81,7 +82,7 @@ class RegistrationForm
     {
         $componentReg = function ($flex, $grid, $column, $component) {
             return $this->workshop->registrations()->where([
-                'flex' => $flex['flex'],
+                'flex' => isset($flex['flex']) ? $flex['flex'] : $flex['id'],
                 'grid' => $grid['grid'],
                 'column' => $column['column'],
                 'component' => $component['id'],

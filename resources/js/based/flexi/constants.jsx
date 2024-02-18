@@ -14,6 +14,7 @@ export const config = {
         "select",
         "is required",
         "is number",
+        "is searchable",
     ],
 };
 

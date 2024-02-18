@@ -157,6 +157,14 @@ export default function Config({
                 onChange={(content) => change("content", content)}
             />
         ),
+        is_searchable: (value) => (
+            <Check
+                title=" Is Searchable"
+                value={value.config["is_searchable"] ?? ""}
+                checked={value.config["is_searchable"] ?? false}
+                onChange={(e) => change("is_searchable", e.target.checked)}
+            />
+        ),
     };
 
     const componentable = (forms, value) => {

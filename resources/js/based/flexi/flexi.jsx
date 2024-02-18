@@ -6,6 +6,7 @@ import {
     grid as gridRaw,
     column as columnRaw,
     attribute as attributeRaw,
+    attributes as attributesRaw,
 } from "./constants";
 
 export const useFlexi = (schema) => {
@@ -350,6 +351,65 @@ export const useFlexi = (schema) => {
     };
 
     const update = (data) => {
+        // Update the schema from the updated based
+
+        const griddable = (grids) => {
+            return grids.map((grid) => {
+                grid = {
+                    ...gridRaw,
+                    ...grid,
+                    columns: grid.columns.map((column) => {
+                        column = {
+                            ...columnRaw,
+                            ...column,
+                            components: column.components.map((component) => {
+                                component = {
+                                    ...attributeRaw,
+                                    ...component,
+                                };
+
+                                if (
+                                    ![
+                                        "contract",
+                                        "heading",
+                                        "label",
+                                        "notes",
+                                    ].includes(component.type)
+                                ) {
+                                    component = {
+                                        ...component,
+                                        config: {
+                                            ...component.config,
+                                            form: attributeRaw.config.form,
+                                        },
+                                    };
+                                }
+
+                                if (component.type == "grid") {
+                                    component = {
+                                        ...component,
+                                        grids: griddable(component.grids),
+                                    };
+                                }
+                                return component;
+                            }),
+                        };
+                        return column;
+                    }),
+                };
+                return grid;
+            });
+        };
+
+        data.flexis = data.flexis.map((flex) => {
+            flex = {
+                ...flexRaw,
+                ...flex,
+                grids: griddable(flex.grids),
+            };
+            return flex;
+        });
+
         set({ ...data });
     };
 

@@ -153,7 +153,7 @@ export default memo(function Export({ event, registrationStatus }) {
             }
         };
 
-        for (let flex of event.registration_form.schema.flexis) {
+        for (let flex of event.registration_form?.schema?.flexis ?? []) {
             griddable(flex.grids);
         }
 

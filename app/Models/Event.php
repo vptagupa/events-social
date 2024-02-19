@@ -152,4 +152,9 @@ class Event extends Model
     {
         return $this->hasMany(EventSetting::class);
     }
+
+    public function exports()
+    {
+        return $this->morphMany(Export::class, 'exportable');
+    }
 }

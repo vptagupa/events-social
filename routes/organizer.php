@@ -59,6 +59,10 @@ Route::name('organizer.')->prefix('organizer')->group(function () {
                 Route::post('{participant}/upload-proof-of-payment', 'uploadProofOfPayment')->name('upp');
             });
             Route::resource('participants', ParticipantsController::class)->except(['create', 'edit']);
+            Route::name('export.')->prefix('export')->group(function () {
+                Route::post('/', 'export')->name('create');
+                Route::post('/list', 'exportList')->name('list');
+            });
         });
     });
     Route::controller(EventsController::class)->prefix('{organizer}/events')->name('events.')->group(function () {

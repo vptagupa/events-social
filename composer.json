@@ -7,12 +7,15 @@
     "require": {
         "php": "^8.1",
         "barryvdh/laravel-debugbar": "^3.9",
+        "dompdf/dompdf": "^2.0",
         "guzzlehttp/guzzle": "^7.8",
         "inertiajs/inertia-laravel": "^0.6.11",
         "laravel/framework": "^10.10",
         "laravel/octane": "^2.2",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
+        "maatwebsite/excel": "^3.1",
+        "mpdf/mpdf": "^8.2",
         "tightenco/ziggy": "^1.8"
     },
     "require-dev": {

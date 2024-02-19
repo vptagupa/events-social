@@ -55,4 +55,9 @@ class Organizer extends Authenticatable
     {
         return $this->fees()->active();
     }
+
+    public function exports()
+    {
+        return $this->morphMany(Export::class, 'creator');
+    }
 }

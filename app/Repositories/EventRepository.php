@@ -3,7 +3,13 @@
 namespace App\Repositories;
 
 use App\Models\Event;
+use App\Models\Export;
 use App\Models\Offer;
+
+use App\Exports\ParticipantsExport;
+use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Str;
 
 class EventRepository extends Repository
 {
@@ -67,5 +73,42 @@ class EventRepository extends Repository
                 'active' => $offer['active'],
             ]), $newOffers));
         }
+    }
+
+    /**
+     * Export participants
+     * @expected $data {
+     *  int event_id,
+     *  array filter
+     * }
+     */
+    public function export($type, $criteria)
+    {
+        $event = $this->find($criteria['event_id']);
+
+        $types = [
+            'pdf' => \Maatwebsite\Excel\Excel::DOMPDF,
+            'csv' => \Maatwebsite\Excel\Excel::CSV
+        ];
+
+        $type = strtolower($type);
+        $path = 'public/exports/' . Str::uuid() . '.' . $type;
+        $filename = Carbon::now()->format('Ymdhis') . '.' . $type;
+
+        Excel::store(
+            new ParticipantsExport($criteria),
+            $path,
+            'local',
+            $types[$type],
+        );
+
+        $criteria['type'] = $type;
+
+        return $event->exports()->save(new Export([
+            'criteria' => $criteria,
+            'path' => $path,
+            'filename' => $filename
+        ]));
+
     }
 }

@@ -41,7 +41,6 @@ class RegistrationForm
     private function grids($flex)
     {
         $gridReg = function ($flex, $grid) {
-            \Log::info($flex);
             return $this->workshop->registrations()->where([
                 'flex' => isset($flex['flex']) ? $flex['flex'] : $flex['id'],
                 'grid' => $grid['grid'],

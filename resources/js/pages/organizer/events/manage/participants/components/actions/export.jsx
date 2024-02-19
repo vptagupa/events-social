@@ -114,16 +114,11 @@ export default memo(function Export({ event, registrationStatus }) {
         }
     };
 
-    // Remove filter if selected
-    useEffect(() => {
-        setFilters(
-            filters.filter((f) =>
-                f.name.toLowerCase() == "status"
-                    ? true
-                    : data.filter((d) => d.name == f.name).length <= 0
-            )
-        );
-    }, [data]);
+    const filteredOptions = filters.filter((f) =>
+        f.name.toLowerCase() == "status"
+            ? true
+            : data.filter((d) => d.name == f.name).length <= 0
+    );
 
     useEffect(() => {
         let data = [];
@@ -230,7 +225,7 @@ export default memo(function Export({ event, registrationStatus }) {
                                         <Options
                                             value={row}
                                             data={data}
-                                            filters={filters}
+                                            filters={filteredOptions}
                                         />
                                     ) : (
                                         row.name

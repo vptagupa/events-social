@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\Role;
 use App\Enums\UserType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -12,6 +13,7 @@ use Laravel\Sanctum\HasApiTokens;
 class Admin extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    use Notifications\AdminNotification;
 
     /**
      * The attributes that are mass assignable.
@@ -23,7 +25,8 @@ class Admin extends Authenticatable
         'email',
         'password',
         'active',
-        'is_temp_password'
+        'is_temp_password',
+        'role'
     ];
 
     /**
@@ -44,7 +47,8 @@ class Admin extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
-        'active' => 'boolean'
+        'active' => 'boolean',
+        'role' => Role::class
     ];
 
     public $type = UserType::ADMIN;

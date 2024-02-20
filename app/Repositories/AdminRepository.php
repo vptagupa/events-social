@@ -15,11 +15,18 @@ class AdminRepository extends Repository
 
     public function create(array $data): ?Admin
     {
+        $password = $data['password'] ?? null;
         if (!isset($data['password'])) {
-            $data['password'] = bcrypt(config('auth.password_default'));
+            $data['password'] = bcrypt($password = config('auth.password_default'));
         }
 
-        return parent::create($data);
+        \DB::transaction(function () use ($data, $password) {
+            $model = parent::create($data);
+
+            $model->notifyAccountLogin($password);
+        });
+
+        return null;
     }
 
     public function delete($id)

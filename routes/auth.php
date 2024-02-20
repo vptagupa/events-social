@@ -71,7 +71,7 @@ Route::prefix('organizer')->name('organizer.')->group(function () {
             Route::get('/{token}', 'index')->name('reset');
             Route::post('/', 'update')->name('update');
         });
-        Route::post('/register', [RegisterController::class, 'store'])->name('register');
+        Route::post('/register', [\App\Http\Controllers\Organizer\Frontend\Auth\RegisterController::class, 'store'])->name('register');
     });
 
 });

@@ -45,11 +45,9 @@ export default function Component() {
                         <div
                             className={`${(() => {
                                 if (defferTab == "login") {
-                                    return "h-[400px]";
+                                    return "h-[350px]";
                                 } else if (defferTab == "forgot") {
                                     return "h-[175px]";
-                                } else if (defferTab == "registration") {
-                                    return "h-[400px]";
                                 }
                             })()} transition-all ease-in-out delay-100`}
                         >
@@ -66,45 +64,10 @@ export default function Component() {
                                 {tab == "login" && (
                                     <>
                                         <Login setTab={setTab} />
-                                        <span
-                                            onClick={(e) =>
-                                                setTab("registration")
-                                            }
-                                            className={`hover:text-purple-500 hover:font-bold
-                                                 before:hover:border-purple-500 before:block before:mr-1 before:border-b before:border-slate-400/60 before:grow before:h-[1px]
-                                                  after:hover:border-purple-500  after:ml-1 after:block after:border-b after:border-slate-400/60 after:grow after:h-[1px] 
-                                                  cursor-pointer  hover:animate-pulse h-10 w-full flex space-x-1 justify-center items-center text-center uppercase text-xs`}
-                                        >
-                                            <span>Signup here</span>
-                                        </span>
                                     </>
                                 )}
                             </Transition>
-                            <Transition
-                                show={defferTab == "registration"}
-                                enter="transition-opacity duration-1000"
-                                enterFrom="opacity-0"
-                                enterTo="opacity-100"
-                                leave="transition-opacity duration-500"
-                                leaveFrom="opacity-100"
-                                leaveTo="opacity-0"
-                                className="flex flex-col gap-y-4"
-                            >
-                                {tab == "registration" && (
-                                    <>
-                                        <Register setTab={setTab} />
-                                        <span
-                                            onClick={(e) => setTab("login")}
-                                            className={`hover:text-purple-500 hover:font-bold
-                                                 before:hover:border-purple-500 before:block before:mr-1 before:border-b before:border-slate-400/60 before:grow before:h-[1px]
-                                                  after:hover:border-purple-500  after:ml-1 after:block after:border-b after:border-slate-400/60 after:grow after:h-[1px] 
-                                                  cursor-pointer  hover:animate-pulse h-10 w-full flex space-x-1 justify-center items-center text-center uppercase text-xs`}
-                                        >
-                                            Back to login
-                                        </span>
-                                    </>
-                                )}
-                            </Transition>
+
                             <Transition
                                 show={defferTab == "forgot"}
                                 enter="transition-opacity duration-1000"

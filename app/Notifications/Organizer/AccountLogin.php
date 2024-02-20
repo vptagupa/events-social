@@ -38,7 +38,7 @@ class AccountLogin extends Notification
         return (new MailMessage)
             ->subject('Welcome to ' . config('app.name') . ': Your Account Login Details!')
             ->greeting('Hi ' . $this->organizer->name)
-            ->line('Congratulations on joining us! Your login details have been generated. Log in now to start exploring our platform.')
+            ->line('Congratulations on joining us! Your login details have been created. Log in now to start exploring our platform.')
             ->line("Email Address: " . $this->organizer->email)
             ->line("Password: " . $this->password)
             ->action('Login', url(route('organizer.login.index')))

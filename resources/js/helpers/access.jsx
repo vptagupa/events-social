@@ -1,6 +1,5 @@
-export const canAccess = (user, pagePermission) => {
-    return true;
-    const access = Object.keys(user?.data?.access ?? []);
+export const canAccess = (user, permission, action = "ALL") => {
+    const access = (user?.access ?? [])[permission] ?? [];
 
-    return access.includes(pagePermission);
+    return access.includes(action) || access.includes("ALL");
 };

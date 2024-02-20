@@ -14,7 +14,7 @@ import { Link, usePage } from "@inertiajs/react";
 export default function Index(props) {
     const [mobileBar, setMobileBar] = useState(false);
     const { auth } = usePage().props;
-    console.log(auth);
+
     return (
         <>
             <div className="bg-slate-100 text-slate-500 w-full h-screen flex xs:max-sm:pl-4 md:pl-6 pt-4 pr-4">
@@ -79,7 +79,7 @@ export default function Index(props) {
                                     </Link>
                                 </li>
                                 <li className="float-left px-1 flex gap-x-1 items-center cursor-pointer">
-                                    <Link href={auth.logout}>
+                                    <Link href={route(auth.routes.logout)}>
                                         <FontAwesomeIcon
                                             icon={faRightFromBracket}
                                             className="h-5 text-slate-400 hover:text-slate-600"

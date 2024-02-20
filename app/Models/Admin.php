@@ -14,6 +14,7 @@ class Admin extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
     use Notifications\AdminNotification;
+    use Relations\Permission;
 
     /**
      * The attributes that are mass assignable.
@@ -48,7 +49,7 @@ class Admin extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
         'active' => 'boolean',
-        'role' => Role::class
+        'role' => Role::class,
     ];
 
     public $type = UserType::ADMIN;
@@ -57,5 +58,9 @@ class Admin extends Authenticatable
         'password.reset' => 'admin.password.reset',
         'login' => 'admin.login.index',
         'auth.change-password' => 'admin.auth.change-password'
+    ];
+
+    protected $appends = [
+        'access'
     ];
 }

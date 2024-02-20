@@ -21,7 +21,7 @@ enum PaymentStatus: string
     public function toArray(): array
     {
         return [
-            'id' => str($this->value)->slug(),
+            'id' => $this->value,
             'name' => str($this->value)->ucfirst()
         ];
     }

@@ -61,10 +61,6 @@ Route::middleware(['auth:admin', RedirectIfTemporaryPassword::class])->name('adm
             });
             Route::resource('fees', SystemFeesController::class)->except(['create', 'edit', 'show']);
         });
-
-        Route::controller(ParticipantsController::class)->prefix('participants')->name('participants.')->group(function () {
-            Route::post('/list', 'list')->name('list');
-        });
     });
 });
 
@@ -72,6 +68,9 @@ Route::middleware(['auth:admin,organizer', RedirectIfTemporaryPassword::class])-
     Route::name('backend.')->group(function () {
         Route::controller(DashboardController::class)->group(function () {
             Route::get('/', 'index')->name('index');
+        });
+        Route::controller(ParticipantsController::class)->prefix('participants')->name('participants.')->group(function () {
+            Route::post('/list', 'list')->name('list');
         });
         Route::resource('participants', ParticipantsController::class)->except(['create', 'edit', 'show']);
     });

@@ -57,7 +57,7 @@ export default [
                     />
                 ),
                 route: "admin.backend.setup.fees.index",
-                permission: "FEES",
+                permission: "SETUP_FEES",
             },
         ],
     },

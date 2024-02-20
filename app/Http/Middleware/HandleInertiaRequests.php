@@ -6,6 +6,7 @@ use App\Enums\UserType;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Auth;
+use App\Enums\Access;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -72,11 +73,13 @@ class HandleInertiaRequests extends Middleware
 
             return null;
         })();
+
         return [
             'auth' => [
                 'user' => $user,
                 'type' => $user?->type?->value,
-                'logout' => !$user ? null : route($user->routes['logout'])
+                'routes' => !$user ? null : $user->routes,
+                'access' => fn() => Access::all(),
             ]
         ];
     }

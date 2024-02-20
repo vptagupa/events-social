@@ -19,6 +19,7 @@ class Participant extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
     use Notifications\ParticipantNotification;
+    use Relations\Permission;
 
     /**
      * The attributes that are mass assignable.
@@ -56,7 +57,8 @@ class Participant extends Authenticatable
     ];
 
     protected $appends = [
-        'is_confirmed'
+        'is_confirmed',
+        'access'
     ];
 
     public $routes = [

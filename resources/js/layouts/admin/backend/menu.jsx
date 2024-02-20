@@ -19,8 +19,11 @@ function MenuLink({ nav, onClick, ...props }) {
 }
 
 export default function Component({ nav }) {
-    const { user } = usePage().props;
+    const {
+        auth: { user },
+    } = usePage().props;
     const [open, setOpen] = useState(isActive(nav));
+
     return (
         <>
             <div
@@ -65,7 +68,9 @@ export default function Component({ nav }) {
                 <div id={nav.id}>
                     <ul className="ms-4 ps-3 list-disc">
                         {nav.children
-                            .filter((nav) => canAccess(user, nav.permission))
+                            .filter((nav) =>
+                                canAccess(user, nav.permission, "VIEW")
+                            )
                             .map((nav, i) => {
                                 const url = nav?.route ? route(nav.route) : "#";
                                 return (

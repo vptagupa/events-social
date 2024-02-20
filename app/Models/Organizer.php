@@ -13,6 +13,7 @@ class Organizer extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
     use Notifications\OrganizerNotification;
+    use Relations\Permission;
 
     /**
      * The attributes that are mass assignable.
@@ -54,6 +55,10 @@ class Organizer extends Authenticatable
         'password.reset' => 'organizer.password.reset',
         'login' => 'organizer.login.index',
         'auth.change-password' => 'organizer.auth.change-password'
+    ];
+
+    protected $appends = [
+        'access'
     ];
 
     public static function booted()

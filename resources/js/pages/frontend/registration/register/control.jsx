@@ -54,7 +54,7 @@ export const useControl = ({ flexis, onNext, onPrev, onSubmit }) => {
 
     const prev = useCallback(
         async (form) => {
-            if (!processing.prev && validateForm(form) && hasPrev()) {
+            if (!processing.prev && hasPrev()) {
                 setProcessingStatus("prev", true);
 
                 try {

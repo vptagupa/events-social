@@ -5,6 +5,7 @@ namespace App\Http\Requests\Participant;
 use App\Rules\ImageFile;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\File;
 
 class PayRequest extends FormRequest
 {
@@ -26,7 +27,7 @@ class PayRequest extends FormRequest
         return [
             'file' => [
                 'required_if:method,upload',
-                Rule::when($this->method == "upload", ImageFile::ensure($this->file))
+                Rule::when($this->request->get('method') == "upload", ['mimes:jpg,jpeg,png,pdf', (new File)->max('5mb')]),
             ],
             'method' => ['required', Rule::in(['upload', 'gateway'])],
             'reference' => 'required'

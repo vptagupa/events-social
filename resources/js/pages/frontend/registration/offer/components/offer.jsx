@@ -20,7 +20,7 @@ export default function Offer({ value, workshop }) {
     };
 
     return (
-        <div className="w-full md:w-1/3 shadow-md border border-amber-200 box-border text-black/80 rounded-md p-2 bg-gradient-to-tr from-amber-400 to-amber-300">
+        <div className="w-full md:w-1/3 shadow-md border border-amber-200 box-border text-white/80 rounded-md p-2 bg-gradient-to-t from-[#BF3131] to-[#BF3131]">
             <div className="text-center font-bold text-2xl w-full p-4">
                 {value.name}
             </div>
@@ -34,7 +34,7 @@ export default function Offer({ value, workshop }) {
                 <Button
                     processing={processing}
                     type="button"
-                    className="bg-white"
+                    className="bg-white text-black"
                     onClick={select}
                 >
                     SELECT

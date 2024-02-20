@@ -8,6 +8,7 @@ use App\Http\Requests\Participant\RegisterRequest;
 use App\Models\Offer;
 use App\Models\Workshop;
 use App\Repositories\ParticipantRepository;
+use App\Rules\Form;
 use App\Services\Payment;
 use App\Services\RegistrationForm;
 use Carbon\Carbon;
@@ -128,17 +129,9 @@ class ParticipantController extends Controller
      */
     public function priceBreakdown(Workshop $workshop)
     {
-        if ($workshop->event->is_offer_package) {
-            return Payment::calculate(
-                $workshop->event->id,
-                $workshop->offer->price,
-                config('system.include_tax') ? config('system.tax') : 0
-            );
-        }
-
         return Payment::calculate(
             $workshop->event->id,
-            $workshop->event->price,
+            $workshop->event->is_offer_package ? $workshop->offer->price : $workshop->event->price,
             config('system.include_tax') ? config('system.tax') : 0
         );
     }
@@ -227,6 +220,7 @@ class ParticipantController extends Controller
     public function form(Request $request, Workshop $workshop)
     {
         $request->validate([
+            'flex' => new Form,
             'flex.grids' => 'required',
             'flex.grids.*.columns' => 'required',
             'flex.grids.*.columns.*.components' => 'required',

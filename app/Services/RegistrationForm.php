@@ -26,13 +26,7 @@ class RegistrationForm
 
         return array_map(function ($flex) {
 
-            $flexReg = function ($flex) {
-                return $this->workshop->registrations()->where('flex', $flex['flex'])->exists();
-            };
-
-            if ($flexReg($flex)) {
-                $flex = $this->grids($flex);
-            }
+            $flex = $this->grids($flex);
 
             return $flex;
         }, $this->workshop->event->registrationForm->schema['flexis']);
@@ -40,17 +34,8 @@ class RegistrationForm
 
     private function grids($flex)
     {
-        $gridReg = function ($flex, $grid) {
-            return $this->workshop->registrations()->where([
-                'flex' => isset($flex['flex']) ? $flex['flex'] : $flex['id'],
-                'grid' => $grid['grid'],
-            ])->exists();
-        };
-
-        $flex['grids'] = array_map(function ($grid) use ($flex, $gridReg) {
-            if ($gridReg($flex, $grid)) {
-                $grid = $this->columns($flex, $grid);
-            }
+        $flex['grids'] = array_map(function ($grid) use ($flex) {
+            $grid = $this->columns($flex, $grid);
             return $grid;
         }, $flex['grids']);
 
@@ -59,18 +44,10 @@ class RegistrationForm
 
     private function columns($flex, $grid)
     {
-        $columnReg = function ($flex, $grid, $column) {
-            return $this->workshop->registrations()->where([
-                'flex' => isset($flex['flex']) ? $flex['flex'] : $flex['id'],
-                'grid' => $grid['grid'],
-                'column' => $column['column'],
-            ])->exists();
-        };
+        $grid['columns'] = array_map(function ($column) use ($flex, $grid) {
 
-        $grid['columns'] = array_map(function ($column) use ($flex, $grid, $columnReg) {
-            if ($columnReg($flex, $grid, $column)) {
-                $column = $this->components($flex, $grid, $column);
-            }
+            $column = $this->components($flex, $grid, $column);
+
             return $column;
         }, $grid['columns']);
 
@@ -81,7 +58,7 @@ class RegistrationForm
     {
         $componentReg = function ($flex, $grid, $column, $component) {
             return $this->workshop->registrations()->where([
-                'flex' => isset($flex['flex']) ? $flex['flex'] : $flex['id'],
+                'flex' => $flex['flex'],
                 'grid' => $grid['grid'],
                 'column' => $column['column'],
                 'component' => $component['id'],
@@ -90,7 +67,8 @@ class RegistrationForm
 
         $column['components'] = array_map(function ($component) use ($flex, $grid, $column, $componentReg) {
             if ($component['type'] == 'grid') {
-                return $this->grids($component);
+                $component['flex'] = $component['id'];
+                $component = $this->grids($component);
             } elseif ($value = $componentReg($flex, $grid, $column, $component)) {
                 $component['value'] = $value->newValue($component['type']);
             }

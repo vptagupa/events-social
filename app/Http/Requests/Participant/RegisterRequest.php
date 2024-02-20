@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Participant;
 
+use App\Rules\Form;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Validator;
 
@@ -23,11 +24,10 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'flexis' => 'required',
+            'flexis' => ['required', new Form],
             'flexis.*.grids' => 'required',
             'flexis.*.grids.*.columns' => 'required',
             'flexis.*.grids.*.columns.*.components' => 'required',
-
         ];
     }
 

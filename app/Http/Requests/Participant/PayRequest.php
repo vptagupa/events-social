@@ -27,7 +27,10 @@ class PayRequest extends FormRequest
         return [
             'file' => [
                 'required_if:method,upload',
-                Rule::when($this->request->get('method') == "upload", ['mimes:jpg,jpeg,png,pdf', (new File)->max('5mb')]),
+                Rule::when(
+                    $this->request->get('method') == "upload",
+                    ['mimes:jpg,jpeg,png,pdf', (new File)->max(config("system.media.max") . 'mb')]
+                ),
             ],
             'method' => ['required', Rule::in(['upload', 'gateway'])],
             'reference' => 'required'

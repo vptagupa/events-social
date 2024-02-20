@@ -3,10 +3,10 @@ import { useControl } from "./control";
 import { ErrorBoundary } from "react-error-boundary";
 import Stepper from "./components/stepper";
 import { ControlContext } from "./context";
-import axios from "axios";
 import { router } from "@inertiajs/react";
+import { AlertDanger } from "@/js/components/alerts";
 
-export default function Registration({ workshop, registrationForm }) {
+export default function Registration({ workshop, registrationForm, errors }) {
     const control = useControl({
         flexis: registrationForm,
         onNext: (form, setProcessingStatus) => {
@@ -51,6 +51,13 @@ export default function Registration({ workshop, registrationForm }) {
                 >
                     <div className="w-full min-h-[500px] flex items-center justify-center transition-all ease-in-out delay-75 duration-150">
                         <div className="p-4 w-full md:w-1/2">
+                            {errors?.flex ||
+                                (errors?.flexis && (
+                                    <AlertDanger>
+                                        {errors?.flex || errors?.flexis}
+                                    </AlertDanger>
+                                ))}
+
                             <ControlContext.Provider value={control}>
                                 <Stepper />
                             </ControlContext.Provider>

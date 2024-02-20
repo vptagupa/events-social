@@ -6,6 +6,7 @@ use App\Http\Controllers\Organizer\FeesController;
 use App\Http\Controllers\Organizer\FeeController;
 use App\Http\Controllers\Organizer\EventsController;
 use App\Http\Controllers\Organizer\OffersController;
+use App\Http\Controllers\Organizer\OrganizerController;
 use App\Http\Controllers\Organizer\ParticipantsController;
 use App\Http\Controllers\Organizer\RegistrationFormController;
 use Illuminate\Support\Facades\Route;
@@ -23,7 +24,7 @@ use App\Http\Controllers\Participant\ParticipantController;
 |
 */
 
-Route::name('organizer.')->prefix('organizer')->group(function () {
+Route::middleware('auth:organizer')->name('organizer.')->prefix('organizer')->group(function () {
     Route::controller(EventsController::class)->prefix('events')->name('events.')->group(function () {
         Route::get('/', 'any')->name('any');
         Route::post('/list', 'anyList')->name('anyList');
@@ -91,6 +92,10 @@ Route::name('organizer.')->prefix('organizer')->group(function () {
             Route::patch('/cancelled', 'cancelled')->name('cancelled');
             Route::patch('/confirmed', 'confirmed')->name('confirmed');
         });
+    });
+
+    Route::controller(OrganizerController::class)->group(function () {
+        Route::get('/logout', 'logout')->name('logout');
     });
 });
 

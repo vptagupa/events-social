@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\UserType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -45,6 +46,8 @@ class Organizer extends Authenticatable
         'password' => 'hashed',
         'active' => 'boolean'
     ];
+
+    public $type = UserType::ORGANIZER;
 
     public static function booted()
     {

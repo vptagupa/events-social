@@ -2,10 +2,12 @@
 
 namespace App\Enums;
 
-enum Role: string
+enum UserType: string
 {
     case ADMIN = "administrator";
-    case EDITOR = "editor";
+    case ORGANIZER = "organizer";
+
+    case PARTICIPANT = "participant";
 
     public static function all(): array
     {
@@ -17,7 +19,7 @@ enum Role: string
     public function toArray(): array
     {
         return [
-            'id' => str($this->value)->slug(),
+            'id' => $this->value,
             'name' => str($this->value)->ucfirst()
         ];
     }

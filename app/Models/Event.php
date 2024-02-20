@@ -93,7 +93,7 @@ class Event extends Model
         static::addGlobalScope('access', function (Builder $builder) {
             if (Auth::guard('organizer')->check()) {
                 $builder->whereOrganizerId(Auth::guard('organizer')->user()->id);
-            } elseif (Auth::guard('participant')->check()) {
+            } elseif (Auth::guard('web')->check()) {
                 $builder->whereHas('workshops', function (Builder $builder) {
                     $builder->whereParticipantId(Auth::guard('participant')->user()->id);
                 });

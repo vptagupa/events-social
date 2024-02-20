@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\UserType;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Auth;
@@ -60,9 +61,30 @@ class HandleInertiaRequests extends Middleware
      */
     private function authenticated($request)
     {
+        $user = (function () {
+            if (Auth::guard('admin')->check()) {
+                return Auth::guard('admin')->user();
+            } elseif (Auth::guard('organizer')->check()) {
+                return Auth::guard('organizer')->user();
+            } elseif (Auth::guard('web')->check()) {
+                return Auth::guard('web')->user();
+            }
+
+            return null;
+        })();
         return [
             'auth' => [
-                'user' => Auth::check() ? $request->user() : null
+                'user' => $user,
+                'type' => $user?->type?->value,
+                'logout' => !$user ? null : (function () use ($user) {
+                    if ($user->type == UserType::ADMIN) {
+                        return route('admin.backend.logout');
+                    } elseif ($user->type == UserType::ORGANIZER) {
+                        return route('organizer.logout');
+                    } elseif ($user->type == UserType::PARTICIPANT) {
+                        return route('participant.logout');
+                    }
+                })()
             ]
         ];
     }

@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Enums\UserType;
 
 class Participant extends Authenticatable
 {
@@ -57,6 +58,8 @@ class Participant extends Authenticatable
     protected $appends = [
         'is_confirmed'
     ];
+
+    public $type = UserType::PARTICIPANT;
 
     public static function booted()
     {

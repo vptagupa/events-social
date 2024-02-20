@@ -20,10 +20,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::name('admin.')->prefix('admin')->group(function () {
+Route::middleware('auth:admin')->name('admin.')->prefix('admin')->group(function () {
     Route::name('backend.')->group(function () {
         Route::controller(DashboardController::class)->group(function () {
-            Route::get('/', 'index')->name('index');
             Route::get('/config', 'index')->name('config');
             Route::get('/audits', 'index')->name('audits');
         });
@@ -65,7 +64,14 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::controller(ParticipantsController::class)->prefix('participants')->name('participants.')->group(function () {
             Route::post('/list', 'list')->name('list');
         });
-        Route::resource('participants', ParticipantsController::class)->except(['create', 'edit', 'show']);
     });
 });
 
+Route::middleware(['auth:admin,organizer'])->name('admin.')->prefix('admin')->group(function () {
+    Route::name('backend.')->group(function () {
+        Route::controller(DashboardController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+        });
+        Route::resource('participants', ParticipantsController::class)->except(['create', 'edit', 'show']);
+    });
+});

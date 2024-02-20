@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\Backend\DashboardController;
 use App\Http\Controllers\Admin\Backend\ParticipantsController;
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\RedirectIfTemporaryPassword;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:admin')->name('admin.')->prefix('admin')->group(function () {
+Route::middleware(['auth:admin', RedirectIfTemporaryPassword::class])->name('admin.')->prefix('admin')->group(function () {
     Route::name('backend.')->group(function () {
         Route::controller(DashboardController::class)->group(function () {
             Route::get('/config', 'index')->name('config');
@@ -67,7 +68,7 @@ Route::middleware('auth:admin')->name('admin.')->prefix('admin')->group(function
     });
 });
 
-Route::middleware(['auth:admin,organizer'])->name('admin.')->prefix('admin')->group(function () {
+Route::middleware(['auth:admin,organizer', RedirectIfTemporaryPassword::class])->name('admin.')->prefix('admin')->group(function () {
     Route::name('backend.')->group(function () {
         Route::controller(DashboardController::class)->group(function () {
             Route::get('/', 'index')->name('index');

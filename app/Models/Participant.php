@@ -59,6 +59,13 @@ class Participant extends Authenticatable
         'is_confirmed'
     ];
 
+    public $routes = [
+        'logout' => 'participant.logout',
+        'password.reset' => 'participant.password.reset',
+        'login' => 'participant.login.index',
+        'auth.change-password' => 'participant.auth.change-password'
+    ];
+
     public $type = UserType::PARTICIPANT;
 
     public static function booted()

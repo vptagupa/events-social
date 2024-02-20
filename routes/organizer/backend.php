@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Backend\DashboardController;
 use App\Http\Controllers\Admin\Backend\SystemFeeController;
 use App\Http\Controllers\Organizer\EventSettingController;
 use App\Http\Controllers\Organizer\FeesController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\Organizer\RegistrationFormController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Participant\ParticipantController;
+use App\Http\Middleware\RedirectIfTemporaryPassword;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +26,7 @@ use App\Http\Controllers\Participant\ParticipantController;
 |
 */
 
-Route::middleware('auth:organizer')->name('organizer.')->prefix('organizer')->group(function () {
+Route::middleware(['auth:organizer,admin', RedirectIfTemporaryPassword::class])->name('organizer.')->prefix('organizer')->group(function () {
     Route::controller(EventsController::class)->prefix('events')->name('events.')->group(function () {
         Route::get('/', 'any')->name('any');
         Route::post('/list', 'anyList')->name('anyList');
@@ -97,5 +99,6 @@ Route::middleware('auth:organizer')->name('organizer.')->prefix('organizer')->gr
     Route::controller(OrganizerController::class)->group(function () {
         Route::get('/logout', 'logout')->name('logout');
     });
+    Route::get('/', [DashboardController::class, 'index'])->name('index');
 });
 

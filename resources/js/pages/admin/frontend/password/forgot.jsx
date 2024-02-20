@@ -5,7 +5,7 @@ import { AlertDanger, AlertSuccess } from "@/js/components/alerts";
 import { memo } from "react";
 
 export default memo(function Component() {
-    const form = useForm("post", route("forgot-password.send"), {
+    const form = useForm("post", route("admin.forgot-password.send"), {
         email: "",
     });
 
@@ -66,7 +66,7 @@ export default memo(function Component() {
                     </div>
                     <div className="text-center !mt-10">
                         <Button
-                            progress={form.processing}
+                            processing={form.processing}
                             className="flex justify-center w-full text-center text-white font-bold uppercase bg-gradient-to-r  from-purple-400 to-indigo-400"
                         >
                             Send

@@ -16,9 +16,9 @@ class OrganizerRepository extends Repository
 
     public function create(array $data): ?Organizer
     {
-        $password = Str::random(6);
+        $password = $data['password'] ?? null;
         if (!isset($data['password'])) {
-            $data['password'] = bcrypt($password);
+            $data['password'] = bcrypt($password = Str::random(6));
         }
 
         \DB::transaction(function () use ($data, $password) {

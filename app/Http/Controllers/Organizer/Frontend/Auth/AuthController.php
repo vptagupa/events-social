@@ -3,11 +3,18 @@
 namespace App\Http\Controllers\Organizer\Frontend\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\UpdateUserPasswordRequest;
+use App\Repositories\OrganizerRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    public function __construct(private OrganizerRepository $repository)
+    {
+
+    }
+
     public function login(Request $request)
     {
         return $this->render(
@@ -18,8 +25,15 @@ class AuthController extends Controller
     public function changePassword(Request $request)
     {
         return $this->render(
-            view: "auth/reset",
+            view: "organizer/frontend/auth/reset",
         );
+    }
+
+    public function updatePassword(UpdateUserPasswordRequest $request)
+    {
+        $this->repository->update($request->validationData(), $request->user()->id);
+
+        return redirect()->intended('organizer/');
     }
 
     public function profile(Request $request)
@@ -55,6 +69,6 @@ class AuthController extends Controller
 
     public function redirectTo()
     {
-        return redirect()->intended(route('admin.backend.index'));
+        return redirect()->intended(route('organizer.index'));
     }
 }

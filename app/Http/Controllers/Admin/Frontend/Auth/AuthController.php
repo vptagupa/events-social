@@ -3,11 +3,18 @@
 namespace App\Http\Controllers\Admin\Frontend\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\AdminRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Auth\UpdateUserPasswordRequest;
 
 class AuthController extends Controller
 {
+    public function __construct(private AdminRepository $repository)
+    {
+
+    }
+
     public function login(Request $request)
     {
         return $this->render(
@@ -18,8 +25,15 @@ class AuthController extends Controller
     public function changePassword(Request $request)
     {
         return $this->render(
-            view: "auth/reset",
+            view: "admin/frontend/auth/reset",
         );
+    }
+
+    public function updatePassword(UpdateUserPasswordRequest $request)
+    {
+        $this->repository->update($request->validationData(), $request->user()->id);
+
+        return redirect()->intended('admin/');
     }
 
     public function profile(Request $request)

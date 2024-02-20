@@ -49,6 +49,13 @@ class Organizer extends Authenticatable
 
     public $type = UserType::ORGANIZER;
 
+    public $routes = [
+        'logout' => 'organizer.logout',
+        'password.reset' => 'organizer.password.reset',
+        'login' => 'organizer.login.index',
+        'auth.change-password' => 'organizer.auth.change-password'
+    ];
+
     public static function booted()
     {
         static::created(function ($model) {

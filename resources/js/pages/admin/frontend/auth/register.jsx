@@ -5,7 +5,7 @@ import { AlertDanger } from "@/js/components/alerts";
 import Socialite from "./socialite";
 
 export default function Component({ setTab }) {
-    const form = useForm("post", route("register"), {
+    const form = useForm("post", route("admin.register"), {
         email: "",
         name: "",
         password: "",

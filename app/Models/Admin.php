@@ -22,7 +22,8 @@ class Admin extends Authenticatable
         'name',
         'email',
         'password',
-        'active'
+        'active',
+        'is_temp_password'
     ];
 
     /**
@@ -47,4 +48,10 @@ class Admin extends Authenticatable
     ];
 
     public $type = UserType::ADMIN;
+    public $routes = [
+        'logout' => 'admin.backend.logout',
+        'password.reset' => 'admin.password.reset',
+        'login' => 'admin.login.index',
+        'auth.change-password' => 'admin.auth.change-password'
+    ];
 }

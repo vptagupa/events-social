@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Frontend\Auth;
+namespace App\Http\Controllers\Organizer\Frontend\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -16,8 +16,8 @@ class ForgotPasswordController extends Controller
     {
         $request->validate(['email' => 'required|email']);
 
-        $status = Password::broker('admins')->sendResetLink(
-            $request->only('email')
+        $status = Password::broker('organizers')->sendResetLink(
+            $request->only('email'),
         );
 
         return $status === Password::RESET_LINK_SENT

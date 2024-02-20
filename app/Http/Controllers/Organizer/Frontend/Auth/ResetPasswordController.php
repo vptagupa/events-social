@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Frontend\Auth;
+namespace App\Http\Controllers\Organizer\Frontend\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\ResetPasswordRequest;
@@ -19,7 +19,7 @@ class ResetPasswordController extends Controller
     public function index(string $token)
     {
         return $this->render(
-            view: 'admin/frontend/password/reset',
+            view: 'organizer/frontend/password/reset',
             options: [
                 'token' => $token
             ]
@@ -31,7 +31,7 @@ class ResetPasswordController extends Controller
      */
     public function update(ResetPasswordRequest $request)
     {
-        $status = Password::broker('admins')->reset(
+        $status = Password::broker('organizers')->reset(
             $request->safe()->only('email', 'password', 'password_confirmation', 'token'),
             function ($user, string $password) {
                 $user->forceFill([
@@ -45,7 +45,7 @@ class ResetPasswordController extends Controller
         );
 
         return $status === Password::PASSWORD_RESET
-            ? $this->render('admin/frontend/password/reset', [
+            ? $this->render('organizer/frontend/password/reset', [
                 'status' => __($status),
                 'token' => $request->token
             ])

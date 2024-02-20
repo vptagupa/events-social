@@ -76,15 +76,7 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $user,
                 'type' => $user?->type?->value,
-                'logout' => !$user ? null : (function () use ($user) {
-                    if ($user->type == UserType::ADMIN) {
-                        return route('admin.backend.logout');
-                    } elseif ($user->type == UserType::ORGANIZER) {
-                        return route('organizer.logout');
-                    } elseif ($user->type == UserType::PARTICIPANT) {
-                        return route('participant.logout');
-                    }
-                })()
+                'logout' => !$user ? null : route($user->routes['logout'])
             ]
         ];
     }

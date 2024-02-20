@@ -157,7 +157,7 @@ class Workshop extends Model
     public function price(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->event->is_offer_package ? $this->offer?->price ?? 0 : $this->event->price
+            get: fn() => $this->event?->is_offer_package ? $this->offer?->price ?? 0 : $this->event?->price
         );
     }
 

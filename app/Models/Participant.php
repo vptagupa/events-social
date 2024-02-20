@@ -73,7 +73,7 @@ class Participant extends Authenticatable
     public static function booted()
     {
         static::addGlobalScope('access', function (Builder $builder) {
-            if (\Auth::guard('organizer')->check()) {
+            if (\Auth::guard('organizer')->check() && !\Auth::guard('admin')->check()) {
                 $builder->whereHas('workshops', function (Builder $builder) {
                     $builder->whereHas('event', function (Builder $builder) {
                         $builder->whereOrganizerId(\Auth::guard('organizer')->user()->id);
@@ -97,7 +97,12 @@ class Participant extends Authenticatable
 
     public function workshops(): HasMany
     {
-        return $this->hasMany(Workshop::class);
+        $model = $this->hasMany(Workshop::class);
+        if (\Auth::guard('organizer')->check() && !\Auth::guard('admin')->check()) {
+            $model->whereRelation('event', 'organizer_id', \Auth::guard('organizer')->user()->id);
+        }
+
+        return $model->orderBy('id', 'desc');
     }
 
     public function currentWorkshop(int $event)

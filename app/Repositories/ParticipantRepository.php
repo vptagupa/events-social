@@ -89,7 +89,7 @@ class ParticipantRepository extends Repository
     public function sendInvitation(array $data)
     {
         \DB::transaction(function () use ($data) {
-            $model = $this->model()->whereEmail($data['email'])->first();
+            $model = $this->model()->withoutGlobalScope('access')->whereEmail($data['email'])->first();
             if (!$model) {
                 $model = $this->create([
                     'email' => $data['email']
@@ -264,7 +264,7 @@ class ParticipantRepository extends Repository
     public function join(array $data): Participant
     {
         \DB::transaction(function () use ($data) {
-            $model = $this->model()->whereEmail($data['email'])->first();
+            $model = $this->model()->withoutGlobalScope('access')->whereEmail($data['email'])->first();
             if (!$model) {
                 $model = $this->create([
                     'email' => $data['email']

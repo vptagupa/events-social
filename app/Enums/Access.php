@@ -9,6 +9,7 @@ enum Access
     case FEES;
     case ORGANIZERS;
     case PARTICIPANTS;
+    case SETUP;
     case SETUP_FEES;
     case USERS;
 
@@ -27,6 +28,7 @@ enum Access
                 Access::FEES->name => [Action::ALL->name],
                 Access::ORGANIZERS->name => [Action::ALL->name],
                 Access::PARTICIPANTS->name => [Action::ALL->name],
+                Access::SETUP->name => [Action::ALL->name],
                 Access::SETUP_FEES->name => [Action::ALL->name],
                 Access::USERS->name => [Action::ALL->name],
 

@@ -40,7 +40,7 @@ class AccountLogin extends Notification
             ->greeting('Hi ' . $this->organizer->name)
             ->line('Congratulations on joining us! Your login details have been generated. Log in now to start exploring our platform.')
             ->line("Email Address: " . $this->organizer->email)
-            ->line("Temporary Password: " . $this->password)
+            ->line("Password: " . $this->password)
             ->action('Login', url(route('organizer.login.index')))
             ->line('Thank you!');
     }

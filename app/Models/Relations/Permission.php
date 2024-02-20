@@ -35,4 +35,9 @@ trait Permission
             get: fn() => $this->getAccess()
         );
     }
+
+    public function typeIs(UserType $type)
+    {
+        return $type === $this->type;
+    }
 }

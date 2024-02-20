@@ -10,6 +10,7 @@ use App\Models\Organizer;
 use App\Models\OrganizerFee;
 use App\Repositories\OrganizerFeeRepository;
 use Illuminate\Http\Request;
+use App\Enums\UserType;
 
 class FeesController extends Controller
 {
@@ -21,8 +22,12 @@ class FeesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function any()
+    public function any(Request $request)
     {
+        if ($request->user()->typeIs(UserType::ORGANIZER)) {
+            return $this->index($request->user());
+        }
+
         return $this->render('organizer/fees/index');
     }
 

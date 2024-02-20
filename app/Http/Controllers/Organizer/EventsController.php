@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Organizer;
 
+use App\Enums\UserType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Event\StoreEventRequest;
 use App\Http\Requests\Event\UpdateEventRequest;
@@ -28,8 +29,12 @@ class EventsController extends Controller
     /**
      * Display the default page of the resource.
      */
-    public function any()
+    public function any(Request $request)
     {
+        if ($request->user()->typeIs(UserType::ORGANIZER)) {
+            return $this->index($request->user());
+        }
+
         return $this->render('organizer/events/index');
     }
 

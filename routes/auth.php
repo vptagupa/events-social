@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\Frontend\Auth\AuthController;
 use App\Http\Controllers\Admin\Frontend\Auth\ForgotPasswordController;
 use App\Http\Controllers\Admin\Frontend\Auth\ResetPasswordController;
 use App\Http\Controllers\Admin\Frontend\Auth\RegisterController;
@@ -18,7 +17,7 @@ use App\Http\Controllers\Admin\Frontend\Auth\RegisterController;
 
 // Administrator auth routes
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::controller(AuthController::class)->group(function () {
+    Route::controller(\App\Http\Controllers\Admin\Frontend\Auth\AuthController::class)->group(function () {
         Route::middleware('auth:admin')->group(function () {
             Route::prefix('change-password')->name('auth.')->group(function () {
                 Route::get('/', 'changePassword')->name('change-password');
@@ -31,6 +30,23 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/', 'login')->name('index');
             Route::post('/', 'auth')->name('auth');
         })->middleware('guest:admin');
+    });
+});
+
+// Organizer auth routes
+Route::prefix('organizer')->name('organizer.')->group(function () {
+    Route::controller(\App\Http\Controllers\Organizer\Frontend\Auth\AuthController::class)->group(function () {
+        Route::middleware('auth:organizer')->group(function () {
+            Route::prefix('change-password')->name('auth.')->group(function () {
+                Route::get('/', 'changePassword')->name('change-password');
+                Route::post('/', 'updatePassword')->name('change-password.update');
+            });
+        });
+
+        Route::prefix('login')->name('login.')->group(function () {
+            Route::get('/', 'login')->name('index');
+            Route::post('/', 'auth')->name('auth');
+        })->middleware('guest:organizer');
     });
 });
 

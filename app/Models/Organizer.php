@@ -46,6 +46,13 @@ class Organizer extends Authenticatable
         'active' => 'boolean'
     ];
 
+    public static function booted()
+    {
+        static::created(function ($model) {
+
+        });
+    }
+
     public function fees()
     {
         return $this->hasMany(OrganizerFee::class);

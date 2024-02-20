@@ -43,7 +43,10 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/admin/backend.php'));
 
             Route::middleware('web')
-                ->group(base_path('routes/organizer.php'));
+                ->group(base_path('routes/organizer/backend.php'));
+
+            Route::middleware('web')
+                ->group(base_path('routes/organizer/frontend.php'));
 
             Route::middleware('web')
                 ->group(base_path('routes/participant.php'));

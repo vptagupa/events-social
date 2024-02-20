@@ -2,7 +2,9 @@
 
 namespace App\Repositories;
 
+use Illuminate\Support\Str;
 use App\Models\Organizer;
+
 
 class OrganizerRepository extends Repository
 {
@@ -14,11 +16,18 @@ class OrganizerRepository extends Repository
 
     public function create(array $data): ?Organizer
     {
+        $password = Str::random(6);
         if (!isset($data['password'])) {
-            $data['password'] = bcrypt(config('auth.password_default'));
+            $data['password'] = bcrypt($password);
         }
 
-        return parent::create($data);
+        \DB::transaction(function () use ($data, $password) {
+            $model = parent::create($data);
+
+            $model->notifyAccountLogin($password);
+        });
+
+        return null;
     }
 
     public function activate($id)

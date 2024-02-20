@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Auth;
 
 class Event extends Model
 {
@@ -87,6 +89,16 @@ class Event extends Model
                 );
             }));
         });
+
+        static::addGlobalScope('access', function (Builder $builder) {
+            if (Auth::guard('organizer')->check()) {
+                $builder->whereOrganizerId(Auth::guard('organizer')->user()->id);
+            } elseif (Auth::guard('participant')->check()) {
+                $builder->whereHas('workshops', function (Builder $builder) {
+                    $builder->whereParticipantId(Auth::guard('participant')->user()->id);
+                });
+            }
+        });
     }
 
     public function isPublished(): Attribute
@@ -156,5 +168,10 @@ class Event extends Model
     public function exports()
     {
         return $this->morphMany(Export::class, 'exportable');
+    }
+
+    public function workshops()
+    {
+        return $this->hasMany(Workshop::class);
     }
 }

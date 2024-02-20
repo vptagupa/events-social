@@ -14,10 +14,17 @@ export default function Registration({ workshop, registrationForm }) {
                 flex: form,
             });
         },
-        onSubmit: (form) => {
-            router.post(route("registration.register", workshop.uuid), {
-                flexis: control.data,
-            });
+        onSubmit: (form, setProcessingStatus) => {
+            router.post(
+                route("registration.register", workshop.uuid),
+                {
+                    flexis: control.data,
+                },
+                {
+                    onBefore: () => setProcessingStatus("next", true),
+                    onFinish: () => setProcessingStatus("next", false),
+                }
+            );
         },
     });
 

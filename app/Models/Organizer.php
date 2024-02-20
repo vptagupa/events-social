@@ -11,6 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 class Organizer extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    use Notifications\OrganizerNotification;
 
     /**
      * The attributes that are mass assignable.
@@ -45,6 +46,13 @@ class Organizer extends Authenticatable
         'active' => 'boolean'
     ];
 
+    public static function booted()
+    {
+        static::created(function ($model) {
+
+        });
+    }
+
     public function fees()
     {
         return $this->hasMany(OrganizerFee::class);
@@ -53,5 +61,10 @@ class Organizer extends Authenticatable
     public function activeFees()
     {
         return $this->fees()->active();
+    }
+
+    public function exports()
+    {
+        return $this->morphMany(Export::class, 'creator');
     }
 }

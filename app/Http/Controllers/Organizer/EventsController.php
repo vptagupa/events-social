@@ -6,17 +6,22 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Event\StoreEventRequest;
 use App\Http\Requests\Event\UpdateEventRequest;
 use App\Http\Resources\Event\EventResource;
+use App\Http\Resources\ExportResource;
 use App\Http\Resources\SettingResource;
 use App\Models\Event;
 use App\Models\Organizer;
 use App\Repositories\EventRepository;
+use App\Repositories\ExportRepository;
 use App\Repositories\SettingRepository;
 use Illuminate\Http\Request;
 
 class EventsController extends Controller
 {
-    public function __construct(private EventRepository $repository, private SettingRepository $settings)
-    {
+    public function __construct(
+        private EventRepository $repository,
+        private SettingRepository $settings,
+        private ExportRepository $export
+    ) {
         // 
     }
 
@@ -157,5 +162,41 @@ class EventsController extends Controller
     public function destroy(Organizer $organizer, Event $event)
     {
         $this->repository->delete($event->id);
+    }
+
+    /**
+     * Export participants records
+     */
+    public function export(Request $request, Event $event)
+    {
+        $request->validate([
+            'type' => 'required',
+            'filter' => 'required',
+            'filter.*.name' => 'required',
+        ]);
+
+        $request->merge(['event_id' => $event->id]);
+
+        $export = $this->repository->export($request->get('type'), $request->only(['filter', 'event_id']));
+
+        return $export->url;
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function exportList(Request $request, Event $event)
+    {
+        return ExportResource::collection(
+            $this->export->list(
+                query: [
+                    'exportable_id' => $event->id,
+                    'exportable_type' => Event::class,
+                ],
+                paginate: true,
+                perPage: 5,
+                orderBy: ['id', 'desc']
+            )
+        );
     }
 }

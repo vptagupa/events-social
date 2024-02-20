@@ -1,4 +1,4 @@
-import { Radio, File } from "@/js/based/form";
+import { Radio, File, Input } from "@/js/based/form";
 import { Transition } from "@headlessui/react";
 
 export default function Methods({ workshop, form }) {
@@ -14,6 +14,7 @@ export default function Methods({ workshop, form }) {
                         <Radio
                             name="method"
                             title="Upload proof of payment"
+                            checked={form.data.method == "upload"}
                             onChange={(e) => form.setData("method", "upload")}
                         />
                     </div>
@@ -23,6 +24,7 @@ export default function Methods({ workshop, form }) {
                         <Radio
                             name="method"
                             title="Pay via gateway"
+                            checked={form.data.method == "gateway"}
                             onChange={(e) =>
                                 form.setData({
                                     ...form.data,
@@ -44,6 +46,14 @@ export default function Methods({ workshop, form }) {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
             >
+                <Input
+                    title="Reference"
+                    placeholder="Reference Number"
+                    onChange={(e) => form.setData("reference", e.target.value)}
+                    error={
+                        form.invalid("reference") ? form.errors.reference : null
+                    }
+                />
                 <File
                     title="Proof of payment"
                     accepted=".jpg,.jpeg,.png"
@@ -51,6 +61,7 @@ export default function Methods({ workshop, form }) {
                     classNameIcon="!text-black/80"
                     onChange={(file) => form.setData("file", file)}
                     remove={(e) => form.setData("file", "")}
+                    error={form.invalid("file") ? form.errors.file : null}
                 />
             </Transition>
 

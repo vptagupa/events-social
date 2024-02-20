@@ -4,10 +4,10 @@ import Grids from "../form/grids";
 import { useContext } from "react";
 
 export default function Form({ value }) {
-    const control = useContext(ControlContext);
+    const context = useContext(ControlContext);
     return (
         <BasedForm>
-            <Grids value={value.grids} control={control} />
+            <Grids value={value.grids} control={context.control} />
         </BasedForm>
     );
 }

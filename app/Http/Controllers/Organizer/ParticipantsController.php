@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Organizer;
 
+use App\Enums\RegistrationStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Participant\InviteRequest;
 use App\Http\Requests\Participant\ProofPaymentRequest;
@@ -11,12 +12,11 @@ use App\Http\Resources\Participant\ParticipantResource;
 use App\Models\Event;
 use App\Models\Participant;
 use App\Repositories\ParticipantRepository;
-use App\Rules\ImageFile;
 use Illuminate\Http\Request;
+
 
 class ParticipantsController extends Controller
 {
-
     public function __construct(private ParticipantRepository $repository)
     {
         // 
@@ -28,7 +28,8 @@ class ParticipantsController extends Controller
     public function index(Event $event)
     {
         return $this->render('organizer/events/manage/participants/index', [
-            'event' => $event
+            'event' => $event->load('registrationForm'),
+            'registration_status' => RegistrationStatus::all()
         ]);
     }
 

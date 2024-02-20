@@ -10,35 +10,82 @@ import {
 export const useControl = ({ flexis, onNext, onPrev, onSubmit }) => {
     const [data, setData] = useState(flexis);
     const [tab, setTab] = useState(0);
-    const [processing, setProcessing] = useState(false);
 
-    const next = useCallback(
-        (form) => {
-            if (validateForm(form) && hasNext()) {
-                setTab(tab + 1);
-                if (onNext) onNext(form);
-                return true;
-            }
-        },
-        [tab]
-    );
-
-    const prev = useCallback(
-        (form) => {
-            if (hasPrev()) {
-                setTab(tab - 1);
-                if (onPrev) onPrev(form);
-                return true;
-            }
-        },
-        [tab]
-    );
+    const [processing, setProcessing] = useState({
+        prev: false,
+        next: false,
+    });
 
     const isFinal = useCallback(() => tab >= flexis.length - 1, [tab]);
 
     const hasPrev = useCallback(() => tab > 0, [tab]);
 
     const hasNext = useCallback(() => tab < flexis.length - 1, [tab, flexis]);
+
+    const setProcessingStatus = (key, status) => {
+        processing.prev = false;
+        processing.next = false;
+
+        setProcessing({
+            ...processing,
+            [key]: status,
+        });
+    };
+
+    const next = useCallback(
+        async (form) => {
+            if (!processing.next && validateForm(form) && hasNext()) {
+                setProcessingStatus("next", true);
+
+                try {
+                    if (onNext) await onNext(form);
+                    setTab(tab + 1);
+                } catch (error) {
+                    console.log(error);
+                }
+
+                setProcessingStatus("next", false);
+
+                return true;
+            }
+        },
+        [tab, processing.next, hasNext]
+    );
+
+    const prev = useCallback(
+        async (form) => {
+            if (!processing.prev && validateForm(form) && hasPrev()) {
+                setProcessingStatus("prev", true);
+
+                try {
+                    if (onPrev) await onPrev(form);
+                    setTab(tab - 1);
+                } catch (error) {
+                    console.log(error);
+                }
+
+                setProcessingStatus("prev", false);
+
+                return true;
+            }
+        },
+        [tab, processing.prev, hasPrev]
+    );
+
+    const submit = useCallback(
+        async (form) => {
+            if (!processing.next && validateForm(form)) {
+                try {
+                    if (onSubmit) await onSubmit(form, setProcessingStatus);
+                } catch (error) {
+                    console.log(error);
+                }
+
+                return true;
+            }
+        },
+        [tab, processing.next, onSubmit]
+    );
 
     const handleChange = (column, component, value) => {
         // Change all radio value to false in favor for the selected radio
@@ -54,12 +101,6 @@ export const useControl = ({ flexis, onNext, onPrev, onSubmit }) => {
         component.value = value;
 
         setData([...data]);
-    };
-
-    const submit = (form) => {
-        if (validateForm(form)) {
-            if (onSubmit) onSubmit(form);
-        }
     };
 
     const validateForm = (form) => {

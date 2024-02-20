@@ -28,7 +28,8 @@ class PayRequest extends FormRequest
                 'required_if:method,upload',
                 Rule::when($this->method == "upload", ImageFile::ensure($this->file))
             ],
-            'method' => ['required', Rule::in(['upload', 'gateway'])]
+            'method' => ['required', Rule::in(['upload', 'gateway'])],
+            'reference' => 'required'
         ];
     }
 

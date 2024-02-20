@@ -2,6 +2,7 @@
 
 namespace App\Listeners\Participant;
 
+use App\Models\Participant;
 use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Events\NotificationSent;
@@ -22,7 +23,9 @@ class Invitation
      */
     public function handle(NotificationSent $event): void
     {
-        $event->notification->workshop->notified_at = Carbon::now();
-        $event->notification->workshop->save();
+        if ($event->notification instanceof \App\Notifications\Participant\Invitation) {
+            $event->notification->workshop->notified_at = Carbon::now();
+            $event->notification->workshop->save();
+        }
     }
 }

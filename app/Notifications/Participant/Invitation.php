@@ -37,7 +37,6 @@ class Invitation extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-
         return (new MailMessage)
             ->subject($this->event->title . ' - Invitation.')
             ->line('You have been invited to participate for this coming event on '

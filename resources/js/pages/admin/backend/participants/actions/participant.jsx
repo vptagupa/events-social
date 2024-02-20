@@ -6,7 +6,7 @@ import { faWpforms } from "@fortawesome/free-brands-svg-icons";
 export default memo(function Participant({ value }) {
     return (
         <Link
-            href={route("participant.index", value.workshops[0].id)}
+            href={route("organizer.participant.index", value.workshops[0].id)}
             target="_blank"
             title="View Registration"
             className="cursor-pointer"

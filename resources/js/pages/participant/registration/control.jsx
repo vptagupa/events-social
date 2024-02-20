@@ -9,6 +9,7 @@ import {
 
 export const useControl = () => {
     const [data, setData] = useState([]);
+    const [other, setOther] = useState({ note: "" });
 
     const handleChange = (column, component, value) => {
         // Change all radio value to false in favor for the selected radio
@@ -24,12 +25,6 @@ export const useControl = () => {
         component.value = value;
 
         setData([...data]);
-    };
-
-    const submit = (form) => {
-        if (validateForm(form)) {
-            if (onSubmit) onSubmit(form);
-        }
     };
 
     const validateForm = (form) => {
@@ -93,7 +88,10 @@ export const useControl = () => {
 
     return {
         data,
+        other,
         setData,
+        setOther,
         handleChange,
+        validateForm,
     };
 };

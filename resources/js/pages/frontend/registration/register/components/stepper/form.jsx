@@ -7,6 +7,7 @@ import { useContext } from "react";
 
 export default function Form({ value }) {
     const control = useContext(ControlContext);
+
     return (
         <BasedForm>
             <Grids value={value.grids} control={control} />
@@ -17,11 +18,11 @@ export default function Form({ value }) {
                         disabled={!control.hasPrev()}
                         title={value.config["prev.title"] ?? "Previous"}
                         onClick={(e) => control.prev(value)}
+                        processing={control.processing.prev}
                     />
                 )}
 
                 <Next
-                    processing={control.processing}
                     className={`!text-[2rem] !h-14 uppercase !pt-0 !pb-1`}
                     title={
                         value.config["next.title"] ??
@@ -32,6 +33,7 @@ export default function Form({ value }) {
                             ? control.submit(value)
                             : control.next(value)
                     }
+                    processing={control.processing.next}
                 />
             </div>
         </BasedForm>

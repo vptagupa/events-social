@@ -25,7 +25,8 @@ class Transaction extends Model
         'failed_reason',
         'file_id',
         'confirmed_at',
-        'confirmed_admin_id'
+        'confirmed_admin_id',
+        'reference'
     ];
 
     protected $casts = [
@@ -48,12 +49,12 @@ class Transaction extends Model
         });
     }
 
-    protected function workshop()
+    public function workshop()
     {
         return $this->belongsTo(Workshop::class);
     }
 
-    protected function file()
+    public function file()
     {
         return $this->belongsTo(File::class);
     }

@@ -7,12 +7,14 @@ use App\Services\Payment;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 
 class Workshop extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory, HasUuids, Notifiable;
     use Generators\WorkshopGenerator;
+    use Notifications\WorkshopNotification;
 
     protected $fillable = [
         'code',
@@ -25,7 +27,9 @@ class Workshop extends Model
         'submitted_at',
         'payment_at',
         'confirmed_at',
-        'invited_at'
+        'invited_at',
+        'cancelled_at',
+        'note'
     ];
 
     protected $casts = [
@@ -35,6 +39,7 @@ class Workshop extends Model
         'confirmed_at' => 'datetime:Y-m-d H:i:s',
         'payment_at' => 'datetime:Y-m-d H:i:s',
         'accepted_at' => 'datetime:Y-m-d H:i:s',
+        'cancelled_at' => 'datetime:Y-m-d H:i:s',
     ];
 
     protected $appends = [
@@ -44,7 +49,9 @@ class Workshop extends Model
         'is_invited',
         'is_confirmed',
         'price',
-        'has_payment'
+        'has_payment',
+        'is_cancelled',
+        'statuses'
     ];
 
     /**
@@ -97,6 +104,13 @@ class Workshop extends Model
     {
         return Attribute::make(
             get: fn() => $this->invited_at ? true : false
+        );
+    }
+
+    public function isCancelled(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->cancelled_at ? true : false
         );
     }
 
@@ -153,6 +167,38 @@ class Workshop extends Model
             $this->event_id,
             $this->price,
             config('system.include_tax') ? config('system.tax') : 0
+        );
+    }
+
+    public function statuses(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $statuses = [
+                    [
+                        'status' => 'Confirmed',
+                        'date' => $this->confirmed_at
+                    ],
+                    [
+                        'status' => 'Cancelled',
+                        'date' => $this->cancelled_at
+                    ],
+                    [
+                        'status' => 'Payment Submitted',
+                        'date' => $this->payment_at
+                    ],
+                    [
+                        'status' => 'Form Submitted',
+                        'date' => $this->submitted_at
+                    ],
+                ];
+
+                $statuses = array_filter($statuses, fn($status) => $status['date'] != null);
+
+                uasort($statuses, fn($a, $b) => strtotime($b['date']) - strtotime($a['date']));
+
+                return array_values($statuses);
+            }
         );
     }
 }

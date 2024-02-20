@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             SettingsSeeder::class,
             OrganizersSeeder::class,
             EventsSeeder::class,
+            RegistrationFormSeeder::class,
             SystemFeesSeeder::class,
             OrganizerFeesSeeder::class
         ]);

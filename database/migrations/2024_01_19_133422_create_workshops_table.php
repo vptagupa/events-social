@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+
 use App\Enums\PaymentStatus;
 
 return new class extends Migration {
@@ -31,6 +32,8 @@ return new class extends Migration {
             $table->dateTime('submitted_at')->nullable();
             $table->dateTime('payment_at')->nullable();
             $table->dateTime('confirmed_at')->nullable();
+            $table->dateTime('cancelled_at')->nullable();
+            $table->string('note', 250)->nullable();
             $table->timestamps();
         });
     }

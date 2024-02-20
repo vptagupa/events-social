@@ -9,8 +9,12 @@ use Illuminate\Database\Eloquent\Model;
 class RegistrationForm extends Model
 {
     use HasFactory;
+    use Generators\RegistrationFormGenerator;
 
     protected $fillable = [
+        'primary_name',
+        'primary_email',
+        'salutation',
         'schema',
         'published_at'
     ];

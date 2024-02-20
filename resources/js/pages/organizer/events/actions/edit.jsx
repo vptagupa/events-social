@@ -64,7 +64,7 @@ export default memo(function Edit({ value, url }) {
                 />
             </div>
 
-            <Modal open={open}>
+            <Modal open={open} className="w-[90%] md:w-1/2 p-3">
                 <Close click={(e) => setOpen(false)} />
                 <Title>Update</Title>
                 <Form form={form} handleChange={handleChange} />

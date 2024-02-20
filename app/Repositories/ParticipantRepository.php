@@ -69,7 +69,7 @@ class ParticipantRepository extends Repository
             $workshop = $workshop();
 
             if ($data['file'] instanceof UploadedFile) {
-                $transaction->file()->associate($this->saveFile($data['file']));
+                $transaction->file()->associate($this->saveFile($data['file'], 'payments'));
                 $transaction->save();
 
                 $workshop->payment_status = PaymentStatus::SUBMITTED;
@@ -133,6 +133,9 @@ class ParticipantRepository extends Repository
 
         $workshop->submitted_at = Carbon::now();
         $workshop->save();
+
+        $model->name = $workshop->primary_name;
+        $model->save();
     }
 
     /**
@@ -168,10 +171,22 @@ class ParticipantRepository extends Repository
                 $model->refresh();
             }
 
+            $registrationValuesParser = function ($registration) {
+                if ($registration['value'] instanceof UploadedFile) {
+                    $registration['value'] = $this->saveFile($registration['value'], "participants")->id;
+                } elseif (isset($registration['value']['id'])) {
+                    $registration['value'] = $registration['value']['id'];
+                }
+
+
+                return $registration;
+            };
+
             $workshop = $workshop();
 
             foreach (Registration::generate($data['flex']) as $row) {
                 $where = $row;
+                $row = $registrationValuesParser($row);
 
                 unset($where['name'], $where['value']);
 
@@ -200,6 +215,7 @@ class ParticipantRepository extends Repository
      *  event_id as int
      *  file as Illuminate\Http\UploadedFile
      *  method as string
+     *  reference as string
      * }
      * @throws \Exception
      */
@@ -213,11 +229,12 @@ class ParticipantRepository extends Repository
 
             $file = null;
             if ($data['file'] instanceof UploadedFile) {
-                $file = $this->saveFile($data['file']);
+                $file = $this->saveFile($data['file'], "payments");
             }
 
             $workshop->transactions()->save(
                 new Transaction([
+                    'reference' => $data['reference'],
                     'expected_price' => $breakdown['total'],
                     'actual_paid_amount' => 0,
                     'charges' => $breakdown['total_fees'],
@@ -232,6 +249,7 @@ class ParticipantRepository extends Repository
 
             $workshop->payment_status = PaymentStatus::SUBMITTED;
             $workshop->payment_at = Carbon::now();
+            $workshop->event->organizer->notifySubmission($workshop);
             $workshop->save();
         });
     }
@@ -268,6 +286,35 @@ class ParticipantRepository extends Repository
 
     public function getStatistics()
     {
-        
+
+    }
+
+    /**
+     * Register participant
+     * @param array $data, int $id
+     * @expected $data {
+     *  event_id as int
+     *  flexis as array (
+     *      flex, grids, columns, components
+     * )
+     * }
+     * @throws \Exception
+     */
+    public function registerUpdate($data, int $id)
+    {
+        foreach ($data['flexis'] as $flex) {
+            $this->storeForm(
+                ['flex' => $flex, 'event_id' => $data['event_id']],
+                $id
+            );
+        }
+
+        $model = $this->find($id);
+        $workshop = $model->workshops()->where('event_id', $data['event_id'])->first();
+        $workshop->note = $data['note'];
+        $workshop->save();
+
+        $model->name = $workshop->primary_name;
+        $model->save();
     }
 }

@@ -14,6 +14,7 @@ export const config = {
         "select",
         "is required",
         "is number",
+        "is searchable",
     ],
 };
 
@@ -159,6 +160,15 @@ export const attributes = [
         },
         properties: {
             types: ["h1", "h2", "h3"],
+        },
+    },
+    {
+        ...attribute,
+        title: "Contract",
+        type: "contract",
+        config: {
+            ...attribute.config,
+            form: ["default value", "name", "is required", "editor"],
         },
     },
 ];

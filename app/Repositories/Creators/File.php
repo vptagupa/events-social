@@ -4,7 +4,7 @@ namespace App\Repositories\Creators;
 
 trait File
 {
-    protected function saveFile($file)
+    protected function saveFile($file, $directory = "")
     {
         if (!$file) {
             return null;
@@ -12,6 +12,6 @@ trait File
 
         return $this->file->create([
             'file' => $file
-        ]);
+        ], $directory);
     }
 }

@@ -6,6 +6,7 @@ use App\Models\Participant;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
+use Illuminate\Support\Facades\Http;
 
 class JoinRequest extends FormRequest
 {
@@ -25,9 +26,23 @@ class JoinRequest extends FormRequest
         return [
             function (Validator $validator) {
                 if ($this->participantExist()) {
-                    \Log::info('exist');
                     $this->sendTrackingLink();
                 }
+
+                $params = sprintF('?secret=%s&response=%s', config('system.reCaptcha'), $this->reCaptcha);
+
+                $response = Http::post('https://www.google.com/recaptcha/api/siteverify' . $params);
+
+                if ($response->successful()) {
+                    if (isset($response->json()['success']) && $response->json()['success']) {
+                        return;
+                    }
+                }
+
+                $validator->errors()->add(
+                    'reCaptcha',
+                    'reCAPTCHA validation is invalid.'
+                );
             }
         ];
     }
@@ -48,6 +63,9 @@ class JoinRequest extends FormRequest
                 )
             ],
             'event_id' => 'required',
+            'reCaptcha' => [
+                'required',
+            ]
         ];
     }
 
@@ -86,8 +104,8 @@ class JoinRequest extends FormRequest
         $model = Participant::whereEmail($this->email)->first();
         $workshop = $model->currentWorkshop($this->event->id);
 
-        // if (!$workshop->notified_at->isToday()) {
-        $model->sendTrackingLink($workshop);
-        // }
+        if (!$workshop->notified_at->isToday()) {
+            $model->sendTrackingLink($workshop);
+        }
     }
 }

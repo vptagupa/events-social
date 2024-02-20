@@ -2,6 +2,7 @@ import Text from "./config/text";
 import Check from "./config/checkbox";
 import Conditions from "./config/conditions";
 import Select from "./config/select";
+import Editor from "./config/editor";
 import { Select as FormSelect } from "@/js/based/form";
 import { conditions, config } from "../constants";
 
@@ -13,6 +14,7 @@ export default function Config({
     value,
     changeProperty,
 }) {
+    const fullWidth = ["editor"];
     const components = {
         name: (value) => (
             <Text
@@ -141,6 +143,57 @@ export default function Config({
                     />
                 );
         },
+        title: (value) => (
+            <Text
+                title={"Title"}
+                value={value.config["title"] ?? ""}
+                onChange={(e) => change("title", e.target.value)}
+            />
+        ),
+        editor: (value) => (
+            <Editor
+                title={"Editor"}
+                value={value.config["content"] ?? ""}
+                onChange={(content) => change("content", content)}
+            />
+        ),
+        is_searchable: (value) => (
+            <Check
+                title=" Is Searchable"
+                value={value.config["is_searchable"] ?? ""}
+                checked={value.config["is_searchable"] ?? false}
+                onChange={(e) => change("is_searchable", e.target.checked)}
+            />
+        ),
+    };
+
+    const componentable = (forms, value) => {
+        return forms
+            .map((form) => {
+                const Component = components[form.replace(/\s+/g, "_")](value);
+                if (Component) {
+                    return Component;
+                }
+                return null;
+            })
+            .filter((f) => f)
+            .map((component, idx) => <div key={idx}>{component}</div>);
+    };
+
+    const Properties = ({ value }) => {
+        return (
+            <FormSelect
+                title="Types"
+                value={value?.properties?.type ?? ""}
+                onChange={(e) => changeProperty("type", e.target.value)}
+            >
+                {value.properties.types.map((type, idx) => (
+                    <option key={idx} value={type}>
+                        {type}
+                    </option>
+                ))}
+            </FormSelect>
+        );
     };
 
     return (
@@ -149,32 +202,23 @@ export default function Config({
                 {value.title}
             </div>
             <div className={`grid grid-cols-2 gap-3 text-xs`}>
-                {value.config.form
-                    .map((form) => {
-                        const Component =
-                            components[form.replace(/\s+/g, "_")](value);
-                        if (Component) {
-                            return Component;
-                        }
-                        return null;
-                    })
-                    .filter((f) => f)
-                    .map((component, idx) => (
-                        <div key={idx}>{component}</div>
-                    ))}
+                {componentable(
+                    value.config.form.filter(
+                        (form) => !fullWidth.includes(form)
+                    ),
+                    value
+                )}
 
                 {value?.properties?.types.length > 0 && (
-                    <FormSelect
-                        title="Types"
-                        value={value?.properties?.type ?? ""}
-                        onChange={(e) => changeProperty("type", e.target.value)}
-                    >
-                        {value.properties.types.map((type, idx) => (
-                            <option key={idx} value={type}>
-                                {type}
-                            </option>
-                        ))}
-                    </FormSelect>
+                    <Properties value={value} />
+                )}
+            </div>
+            <div className={`grid grid-cols-1  text-xs`}>
+                {componentable(
+                    value.config.form.filter((form) =>
+                        fullWidth.includes(form)
+                    ),
+                    value
                 )}
             </div>
         </div>

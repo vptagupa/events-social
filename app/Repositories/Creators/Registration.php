@@ -25,8 +25,8 @@ class Registration
                         'grid' => $grid['grid'],
                         'column' => $column['column'],
                         'component' => $component['id'],
-                        'name' => $component['config']['name'],
-                        'value' => $component['value'],
+                        'name' => $component['config']['name'] ?? "",
+                        'value' => $component['value'] ?? "",
                     ];
                 }
             }

@@ -42,7 +42,7 @@ const Component = ({
                 <div className="flex items-center">
                     <Input
                         type="text"
-                        placeholder="Search by name"
+                        placeholder="Search by name, email, or code"
                         className="border-r-0 rounded-r-none lg:w-96"
                         onChange={(e) => setSearch(e.target.value)}
                     />

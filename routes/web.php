@@ -49,7 +49,7 @@ Route::controller(ParticipantController::class)->group(function () {
         Route::get('/pay', 'pay')->name('pay');
         Route::post('/pay', 'payCreate')->name('payCreate');
         Route::get('/status', 'status')->name('status');
-        Route::get('/confirmed', 'confirmed')->name('confirmed');
+        Route::get('/completed', 'completed')->name('completed');
         Route::get('/price-breakdown', 'priceBreakdown')->name('priceBreakdown');
     });
 

@@ -10,6 +10,7 @@ class Payment
     {
 
     }
+
     public static function calculate(int $event, float $price, float $tax = 0)
     {
         $repository = app()->make(EventRepository::class);

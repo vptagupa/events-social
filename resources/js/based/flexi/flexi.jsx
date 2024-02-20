@@ -374,6 +374,7 @@ export const useFlexi = (schema) => {
                                         "heading",
                                         "label",
                                         "notes",
+                                        "file",
                                     ].includes(component.type)
                                 ) {
                                     component = {

@@ -56,7 +56,7 @@ export default function Methods({ workshop, form }) {
                 />
                 <File
                     title="Proof of payment"
-                    accepted=".jpg,.jpeg,.png"
+                    accept=".jpg,.jpeg,.png,.pdf"
                     classNameContainer="ring-1 ring-slate-500/60"
                     classNameIcon="!text-black/80"
                     onChange={(file) => form.setData("file", file)}

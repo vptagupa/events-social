@@ -26,32 +26,39 @@ export default function confirmed({ workshop }) {
                         <p>There was an error while accessing the form</p>
                     }
                 >
-                    <div>
-                        <p className="text-3xl">
-                            You have been invited to join this coming{" "}
-                            <Link
-                                href={route("event.index", workshop.event.slug)}
-                                className="underline decoration-pink-500 font-semibold"
-                            >
-                                {workshop.event.title}
-                            </Link>{" "}
-                            event.
-                        </p>
-                    </div>
-                    <div className="flex items-center justify-center mt-10">
-                        <PrimaryButton
-                            type="button"
-                            className="!h-16 !text-2xl py-2"
-                            processing={processing}
-                            onClick={accept}
-                        >
-                            <FontAwesomeIcon
-                                icon={faCheckCircle}
-                                className="h-10"
-                            />
+                    <div className="w-full min-h-[500px] flex items-center justify-center transition-all ease-in-out delay-75 duration-150">
+                        <div className="text-center p-4 w-full md:w-1/2">
+                            <div>
+                                <p className="text-3xl">
+                                    You have been invited to join this coming{" "}
+                                    <Link
+                                        href={route(
+                                            "event.index",
+                                            workshop.event.slug
+                                        )}
+                                        className="underline decoration-pink-500 font-semibold"
+                                    >
+                                        {workshop.event.title}
+                                    </Link>{" "}
+                                    event.
+                                </p>
+                            </div>
+                            <div className="flex items-center justify-center mt-10">
+                                <PrimaryButton
+                                    type="button"
+                                    className="!h-16 !text-2xl py-2 bg-gradient-to-t from-[#BF3131] to-[#BF3131] text-white"
+                                    processing={processing}
+                                    onClick={accept}
+                                >
+                                    <FontAwesomeIcon
+                                        icon={faCheckCircle}
+                                        className="h-10"
+                                    />
 
-                            <span className="ml-1">ACCEPT</span>
-                        </PrimaryButton>
+                                    <span className="ml-1">ACCEPT</span>
+                                </PrimaryButton>
+                            </div>
+                        </div>
                     </div>
                 </ErrorBoundary>
             </Layout>

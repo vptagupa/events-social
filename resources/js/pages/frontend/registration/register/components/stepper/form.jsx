@@ -14,7 +14,7 @@ export default function Form({ value }) {
             <div className="mt-20 flex gap-x-2 items-center justify-center border border-slate-200 rounded-md p-3">
                 {control.data.length > 1 && (
                     <Prev
-                        className={`!text-[2rem] !h-14 uppercase !pt-0 !pb-1`}
+                        className={`!text-[2rem] !h-14 uppercase !pt-0 !pb-1 bg-gradient-to-t from-[#FFB996] to-[#FFB996] text-white`}
                         disabled={!control.hasPrev()}
                         title={value.config["prev.title"] ?? "Previous"}
                         onClick={(e) => control.prev(value)}
@@ -23,7 +23,7 @@ export default function Form({ value }) {
                 )}
 
                 <Next
-                    className={`!text-[2rem] !h-14 uppercase !pt-0 !pb-1`}
+                    className={`!text-[2rem] !h-14 uppercase !pt-0 !pb-1 bg-gradient-to-t from-[#BF3131] to-[#BF3131] text-white`}
                     title={
                         value.config["next.title"] ??
                         (control.isFinal() ? "Submit" : "Next")

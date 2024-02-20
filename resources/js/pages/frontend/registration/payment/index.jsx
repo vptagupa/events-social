@@ -40,28 +40,32 @@ export default function Payment({ workshop }) {
                         <p>There was an error while accessing this page.</p>
                     }
                 >
-                    <div className="w-full flex items-center justify-center">
-                        <div className="w-full md:w-1/2  flex flex-col items-center justify-center gap-y-4 shadow-md border border-amber-200 box-border text-black/80 rounded-md p-4 bg-gradient-to-tr from-amber-400 to-amber-300 transition-all ease-in-out delay-75 duration-150">
-                            <Price workshop={workshop} />
+                    <div className="w-full min-h-[500px] flex items-center justify-center transition-all ease-in-out delay-75 duration-150">
+                        <div className="p-4 w-full md:w-1/2">
+                            <div className="w-full px-2 py-10 sm:px-0">
+                                <div className="bg-white rounded-md p-4 flex flex-col items-center justify-center gap-y-4">
+                                    <Price workshop={workshop} />
 
-                            <Breakdown workshop={workshop} />
+                                    <Breakdown workshop={workshop} />
 
-                            <Methods workshop={workshop} form={form} />
-                            {form.invalid("method") && (
-                                <AlertDanger>
-                                    <p>{form.errors.method}</p>
-                                </AlertDanger>
-                            )}
+                                    <Methods workshop={workshop} form={form} />
+                                    {form.invalid("method") && (
+                                        <AlertDanger>
+                                            <p>{form.errors.method}</p>
+                                        </AlertDanger>
+                                    )}
 
-                            <div className="w-full mt-10 mb-5 flex items-center justify-center">
-                                <Button
-                                    type="button"
-                                    className="bg-white"
-                                    processing={form.processing}
-                                    onClick={submit}
-                                >
-                                    PAY
-                                </Button>
+                                    <div className="w-full mt-10 mb-5 flex items-center justify-center">
+                                        <Button
+                                            type="button"
+                                            className="bg-gradient-to-t from-[#BF3131] to-[#BF3131] !text-white !text-2xl"
+                                            processing={form.processing}
+                                            onClick={submit}
+                                        >
+                                            PAY
+                                        </Button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

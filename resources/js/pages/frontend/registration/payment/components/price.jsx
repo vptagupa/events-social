@@ -23,9 +23,9 @@ export default function Price({ workshop }) {
     }
 
     return (
-        <>
+        <div className="flex items-start justify-between w-full">
             <div>Price</div>
             <div>{currency(parseFloat(workshop.event.price))}</div>
-        </>
+        </div>
     );
 }

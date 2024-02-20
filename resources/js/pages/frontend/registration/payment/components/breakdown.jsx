@@ -24,7 +24,7 @@ export default function Breakdown({ workshop }) {
     }
 
     return (
-        <div className="w-full flex flex-col gap-y-2 mt-5">
+        <div className="w-full flex flex-col gap-y-2 mt-3">
             <div className="w-full flex items-center justify-between border-b border-slate-500/60">
                 <div>Total Charges:</div>
                 <div>{currency(data.total_fees)}</div>
@@ -33,7 +33,7 @@ export default function Breakdown({ workshop }) {
                 <div>Tax ({data.tax}):</div>
                 <div>{currency(data.tax_amount)}</div>
             </div>
-            <div className="w-full flex items-center justify-between border-b border-slate-500/60">
+            <div className="w-full flex items-center justify-between border-b-0 border-slate-500/60">
                 <div>Total Price:</div>
                 <div>{currency(data.total)}</div>
             </div>

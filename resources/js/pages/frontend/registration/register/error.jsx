@@ -6,7 +6,11 @@ export default function Error({ message }) {
     return (
         <>
             <Layout>
-                <div className="text-4xl p-4">{message}</div>
+                <div className="w-full min-h-[500px] flex items-center justify-center transition-all ease-in-out delay-75 duration-150">
+                    <div className="text-4xl text-center p-4 w-full md:w-1/2">
+                        {message}
+                    </div>
+                </div>
             </Layout>
         </>
     );

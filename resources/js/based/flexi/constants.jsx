@@ -128,6 +128,10 @@ export const attributes = [
         ...attribute,
         title: "File",
         type: "file",
+        config: {
+            ...attribute.config,
+            form: ["name", "class", "placeholder", "file types", "is required"],
+        },
     },
     {
         ...attribute,

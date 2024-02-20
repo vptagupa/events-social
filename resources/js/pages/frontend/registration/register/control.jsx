@@ -38,7 +38,7 @@ export const useControl = ({ flexis, onNext, onPrev, onSubmit }) => {
                 setProcessingStatus("next", true);
 
                 try {
-                    if (onNext) await onNext(form);
+                    if (onNext) await onNext(form, setProcessingStatus);
                     setTab(tab + 1);
                 } catch (error) {
                     console.log(error);

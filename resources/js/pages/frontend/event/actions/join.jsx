@@ -1,6 +1,6 @@
 import { Form } from "@/js/components/form";
 import { Input } from "@/js/based/form";
-import { PrimaryButton } from "@/js/components/buttons";
+import { Button } from "@/js/components/buttons";
 import { useForm } from "@/js/helpers/form";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useRef, useEffect } from "react";
@@ -19,6 +19,8 @@ export default function Join({ event }) {
     const submit = (e) => {
         e.preventDefault();
 
+        if (form.data.reCaptcha == "" || form.data.email == "") return;
+
         form.submit({
             preserveState: true,
             preserveScroll: true,
@@ -35,12 +37,12 @@ export default function Join({ event }) {
             <Form onSubmit={submit}>
                 <Input
                     type="email"
-                    title="Email Address"
                     placeholder="Email Adress"
+                    className={`!text-2xl !p-4 !ring-[#BF3131] !shadow-md !shadow-[#BF3131]/50`}
                     error={form.invalid("email") ? form.errors.email : null}
                     onChange={(e) => form.setData("email", e.target.value)}
                 />
-                <div>
+                <div className="mt-10">
                     <ReCAPTCHA
                         ref={reCaptcha}
                         sitekey={import.meta.env.VITE_GOOGLE_SITE_KEY}
@@ -53,9 +55,12 @@ export default function Join({ event }) {
                     )}
                 </div>
                 <div className="flex items-center justify-center mt-5">
-                    <PrimaryButton processing={form.processing}>
+                    <Button
+                        processing={form.processing}
+                        className="!text-3xl bg-gradient-to-t from-[#BF3131] to-[#BF3131] text-white"
+                    >
                         JOIN
-                    </PrimaryButton>
+                    </Button>
                 </div>
             </Form>
         </div>

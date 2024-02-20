@@ -36,7 +36,7 @@ class ParticipantController extends Controller
             }
             return $this->pay($workshop);
         } elseif ($workshop->has_payment && !$workshop->is_confirmed) {
-            return $this->confirmed($workshop);
+            return $this->completed($workshop);
         }
 
         return $this->status($workshop);

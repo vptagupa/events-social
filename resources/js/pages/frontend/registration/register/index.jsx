@@ -9,9 +9,21 @@ import { router } from "@inertiajs/react";
 export default function Registration({ workshop, registrationForm }) {
     const control = useControl({
         flexis: registrationForm,
-        onNext: async (form) => {
-            await axios.post(route("registration.store", workshop.uuid), {
-                flex: form,
+        onNext: (form, setProcessingStatus) => {
+            return new Promise((resolve, reject) => {
+                router.post(
+                    route("registration.store", workshop.uuid),
+                    {
+                        flex: form,
+                    },
+                    {
+                        forceFormData: true,
+                        onBefore: () => setProcessingStatus("next", true),
+                        onFinish: () => setProcessingStatus("next", false),
+                        onSuccess: () => resolve(true),
+                        onError: () => reject(false),
+                    }
+                );
             });
         },
         onSubmit: (form, setProcessingStatus) => {
@@ -21,6 +33,7 @@ export default function Registration({ workshop, registrationForm }) {
                     flexis: control.data,
                 },
                 {
+                    forceFormData: true,
                     onBefore: () => setProcessingStatus("next", true),
                     onFinish: () => setProcessingStatus("next", false),
                 }
@@ -36,9 +49,13 @@ export default function Registration({ workshop, registrationForm }) {
                         <p>There was an error while submitting the form</p>
                     }
                 >
-                    <ControlContext.Provider value={control}>
-                        <Stepper />
-                    </ControlContext.Provider>
+                    <div className="w-full min-h-[500px] flex items-center justify-center transition-all ease-in-out delay-75 duration-150">
+                        <div className="p-4 w-full md:w-1/2">
+                            <ControlContext.Provider value={control}>
+                                <Stepper />
+                            </ControlContext.Provider>
+                        </div>
+                    </div>
                 </ErrorBoundary>
             </Layout>
         </>

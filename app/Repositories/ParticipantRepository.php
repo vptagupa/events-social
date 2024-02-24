@@ -241,15 +241,16 @@ class ParticipantRepository extends Repository
                     'price' => $workshop->price,
                     'tax_amount' => $breakdown['tax_amount'],
                     'tax' => $breakdown['tax'],
-                    'paid_at' => Carbon::now(),
                     'is_gateway' => $data['method'] == 'gateway' ? true : false,
-                    'file_id' => $file?->id
+                    'file_id' => $file?->id,
+                    'status' => PaymentStatus::SUBMITTED
                 ])
             );
 
             $workshop->payment_status = PaymentStatus::SUBMITTED;
             $workshop->payment_at = Carbon::now();
             $workshop->event->organizer->notifySubmission($workshop);
+            $workshop->amount = $breakdown['total'];
             $workshop->save();
         });
     }

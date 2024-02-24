@@ -29,6 +29,7 @@ class Workshop extends Model
         'confirmed_at',
         'invited_at',
         'cancelled_at',
+        'amount',
         'note'
     ];
 
@@ -40,6 +41,7 @@ class Workshop extends Model
         'payment_at' => 'datetime:Y-m-d H:i:s',
         'accepted_at' => 'datetime:Y-m-d H:i:s',
         'cancelled_at' => 'datetime:Y-m-d H:i:s',
+        'amount' => 'decimal:2'
     ];
 
     protected $appends = [
@@ -170,35 +172,35 @@ class Workshop extends Model
         );
     }
 
-    public function statuses(): Attribute
+    public function isFullyPaid(): Attribute
     {
         return Attribute::make(
-            get: function () {
-                $statuses = [
-                    [
-                        'status' => 'Confirmed',
-                        'date' => $this->confirmed_at
-                    ],
-                    [
-                        'status' => 'Cancelled',
-                        'date' => $this->cancelled_at
-                    ],
-                    [
-                        'status' => 'Payment Submitted',
-                        'date' => $this->payment_at
-                    ],
-                    [
-                        'status' => 'Form Submitted',
-                        'date' => $this->submitted_at
-                    ],
-                ];
+            get: fn() => $this->balance <= 0
+        );
+    }
 
-                $statuses = array_filter($statuses, fn($status) => $status['date'] != null);
+    public function balance(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => round($this->amount - $this->transactions->reject(
+                fn($trans) => $trans->status === PaymentStatus::CANCELLED
+            )->sum('actual_paid_amount'), 2)
+        );
+    }
 
-                uasort($statuses, fn($a, $b) => strtotime($b['date']) - strtotime($a['date']));
+    public function paid(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => round($this->transactions->reject(
+                fn($trans) => $trans->status === PaymentStatus::CANCELLED
+            )->sum('actual_paid_amount'), 2)
+        );
+    }
 
-                return array_values($statuses);
-            }
+    public function paymentStatusClasses(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->statusClasses($this->payment_status)
         );
     }
 }

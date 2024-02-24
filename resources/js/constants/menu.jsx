@@ -6,6 +6,7 @@ import {
     faFileInvoiceDollar,
     faHammer,
     faUserGroup,
+    faReceipt,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default [
@@ -39,7 +40,13 @@ export default [
         route: "admin.backend.participants.index",
         permission: "PARTICIPANTS",
     },
-
+    {
+        id: "payments",
+        name: "Payments",
+        icon: <FontAwesomeIcon icon={faReceipt} className="text-lg" />,
+        route: "organizer.participants.payments.index",
+        permission: "PAYMENTS",
+    },
     {
         id: "setup",
         name: "Setup",

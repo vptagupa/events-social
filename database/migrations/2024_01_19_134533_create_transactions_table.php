@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\PaymentStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,13 +22,11 @@ return new class extends Migration {
             $table->decimal('tax_amount');
             $table->string('tax', 5);
             $table->string('reference')->nullable();
-            $table->dateTime('paid_at')->nullable();
             $table->boolean('is_gateway')->default(false);
-            $table->dateTime('failed_at')->nullable();
-            $table->string('failed_reason')->nullable();
             $table->foreignId('file_id')->nullable()->constrained('files');
-            $table->dateTime('confirmed_at')->nullable();
-            $table->foreignId('confirmed_admin_id')->nullable()->constrained('admins');
+            $table->nullableMorphs('transactor');
+            $table->enum('status', array_map(fn($status) => $status->value, PaymentStatus::cases()))->length(75);
+            $table->string('remarks', 150)->nullable();
             $table->timestamps();
         });
     }

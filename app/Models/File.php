@@ -29,7 +29,8 @@ class File extends Model
         'url',
         'is_image',
         'is_video',
-        'is_audio'
+        'is_audio',
+        'is_pdf'
     ];
 
     public static function booted()
@@ -59,6 +60,13 @@ class File extends Model
     {
         return Attribute::make(
             get: fn() => str($this->type)->startsWith('video/')
+        );
+    }
+
+    public function isPdf(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => str($this->type)->startsWith('application/pdf')
         );
     }
 

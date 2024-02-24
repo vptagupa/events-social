@@ -50,15 +50,13 @@ export default function Payment({ value }) {
             <div className="w-full flex items-center justify-between gap-x-2">
                 <div className="font-bold">Status</div>
                 <div>
-                    {value.failed_at && (
-                        <div
-                            className="text-danger"
-                            title={value.failed_reason}
-                        >
-                            Failed
+                    {value.is_failed ? (
+                        <div className="text-danger" title={value.reason}>
+                            {value.status}
                         </div>
+                    ) : (
+                        value.status
                     )}
-                    {!value.failed_at && "For Review"}
                 </div>
             </div>
         </div>

@@ -4,18 +4,19 @@ namespace App\Enums;
 
 enum PaymentStatus: string
 {
-    case UNPAID = "Unpaid";
     case SUBMITTED = "Submitted";
-    case PROCESSING = "Processing";
-    case FAILED = "FAILED";
-    case APPROVED = "Approved";
-    case COMPLETED = "Completed";
+    case FAILED = "Failed";
+    case CONFIRMED = "Confirmed";
+    case REJECTED = "Rejected";
+    case CANCELLED = "Cancelled";
+    case PARTIAL = "Partial";
+    case PAID = "Paid";
 
     public static function all(): array
     {
         return array_map(function ($role) {
             return $role->toArray();
-        }, Role::cases());
+        }, static::cases());
     }
 
     public function toArray(): array

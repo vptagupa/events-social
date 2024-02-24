@@ -2,6 +2,7 @@
 
 namespace App\Models\Generators;
 
+use App\Enums\PaymentStatus;
 use App\Models\Transaction;
 use Carbon\Carbon;
 
@@ -17,5 +18,16 @@ trait TransactionGenerator
         }
 
         return $code;
+    }
+
+    public function getStatusClasses(PaymentStatus $status)
+    {
+        return match (true) {
+            PaymentStatus::CONFIRMED === $status => "success",
+            PaymentStatus::REJECTED === $status => "danger",
+            PaymentStatus::CANCELLED === $status => "warning",
+            PaymentStatus::PARTIAL === $status => "info",
+            PaymentStatus::SUBMITTED === $status => "bg-slate-400 text-white",
+        };
     }
 }

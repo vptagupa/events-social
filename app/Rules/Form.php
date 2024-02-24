@@ -34,11 +34,11 @@ class Form implements ValidationRule
                         $fail("The field " . ($component['config']['name'] ?? "") . " contains an invalid file.");
                     }
 
+                    // Validate in mb size
                     if (($component['value']->getSize() / 1048576) > config("system.media.max")) {
                         $fail("The field " . ($component['config']['name'] ?? "") . " contains an invalid file size.");
                     }
                 }
-                \Log::info($component['config']['name']);
             });
         }
     }

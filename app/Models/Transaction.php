@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\PaymentStatus;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,12 +23,10 @@ class Transaction extends Model
         'tax',
         'paid_at',
         'is_gateway',
-        'failed_at',
-        'failed_reason',
+        'remarks',
         'file_id',
-        'confirmed_at',
-        'confirmed_admin_id',
-        'reference'
+        'reference',
+        'status'
     ];
 
     protected $casts = [
@@ -37,15 +37,39 @@ class Transaction extends Model
         'tax_amount' => 'decimal:2',
         'paid_at' => 'datetime:Y-m-d H:i:s',
         'is_gateway' => 'boolean',
-        'failed_at' => 'datetime:Y-m-d H:i:s',
-        'confirmed_at' => 'datetime:Y-m-d H:i:s',
+        'status' => PaymentStatus::class
+    ];
+
+    protected $appends = [
+        'status_classes',
+        'is_confirmed',
+        'is_rejected',
+        'is_cancelled',
+        'is_partial',
+        'has_submitted'
     ];
 
     public static function booted()
     {
-        static::created(function (Transaction $model) {
+        // Update payment status automatically when transaction changes
+        $payment = function ($model) {
+            $workshop = $model->workshop;
+
+            if ($workshop->is_paid) {
+                $workshop->payment_status = PaymentStatus::PAID;
+                $workshop->save();
+            }
+        };
+
+        static::created(function (Transaction $model) use ($payment) {
             $model->code = (new self())->generateCode();
             $model->save();
+
+            $payment($model);
+        });
+
+        static::updated(function (Transaction $model) use ($payment) {
+            $payment($model);
         });
     }
 
@@ -53,9 +77,62 @@ class Transaction extends Model
     {
         return $this->belongsTo(Workshop::class);
     }
+    public function transactor()
+    {
+        return $this->morphTo();
+    }
 
     public function file()
     {
         return $this->belongsTo(File::class);
+    }
+
+    public function isConfirmed(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->status === PaymentStatus::CONFIRMED
+        );
+    }
+
+    public function isFailed(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->status === PaymentStatus::FAILED
+        );
+    }
+
+    public function isRejected(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->status === PaymentStatus::REJECTED
+        );
+    }
+
+    public function isPartial(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->status === PaymentStatus::PARTIAL
+        );
+    }
+
+    public function isCancelled(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->status === PaymentStatus::CANCELLED
+        );
+    }
+
+    public function hasSubmitted(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->status === PaymentStatus::SUBMITTED
+        );
+    }
+
+    public function statusClasses(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->getStatusClasses($this->status)
+        );
     }
 }

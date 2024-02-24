@@ -17,7 +17,7 @@ export default function Model({
         <Transition.Root show={open} as={Fragment}>
             <Dialog
                 as="div"
-                className="relative z-10"
+                className="relative z-[99999]"
                 initialFocus={cancelButtonRef}
                 onClose={_onClose}
             >
@@ -30,10 +30,10 @@ export default function Model({
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
-                    <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                    <div className="fixed inset-0 bg-black/25" />
                 </Transition.Child>
 
-                <div className="fixed inset-0  w-screen overflow-y-auto">
+                <div className="fixed inset-0 w-screen overflow-y-auto">
                     <div className="flex min-h-full items-end justify-center p-4 text-center xs:items-center xs:p-0">
                         <Transition.Child
                             as={Fragment}

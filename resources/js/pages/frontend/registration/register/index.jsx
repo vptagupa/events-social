@@ -51,12 +51,11 @@ export default function Registration({ workshop, registrationForm, errors }) {
                 >
                     <div className="w-full min-h-[500px] flex items-center justify-center transition-all ease-in-out delay-75 duration-150">
                         <div className="p-4 w-full md:w-1/2">
-                            {errors?.flex ||
-                                (errors?.flexis && (
-                                    <AlertDanger>
-                                        {errors?.flex || errors?.flexis}
-                                    </AlertDanger>
-                                ))}
+                            {(errors?.flex || errors?.flexis) && (
+                                <AlertDanger>
+                                    {errors?.flex || errors?.flexis}
+                                </AlertDanger>
+                            )}
 
                             <ControlContext.Provider value={control}>
                                 <Stepper />

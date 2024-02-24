@@ -1,11 +1,17 @@
-import { faPhotoFilm } from "@fortawesome/free-solid-svg-icons";
+import {
+    faPhotoFilm,
+    faRotateLeft,
+    faRotateRight,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRef } from "react";
 
 import Audio from "./audio";
 import Video from "./video";
-import { useRef } from "react";
+import Pdf from "./pdf";
+import Image from "./image";
 
-export default ({ file }) => {
+export default function Load({ file }) {
     const ref = useRef();
 
     if (!file) {
@@ -25,11 +31,13 @@ export default ({ file }) => {
     }
 
     if (file.is_image) {
-        return <img src={url} className="w-1/2" />;
+        return <Image src={url} title={file?.title} content={file?.content} />;
     } else if (file.is_audio) {
         return <Audio ref={ref} src={url} />;
     } else if (file.is_video) {
         return <Video ref={ref} src={url} />;
+    } else if (file.is_pdf) {
+        return <Pdf ref={ref} src={url} />;
     }
 
     return (
@@ -38,4 +46,4 @@ export default ({ file }) => {
             icon={faPhotoFilm}
         />
     );
-};
+}

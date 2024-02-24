@@ -47,7 +47,7 @@ export default function Methods({ workshop, form }) {
                 leaveTo="opacity-0"
             >
                 <Input
-                    title="Reference"
+                    title="Reference Number"
                     placeholder="Reference Number"
                     onChange={(e) => form.setData("reference", e.target.value)}
                     error={

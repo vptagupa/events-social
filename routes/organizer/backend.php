@@ -13,6 +13,8 @@ use App\Http\Controllers\Organizer\RegistrationFormController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Participant\ParticipantController;
+use App\Http\Controllers\Participant\TransactionsController;
+
 use App\Http\Middleware\RedirectIfTemporaryPassword;
 
 /*
@@ -99,6 +101,22 @@ Route::middleware(['auth:organizer,admin', RedirectIfTemporaryPassword::class])-
     Route::controller(OrganizerController::class)->group(function () {
         Route::get('/logout', 'logout')->name('logout');
     });
+
+    Route::name('participants.')->prefix('participants')->group(function () {
+        // Payment routes
+        Route::controller(TransactionsController::class)->name('payments.')->prefix('payments')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::post('/list', 'list')->name('list');
+            Route::prefix('{transaction}')->group(function () {
+                Route::get('/info', 'info')->name('info');
+                Route::patch('/confirmed', 'confirmed')->name('confirmed');
+                Route::patch('/rejected', 'rejected')->name('rejected');
+                Route::patch('/cancelled', 'cancelled')->name('cancelled');
+                Route::patch('/partial', 'partial')->name('partial');
+            });
+        });
+    });
+
     Route::get('/', [DashboardController::class, 'index'])->name('index');
 });
 

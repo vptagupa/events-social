@@ -58,6 +58,6 @@ export const currency = (amount) => {
     });
 };
 
-export const dateDisplay = (date) => {
-    return date ? moment(date).format("MMMM Do YYYY, h:mm a") : "";
+export const dateDisplay = (date, format = "MMMM Do YYYY, h:mm a") => {
+    return date ? moment(date).format(format) : "";
 };

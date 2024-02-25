@@ -7,14 +7,12 @@ export default memo(function Action({ value }) {
     const [open, setOpen] = useState(false);
     return (
         <>
-            <FontAwesomeIcon
-                icon={faFolderOpen}
-                title="Cancelled"
-                className={`text-xl text-slate-400 cursor-pointer 
-                transition-all ease-in-out duration-150 delay-75 
-                hover:scale-110 hover:text-slate-600`}
+            <span
                 onClick={(e) => setOpen(true)}
-            />
+                className={`p-2  rounded-lg !text-xs cursor-pointer underline underline-offset-4 hover:decoration-purple-700 decoration-purple-400 decoration-2`}
+            >
+                {value.status}
+            </span>
             <View value={value} open={open} parentSetOpen={setOpen} />
         </>
     );

@@ -58,7 +58,6 @@ const Component = ({
                                 <Th>Price</Th>
                                 <Th>Paid Amount</Th>
                                 <Th>Status</Th>
-                                <Th>Action</Th>
                             </TrH>
                         </Theader>
                         <Tbody>
@@ -77,7 +76,7 @@ const Component = ({
                                                         "organizer.participant.index",
                                                         item.workshop.id
                                                     )}
-                                                    className="underline decoration-purple-600"
+                                                    className="underline decoration-purple-600 underline-offset-4"
                                                 >
                                                     {
                                                         item.workshop
@@ -92,7 +91,7 @@ const Component = ({
                                                     "organizer.events.participants.index",
                                                     item.workshop.event.id
                                                 )}
-                                                className="underline decoration-purple-600"
+                                                className="underline decoration-purple-600 underline-offset-4"
                                             >
                                                 {item.workshop.event.title}
                                             </Link>
@@ -110,13 +109,6 @@ const Component = ({
                                                     item.actual_paid_amount
                                                 )
                                             )}
-                                        </Td>
-                                        <Td>
-                                            <div className="flex items-center justify-center">
-                                                <span className="p-2 bg-slate-500 rounded-lg !text-xs text-white">
-                                                    {item.status}
-                                                </span>
-                                            </div>
                                         </Td>
                                         <Td>
                                             <div className="flex space-x-2 justify-end z-20">

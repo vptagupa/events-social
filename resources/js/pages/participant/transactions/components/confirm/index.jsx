@@ -6,9 +6,8 @@ import { useState, useEffect, memo, useCallback } from "react";
 
 import Status from "./status";
 import Processing from "./processing";
-import Actions from "./actions";
-import Info from "./info";
-import Form from "./form";
+
+import Drawer from "./drawer";
 
 export default memo(function Confirm({ value: _value }) {
     const stateRaw = {
@@ -28,33 +27,44 @@ export default memo(function Confirm({ value: _value }) {
     const [state, setState] = useState({ ...stateRaw });
 
     const setStateValue = (key, value) => {
-        setState({
+        setState((state) => ({
             ...state,
             [key]: value,
-        });
+        }));
     };
 
     const setProcessing = (key, value) => {
-        setState({
+        setState((state) => ({
             ...state,
             processing: {
                 ...state.processing,
                 [key]: value,
             },
-        });
+        }));
     };
 
     const submit = (route, data, process) => {
-        router.patch(route, data, {
-            onError: (errors) => setStateValue("errors", errors),
-            onBefore: () => setProcessing(process, true),
-            onSuccess: async () => {
-                await getInfo();
-                setState(stateRaw);
-                Event.emit("payments.reload");
-            },
-            preserveScroll: true,
-            preserveState: true,
+        return new Promise((resolve, reject) => {
+            router.patch(route, data, {
+                onError: (errors) => {
+                    setStateValue("errors", errors);
+                    resolve(false);
+                },
+                onBefore: () => {
+                    setProcessing(process, true);
+                },
+                onSuccess: async () => {
+                    await getInfo();
+                    setState(stateRaw);
+                    Event.emit("payments.reload");
+                    resolve(true);
+                },
+                onFinish: () => {
+                    setProcessing(process, false);
+                },
+                preserveScroll: true,
+                preserveState: true,
+            });
         });
     };
 
@@ -83,7 +93,7 @@ export default memo(function Confirm({ value: _value }) {
     }, [_value]);
 
     return (
-        <div className="relative flex items-center justify-center">
+        <div className="w-full relative flex items-center justify-center">
             {!value.has_submitted && <Status value={value} />}
             <Processing
                 show={
@@ -94,34 +104,24 @@ export default memo(function Confirm({ value: _value }) {
                     state.processing.info
                 }
             />
-            <div>
-                <div className="h-8 flex items-center justify-center mx-3 my-2">
-                    <div className="w-2/3 text-start flex items-center justify-between">
-                        <div className="w-full text-lg">
-                            {value.workshop.participant.name}
-                        </div>
-                    </div>
-                    <Actions state={state} value={value} submit={submit} />
-                </div>
-                <div className="border-0 border-slate-300 rounded-md xs:max-sm:flex-col flex items-center justify-between gap-x-10">
-                    <Info value={value} meta={meta} />
-                    <Form
-                        state={state}
-                        meta={meta}
-                        setStateValue={setStateValue}
-                    />
-                </div>
-                <div className="mt-3 flex items-center justify-center bg-slate-900">
-                    <Load
-                        file={{
-                            ...value.file,
-                            title: value.workshop.participant.name,
-                            content: currency(
-                                parseFloat(value?.workshop?.amount ?? 0)
-                            ),
-                        }}
-                    />
-                </div>
+            <Drawer
+                state={state}
+                meta={meta}
+                value={value}
+                setStateValue={setStateValue}
+                submit={submit}
+            />
+
+            <div className="w-full flex items-center justify-center">
+                <Load
+                    file={{
+                        ...value.file,
+                        title: value.workshop.participant.name,
+                        content: currency(
+                            parseFloat(value?.workshop?.amount ?? 0)
+                        ),
+                    }}
+                />
             </div>
         </div>
     );

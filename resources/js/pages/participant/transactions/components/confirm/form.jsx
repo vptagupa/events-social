@@ -6,7 +6,7 @@ import { faPesoSign } from "@fortawesome/free-solid-svg-icons";
 
 export default memo(function Form({ state, meta, setStateValue }) {
     return (
-        <div className="w-full md:w-1/2 text-slate-700 bg-slate-200 flex-col items-center justify-start p-2 gap-y-2 border-t border-b border-l border-slate-200 rounded-tl-xl rounded-bl-xl">
+        <div className="w-full text-slate-700 bg-slate-200 flex-col items-center justify-start p-2 gap-y-2 border-t border-b border-l border-slate-200 rounded-tl-xl rounded-bl-xl">
             <div className="w-full flex items-center justify-center gap-x-2">
                 <span>
                     <FontAwesomeIcon icon={faPesoSign} className="text-6xl " />

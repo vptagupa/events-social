@@ -7,7 +7,7 @@ export default memo(function Processing({ show }) {
     return (
         <Transition
             show={show}
-            className={`w-full h-full bg-slate-200/50 absolute flex items-center justify-center z-50`}
+            className={`w-full h-full bg-slate-200/50 absolute flex items-center justify-center z-[60]`}
             enter="transition-opacity duration-75"
             enterFrom="opacity-0"
             enterTo="opacity-100"

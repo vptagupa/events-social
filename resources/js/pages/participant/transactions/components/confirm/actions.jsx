@@ -5,14 +5,8 @@ import More from "../../actions/more";
 
 export default memo(function Actions({ state, value, submit }) {
     return (
-        <div className="w-1/3 flex items-center justify-end gap-x-2">
+        <div className="flex items-center justify-end gap-x-2">
             <Confirmed
-                className={`${
-                    state.processing.confirmed
-                        ? "animate-pulse !text-green-800 !scale-150"
-                        : ""
-                }`}
-                value={value}
                 onClick={(e) =>
                     submit(
                         route(

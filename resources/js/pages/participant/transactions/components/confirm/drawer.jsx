@@ -24,8 +24,9 @@ export default memo(function Drawer({
         >
             <FontAwesomeIcon
                 icon={open ? faAnglesRight : faAnglesLeft}
-                className={`text-xl cursor-pointer transition-all ease-in-out hover:scale-150 absolute ${
-                    open ? "text-slate-100 left-0" : "text-slate-700 -left-5"
+                title={`${open ? "Close drawer" : "Open drawer"}`}
+                className={`text-xl cursor-pointer transition-all bg-primary rounded-lg p-2 ease-in-out hover:scale-150 absolute ${
+                    open ? "text-slate-100 -left-2" : "text-white -left-5"
                 }`}
                 onClick={(e) => setOpen(!open)}
             />

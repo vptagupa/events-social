@@ -51,4 +51,34 @@ trait TransactionConditions
             $builder->where('id', '<', $query['current_id']);
         });
     }
+
+    public function startDateCondition(&$builder, $query)
+    {
+        return $builder->when(isset($query['start_date']) && $query['start_date'], function ($builder) use ($query) {
+            $builder->where(\DB::raw('date(created_at)'), '>=', $query['start_date']);
+        });
+    }
+
+    public function endDateCondition(&$builder, $query)
+    {
+        return $builder->when(isset($query['end_date']) && $query['end_date'], function ($builder) use ($query) {
+            $builder->where(\DB::raw('date(created_at)'), '<=', $query['end_date']);
+        });
+    }
+
+    public function eventIdCondition(&$builder, $query)
+    {
+        return $builder->when(isset($query['event_id']) && $query['event_id'], function ($builder) use ($query) {
+            $builder->whereHas('workshop', function ($builder) use ($query) {
+                $builder->where('event_id', $query['event_id']);
+            });
+        });
+    }
+
+    public function statusesCondition(&$builder, $query)
+    {
+        return $builder->when(isset($query['statuses']) && $query['statuses'], function ($builder) use ($query) {
+            $builder->whereIn('status', $query['statuses']);
+        });
+    }
 }

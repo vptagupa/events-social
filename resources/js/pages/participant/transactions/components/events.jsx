@@ -1,37 +1,50 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
-const people = [
-    { id: 1, name: "Wade Cooper" },
-    { id: 2, name: "Arlene Mccoy" },
-    { id: 3, name: "Devon Webb" },
-    { id: 4, name: "Tom Cook" },
-    { id: 5, name: "Tanya Fox" },
-    { id: 6, name: "Hellen Schmidt" },
-];
-
-export default function Events() {
-    const [selected, setSelected] = useState(people[0]);
+export default function Events({ setSearch }) {
+    const [selected, setSelected] = useState(null);
     const [query, setQuery] = useState("");
+    const [data, setData] = useState([]);
 
-    const filteredPeople =
-        query === ""
-            ? people
-            : people.filter((person) =>
-                  person.name
-                      .toLowerCase()
-                      .replace(/\s+/g, "")
-                      .includes(query.toLowerCase().replace(/\s+/g, ""))
-              );
+    const search = (query) => {
+        const controller = new AbortController();
+        axios
+            .post(
+                route("organizer.events.anyList"),
+                {
+                    query,
+                },
+                {
+                    signal: controller.signal,
+                }
+            )
+            .then((res) => {
+                setData(res.data.data);
+            });
+    };
+
+    useEffect(() => {
+        setSearch((search) => ({
+            ...search,
+            event: selected?.id,
+        }));
+    }, [selected]);
+
+    useEffect(() => {
+        search(query);
+    }, [query]);
 
     return (
-        <Combobox value={selected} onChange={setSelected}>
+        <Combobox
+            value={selected}
+            onChange={(value) => setSelected(selected == value ? null : value)}
+        >
             <div className="relative mt-1">
                 <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md shadow-slate-200 ring-1 ring-slate-300 focus:ring-purple-300 focus-visible:ring-purple-300 sm:text-sm">
                     <Combobox.Input
                         className="w-full border-none py-2 pl-3 pr-10 focus:outline-none text-sm leading-5 text-gray-900 focus:ring-0"
-                        displayValue={(person) => person.name}
+                        displayValue={(event) => event?.title ?? ""}
                         onChange={(event) => setQuery(event.target.value)}
                     />
                     <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
@@ -49,14 +62,14 @@ export default function Events() {
                     afterLeave={() => setQuery("")}
                 >
                     <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                        {filteredPeople.length === 0 && query !== "" ? (
+                        {data.length === 0 && query !== "" ? (
                             <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
                                 Nothing found.
                             </div>
                         ) : (
-                            filteredPeople.map((person) => (
+                            data.map((event) => (
                                 <Combobox.Option
-                                    key={person.id}
+                                    key={event.id}
                                     className={({ active }) =>
                                         `relative cursor-default select-none py-2 pl-10 pr-4 ${
                                             active
@@ -64,7 +77,7 @@ export default function Events() {
                                                 : "text-gray-900"
                                         }`
                                     }
-                                    value={person}
+                                    value={event}
                                 >
                                     {({ selected, active }) => (
                                         <>
@@ -75,7 +88,7 @@ export default function Events() {
                                                         : "font-normal"
                                                 }`}
                                             >
-                                                {person.name}
+                                                {event.title}
                                             </span>
                                             {selected ? (
                                                 <span

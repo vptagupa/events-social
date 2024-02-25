@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\TransactionResource;
 use App\Models\Transaction;
 use App\Repositories\TransactionRepository;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TransactionsController extends Controller
@@ -31,7 +32,11 @@ class TransactionsController extends Controller
         return TransactionResource::collection(
             $this->repository->list(
                 query: [
-                    'query' => $request->get('query'),
+                    'query' => $request->get('query')['query'],
+                    'start_date' => Carbon::parse($request->get('query')['date']['startDate'])->format('Y-m-d'),
+                    'end_date' => Carbon::parse($request->get('query')['date']['endDate'])->format('Y-m-d'),
+                    'statuses' => $request->get('query')['statuses'] ?? [],
+                    'event_id' => $request->get('query')['event'] ?? '',
                     'workshop_participant' => true,
                     'file' => true
                 ],

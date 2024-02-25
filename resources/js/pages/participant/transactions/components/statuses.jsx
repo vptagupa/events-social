@@ -1,12 +1,19 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { usePage } from "@inertiajs/react";
 
-export default function Statuses() {
+export default function Statuses({ setSearch }) {
     const { statuses } = usePage().props;
     const [data, setData] = useState(statuses);
     const [selected, setSelected] = useState([]);
+
+    useEffect(() => {
+        setSearch((search) => ({
+            ...search,
+            statuses: selected.map((d) => d.id),
+        }));
+    }, [selected]);
 
     return (
         <Listbox value={selected} onChange={setSelected} multiple>

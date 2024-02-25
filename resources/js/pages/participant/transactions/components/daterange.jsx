@@ -1,18 +1,19 @@
 import { DateRange as DateRangeBased } from "react-date-range";
-import { useState, Fragment } from "react";
+import { useState, Fragment, useEffect } from "react";
 import moment from "moment";
 import { Popover, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { dateDisplay } from "@/js/helpers";
 
-export default function DateRange() {
-    const [state, setState] = useState([
-        {
-            startDate: new Date(),
-            endDate: moment(new Date()).days(7),
-            key: "selection",
-        },
-    ]);
+export default function DateRange({ setSearch, search }) {
+    const [state, setState] = useState([search.date]);
+
+    useEffect(() => {
+        setSearch((search) => ({
+            ...search,
+            date: state[0],
+        }));
+    }, [state]);
 
     return (
         <Popover className="relative">

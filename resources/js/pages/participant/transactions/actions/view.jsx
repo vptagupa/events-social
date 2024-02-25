@@ -1,6 +1,6 @@
 import { Modal, Title } from "@/js/components/modal";
 import { useState, useEffect, memo } from "react";
-import Form from "../components/form";
+import Confirm from "../components/confirm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
@@ -27,7 +27,7 @@ export default memo(function View({ value, open: _open, parentSetOpen }) {
                 }}
             />
             <div className="flex items-center justify-center gap-3">
-                <Form value={value} />
+                <Confirm value={value} />
             </div>
         </Modal>
     );

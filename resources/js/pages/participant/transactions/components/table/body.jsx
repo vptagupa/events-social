@@ -24,6 +24,7 @@ import Filter from "../../actions/filter";
 const Component = ({
     event,
     data,
+    search,
     searching,
     pagination,
     setSearch,
@@ -34,7 +35,12 @@ const Component = ({
     return (
         <>
             <div className="flex xs:max-sm:flex-col xs:gap-y-2 md:gap-y-0 justify-between p-2 gap-x-2">
-                <Filter />
+                <Filter
+                    searching={searching}
+                    handleSearch={handleSearch}
+                    setSearch={setSearch}
+                    search={search}
+                />
             </div>
             <Table
                 data={data}

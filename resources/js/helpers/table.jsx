@@ -68,6 +68,7 @@ export const useTable = ({ initialParams, listRoute: _listRoute, name }) => {
     useEffect(() => {
         fetchData({
             page: initialParams.page,
+            search: initialParams.search,
         });
     }, []);
 

@@ -174,4 +174,9 @@ class Event extends Model
     {
         return $this->hasMany(Workshop::class);
     }
+
+    public function certificates()
+    {
+        return $this->hasMany(Certificate::class);
+    }
 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\Backend\DashboardController;
 use App\Http\Controllers\Admin\Backend\SystemFeeController;
+use App\Http\Controllers\Organizer\CertificatesController;
 use App\Http\Controllers\Organizer\EventSettingController;
 use App\Http\Controllers\Organizer\FeesController;
 use App\Http\Controllers\Organizer\FeeController;
@@ -68,6 +69,13 @@ Route::middleware(['auth:organizer,admin', RedirectIfTemporaryPassword::class])-
                 Route::post('/', 'export')->name('create');
                 Route::post('/list', 'exportList')->name('list');
             });
+            Route::controller(CertificatesController::class)->name('certificates.')->prefix('certificates')->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::post('/list', 'list')->name('list');
+                Route::patch('/updateName/{certificate}', 'updateName')->name('update-name');
+                Route::get('/print-select', 'printSelect')->name('print-select');
+            });
+            Route::resource('certificates', CertificatesController::class)->except(['edit', 'show', 'create']);
         });
     });
     Route::controller(EventsController::class)->prefix('{organizer}/events')->name('events.')->group(function () {

@@ -42,7 +42,8 @@ class ParticipantsController extends Controller
             $this->repository->list(
                 query: [
                     'query' => $request->get('query'),
-                    'event_id' => $event->id
+                    'event_id' => $event->id,
+                    ...($request->has('with') ? $request->get('with') : [])
                 ],
                 orderBy: ['id', 'desc'],
                 paginate: true,

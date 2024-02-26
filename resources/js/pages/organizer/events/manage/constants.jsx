@@ -105,14 +105,19 @@ export const menus = [
         ),
     },
     {
-        title: "Certificate",
-        url: () => "",
+        title: "Certificates",
+        url: ({ organizer, event }) =>
+            route("organizer.events.certificates.index", { event }),
         isActive: () => false,
         icon: () => (
             <FontAwesomeIcon
                 icon={faCertificate}
-                title="Certificate"
-                className={`${menuIconClasses}`}
+                title="Certificates"
+                className={`${menuIconClasses} ${
+                    isActive("organizer.events.certificates.index")
+                        ? "text-primary transform -rotate-45 scale-110"
+                        : ""
+                } !h-7`}
             />
         ),
     },

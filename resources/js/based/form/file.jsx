@@ -5,7 +5,7 @@ import {
     faTrashAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import LoadFile from "./media/load";
 import { useState } from "react";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
@@ -23,8 +23,13 @@ export default function File({
     classNameContainer = "ring-1 ring-slate-300 focus:outline-purple-300 disabled:bg-slate-300",
     ...props
 }) {
+    console.log(value);
     const [file, setFile] = useState(value);
     const ref = useRef();
+
+    useEffect(() => {
+        setFile(value);
+    }, [value]);
 
     return (
         <div
@@ -40,14 +45,18 @@ export default function File({
                         type="file"
                         className={`hidden ${className}`}
                         onChange={(e) => {
-                            setFile(e.target.files[0]);
-                            onChange(e.target.files[0]);
+                            const files =
+                                e.target.files.length <= 1
+                                    ? e.target.files[0]
+                                    : e.target.files;
+
+                            onChange(files);
                         }}
                         {...props}
                     />
                     <div className="flex items-center justify-center m-3">
                         <FontAwesomeIcon
-                            title={title}
+                            title={typeof title == "string" ? title : ""}
                             icon={faArrowUpFromBracket}
                             className={`h-8 text-slate-300 hover-pointer ${classNameIcon}`}
                             onClick={(e) => ref.current.click()}
@@ -67,7 +76,7 @@ export default function File({
                             title="Remove"
                             onClick={(e) => {
                                 setFile(null);
-                                if (remove) remove();
+                                if (remove) remove(file);
                             }}
                         >
                             <FontAwesomeIcon

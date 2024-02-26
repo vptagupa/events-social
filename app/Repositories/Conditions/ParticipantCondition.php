@@ -30,6 +30,15 @@ trait ParticipantCondition
         });
     }
 
+    public function workshopsWithParticipantCondition(&$builder, $query)
+    {
+        return $builder->when(isset($query['workshops.participant']) && $query['workshops.participant'], function ($builder) use ($query) {
+            $builder->with([
+                'workshops.participant'
+            ]);
+        });
+    }
+
     public function eventOrganizerCondition(&$builder, $query)
     {
         return $builder->when(isset($query['eventOrganizer']) && $query['eventOrganizer'], function ($builder) use ($query) {

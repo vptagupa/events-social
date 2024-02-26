@@ -70,7 +70,7 @@ class ProofPaymentRequest extends FormRequest
     protected function passedValidation(): void
     {
         $this->merge([
-            'price' => $this->participant->workshop($this->event_id)->first()->offer->price
+            'price' => $this->participant->currentWorkshop($this->event_id)->price
         ]);
     }
 }

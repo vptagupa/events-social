@@ -12,9 +12,13 @@ return new class extends Migration {
     {
         Schema::create('certificates', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('workshop_id')->constrained('workshops');
-            $table->string('url');
-            $table->unsignedInteger('downloads');
+            $table->foreignId('event_id')->constrained('events');
+            $table->foreignId('workshop_id')->nullable()->constrained('workshops');
+            $table->foreignId('file_id')->constrained('files');
+            $table->string('name', 120)->nullable();
+            $table->unsignedInteger('downloads')->default(0);
+            $table->unsignedInteger('prints')->default(0);
+            $table->morphs('creator');
             $table->timestamps();
         });
     }

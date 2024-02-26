@@ -112,7 +112,7 @@ export default memo(function Confirm({ value: _value }) {
                 submit={submit}
             />
 
-            <div className="w-full flex items-center justify-center">
+            <div className="w-full flex items-center justify-center !text-black">
                 <Load
                     file={{
                         ...value.file,
@@ -121,6 +121,7 @@ export default memo(function Confirm({ value: _value }) {
                             parseFloat(value?.workshop?.amount ?? 0)
                         ),
                     }}
+                    pdf={{ modal: false }}
                 />
             </div>
         </div>

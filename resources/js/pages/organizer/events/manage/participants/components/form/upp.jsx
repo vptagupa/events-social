@@ -20,8 +20,8 @@ export default function Component({ form, handleRemove }) {
                     "Upload proof of payment in image format (jpg and png only)."
                 }
                 value={form.data?.file ?? ""}
-                onChange={(e) => {
-                    form.setData("file", e.target.files[0]);
+                onChange={(file) => {
+                    form.setData("file", file);
                 }}
                 accept=" .jpg, .jpeg, .png, .mp4"
                 remove={handleRemove}

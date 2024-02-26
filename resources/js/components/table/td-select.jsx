@@ -1,14 +1,14 @@
-import { Cell } from "@table-library/react-table-library/table";
+import { CellSelect } from "@table-library/react-table-library/select";
 import { forwardRef } from "react";
 import Base from "../base";
 
 export default forwardRef(({ className = "", ...props }, ref) => {
     return (
         <Base
-            render={<Cell />}
+            render={<CellSelect />}
             ref={ref}
             {...props}
-            className={`!p-3 border-solid border-b text-xs ${className}`}
+            className={`${className}`}
         >
             {props.children}
         </Base>

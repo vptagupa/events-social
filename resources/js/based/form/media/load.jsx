@@ -4,14 +4,15 @@ import {
     faRotateRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useRef } from "react";
+import { useRef, memo } from "react";
 
 import Audio from "./audio";
 import Video from "./video";
 import Pdf from "./pdf";
+import PdfViewer from "./pdf-viewer";
 import Image from "./image";
 
-export default function Load({ file }) {
+export default memo(function Load({ file, ...props }) {
     const ref = useRef();
 
     if (!file) {
@@ -22,11 +23,18 @@ export default function Load({ file }) {
 
     if (file instanceof File) {
         if (file.type.startsWith("image/")) {
-            return <img src={url} className="w-1/2" />;
+            return (
+                <Image src={url} title={file?.title} content={file?.content} />
+            );
         } else if (file.type.startsWith("audio/")) {
             return <Audio ref={ref} src={url} />;
         } else if (file.type.startsWith("video/")) {
             return <Video ref={ref} src={url} />;
+        } else if (file.type.startsWith("application/pdf")) {
+            if (props.pdf?.modal === false) {
+                return <PdfViewer ref={ref} src={url} />;
+            }
+            return <Pdf ref={ref} src={url} />;
         }
     }
 
@@ -37,6 +45,9 @@ export default function Load({ file }) {
     } else if (file.is_video) {
         return <Video ref={ref} src={url} />;
     } else if (file.is_pdf) {
+        if (props.pdf?.modal === false) {
+            return <PdfViewer ref={ref} src={url} />;
+        }
         return <Pdf ref={ref} src={url} />;
     }
 
@@ -46,4 +57,4 @@ export default function Load({ file }) {
             icon={faPhotoFilm}
         />
     );
-}
+});

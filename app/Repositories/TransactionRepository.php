@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Enums\PaymentStatus;
 use App\Models\Transaction;
 
 class TransactionRepository extends Repository

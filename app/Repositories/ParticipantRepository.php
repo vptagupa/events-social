@@ -49,11 +49,11 @@ class ParticipantRepository extends Repository
             $model = $this->find($id);
 
             $workshop = function () use ($model, $data) {
-                return $model->workshop($data['event_id'])->first();
+                return $model->currentWorkshop($data['event_id']);
             };
 
             $payment = Payment::calculate($data['event_id'], $data['price'], $data['tax']);
-            $transaction = $workshop()->save(
+            $transaction = $workshop()->transactions()->save(
                 new Transaction([
                     'expected_price' => $payment['total'],
                     'actual_paid_amount' => $data['paid_amount'] ?? 0,

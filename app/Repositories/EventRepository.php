@@ -109,6 +109,5 @@ class EventRepository extends Repository
             'path' => $path,
             'filename' => $filename
         ]));
-
     }
 }

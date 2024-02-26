@@ -100,6 +100,7 @@ export default function Component({ value, column }) {
                     "Acceptable format: " +
                     (value.config?.file_types ?? "any files")
                 }
+                value={value?.value ?? null}
                 remove={(e) => handleChange(value, null)}
                 onChange={(file) => handleChange(value, file)}
             />

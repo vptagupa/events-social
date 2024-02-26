@@ -4,7 +4,20 @@ import Theader from "./header";
 import Tbody from "./body";
 import TrH from "./row-h";
 import Td from "./td";
-import Th from "./Th";
+import Th from "./th";
+import ThSelect from "./th-select";
+import TdSelect from "./td-select";
 import Pagination from "./pagination";
 
-export { Table, Tbody, Theader, TrH, Tr, Td, Th, Pagination };
+export {
+    Table,
+    Tbody,
+    Theader,
+    TrH,
+    Tr,
+    Td,
+    Th,
+    Pagination,
+    ThSelect,
+    TdSelect,
+};

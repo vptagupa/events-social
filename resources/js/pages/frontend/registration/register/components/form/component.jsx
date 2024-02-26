@@ -100,11 +100,9 @@ export default function Component({ value, column }) {
                     "Acceptable format: " +
                     (value.config?.file_types ?? "any files")
                 }
+                valye={value?.value}
                 remove={(e) => handleChange(value, null)}
-                onChange={(file) => {
-                    console.log(file);
-                    handleChange(value, file);
-                }}
+                onChange={(file) => handleChange(value, file)}
             />
         ),
         label: (value) => <Label value={props.value} />,

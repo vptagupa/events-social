@@ -59,6 +59,7 @@ export default function Methods({ workshop, form }) {
                     accept=".jpg,.jpeg,.png,.pdf"
                     classNameContainer="ring-1 ring-slate-500/60"
                     classNameIcon="!text-black/80"
+                    value={form.data.file}
                     onChange={(file) => form.setData("file", file)}
                     remove={(e) => form.setData("file", "")}
                     error={form.invalid("file") ? form.errors.file : null}

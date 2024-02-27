@@ -19,18 +19,18 @@ class EventsSeeder extends Seeder
         $data = [
             [
                 'uuid' => Str::uuid(),
-                "title" => "Life Time Style",
-                'slug' => Str::slug('Life Time Style'),
-                'description' => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
-                'place' => 'SMX',
-                'address' => 'Mall of Asia',
-                'map' => "",
-                'expected_start_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'expected_end_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                "title" => "37th Annual Conference and General Assembly 2024",
+                'slug' => Str::slug('37th Annual Conference and General Assembly 2024'),
+                'description' => "Sustaining a workplace culture of Quality Assurance and Accreditation.",
+                'place' => 'Grand Ballroom, Century Park Hotel',
+                'address' => '599 P. Ocampo St., Malate Manila',
+                'map' => "Map",
+                'expected_start_at' => '2024-03-20',
+                'expected_end_at' => '2024-03-22',
                 'organizer_id' => Organizer::first()->id
             ]
         ];
-        \Log::info($data);
+
         foreach ($data as $row) {
             Event::updateOrInsert(
                 [

@@ -15,8 +15,8 @@ class OrganizersSeeder extends Seeder
     {
         $data = [
             [
-                "name" => "PCU",
-                "email" => "pcu@gmail.com",
+                "name" => "AACCUP",
+                "email" => "aacup@gmail.com",
                 "password" => bcrypt("secret"),
             ]
         ];

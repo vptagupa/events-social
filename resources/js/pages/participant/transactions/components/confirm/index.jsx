@@ -12,7 +12,7 @@ import Drawer from "./drawer";
 export default memo(function Confirm({ value: _value }) {
     const stateRaw = {
         amount: "",
-        remarks: _value?.remarks,
+        remarks: _value?.remarks ?? "",
         errors: null,
         processing: {
             confirmed: false,

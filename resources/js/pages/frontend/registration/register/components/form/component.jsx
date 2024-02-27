@@ -53,6 +53,13 @@ export default function Component({ value, column }) {
         input: (value) => (
             <Input
                 {...props}
+                isRequired={value?.config?.is_required ?? false}
+                className={` ${
+                    value?.config?.className ?? ""
+                } !text-lg transition-[border-bottom] ease-in-out delay-150 duration-700 !p-0 !mt-8 !rounded-none !border-t-0 !border-l-0 !border-r-0 border-b-2 !ring-0 focus:!outline-none
+                    ${props?.error ? "border-red-300" : "border-slate-200"}
+                    focus:border-blue-300
+                `}
                 type={value?.properties?.type}
                 onChange={(e) => handleChange(value, e.target.value)}
             />
@@ -60,6 +67,8 @@ export default function Component({ value, column }) {
         select: (value) => (
             <Select
                 {...props}
+                isRequired={value?.config?.is_required ?? false}
+                className={` ${value?.config?.className ?? ""} !text-lg`}
                 onChange={(e) => handleChange(value, e.target.value)}
             >
                 {value.config.options.map((option) => (
@@ -72,6 +81,8 @@ export default function Component({ value, column }) {
         textarea: (value) => (
             <Textarea
                 {...props}
+                isRequired={value?.config?.is_required ?? false}
+                className={` ${value?.config?.className ?? ""} !text-lg`}
                 onChange={(e) => handleChange(value, e.target.value)}
             />
         ),

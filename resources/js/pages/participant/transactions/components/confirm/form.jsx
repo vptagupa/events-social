@@ -21,7 +21,7 @@ export default memo(function Form({ state, meta, setStateValue }) {
                           ? "border-b-2 border-b-pink-300"
                           : "border-b border-b-slate-300"
                   }`}
-                        value={state.amount}
+                        value={state?.amount ?? ""}
                         onChange={(e) =>
                             setStateValue("amount", e.target.value)
                         }
@@ -44,7 +44,7 @@ export default memo(function Form({ state, meta, setStateValue }) {
                             ? "border-b-2 border-b-pink-300"
                             : "border-b border-b-slate-300"
                     }`}
-                        value={state.remarks}
+                        value={state?.remarks ?? ""}
                         maxLength="150"
                         onChange={(e) =>
                             setStateValue("remarks", e.target.value)

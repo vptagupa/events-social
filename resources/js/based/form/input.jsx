@@ -6,13 +6,17 @@ export default function Input({
     value,
     onChange,
     className = "",
+    isRequired = false,
     info,
     error,
     ...props
 }) {
     return (
         <div className="block p-1">
-            <label>{title}</label>
+            <label>
+                {title}{" "}
+                {isRequired ? <span className="text-danger">*</span> : ""}
+            </label>
             <Base
                 type={type}
                 className={`mt-2 ${className}`}

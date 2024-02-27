@@ -33,12 +33,6 @@ export default memo(function Drawer({
             <div
                 className={`bg-slate-400 text-white h-full w-full flex items-center justify-center`}
             >
-                <div className="absolute top-5 w-full flex items-center justify-center">
-                    <div className="text-3xl uppercase">
-                        {value.workshop.participant.name}
-                    </div>
-                </div>
-
                 <Transition
                     show={open}
                     className="w-full xs:max-sm:flex-col flex items-center justify-between gap-x-10 pl-5"

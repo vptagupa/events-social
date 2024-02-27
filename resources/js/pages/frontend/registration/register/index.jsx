@@ -49,8 +49,8 @@ export default function Registration({ workshop, registrationForm, errors }) {
                         <p>There was an error while submitting the form</p>
                     }
                 >
-                    <div className="w-full min-h-[500px] mt-10 flex flex-col items-center justify-center transition-all ease-in-out delay-75 duration-150">
-                        <div className="text-2xl text-center flex items-center justify-center p-8 w-full md:w-1/2">
+                    <div className="w-full min-h-[500px] mt-5 flex flex-col items-center justify-center transition-all ease-in-out delay-75 duration-150">
+                        <div className="text-2xl text-center flex items-center justify-center px-8 pt-5 pb-0 w-full md:w-1/2">
                             {workshop.event.title}
                         </div>
                         <div className="p-4 w-full md:w-1/2">

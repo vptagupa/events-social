@@ -147,6 +147,8 @@ export default function Component({ value, column }) {
                 title={value.config?.name ?? ""}
                 content={value.config?.content ?? ""}
                 onAgree={(agree) => handleChange(value, agree)}
+                error={null}
+                className={props?.error ? "decoration-red-300" : ""}
             />
         ),
     };

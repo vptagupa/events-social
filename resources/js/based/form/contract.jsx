@@ -13,6 +13,7 @@ export default function Contract({
     onAgree,
     info,
     error,
+    className,
 }) {
     const [open, setOpen] = useState(false);
     const [enabled, setEnabled] = useState(false);
@@ -27,7 +28,9 @@ export default function Contract({
                     onChange={(e) => onAgree(e.target.checked)}
                 />
                 <span
-                    className="text-blue-500 underline cursor-pointer"
+                    className={`text-blue-500 underline underline-offset-4 cursor-pointer 
+                        ${className}
+                    `}
                     onClick={(e) => setOpen(true)}
                 >
                     {title}

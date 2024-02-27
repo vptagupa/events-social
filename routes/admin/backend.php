@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Backend\ImportController;
 use App\Http\Controllers\Admin\Backend\OrganizersController;
 use App\Http\Controllers\Admin\Backend\SystemFeesController;
 use App\Http\Controllers\Admin\Backend\UsersController;
@@ -60,6 +61,10 @@ Route::middleware(['auth:admin', RedirectIfTemporaryPassword::class])->name('adm
                 Route::patch('/active/{fee}', 'activate')->name('activate');
             });
             Route::resource('fees', SystemFeesController::class)->except(['create', 'edit', 'show']);
+        });
+
+        Route::controller(ImportController::class)->prefix('import')->name('import.')->group(function () {
+            Route::get('/', 'import')->name('import');
         });
     });
 });

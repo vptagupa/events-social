@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->dateTime('published_at')->nullable();
             $table->string('primary_name')->nullable();
             $table->string('primary_email')->nullable();
-            $table->string('salutation', 15)->nullable();
+            $table->string('salutation', 35)->nullable();
             $table->json('schema');
             $table->timestamps();
         });

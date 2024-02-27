@@ -56,6 +56,8 @@ class Workshop extends Model
         'statuses'
     ];
 
+    public $saveQuitely = true;
+
     /**
      * Get the columns that should receive a unique identifier.
      *
@@ -72,11 +74,14 @@ class Workshop extends Model
             $model->code = (new self)->generateCode();
             $model->save();
 
-            if ($model->is_invited) {
-                $model->participant->sendInvitation($model);
-            } else {
-                $model->participant->sendTrackingLink($model);
+            if (!$model->saveQuitely) {
+                if ($model->is_invited) {
+                    $model->participant->sendInvitation($model);
+                } else {
+                    $model->participant->sendTrackingLink($model);
+                }
             }
+
         });
     }
 

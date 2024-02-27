@@ -76,7 +76,7 @@ const Component = ({
                                                         "organizer.participant.index",
                                                         item.workshop.id
                                                     )}
-                                                    className="underline decoration-purple-600 underline-offset-4"
+                                                    className="underline decoration-purple-600 underline-offset-2"
                                                 >
                                                     {
                                                         item.workshop
@@ -91,7 +91,7 @@ const Component = ({
                                                     "organizer.events.participants.index",
                                                     item.workshop.event.id
                                                 )}
-                                                className="underline decoration-purple-600 underline-offset-4"
+                                                className="underline decoration-purple-600 underline-offset-2"
                                             >
                                                 {item.workshop.event.title}
                                             </Link>

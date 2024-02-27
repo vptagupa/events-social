@@ -1,5 +1,5 @@
 import { currency, dateDisplay } from "@/js/helpers";
-import { Link } from "@inertiajs/react";
+import Status from "./status";
 
 export default function Payment({ value }) {
     return (
@@ -50,13 +50,7 @@ export default function Payment({ value }) {
             <div className="w-full flex items-center justify-between gap-x-2">
                 <div className="font-bold">Status</div>
                 <div>
-                    {value.is_failed ? (
-                        <div className="text-danger" title={value.reason}>
-                            {value.status}
-                        </div>
-                    ) : (
-                        value.status
-                    )}
+                    <Status value={value} />
                 </div>
             </div>
         </div>

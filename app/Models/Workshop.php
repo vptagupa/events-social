@@ -203,4 +203,9 @@ class Workshop extends Model
             get: fn() => $this->statusClasses($this->payment_status)
         );
     }
+
+    public function submissions()
+    {
+        return $this->hasMany(Submission::class);
+    }
 }

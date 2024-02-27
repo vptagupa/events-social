@@ -74,7 +74,8 @@ class ParticipantController extends Controller
                 perPage: 2,
                 query: [
                     'workshop_id' => $workshop->id,
-                    'file' => true
+                    'file' => true,
+                    'workshop.participant' => true
                 ],
                 orderBy: ['id', 'desc']
             )

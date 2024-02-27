@@ -4,10 +4,12 @@ namespace App\Repositories;
 
 use App\Enums\PaymentStatus;
 use App\Models\Participant;
+use App\Models\Submission;
 use App\Models\Transaction;
 use App\Models\Workshop;
 use App\Repositories\Creators\Registration;
 use App\Services\Payment;
+use App\Services\RegistrationForm;
 use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
 
@@ -132,6 +134,14 @@ class ParticipantRepository extends Repository
         $workshop = $model->workshops()->where('event_id', $data['event_id'])->first();
 
         $workshop->submitted_at = Carbon::now();
+
+        $schema = $workshop->event->registrationForm->schema;
+        $schema['flexis'] = RegistrationForm::populate($id, $data['event_id']);
+
+        $workshop->submissions()->save(new Submission([
+            'schema' => $schema
+        ]));
+
         $workshop->save();
 
         $model->name = $workshop->primary_name;

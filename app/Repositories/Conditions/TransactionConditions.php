@@ -27,6 +27,13 @@ trait TransactionConditions
         });
     }
 
+    public function workshopWithParticipantCondition(&$builder, $query)
+    {
+        return $builder->when(isset($query['workshop.participant']) && $query['workshop.participant'], function ($builder) use ($query) {
+            $builder->with('workshop.participant');
+        });
+    }
+
     public function queryCondition(&$builder, $query)
     {
         return $builder->when(isset($query['query']) && $query['query'], function ($builder) use ($query) {

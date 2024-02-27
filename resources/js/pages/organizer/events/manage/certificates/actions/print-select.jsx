@@ -1,16 +1,16 @@
 import { faPrint } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { PrimaryButton } from "@/js/components/buttons";
+import { Button } from "@/js/components/buttons";
 import Event from "@/js/helpers/event";
 import { useState } from "react";
 
 export default function PrintSelect({ event, value = [] }) {
     const [processing, setProcessing] = useState(false);
     return (
-        <PrimaryButton
+        <Button
             title="Print selected"
             type="button"
-            className="!px-3 flex items-center justify-center gap-x-1"
+            className="!px-3 flex items-center justify-center gap-x-1 bg-slate-500 text-white !shadow-none hover:!bg-slate-400"
             processing={processing}
             onClick={async (e) => {
                 setProcessing(true);
@@ -39,6 +39,6 @@ export default function PrintSelect({ event, value = [] }) {
         >
             <FontAwesomeIcon icon={faPrint} className="text-lg" />
             <span className="w-2 text-center">{value.length}</span>
-        </PrimaryButton>
+        </Button>
     );
 }

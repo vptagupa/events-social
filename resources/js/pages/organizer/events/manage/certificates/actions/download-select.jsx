@@ -10,7 +10,7 @@ export default function DownloadSelect({ event, value = [] }) {
         <Button
             title="Download selected"
             type="button"
-            className="!px-3 flex items-center justify-center gap-x-1 bg-slate-800 !text-white"
+            className="!px-3 flex items-center justify-center gap-x-1 bg-slate-800 !text-white !shadow-none hover:!bg-slate-600"
             processing={processing}
             onClick={async (e) => {
                 setProcessing(true);

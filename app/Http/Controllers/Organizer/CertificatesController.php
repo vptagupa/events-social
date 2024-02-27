@@ -10,7 +10,6 @@ use App\Http\Resources\Event\CertificateResource;
 use App\Models\Certificate;
 use App\Models\Event;
 
-use App\Models\Workshop;
 use App\Repositories\CertificateRepository;
 
 use Illuminate\Http\Request;
@@ -97,7 +96,7 @@ class CertificatesController extends Controller
     }
 
     /**
-     * Generate the specified resource in storage.
+     * Update the specified resource in storage.
      */
     public function downloadSelect(Request $request, Event $event)
     {
@@ -105,7 +104,7 @@ class CertificatesController extends Controller
     }
 
     /**
-     * Generate the specified resource in storage.
+     * Download the specified resource in storage.
      */
     public function download(Request $request, Event $event)
     {

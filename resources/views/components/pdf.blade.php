@@ -9,7 +9,6 @@
 
 <body style="text-align: center;">
     <img src="{{$src}}" style="width:100%;" />
-
 </body>
 
 </html>

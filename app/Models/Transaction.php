@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use App\Enums\PaymentStatus;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
+use Auth;
 
 class Transaction extends Model
 {
@@ -70,6 +73,22 @@ class Transaction extends Model
 
         static::updated(function (Transaction $model) use ($payment) {
             $payment($model);
+        });
+
+        static::addGlobalScope('access', function (Builder $builder) {
+            if (Auth::guard('organizer')->check()) {
+                $builder->whereHas('workshop', function (Builder $builder) {
+                    $builder->whereHas('event', function (Builder $builder) {
+                        $builder->whereOrganizerId(Auth::guard('organizer')->user()->id);
+                    });
+                });
+            } elseif (Auth::guard('web')->check()) {
+                $builder->whereHas('workshop', function (Builder $builder) {
+                    $builder->whereHas('participant', function (Builder $builder) {
+                        $builder->whereParticipantId(Auth::guard('web')->user()->id);
+                    });
+                });
+            }
         });
     }
 

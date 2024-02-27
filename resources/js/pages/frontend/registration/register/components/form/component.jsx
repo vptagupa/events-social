@@ -56,20 +56,26 @@ export default function Component({ value, column }) {
                 isRequired={value?.config?.is_required ?? false}
                 className={` ${
                     value?.config?.className ?? ""
-                } !text-lg transition-[border-bottom] ease-in-out delay-150 duration-700 !p-0 !mt-8 !rounded-none !border-t-0 !border-l-0 !border-r-0 border-b-2 !ring-0 focus:!outline-none
+                } !text-lg transition-[border-bottom] ease-in-out delay-100 duration-700 !p-0 !mt-8 !rounded-none !border-t-0 !border-l-0 !border-r-0 border-b-2 !ring-0 focus:!outline-none
                     ${props?.error ? "border-red-300" : "border-slate-200"}
                     focus:border-blue-300
                 `}
                 type={value?.properties?.type}
                 onChange={(e) => handleChange(value, e.target.value)}
+                error={null}
             />
         ),
         select: (value) => (
             <Select
                 {...props}
                 isRequired={value?.config?.is_required ?? false}
-                className={` ${value?.config?.className ?? ""} !text-lg`}
+                className={` ${
+                    value?.config?.className ?? ""
+                } !text-lg border-b-2 ${
+                    props?.error ? "border-red-300" : "border-slate-200"
+                }`}
                 onChange={(e) => handleChange(value, e.target.value)}
+                error={null}
             >
                 {value.config.options.map((option) => (
                     <option key={option.id} value={option.value}>
@@ -82,7 +88,10 @@ export default function Component({ value, column }) {
             <Textarea
                 {...props}
                 isRequired={value?.config?.is_required ?? false}
-                className={` ${value?.config?.className ?? ""} !text-lg`}
+                className={` ${value?.config?.className ?? ""} !text-lg ${
+                    props?.error ? "border-red-300" : "border-slate-200"
+                }`}
+                error={null}
                 onChange={(e) => handleChange(value, e.target.value)}
             />
         ),

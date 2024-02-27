@@ -11,7 +11,7 @@ export default function Form({ value }) {
     return (
         <BasedForm>
             <Grids value={value.grids} control={control} />
-            <div className="mt-20 flex gap-x-2 items-center justify-center border border-slate-200 rounded-md p-3">
+            <div className="mt-10 flex gap-x-2 items-center justify-center border border-slate-200 rounded-md p-3">
                 {control.data.length > 1 && (
                     <Prev
                         className={`!text-[2rem] !h-14 uppercase !pt-0 !pb-1 bg-gradient-to-t from-[#FFB996] to-[#FFB996] text-white`}

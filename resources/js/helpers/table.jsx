@@ -101,7 +101,7 @@ export const useTable = ({ initialParams, listRoute: _listRoute, name }) => {
         );
 
         return () => Event.off((name ? name + "." : "") + "reload");
-    }, []);
+    }, [search, initialParams.page]);
 
     return {
         data,

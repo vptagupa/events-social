@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Certificate;
 use App\Models\Workshop;
-
+use Illuminate\Database\Eloquent\Collection;
 
 class CertificateRepository extends Repository
 {
@@ -32,5 +32,33 @@ class CertificateRepository extends Repository
 
             return parent::create($data);
         });
+    }
+
+    public function printable(int $event, array $certificates)
+    {
+        $collected = [];
+        $this->callableUpdate(function (Collection $certificates) use (&$collected, $event) {
+            foreach ($certificates->reject(fn($cert) => $cert->event_id != $event) as $certificate) {
+                $certificate->prints += 1;
+                $certificate->save();
+                $collected[] = $certificate->id;
+            }
+        }, $certificates);
+
+        return $collected;
+    }
+
+    public function downloadable(int $event, array $certificates)
+    {
+        $collected = [];
+        $this->callableUpdate(function (Collection $certificates) use (&$collected, $event) {
+            foreach ($certificates->reject(fn($cert) => $cert->event_id != $event) as $certificate) {
+                $certificate->downloads += 1;
+                $certificate->save();
+                $collected[] = $certificate->id;
+            }
+        }, $certificates);
+
+        return $collected;
     }
 }

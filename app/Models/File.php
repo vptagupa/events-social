@@ -76,4 +76,18 @@ class File extends Model
             get: fn() => str($this->type)->startsWith(['audio/'])
         );
     }
+
+    public function noExtFilename(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => explode('.', $this->filename)[0] ?? ''
+        );
+    }
+
+    public function ext(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => explode('.', $this->filename)[1] ?? ''
+        );
+    }
 }

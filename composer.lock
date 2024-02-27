@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0ec5e324059a28f8156c2c02f34e3552",
+    "content-hash": "2ad1de0960e01f903641c5087eaa8543",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -1404,6 +1404,55 @@
                 }
             ],
             "time": "2023-10-27T10:59:02+00:00"
+        },
+        {
+            "name": "jurosh/pdf-merge",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jurosh/php-pdf-merge.git",
+                "reference": "89ba3446c9f38c573e3b8bf577d2f22993494130"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jurosh/php-pdf-merge/zipball/89ba3446c9f38c573e3b8bf577d2f22993494130",
+                "reference": "89ba3446c9f38c573e3b8bf577d2f22993494130",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.20",
+                "setasign/fpdf": "^1.8",
+                "setasign/fpdi": "^2.3"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/Jurosh/PDFMerge/PDFMerger.php",
+                    "src/Jurosh/PDFMerge/PDFObject.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Juraj Husar",
+                    "email": "jurosh@jurosh.com",
+                    "homepage": "http://jurosh.com"
+                }
+            ],
+            "description": "PHP PDF Merger",
+            "homepage": "https://github.com/jurosh/php-pdf-merge",
+            "keywords": [
+                "merge",
+                "pdf"
+            ],
+            "support": {
+                "issues": "https://github.com/jurosh/php-pdf-merge/issues",
+                "source": "https://github.com/jurosh/php-pdf-merge/tree/remove"
+            },
+            "time": "2021-03-28T19:57:14+00:00"
         },
         {
             "name": "laminas/laminas-diactoros",
@@ -3162,6 +3211,79 @@
             "time": "2023-03-08T13:26:56+00:00"
         },
         {
+            "name": "nelexa/zip",
+            "version": "4.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Ne-Lexa/php-zip.git",
+                "reference": "88a1b6549be813278ff2dd3b6b2ac188827634a7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Ne-Lexa/php-zip/zipball/88a1b6549be813278ff2dd3b6b2ac188827634a7",
+                "reference": "88a1b6549be813278ff2dd3b6b2ac188827634a7",
+                "shasum": ""
+            },
+            "require": {
+                "ext-zlib": "*",
+                "php": "^7.4 || ^8.0",
+                "psr/http-message": "*",
+                "symfony/finder": "*"
+            },
+            "require-dev": {
+                "ext-bz2": "*",
+                "ext-dom": "*",
+                "ext-fileinfo": "*",
+                "ext-iconv": "*",
+                "ext-openssl": "*",
+                "ext-xml": "*",
+                "friendsofphp/php-cs-fixer": "^3.4.0",
+                "guzzlehttp/psr7": "^1.6",
+                "phpunit/phpunit": "^9",
+                "symfony/http-foundation": "*",
+                "symfony/var-dumper": "*",
+                "vimeo/psalm": "^4.6"
+            },
+            "suggest": {
+                "ext-bz2": "Needed to support BZIP2 compression",
+                "ext-fileinfo": "Needed to get mime-type file",
+                "ext-iconv": "Needed to support convert zip entry name to requested character encoding",
+                "ext-openssl": "Needed to support encrypt zip entries or use ext-mcrypt"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PhpZip\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ne-Lexa",
+                    "email": "alexey@nelexa.ru",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PhpZip is a php-library for extended work with ZIP-archives. Open, create, update, delete, extract and get info tool. Supports appending to existing ZIP files, WinZip AES encryption, Traditional PKWARE Encryption, BZIP2 compression, external file attributes and ZIP64 extensions. Alternative ZipArchive. It does not require php-zip extension.",
+            "homepage": "https://github.com/Ne-Lexa/php-zip",
+            "keywords": [
+                "archive",
+                "extract",
+                "unzip",
+                "winzip",
+                "zip",
+                "ziparchive"
+            ],
+            "support": {
+                "issues": "https://github.com/Ne-Lexa/php-zip/issues",
+                "source": "https://github.com/Ne-Lexa/php-zip/tree/4.0.2"
+            },
+            "time": "2022-06-17T11:17:46+00:00"
+        },
+        {
             "name": "nesbot/carbon",
             "version": "2.72.1",
             "source": {
@@ -4660,6 +4782,52 @@
                 "source": "https://github.com/MyIntervals/PHP-CSS-Parser/tree/v8.5.1"
             },
             "time": "2024-02-15T16:41:13+00:00"
+        },
+        {
+            "name": "setasign/fpdf",
+            "version": "1.8.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Setasign/FPDF.git",
+                "reference": "0838e0ee4925716fcbbc50ad9e1799b5edfae0a0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Setasign/FPDF/zipball/0838e0ee4925716fcbbc50ad9e1799b5edfae0a0",
+                "reference": "0838e0ee4925716fcbbc50ad9e1799b5edfae0a0",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "ext-zlib": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "fpdf.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Olivier Plathey",
+                    "email": "oliver@fpdf.org",
+                    "homepage": "http://fpdf.org/"
+                }
+            ],
+            "description": "FPDF is a PHP class which allows to generate PDF files with pure PHP. F from FPDF stands for Free: you may use it for any kind of usage and modify it to suit your needs.",
+            "homepage": "http://www.fpdf.org",
+            "keywords": [
+                "fpdf",
+                "pdf"
+            ],
+            "support": {
+                "source": "https://github.com/Setasign/FPDF/tree/1.8.6"
+            },
+            "time": "2023-06-26T14:44:25+00:00"
         },
         {
             "name": "setasign/fpdi",

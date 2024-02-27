@@ -27,7 +27,9 @@ import { Cell, HeaderCell } from "@table-library/react-table-library/table";
 import Print from "../../actions/print";
 import Download from "../../actions/download";
 import PrintSelect from "../../actions/print-select";
+import CertificateStatses from "../certificate-statuses";
 import { useState } from "react";
+import DownloadSelect from "../../actions/download-select";
 
 const Component = ({
     event,
@@ -42,7 +44,7 @@ const Component = ({
     const [selected, setSelected] = useState([]);
     const theme = useTheme({
         Table: `
-            --data-table-library_grid-template-columns: 26px repeat(3, minmax(0, 1fr)) 100px;
+            --data-table-library_grid-template-columns: 26px repeat(5, minmax(0, 1fr)) 100px;
           `,
         Row: `
           &.row-select-selected {
@@ -68,16 +70,25 @@ const Component = ({
 
     return (
         <>
-            <div className="md:absolute flex items-center justify-end mb-2 top-0 right-2">
+            <div className="md:absolute flex items-center justify-end mb-2 gap-x-1 top-0 right-2">
+                <DownloadSelect event={event} value={selected} />
                 <PrintSelect event={event} value={selected} />
             </div>
-            <div className="flex xs:max-md:flex-col xs:gap-y-2 md:gap-y-0 justify-end p-2">
+            <div className="flex xs:max-md:flex-col xs:gap-y-2 md:gap-y-0  gap-x-2 justify-end p-2">
+                <div className="w-full md:w-40 z-20">
+                    <CertificateStatses setSearch={setSearch} />
+                </div>
                 <div className="flex items-center">
                     <Input
                         type="text"
                         placeholder="Search by name, email, or code"
                         className="border-r-0 rounded-r-none lg:w-96"
-                        onChange={(e) => setSearch(e.target.value)}
+                        onChange={(e) =>
+                            setSearch((search) => ({
+                                ...search,
+                                query: e.target.value,
+                            }))
+                        }
                     />
                     <SecondaryButton
                         onClick={(e) => handleSearch()}
@@ -121,6 +132,8 @@ const Component = ({
                                 </HeaderCell>
                                 <Th>Name</Th>
                                 <Th>Code</Th>
+                                <Th>Filename</Th>
+                                <Th>Downloads</Th>
                                 <Th>Prints</Th>
                                 <Th>Action</Th>
                             </TrH>
@@ -146,10 +159,19 @@ const Component = ({
                                         </Cell>
                                         <Td>{item.name}</Td>
                                         <Td>{item?.workshop?.code ?? ""}</Td>
+                                        <Td>{item.file.orig_filename}</Td>
+                                        <Td>{item.downloads}</Td>
                                         <Td>{item.prints}</Td>
                                         <Td pinRight>
                                             <div className="flex items-center justify-end gap-x-2 p-1">
-                                                <Print />
+                                                <Download
+                                                    event={event}
+                                                    value={item}
+                                                />
+                                                <Print
+                                                    value={item}
+                                                    event={event}
+                                                />
                                             </div>
                                         </Td>
                                     </Tr>

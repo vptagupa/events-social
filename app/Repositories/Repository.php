@@ -2,12 +2,16 @@
 
 namespace App\Repositories;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class Repository
 {
     use Conditions\Conditions;
 
+    /**
+     * @TODO: Allow model return type as mixed so it can return a multiple models or paginated results
+     */
     public function model()
     {
         return $this->model;
@@ -20,7 +24,8 @@ class Repository
 
     public function update(array $data, $id, $key = 'id'): ?Model
     {
-        $model = $this->model()->where($key, $id)->first();
+        $id = is_array($id) ? $id : [$id];
+        $model = $this->model()->whereIn($key, $id)->first();
 
         foreach ($data as $key => $value) {
             $model->$key = $value;
@@ -29,6 +34,14 @@ class Repository
         $model->save();
 
         return $model;
+    }
+
+    public function callableUpdate(callable $callable, $id, $key = 'id', $chunk = 100)
+    {
+        $id = is_array($id) ? $id : [$id];
+        $this->model()->whereIn($key, $id)->chunkById($chunk, function (Collection $models) use ($callable) {
+            $callable($models);
+        }, $key);
     }
 
     public function delete(int $id)

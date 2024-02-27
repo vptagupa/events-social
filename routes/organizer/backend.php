@@ -73,7 +73,10 @@ Route::middleware(['auth:organizer,admin', RedirectIfTemporaryPassword::class])-
                 Route::get('/', 'index')->name('index');
                 Route::post('/list', 'list')->name('list');
                 Route::patch('/updateName/{certificate}', 'updateName')->name('update-name');
-                Route::get('/print-select', 'printSelect')->name('print-select');
+                Route::post('/print-select', 'printSelect')->name('print-select');
+                Route::get('/printtable', 'printtable')->name('printtable');
+                Route::post('/download-select', 'downloadSelect')->name('download-select');
+                Route::get('/download', 'download')->name('download');
             });
             Route::resource('certificates', CertificatesController::class)->except(['edit', 'show', 'create']);
         });

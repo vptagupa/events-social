@@ -1,20 +1,24 @@
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { router } from "@inertiajs/react";
+import { Button } from "@/js/components/buttons";
 import Event from "@/js/helpers/event";
+import { useState } from "react";
 
-export default function Download({ event, value }) {
+export default function DownloadSelect({ event, value = [] }) {
+    const [processing, setProcessing] = useState(false);
     return (
-        <FontAwesomeIcon
-            icon={faDownload}
-            title="Download"
-            className="text-lg"
+        <Button
+            title="Download selected"
+            type="button"
+            className="!px-3 flex items-center justify-center gap-x-1 bg-slate-800 !text-white"
+            processing={processing}
             onClick={async (e) => {
+                setProcessing(true);
                 try {
                     const res = await axios.post(
                         route("organizer.events.certificates.download-select", {
                             event: event.id,
-                            ids: JSON.stringify([value.id]),
+                            ids: JSON.stringify(value),
                         })
                     );
 
@@ -28,10 +32,13 @@ export default function Download({ event, value }) {
                         );
                     }
                 } catch (error) {
-                    console.log(error);
                 } finally {
+                    setProcessing(false);
                 }
             }}
-        />
+        >
+            <FontAwesomeIcon icon={faDownload} className="text-lg " />
+            <span className="w-2 text-center">{value.length}</span>
+        </Button>
     );
 }

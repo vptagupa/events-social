@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Organizer;
 
+use App\Enums\CertificateStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Event\StoreCertificateRequest;
 use App\Http\Resources\Event\CertificateResource;
@@ -11,6 +12,7 @@ use App\Models\Event;
 
 use App\Models\Workshop;
 use App\Repositories\CertificateRepository;
+
 use Illuminate\Http\Request;
 
 class CertificatesController extends Controller
@@ -26,7 +28,9 @@ class CertificatesController extends Controller
     public function index(Event $event)
     {
         return $this->render('organizer/events/manage/certificates/index', [
-            'event' => $event
+            'event' => $event,
+            'certificate_statuses' => CertificateStatus::all(),
+            'default_certificate_status' => CertificateStatus::NOT_PRINTED
         ]);
     }
 
@@ -35,10 +39,12 @@ class CertificatesController extends Controller
         return CertificateResource::collection(
             $this->repository->list(
                 query: [
-                    'name' => $request->get('query'),
+                    'name' => $request->get('query')['query'],
+                    'certificate_status' => $request->get('query')['certificate_status'] ?? '',
                     'event' => true,
                     'event_id' => $event->id,
-                    'workshop.participant' => true
+                    'workshop.participant' => true,
+                    'file' => true
                 ],
                 paginate: true,
                 perPage: $request->get('per_page')
@@ -79,7 +85,31 @@ class CertificatesController extends Controller
      */
     public function printSelect(Request $request, Event $event)
     {
-        dd(json_decode($request->get('ids')));
+        return $this->repository->printable($event->id, json_decode($request->get('ids')));
+    }
+
+    /**
+     * Generate the specified resource in storage.
+     */
+    public function printtable(Request $request, Event $event)
+    {
+        return \App\Services\Certificate::printtable(json_decode($request->get('ids')));
+    }
+
+    /**
+     * Generate the specified resource in storage.
+     */
+    public function downloadSelect(Request $request, Event $event)
+    {
+        return $this->repository->downloadable($event->id, json_decode($request->get('ids')));
+    }
+
+    /**
+     * Generate the specified resource in storage.
+     */
+    public function download(Request $request, Event $event)
+    {
+        return \Storage::download(\App\Services\Certificate::download(json_decode($request->get('ids'))));
     }
 
     /**

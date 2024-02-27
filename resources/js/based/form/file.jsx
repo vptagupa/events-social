@@ -23,7 +23,6 @@ export default function File({
     classNameContainer = "ring-1 ring-slate-300 focus:outline-purple-300 disabled:bg-slate-300",
     ...props
 }) {
-    console.log(value);
     const [file, setFile] = useState(value);
     const ref = useRef();
 

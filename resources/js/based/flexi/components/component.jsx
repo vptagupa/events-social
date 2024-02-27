@@ -91,6 +91,7 @@ export default function Component({
                                         e.target.value
                                     )
                                 }
+                                title={component.config?.name}
                             />
                         )}
                         {component.type == "select" && (
@@ -107,6 +108,7 @@ export default function Component({
                                         e.target.value
                                     )
                                 }
+                                title={component.config?.name}
                             />
                         )}
                         {component.type == "textarea" && (
@@ -121,6 +123,7 @@ export default function Component({
                                         e.target.value
                                     )
                                 }
+                                title={component.config?.name}
                             />
                         )}
                         {component.type == "file" && (
@@ -134,6 +137,7 @@ export default function Component({
                                         e.target.value
                                     )
                                 }
+                                title={component.config?.name}
                             />
                         )}
                         {component.type == "radio" && (

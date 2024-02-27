@@ -13,7 +13,7 @@ export default function Drop({ className = "", onDrop, ...props }) {
     };
     return (
         <div
-            className={`border-2 border-dotted border-slate-300 rounded-md min-h-10 w-full p-3 ${className} --drop`}
+            className={`border-2 border-dotted border-slate-300 rounded-md min-h-10 w-full px-3 py-6 ${className} --drop`}
             onDrop={(e) => {
                 onDrop(e);
                 const component = target(e);

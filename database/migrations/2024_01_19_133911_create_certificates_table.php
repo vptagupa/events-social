@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->string('name', 120)->nullable();
             $table->unsignedInteger('downloads')->default(0);
             $table->unsignedInteger('prints')->default(0);
+            $table->unsignedInteger('sends')->default(0);
             $table->morphs('creator');
             $table->timestamps();
         });

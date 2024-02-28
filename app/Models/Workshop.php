@@ -135,7 +135,6 @@ class Workshop extends Model
         );
     }
 
-
     public function participant()
     {
         return $this->belongsTo(Participant::class);

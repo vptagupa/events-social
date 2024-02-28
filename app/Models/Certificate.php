@@ -16,6 +16,7 @@ class Certificate extends Model
         'name',
         'downloads',
         'prints',
+        'sends',
         'creator_type',
         'creator_id'
     ];
@@ -31,7 +32,7 @@ class Certificate extends Model
                 ])->first();
                 if ($workshop) {
                     $model->workshop()->associate($workshop);
-                    if (empty($model->name)) {
+                    if (empty ($model->name)) {
                         $model->name = $workshop->participant->name;
                     }
                     $model->save();

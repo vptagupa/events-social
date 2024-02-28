@@ -76,6 +76,7 @@ Route::middleware(['auth:organizer,admin', RedirectIfTemporaryPassword::class])-
                 Route::get('/printtable', 'printtable')->name('printtable');
                 Route::post('/download-select', 'downloadSelect')->name('download-select');
                 Route::get('/download', 'download')->name('download');
+                Route::post('/send-select', 'sendSelect')->name('send-select');
             });
             Route::resource('certificates', CertificatesController::class)->except(['edit', 'show', 'create']);
             Route::get('statistics', 'statistics')->name('statistics');

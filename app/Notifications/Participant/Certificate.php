@@ -7,19 +7,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use App\Models\Workshop;
+use App\Models\Certificate as Cert;
 
-class Confirmed extends Notification
+class Certificate extends Notification
 {
     use Queueable;
-
-    public $event;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(public Workshop $workshop)
+    public function __construct(public Workshop $workshop, public Cert $certificate)
     {
-        $this->event = $this->workshop->event;
+
     }
 
     /**
@@ -37,14 +36,12 @@ class Confirmed extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-        $name = $this->workshop->name;
-        $name = !empty($name) ? $name . ' ' : $this->workshop->participant->email . ' ';
-
-        return(new MailMessage)
-            ->subject('Your Registration is Confirmed!')
-            ->greeting('Hello!')
-            ->line($name . 'your registration has been successfully confirmed.')
-            ->line('See you!');
+        return(new MailMessage)->subject('Your Event Attendance Certificate is Ready for Download!')
+            ->markdown('mail.certificate', [
+                'name' => $this->workshop->name,
+                'event' => $this->workshop->event->title
+            ])
+            ->attach(storage_path('app/' . $this->certificate->file->path));
     }
 
     /**

@@ -53,6 +53,22 @@ trait WorkshopGenerator
         );
     }
 
+    public function name(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $salutation = $this->salutation;
+                if (!empty ($salutation)) {
+                    if (!str($salutation)->endsWith('.')) {
+                        $salutation = $salutation . '.';
+                    }
+                }
+
+                return (empty ($salutation) ? '' : $salutation . ' ') . $this->primary_name;
+            }
+        );
+    }
+
     public function statusClasses(PaymentStatus $status)
     {
         return match (true) {

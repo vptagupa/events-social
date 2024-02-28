@@ -9,6 +9,7 @@ use App\Http\Resources\Event\CertificateResource;
 
 use App\Models\Certificate;
 use App\Models\Event;
+use App\Services\Certificate as Service;
 
 use App\Repositories\CertificateRepository;
 
@@ -92,7 +93,7 @@ class CertificatesController extends Controller
      */
     public function printtable(Request $request, Event $event)
     {
-        return \App\Services\Certificate::printtable(json_decode($request->get('ids')));
+        return Service::printtable(json_decode($request->get('ids')));
     }
 
     /**
@@ -108,7 +109,15 @@ class CertificatesController extends Controller
      */
     public function download(Request $request, Event $event)
     {
-        return \Storage::download(\App\Services\Certificate::download(json_decode($request->get('ids'))));
+        return \Storage::download(Service::download(json_decode($request->get('ids'))));
+    }
+
+    /**
+     * Send certificates via email notification
+     */
+    public function sendSelect(Request $request, Event $event)
+    {
+        Service::send(json_decode($request->get('ids')));
     }
 
     /**

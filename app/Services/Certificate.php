@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use Carbon\Carbon;
 use Storage;
+use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Jurosh\PDFMerge\PDFMerger;
@@ -19,11 +19,7 @@ class Certificate
 
     public static function printtable(array|int $ids)
     {
-        return (
-            new self(
-                app()->make(CertificateRepository::class)
-            )
-        )->generate($ids);
+        return self::construct()->generate($ids);
     }
 
     /**
@@ -66,14 +62,8 @@ class Certificate
     {
         $ids = is_array($ids) ? $ids : [$ids];
 
-        $service = (
-            new self(
-                app()->make(CertificateRepository::class)
-            )
-        );
-
         if (count($ids) > 1) {
-            return $service->zipped($ids);
+            return self::construct()->zipped($ids);
         }
 
         return $service->file($ids[0]);
@@ -125,5 +115,41 @@ class Certificate
             ->close();
 
         return $path;
+    }
+
+    /**
+     * Send certificates
+     */
+    public static function send(array|int $ids): void
+    {
+        $ids = is_array($ids) ? $ids : [$ids];
+
+        self::construct()->mail($ids);
+    }
+
+    /**
+     *Send certificates via email notification
+     */
+    public function mail(array $ids): void
+    {
+        $this->repository->callableUpdate(function ($certificates) {
+            foreach ($certificates as $certificate) {
+                if ($certificate->workshop) {
+                    $certificate->sends += 1;
+                    $certificate->save();
+
+                    $certificate->workshop->sendCertificate($certificate);
+                }
+            }
+        }, $ids, 'id', 10);
+    }
+
+    public static function construct()
+    {
+        return(
+            new self(
+                app()->make(CertificateRepository::class)
+            )
+        );
     }
 }

@@ -30,6 +30,8 @@ import PrintSelect from "../../actions/print-select";
 import CertificateStatses from "../certificate-statuses";
 import { useState } from "react";
 import DownloadSelect from "../../actions/download-select";
+import SendSelect from "../../actions/send-select";
+import Send from "../../actions/send";
 
 const Component = ({
     event,
@@ -44,7 +46,7 @@ const Component = ({
     const [selected, setSelected] = useState([]);
     const theme = useTheme({
         Table: `
-            --data-table-library_grid-template-columns: 26px repeat(5, minmax(0, 1fr)) 100px;
+            --data-table-library_grid-template-columns: 26px 250px repeat(5, minmax(0, 1fr)) 100px;
           `,
         Row: `
           &.row-select-selected {
@@ -73,6 +75,7 @@ const Component = ({
             <div className="md:absolute flex items-center justify-end mb-2 gap-x-1 top-0 right-2">
                 <DownloadSelect event={event} value={selected} />
                 <PrintSelect event={event} value={selected} />
+                <SendSelect event={event} value={selected} />
             </div>
             <div className="flex xs:max-md:flex-col xs:gap-y-2 md:gap-y-0  gap-x-2 justify-end p-2">
                 <div className="w-full md:w-40 z-20">
@@ -135,6 +138,7 @@ const Component = ({
                                 <Th>Filename</Th>
                                 <Th>Downloads</Th>
                                 <Th>Prints</Th>
+                                <Th>Sent</Th>
                                 <Th>Action</Th>
                             </TrH>
                         </Theader>
@@ -162,6 +166,7 @@ const Component = ({
                                         <Td>{item.file.orig_filename}</Td>
                                         <Td>{item.downloads}</Td>
                                         <Td>{item.prints}</Td>
+                                        <Td>{item.sents}</Td>
                                         <Td pinRight>
                                             <div className="flex items-center justify-end gap-x-2 p-1">
                                                 <Download
@@ -169,6 +174,10 @@ const Component = ({
                                                     value={item}
                                                 />
                                                 <Print
+                                                    value={item}
+                                                    event={event}
+                                                />
+                                                <Send
                                                     value={item}
                                                     event={event}
                                                 />

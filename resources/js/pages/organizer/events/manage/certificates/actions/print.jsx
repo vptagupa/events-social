@@ -11,6 +11,8 @@ export default function Print({ event, value }) {
             icon={faPrint}
             className="text-lg cursor-pointer"
             onClick={async (e) => {
+                if (processing) return;
+
                 setProcessing(true);
                 try {
                     const res = await axios.post(

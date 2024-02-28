@@ -6,9 +6,10 @@ use App\Notifications\Participant\{
     Cancelled,
     Confirmed,
     Invitation,
-    TrackingLink
+    TrackingLink,
+    Certificate
 };
-
+use App\Models\Certificate as Cert;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Notification;
 
@@ -43,5 +44,12 @@ trait WorkshopNotification
 
         $this->notified_at = Carbon::now();
         $this->save();
+    }
+
+    public function sendCertificate(Cert $certificate)
+    {
+        Notification::route('mail', [
+            $this->participant->email
+        ])->notify(new Certificate($this, $certificate));
     }
 }

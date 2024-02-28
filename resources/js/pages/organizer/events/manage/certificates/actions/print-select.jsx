@@ -13,6 +13,7 @@ export default function PrintSelect({ event, value = [] }) {
             className="!px-3 flex items-center justify-center gap-x-1 bg-slate-500 text-white !shadow-none hover:!bg-slate-400"
             processing={processing}
             onClick={async (e) => {
+                if (value.length <= 0) return;
                 setProcessing(true);
                 try {
                     const res = await axios.post(

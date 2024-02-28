@@ -204,4 +204,12 @@ class EventsController extends Controller
             )
         );
     }
+
+    /**
+     * Get event statistics such as total number of confirmed, registered and etc
+     */
+    public function statistics(Event $event)
+    {
+        return $this->repository->statistics($event->id);
+    }
 }

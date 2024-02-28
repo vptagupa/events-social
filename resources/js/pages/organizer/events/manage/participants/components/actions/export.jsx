@@ -256,6 +256,7 @@ export default memo(function Export({ event, registrationStatus }) {
                         <div className="flex space-x-2 items-center">
                             <PrimaryButton
                                 type="button"
+                                className="hidden"
                                 onClick={(e) => {
                                     submit("PDF");
                                 }}

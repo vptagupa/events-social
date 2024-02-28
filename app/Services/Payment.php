@@ -38,9 +38,9 @@ class Payment
             return $s;
         }, 0);
 
-        $fees = $organizerFees + $systemFees + $price;
-        $tax_amount = $fees * ($tax / 100);
-        $total = $fees + $tax_amount;
+        $fees = $organizerFees + $systemFees;
+        $tax_amount = ($fees + $price) * ($tax / 100);
+        $total = $price + $fees + $tax_amount;
 
         return [
             'organizer' => $organizerFees,

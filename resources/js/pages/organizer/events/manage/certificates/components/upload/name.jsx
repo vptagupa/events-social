@@ -57,7 +57,7 @@ export default function Name({ setFiles, value, event }) {
             value={selected}
             onChange={(value) => setSelected(selected == value ? null : value)}
         >
-            <div className="relative mt-1">
+            <div className="relative mt-1 z-50">
                 <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md shadow-slate-200 ring-1 ring-slate-300 focus:ring-purple-300 focus-visible:ring-purple-300 sm:text-sm">
                     <Combobox.Input
                         className="w-full border-none py-2 pl-3 pr-10 focus:outline-none text-sm leading-5 text-gray-900 focus:ring-0"

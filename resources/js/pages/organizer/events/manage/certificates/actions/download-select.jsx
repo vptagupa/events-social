@@ -13,6 +13,8 @@ export default function DownloadSelect({ event, value = [] }) {
             className="!px-3 flex items-center justify-center gap-x-1 bg-slate-800 !text-white !shadow-none hover:!bg-slate-600"
             processing={processing}
             onClick={async (e) => {
+                if (value.length <= 0) return;
+
                 setProcessing(true);
                 try {
                     const res = await axios.post(

@@ -9,7 +9,7 @@ import {
 export const stats = [
     {
         title: "Registered",
-        value: 99,
+        value: 0,
         className: "bg-gradient",
         icon: (
             <FontAwesomeIcon
@@ -20,7 +20,7 @@ export const stats = [
     },
     {
         title: "Confirmed",
-        value: 99,
+        value: 0,
         className: "",
         icon: (
             <FontAwesomeIcon
@@ -30,8 +30,8 @@ export const stats = [
         ),
     },
     {
-        title: "Paid",
-        value: 99,
+        title: "Payments Accepted",
+        value: 0,
         className: "",
         icon: (
             <FontAwesomeIcon
@@ -41,8 +41,8 @@ export const stats = [
         ),
     },
     {
-        title: "Unpaid",
-        value: 99,
+        title: "Pending Payments",
+        value: 0,
         className: "",
         icon: (
             <FontAwesomeIcon
@@ -53,7 +53,7 @@ export const stats = [
     },
     {
         title: "Failed",
-        value: 99,
+        value: 0,
         className: "",
         icon: (
             <FontAwesomeIcon

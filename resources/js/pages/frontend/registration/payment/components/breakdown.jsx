@@ -25,18 +25,25 @@ export default function Breakdown({ workshop }) {
 
     return (
         <div className="w-full flex flex-col gap-y-2 mt-3">
-            <div className="w-full flex items-center justify-between border-b border-slate-500/60">
-                <div>Total Charges:</div>
-                <div>{currency(data.total_fees)}</div>
-            </div>
-            <div className="w-full flex items-center justify-between border-b border-slate-500/60">
-                <div>Tax ({data.tax}):</div>
-                <div>{currency(data.tax_amount)}</div>
-            </div>
-            <div className="w-full flex items-center justify-between border-b-0 border-slate-500/60">
-                <div>Total Price:</div>
-                <div>{currency(data.total)}</div>
-            </div>
+            {data.total_fees > 0 && (
+                <div className="w-full flex items-center justify-between border-b border-slate-500/60">
+                    <div>Total Charges:</div>
+                    <div>{currency(data.total_fees)}</div>
+                </div>
+            )}
+
+            {data.tax_amount > 0 && (
+                <div className="w-full flex items-center justify-between border-b border-slate-500/60">
+                    <div>Tax ({data.tax}):</div>
+                    <div>{currency(data.tax_amount)}</div>
+                </div>
+            )}
+            {(data.total_fees > 0 || data.tax_amount > 0) && (
+                <div className="w-full flex items-center justify-between border-b-0 border-slate-500/60">
+                    <div>Total Dues:</div>
+                    <div>{currency(data.total)}</div>
+                </div>
+            )}
         </div>
     );
 }

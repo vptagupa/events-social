@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Enums\PaymentStatus;
 use App\Models\Event;
 use App\Models\Export;
 use App\Models\Offer;
@@ -109,5 +110,24 @@ class EventRepository extends Repository
             'path' => $path,
             'filename' => $filename
         ]));
+    }
+
+    /**
+     * Get event stat counts
+     */
+    public function statistics(int $event)
+    {
+        $event = $this->find($event);
+
+        return [
+            'registered' => $event->workshops->count(),
+            'confirmed' => $event->workshops()->whereNotNull('confirmed_at')->count(),
+            'payments_accepted' => $event->workshops()->where('payment_status', PaymentStatus::CONFIRMED)->count(),
+            'pending_payments' => $event->workshops()
+                ->where('payment_status', '<>', PaymentStatus::CONFIRMED)
+                ->whereNotNull('submitted_at')
+                ->count(),
+            'failed' => $event->workshops()->where('payment_status', PaymentStatus::FAILED)->count(),
+        ];
     }
 }

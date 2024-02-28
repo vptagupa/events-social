@@ -61,7 +61,6 @@ Route::middleware(['auth:organizer,admin', RedirectIfTemporaryPassword::class])-
             Route::controller(ParticipantsController::class)->name('participants.')->prefix('participants')->group(function () {
                 Route::post('/list', 'list')->name('list');
                 Route::post('/invite', 'invite')->name('invite');
-                Route::post('/stats', 'statistics')->name('statistics');
                 Route::post('{participant}/upload-proof-of-payment', 'uploadProofOfPayment')->name('upp');
             });
             Route::resource('participants', ParticipantsController::class)->except(['create', 'edit']);
@@ -79,6 +78,7 @@ Route::middleware(['auth:organizer,admin', RedirectIfTemporaryPassword::class])-
                 Route::get('/download', 'download')->name('download');
             });
             Route::resource('certificates', CertificatesController::class)->except(['edit', 'show', 'create']);
+            Route::get('statistics', 'statistics')->name('statistics');
         });
     });
     Route::controller(EventsController::class)->prefix('{organizer}/events')->name('events.')->group(function () {

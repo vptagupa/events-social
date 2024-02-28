@@ -48,8 +48,8 @@ export default function Methods({ workshop, form }) {
             >
                 <Input
                     title="Reference Number"
-                    placeholder="Reference Number"
-                    className=" bg-[#BF3131] text-white placeholder:text-white"
+                    placeholder="Enter Reference Number"
+                    className=" bg-slate-200 text-slate-700 placeholder:text-slate-500"
                     onChange={(e) => form.setData("reference", e.target.value)}
                     error={
                         form.invalid("reference") ? form.errors.reference : null

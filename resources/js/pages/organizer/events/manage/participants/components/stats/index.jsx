@@ -7,9 +7,19 @@ export default function Stats({ event }) {
 
     useEffect(() => {
         axios
-            .post(route("organizer.events.participants.statistics", event.id))
+            .get(route("organizer.events.statistics", event.id))
             .then((res) => {
-                // setData()
+                console.log(res.data);
+                setData((data) =>
+                    data.map((d) => {
+                        d.value =
+                            res.data[
+                                d.title.toLowerCase().replace(/\s+/g, "_")
+                            ];
+
+                        return d;
+                    })
+                );
             });
     }, []);
 

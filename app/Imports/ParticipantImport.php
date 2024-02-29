@@ -54,7 +54,7 @@ class ParticipantImport implements ToCollection, WithHeadingRow
      * No insert for duplicate records of email address and full name
      * For entries with the same email address but different full name, 
      * the email address will be appended by a -duplicate keyword
-     * this is to ensure that all records are imported without errors
+     * this is to ensure that all records are imported without errors since email addresses are unique in the database
      */
     private function participant($row)
     {
@@ -105,7 +105,7 @@ class ParticipantImport implements ToCollection, WithHeadingRow
                 'payment_status' => null,
                 'notified_at' => null,
                 'accepted_at' => null,
-                'submitted_at' => Carbon::parse($data['Timestamp'])->format('Y-m-d H:i:s'),
+                'submitted_at' => !empty($data['Timestamp']) ? Carbon::parse($data['Timestamp'])->format('Y-m-d H:i:s') : null,
                 'payment_at' => null,
                 'confirmed_at' => null,
                 'invited_at' => null,

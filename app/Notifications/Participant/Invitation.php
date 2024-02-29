@@ -37,15 +37,21 @@ class Invitation extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage)
-            ->subject($this->event->title . ' - Invitation.')
-            ->line('You have been invited to participate for this coming event on '
-                . $this->event->expected_start_at->format('F j, Y, h:i a ') . '.')
-            ->line('Event: ' . $this->event->title)
-            ->line('Place: ' . $this->event->place)
-            ->line('Address: ' . $this->event->address)
+        $name = $this->workshop->name;
+        $name = !empty($name) ? $name . ' ' : $this->workshop->participant->email . ' ';
+
+        return(new MailMessage)
+            ->subject('Invitation to Join ' . $this->event->title)
+            ->greeting('Dear ' . $name)
+            ->line('We are excited to invite you to join us for ' . $this->workshop->event->title . '! As a valued member of our community, we would be delighted to have you participate in this event.')
+            ->line('Event Details:')
+            ->line('Date: ' . $this->workshop->event->expected_start_at->format('m/d/Y'))
+            ->line('Time: ' . $this->event->expected_start_at->format('h:i a'))
+            ->line('Place: ' . $this->workshop->event->place)
+            ->line('Address: ' . $this->workshop->event->address)
             ->action('Accept Invite', url(route('invitation.accepted', $this->workshop->uuid)))
-            ->line('See you!');
+            ->line("If you have any questions or need further information, feel free to contact us.")
+            ->line('We look forward to seeing you at the event!');
     }
 
     /**

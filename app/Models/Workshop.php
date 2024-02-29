@@ -56,7 +56,7 @@ class Workshop extends Model
         'statuses'
     ];
 
-    public $saveQuitely = true;
+    public $saveQuitely = false;
 
     /**
      * Get the columns that should receive a unique identifier.

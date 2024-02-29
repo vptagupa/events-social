@@ -37,15 +37,15 @@ class Cancelled extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-        $name = $this->workshop->primary_name;
-        $salutation = $this->workshop->salutation;
+        $name = $this->workshop->name;
         $name = !empty($name) ? $name . ' ' : $this->workshop->participant->email . ' ';
 
-        return (new MailMessage)
-            ->subject('Your Registration is Cancelled!')
-            ->greeting('Hello!')
-            ->line((empty($salutation) ? '' : $salutation . ' ') . $name . 'your registration has been cancelled.')
-            ->line('See you!');
+        return(new MailMessage)
+            ->subject('Cancellation of Your Event Registration')
+            ->greeting('Dear ' . $name)
+            ->line('We regret to inform you that your registration for the ' . $this->workshop->event->title . ' has been cancelled. We apologize for any inconvenience this may cause.')
+            ->line("If you have any questions or require further information, please don't hesitate to contact us.")
+            ->line('Thank you for your understanding.');
     }
 
     /**

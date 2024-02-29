@@ -69,6 +69,16 @@ Route::prefix('organizer')->name('organizer.')->group(function () {
         });
         Route::post('/register', [\App\Http\Controllers\Organizer\Frontend\Auth\RegisterController::class, 'store'])->name('register');
     });
+});
 
+// Global auth routes
+Route::controller(\App\Http\Controllers\Frontend\Auth\AuthController::class)->group(function () {
+    Route::prefix('login')->name('login.')->group(function () {
+        Route::get('/', 'login')->name('index');
+        Route::post('/', 'attempt')->name('attempt');
+    })->middleware('guest');
+
+    Route::post('/register', [\App\Http\Controllers\Frontend\Auth\RegisterController::class, 'store'])->name('register');
+    Route::get('redirect', 'redirect')->name('redirect');
 });
 

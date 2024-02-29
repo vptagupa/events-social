@@ -16,10 +16,6 @@ class Authenticate extends Middleware
             return null;
         }
 
-        if ($request->route()->named('admin.*')) {
-            return route('admin.login.index');
-        } elseif ($request->route()->named('organizer.*')) {
-            return route('organizer.login.index');
-        }
+        return route('login.index');
     }
 }

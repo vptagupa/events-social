@@ -19,7 +19,8 @@ class AdminsSeeder extends Seeder
                 "name" => "Vic",
                 "email" => "victortagupa@gmail.com",
                 "password" => bcrypt("secret"),
-                'role' => Role::ADMIN
+                'role' => Role::ADMIN,
+                'active' => 1
             ]
         ];
 

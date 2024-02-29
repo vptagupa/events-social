@@ -69,8 +69,9 @@ class OrganizersController extends Controller
      */
     public function resetPassword(Organizer $organizer)
     {
+        \Log::info(config('auth.password_default'));
         $this->repository->update([
-            'password' => bcrypt(config('auth.default_password'))
+            'password' => bcrypt(config('auth.password_default'))
         ], $organizer->id);
     }
 

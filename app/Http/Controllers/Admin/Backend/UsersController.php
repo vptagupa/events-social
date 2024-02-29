@@ -77,7 +77,7 @@ class UsersController extends Controller
     public function resetPassword(Admin $admin)
     {
         $this->repository->update([
-            'password' => bcrypt(config('auth.default_password'))
+            'password' => bcrypt(config('auth.password_default'))
         ], $admin->id);
     }
 

@@ -9,9 +9,9 @@ import Socialite from "./socialite";
 export default function Component({ setTab }) {
     const [remember, setRemember] = useState(false);
 
-    const form = useForm("post", route("organizer.login.auth"), {
-        email: "jhoanna@gmail.com",
-        password: "BsrhJV",
+    const form = useForm("post", route("login.attempt"), {
+        email: "",
+        password: "",
         remember: remember,
     });
 

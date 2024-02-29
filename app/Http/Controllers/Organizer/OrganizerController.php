@@ -53,9 +53,10 @@ class OrganizerController extends Controller
     public function logout(Request $request)
     {
         \Auth::guard('organizer')->logout();
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect(route('organizer.login.index'));
+        return redirect(route('login.index'));
     }
 }

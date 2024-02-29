@@ -6,13 +6,9 @@ import { AlertDanger } from "@/js/components/alerts";
 import Logo from "@/assets/images/logo.png";
 
 export default () => {
-    const form = useForm(
-        "post",
-        route("organizer.auth.change-password.update"),
-        {
-            password: "",
-        }
-    );
+    const form = useForm("post", route("auth.change-password.update"), {
+        password: "",
+    });
 
     const submit = (e) => {
         e.preventDefault();

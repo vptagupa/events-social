@@ -18,6 +18,7 @@ class OrganizersSeeder extends Seeder
                 "name" => "AACCUP",
                 "email" => "aacup@gmail.com",
                 "password" => bcrypt("secret"),
+                'active' => 1
             ]
         ];
 

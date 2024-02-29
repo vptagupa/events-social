@@ -96,24 +96,26 @@ class ParticipantImport implements ToCollection, WithHeadingRow
         $offer = $event->offers()->first();
         $price = $event->is_offer_package ? $offer->price : $event->price;
 
-        $participant->workshops()->save(
-            new Workshop([
-                'code' => '',
-                'event_id' => $event->id,
-                'participant_id' => $participant->id,
-                'offer_id' => $offer?->id,
-                'payment_status' => null,
-                'notified_at' => null,
-                'accepted_at' => null,
-                'submitted_at' => !empty($data['Timestamp']) ? Carbon::parse($data['Timestamp'])->format('Y-m-d H:i:s') : null,
-                'payment_at' => null,
-                'confirmed_at' => null,
-                'invited_at' => null,
-                'cancelled_at' => null,
-                'amount' => $price,
-                'note' => null
-            ])
-        );
+        $model = new Workshop([
+            'code' => '',
+            'event_id' => $event->id,
+            'participant_id' => $participant->id,
+            'offer_id' => $offer?->id,
+            'payment_status' => null,
+            'notified_at' => null,
+            'accepted_at' => null,
+            'submitted_at' => !empty($data['Timestamp']) ? Carbon::parse($data['Timestamp'])->format('Y-m-d H:i:s') : null,
+            'payment_at' => null,
+            'confirmed_at' => null,
+            'invited_at' => null,
+            'cancelled_at' => null,
+            'amount' => $price,
+            'note' => null,
+        ]);
+
+        $model->saveQuitely = true;
+
+        $participant->workshops()->save($model);
 
         $participant->refresh();
 

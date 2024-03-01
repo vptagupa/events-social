@@ -34,7 +34,7 @@ class JoinRequest extends FormRequest
                 $response = Http::post('https://www.google.com/recaptcha/api/siteverify' . $params);
 
                 if ($response->successful()) {
-                    if (isset($response->json()['success']) && $response->json()['success']) {
+                    if (isset ($response->json()['success']) && $response->json()['success']) {
                         return;
                     }
                 }
@@ -87,7 +87,7 @@ class JoinRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email.prohibited' => 'It seems that you have already joined the event. To continue editing your application or checking the status, we have sent you a tracking link to your email address.',
+            'email.prohibited' => 'It appears that you have already joined the event. To continue editing your application or checking its status, we have sent a tracking link to your email address.',
         ];
     }
 

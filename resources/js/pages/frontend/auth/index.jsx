@@ -40,7 +40,6 @@ export default function Component() {
                             <span>
                                 <img className="h-[3rem] inline" src={Logo} />
                             </span>
-                            <h2 className="text-lg font-bold">LaReact</h2>
                         </div>
                         <div
                             className={`${(() => {
@@ -75,7 +74,9 @@ export default function Component() {
                                                   after:hover:border-purple-500  after:ml-1 after:block after:border-b after:border-slate-400/60 after:grow after:h-[1px] 
                                                   cursor-pointer  hover:animate-pulse h-10 w-full flex space-x-1 justify-center items-center text-center uppercase text-xs`}
                                         >
-                                            <span>Signup here</span>
+                                            <span>
+                                                Signup here as Organizer
+                                            </span>
                                         </span>
                                     </>
                                 )}

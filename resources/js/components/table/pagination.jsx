@@ -14,14 +14,14 @@ const Component = ({ pagination, pageInfo }) => {
             {pageInfo && (
                 <div className="flex space-x-1 justify-center">
                     <Button
-                        className="bg-slate-400 text-white enabled:hover:bg-slate-500"
+                        className="bg-slate-400 text-white enabled:hover:bg-slate-500 disabled:bg-slate-300"
                         disabled={pagination.state.page === 0}
                         onClick={() => pagination.fns.onSetPage(0)}
                     >
                         <FontAwesomeIcon icon={faAnglesLeft} className="h-3" />
                     </Button>
                     <Button
-                        className="bg-slate-400 text-white enabled:hover:bg-slate-500"
+                        className="bg-slate-400 text-white enabled:hover:bg-slate-500 disabled:bg-slate-300"
                         disabled={pagination.state.page === 0}
                         onClick={() =>
                             pagination.fns.onSetPage(pagination.state.page - 1)
@@ -37,7 +37,7 @@ const Component = ({ pagination, pageInfo }) => {
                         {pageInfo.total}{" "}
                     </span>
                     <Button
-                        className="bg-slate-400 text-white enabled:hover:bg-slate-500"
+                        className="bg-slate-400 text-white enabled:hover:bg-slate-500 disabled:bg-slate-300"
                         disabled={
                             pagination.state.page + 1 === pageInfo.totalPages ||
                             pageInfo.total === 0
@@ -49,7 +49,7 @@ const Component = ({ pagination, pageInfo }) => {
                         <FontAwesomeIcon icon={faArrowRight} className="h-3" />
                     </Button>
                     <Button
-                        className="bg-slate-400 text-white enabled:hover:bg-slate-500"
+                        className="bg-slate-400 text-white enabled:hover:bg-slate-500 disabled:bg-slate-300"
                         disabled={
                             pagination.state.page + 1 === pageInfo.totalPages ||
                             pageInfo.total === 0

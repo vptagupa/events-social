@@ -1,10 +1,9 @@
 <?php
 
-use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Frontend\EventController;
 use App\Http\Controllers\Frontend\ParticipantController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Frontend\Auth\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +56,7 @@ Route::controller(ParticipantController::class)->group(function () {
         Route::get('/{event:slug}', 'index')->name('index');
         Route::post('/{event:slug}', 'join')->name('join');
     });
-
 });
+
+Route::redirect('/', 'redirect');
 

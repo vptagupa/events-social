@@ -36,6 +36,8 @@ class AuthController extends Controller
                 return redirect()->intended(route($route));
             }
         }
+
+        return to_route('login.index');
     }
 
     /**

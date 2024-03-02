@@ -93,7 +93,7 @@ export default function Index(props) {
                     </div>
                     <div className="w-full grow">{props.children}</div>
                     <div className="w-full h-10 p-2 text-xs flex items-center justify-start">
-                        Created with love by Vic Tagupa
+                        Created with love by VicT
                     </div>
                 </div>
             </div>

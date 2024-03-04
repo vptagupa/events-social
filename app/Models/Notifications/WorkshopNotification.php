@@ -2,6 +2,7 @@
 
 namespace App\Models\Notifications;
 
+use App\Models\Transaction;
 use App\Notifications\Participant\{
     Cancelled,
     Confirmed,
@@ -10,16 +11,24 @@ use App\Notifications\Participant\{
     Certificate
 };
 use App\Models\Certificate as Cert;
+use App\Notifications\Participant\Partial;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Notification;
 
 trait WorkshopNotification
 {
-    public function notifyConfirmed()
+    public function notifyConfirmed(Transaction $transaction)
     {
         Notification::route('mail', [
             $this->participant->email
-        ])->notify(new Confirmed($this));
+        ])->notify(new Confirmed($this, $transaction));
+    }
+
+    public function notifyPartial(Transaction $transaction)
+    {
+        Notification::route('mail', [
+            $this->participant->email
+        ])->notify(new Partial($this, $transaction));
     }
 
     public function notifyCancelled()

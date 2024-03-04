@@ -4,6 +4,7 @@ namespace App\Http\Requests\Transaction;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\File;
+use Illuminate\Validation\Rule;
 
 class PartialRequest extends FormRequest
 {
@@ -24,8 +25,7 @@ class PartialRequest extends FormRequest
     {
         return [
             'file' => [
-                'required',
-                File::ensure()
+                Rule::when($this->file ? true : false, File::ensure())
             ],
             'amount' => [
                 'required',

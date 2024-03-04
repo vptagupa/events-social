@@ -13,7 +13,7 @@ export default function Partial({ onClick, className }) {
                     title="Partial"
                     className={`cursor-pointer text-primary group-hover:text-slate-200 ${className}`}
                 />
-                Partial
+                Partial Payment
             </div>
         </>
     );

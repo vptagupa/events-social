@@ -65,14 +65,19 @@ export default memo(function Drawer({
                                     error={form.errors?.file}
                                 />
                             </div>
-                            <Actions
-                                value={value}
-                                submit={async (route, process) => {
-                                    const res = await submit(route, process);
+                            <div className="p-2">
+                                <Actions
+                                    value={value}
+                                    submit={async (route, process) => {
+                                        const res = await submit(
+                                            route,
+                                            process
+                                        );
 
-                                    if (res) setOpen(false);
-                                }}
-                            />
+                                        if (res) setOpen(false);
+                                    }}
+                                />
+                            </div>
                         </div>
                     </div>
                 </Transition>

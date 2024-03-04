@@ -2,6 +2,7 @@
 
 namespace App\Notifications\Participant;
 
+use App\Models\Transaction;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -17,7 +18,7 @@ class Confirmed extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct(public Workshop $workshop)
+    public function __construct(protected Workshop $workshop, protected Transaction $transaction)
     {
         $this->event = $this->workshop->event;
     }
@@ -38,11 +39,10 @@ class Confirmed extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         $name = $this->workshop->name;
-        $name = !empty($name) ? $name . ' ' : $this->workshop->participant->email . ' ';
 
-        return(new MailMessage)
+        $message = (new MailMessage)
             ->subject('Confirmation of Your Event Registration')
-            ->greeting('Dear ' . $name)
+            ->greeting(empty($name) ? 'Hello' : 'Dear ' . $name)
             ->line('We are delighted to confirm that your registration for the ' . $this->workshop->event->title . ' has been successfully received and processed. Your participation is now confirmed!')
             ->line('Here are the details of your registration:')
             ->line('Event Name: ' . $this->workshop->event->title)
@@ -53,6 +53,12 @@ class Confirmed extends Notification
 
             ->line("If you have any questions or require further assistance, please feel free to reach out to us.")
             ->line('We look forward to seeing you at the event!');
+
+        if ($this->transaction->officialReceipt) {
+            $message->attach(storage_path('app/' . $this->transaction->officialReceipt->path));
+        }
+
+        return $message;
     }
 
     /**

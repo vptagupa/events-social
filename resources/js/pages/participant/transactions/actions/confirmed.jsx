@@ -10,8 +10,8 @@ export default function Confirmed({ onClick }) {
             title="Confirmed"
             onClick={onClick}
         >
-            <FontAwesomeIcon icon={faCircleCheck} />
-            Confirm
+            <FontAwesomeIcon icon={faCircleCheck} className="text-xl" />
+            Confirm Full Payment
         </SuccessButton>
     );
 }

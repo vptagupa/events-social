@@ -31,7 +31,6 @@ trait Transaction
         \DB::transaction(function () use ($model, $data, $transaction) {
             $workshop = $model->workshop;
             $workshop->confirmed_at = Carbon::now();
-            $workshop->notifyConfirmed();
             $workshop->payment_status = PaymentStatus::CONFIRMED->value;
             $workshop->save();
 
@@ -47,6 +46,10 @@ trait Transaction
                 'status' => $workshop->payment_status,
                 'official_receipt_id' => $officialReceipt?->id
             ], $transaction);
+
+            $model->refresh();
+
+            $workshop->notifyConfirmed($model);
         });
     }
 
@@ -91,7 +94,7 @@ trait Transaction
 
         \DB::transaction(function () use ($model, $remarks, $transaction) {
             $workshop = $model->workshop;
-            // $workshop->notifyCancelled($model);
+
             $workshop->payment_status = PaymentStatus::CANCELLED->value;
             $workshop->save();
 
@@ -99,6 +102,8 @@ trait Transaction
                 'remarks' => $remarks,
                 'status' => $workshop->payment_status
             ], $transaction);
+
+            $workshop->notifyCancelled();
         });
     }
 
@@ -121,7 +126,6 @@ trait Transaction
 
         \DB::transaction(function () use ($model, $data, $transaction) {
             $workshop = $model->workshop;
-            // $workshop->notifyBalance($model);
             $workshop->payment_status = PaymentStatus::PARTIAL->value;
             $workshop->payment_at = null;
             $workshop->save();
@@ -131,6 +135,10 @@ trait Transaction
                 'remarks' => $data['remarks'] ?? '',
                 'status' => $workshop->payment_status
             ], $transaction);
+
+            $model->refresh();
+
+            $workshop->notifyPartial($model);
         });
     }
 }

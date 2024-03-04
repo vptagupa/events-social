@@ -11,17 +11,14 @@ export default function Column({ value }) {
 
                 return (
                     <div
+                        key={component.id}
                         className={`py-6 px-6 rounded-xl bg-white ml-0 mb-4 mr-0 md:m-4 border  ${
                             component?.error
                                 ? "border-[#BF3131]"
                                 : "border-slate-300"
                         }`}
                     >
-                        <Component
-                            column={value}
-                            key={component.id}
-                            value={component}
-                        />
+                        <Component column={value} value={component} />
                     </div>
                 );
             })}

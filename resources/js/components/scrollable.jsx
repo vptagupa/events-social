@@ -1,7 +1,8 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 
 export default function Scrollable({ value, bottom, top }) {
     const ref = useRef();
+    const [state, setState] = useState({});
 
     useEffect(() => {
         if (
@@ -13,21 +14,35 @@ export default function Scrollable({ value, bottom, top }) {
     }, []);
 
     return (
-        <div
-            ref={ref}
-            onScroll={(e) => {
-                const { scrollTop, scrollHeight, clientHeight } = e.target;
+        <>
+            <div
+                ref={ref}
+                onScroll={(e) => {
+                    const { scrollTop, scrollHeight, clientHeight } = e.target;
 
-                if (scrollTop === 0) {
-                    top && top(true);
-                } else if (scrollTop + clientHeight >= scrollHeight) {
-                    bottom && bottom(true);
-                }
-            }}
-            className="h-[500px] overflow-y-auto"
-            dangerouslySetInnerHTML={{
-                __html: value,
-            }}
-        />
+                    if (scrollTop === 0) {
+                        top && top(true);
+                    } else if (scrollTop + clientHeight >= scrollHeight - 10) {
+                        bottom && bottom(true);
+                    }
+                    setState({
+                        scrollTop,
+                        clientHeight,
+                        scrollHeight,
+                    });
+                }}
+                className="h-[500px] overflow-y-auto"
+                dangerouslySetInnerHTML={{
+                    __html: value,
+                }}
+            />
+            <div className="hidden">
+                <pre>
+                    scrollTop: {state?.scrollTop} <br />
+                    clientHeight: {state?.clientHeight} <br />
+                    scrollHeight: {state?.scrollHeight}
+                </pre>
+            </div>
+        </>
     );
 }

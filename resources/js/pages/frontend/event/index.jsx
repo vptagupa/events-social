@@ -19,7 +19,7 @@ export default function Event({ event }) {
                                 {event.title}
                             </div>
                             <div className="w-full gap-y-1 flex flex-col items-center justify-start">
-                                <div className="text-lg w-full flex items-center justify-start gap-x-2">
+                                <div className="text-sm md:text-lg w-full flex items-center justify-start gap-x-2">
                                     <FontAwesomeIcon
                                         icon={faCalendar}
                                         className="text-2xl w-[30px]"
@@ -32,8 +32,8 @@ export default function Event({ event }) {
                                         )}
                                     </div>
                                 </div>
-                                <div className="text-lg w-full">
-                                    <div className="text-lg w-full flex items-center justify-start gap-x-2">
+                                <div className="text-sm md:text-lg w-full">
+                                    <div className="w-full flex items-center justify-start gap-x-2">
                                         <FontAwesomeIcon
                                             icon={faLocationPin}
                                             className="text-2xl w-[30px]"
@@ -43,8 +43,8 @@ export default function Event({ event }) {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="text-sm w-full">
-                                    <div className="text-lg w-full flex items-center justify-start gap-x-2">
+                                <div className="text-sm md:text-lg w-full">
+                                    <div className="w-full flex items-center justify-start gap-x-2">
                                         <FontAwesomeIcon
                                             icon={faMap}
                                             className="text-2xl w-[30px]"

@@ -25,12 +25,22 @@ trait WorkshopGenerator
     {
         return Attribute::make(
             get: function () {
-                $name = explode(",", $this->event->registrationForm->primary_name);
+                $explodes = explode(",", $this->event->registrationForm->primary_name);
+                $names = array_map(fn($v) => $v, preg_replace('/({.})/', '', $explodes));
                 $names = $this->registrations()
-                    ->whereIn('name', $name)
+                    ->whereIn('name', $names)
                     ->get();
 
-                return $names->implode('value', ' ');
+                return $names->map(function ($v) use ($explodes) {
+                    foreach ($explodes as $name) {
+                        if (str($name)->contains($v->name)) {
+                            if (preg_match('/{.}/', $name)) {
+                                $v->value = $v->value . '.';
+                            }
+                        }
+                    }
+                    return $v;
+                })->implode('value', ' ');
             }
         );
     }

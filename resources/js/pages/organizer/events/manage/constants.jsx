@@ -80,30 +80,30 @@ export const menus = [
             />
         ),
     },
-    {
-        title: "Members",
-        url: () => "",
-        isActive: () => false,
-        icon: () => (
-            <FontAwesomeIcon
-                icon={faUserClock}
-                title="Members"
-                className={`${menuIconClasses} !h-6 hover:!scale-105`}
-            />
-        ),
-    },
-    {
-        title: "Upload Banner",
-        url: () => "",
-        isActive: () => false,
-        icon: () => (
-            <FontAwesomeIcon
-                icon={faImage}
-                title="Upload Banner"
-                className={`${menuIconClasses}`}
-            />
-        ),
-    },
+    // {
+    //     title: "Members",
+    //     url: () => "",
+    //     isActive: () => false,
+    //     icon: () => (
+    //         <FontAwesomeIcon
+    //             icon={faUserClock}
+    //             title="Members"
+    //             className={`${menuIconClasses} !h-6 hover:!scale-105`}
+    //         />
+    //     ),
+    // },
+    // {
+    //     title: "Upload Banner",
+    //     url: () => "",
+    //     isActive: () => false,
+    //     icon: () => (
+    //         <FontAwesomeIcon
+    //             icon={faImage}
+    //             title="Upload Banner"
+    //             className={`${menuIconClasses}`}
+    //         />
+    //     ),
+    // },
     {
         title: "Certificates",
         url: ({ organizer, event }) =>

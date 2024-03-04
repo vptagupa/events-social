@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Participant\JoinRequest;
 use App\Models\Event;
+use App\Models\Workshop;
 use App\Repositories\EventRepository;
 use App\Repositories\ParticipantRepository;
 use Illuminate\Http\Request;

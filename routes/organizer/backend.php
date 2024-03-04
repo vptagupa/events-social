@@ -121,10 +121,10 @@ Route::middleware(['auth:organizer,admin', RedirectIfTemporaryPassword::class])-
             Route::post('/list', 'list')->name('list');
             Route::prefix('{transaction}')->group(function () {
                 Route::get('/info', 'info')->name('info');
-                Route::patch('/confirmed', 'confirmed')->name('confirmed');
-                Route::patch('/rejected', 'rejected')->name('rejected');
-                Route::patch('/cancelled', 'cancelled')->name('cancelled');
-                Route::patch('/partial', 'partial')->name('partial');
+                Route::post('/confirmed', 'confirmed')->name('confirmed');
+                Route::post('/rejected', 'rejected')->name('rejected');
+                Route::post('/cancelled', 'cancelled')->name('cancelled');
+                Route::post('/partial', 'partial')->name('partial');
             });
         });
     });

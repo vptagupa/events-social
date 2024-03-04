@@ -42,7 +42,7 @@ export default function Flexi({ flexia }) {
                 </div>
             </div>
 
-            <div className="w-[15%] fixed right-6 grid md:grid-cols-2 gap-x-2 gap-y-2 min-h-[10rem] box-border border-l border-slate-300 p-2 bg-slate-200 rounded-tl-md rounded-bl-md">
+            <div className="w-[15%] sticky top-2 right-6 grid md:grid-cols-2 gap-x-2 gap-y-2 min-h-[10rem] box-border border-l border-slate-300 p-2 bg-slate-200 rounded-tl-md rounded-bl-md">
                 <Attributes {...flexia} />
             </div>
         </>

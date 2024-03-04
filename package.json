@@ -26,7 +26,7 @@
         "@fortawesome/react-fontawesome": "^0.2.0",
         "@headlessui/react": "^1.7.17",
         "@heroicons/react": "^2.1.1",
-        "@inertiajs/react": "^1.0.14",
+        "@inertiajs/react": "^1.0.15",
         "@table-library/react-table-library": "^4.1.7",
         "eventemitter3": "^5.0.1",
         "install": "^0.13.0",

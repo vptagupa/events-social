@@ -4,6 +4,7 @@ namespace App\Repositories\Concerns;
 
 use App\Enums\PaymentStatus;
 use Carbon\Carbon;
+use Illuminate\Http\UploadedFile;
 
 /**
  * Trait for participant payment transactions
@@ -34,10 +35,17 @@ trait Transaction
             $workshop->payment_status = PaymentStatus::CONFIRMED->value;
             $workshop->save();
 
+            $officialReceipt = null;
+            if ($data['file'] instanceof UploadedFile) {
+                $officialReceipt = $this->saveFile($data['file'], 'official-receipts');
+                unset ($data['file']);
+            }
+
             parent::update([
                 'actual_paid_amount' => $data['amount'],
                 'remarks' => $data['remarks'] ?? '',
-                'status' => $workshop->payment_status
+                'status' => $workshop->payment_status,
+                'official_receipt_id' => $officialReceipt?->id
             ], $transaction);
         });
     }

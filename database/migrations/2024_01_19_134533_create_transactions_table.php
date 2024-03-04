@@ -24,6 +24,7 @@ return new class extends Migration {
             $table->string('reference')->nullable();
             $table->boolean('is_gateway')->default(false);
             $table->foreignId('file_id')->nullable()->constrained('files');
+            $table->foreignId('official_receipt_id')->nullable()->constrained('files');
             $table->nullableMorphs('transactor');
             $table->enum('status', array_map(fn($status) => $status->value, PaymentStatus::cases()))->length(75);
             $table->string('remarks', 150)->nullable();

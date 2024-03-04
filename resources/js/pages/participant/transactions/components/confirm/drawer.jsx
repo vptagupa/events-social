@@ -5,6 +5,7 @@ import Info from "./info";
 import Form from "./form";
 import Actions from "./actions";
 import { Transition } from "@headlessui/react";
+import { File } from "@/js/based/form";
 
 export default memo(function Drawer({
     state,
@@ -12,6 +13,7 @@ export default memo(function Drawer({
     value,
     setStateValue,
     submit,
+    form,
 }) {
     const [open, setOpen] = useState(false);
 
@@ -46,20 +48,27 @@ export default memo(function Drawer({
                     <Info value={value} meta={meta} />
                     <div className="w-full md:w-1/2 flex flex-col items-end justify-center gap-y-3">
                         <Form
-                            state={state}
+                            form={form}
                             meta={meta}
                             setStateValue={setStateValue}
                         />
-                        <div className="w-full pr-2">
+                        <div className="w-full pr-2 flex items-center justify-between">
+                            <div className="w-1/2">
+                                <File
+                                    title="Upload Official Receipt"
+                                    accept=".jpg,.jpeg,.png,.pdf"
+                                    value={form.data.file}
+                                    remove={(e) => setStateValue("file", "")}
+                                    onChange={(file) =>
+                                        setStateValue("file", file)
+                                    }
+                                    error={form.errors?.file}
+                                />
+                            </div>
                             <Actions
-                                state={state}
                                 value={value}
-                                submit={async (route, data, process) => {
-                                    const res = await submit(
-                                        route,
-                                        data,
-                                        process
-                                    );
+                                submit={async (route, process) => {
+                                    const res = await submit(route, process);
 
                                     if (res) setOpen(false);
                                 }}

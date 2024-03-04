@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Participant;
 
 use App\Enums\PaymentStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Transaction\ConfirmRequest;
+use App\Http\Requests\Transaction\PartialRequest;
 use App\Http\Resources\TransactionResource;
 use App\Models\Transaction;
 use App\Repositories\TransactionRepository;
@@ -38,7 +40,8 @@ class TransactionsController extends Controller
                     'statuses' => $request->get('query')['statuses'] ?? [],
                     'event_id' => $request->get('query')['event'] ?? '',
                     'workshop_participant' => true,
-                    'file' => true
+                    'file' => true,
+                    'official_receipt' => true
                 ],
                 paginate: true,
                 perPage: $request->get('per_page'),
@@ -73,7 +76,7 @@ class TransactionsController extends Controller
                     'workshop_participant' => true,
                     'file' => true,
                     'previous' => true,
-                    'current_id' => $transaction->id
+                    'current_id' => $transaction->id,
                 ],
                 paginate: true,
                 perPage: 1,
@@ -108,17 +111,9 @@ class TransactionsController extends Controller
     /**
      * Confirmed payment
      */
-    public function confirmed(Request $request, Transaction $transaction)
+    public function confirmed(ConfirmRequest $request, Transaction $transaction)
     {
-        $request->validate([
-            'amount' => [
-                'required',
-                'numeric',
-                'gte:' . $transaction->workshop->balance
-            ]
-        ]);
-
-        $this->repository->confirmed($request->only(['amount', 'remarks']), $transaction->id);
+        $this->repository->confirmed($request->safe()->only(['amount', 'remarks', 'file']), $transaction->id);
     }
 
     /**
@@ -148,12 +143,8 @@ class TransactionsController extends Controller
     /**
      * Partial payment
      */
-    public function partial(Request $request, Transaction $transaction)
+    public function partial(PartialRequest $request, Transaction $transaction)
     {
-        $request->validate([
-            'amount' => 'required|numeric|min:1'
-        ]);
-
-        $this->repository->partial($request->only(['amount', 'remarks']), $transaction->id);
+        $this->repository->partial($request->safe()->only(['amount', 'remarks', 'file']), $transaction->id);
     }
 }

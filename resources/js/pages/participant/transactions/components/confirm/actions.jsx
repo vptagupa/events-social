@@ -3,7 +3,7 @@ import { memo } from "react";
 import Confirmed from "../../actions/confirmed";
 import More from "../../actions/more";
 
-export default memo(function Actions({ state, value, submit }) {
+export default memo(function Actions({ value, submit }) {
     return (
         <div className="flex items-center justify-end gap-x-2">
             <Confirmed
@@ -13,10 +13,6 @@ export default memo(function Actions({ state, value, submit }) {
                             "organizer.participants.payments.confirmed",
                             value.id
                         ),
-                        {
-                            amount: state.amount,
-                            remarks: state.remarks,
-                        },
                         "confirmed"
                     )
                 }
@@ -28,9 +24,6 @@ export default memo(function Actions({ state, value, submit }) {
                             "organizer.participants.payments.cancelled",
                             value.id
                         ),
-                        {
-                            remarks: state.remarks,
-                        },
                         "cancelled"
                     )
                 }
@@ -40,9 +33,6 @@ export default memo(function Actions({ state, value, submit }) {
                             "organizer.participants.payments.rejected",
                             value.id
                         ),
-                        {
-                            remarks: state.remarks,
-                        },
                         "rejected"
                     )
                 }
@@ -52,10 +42,6 @@ export default memo(function Actions({ state, value, submit }) {
                             "organizer.participants.payments.partial",
                             value.id
                         ),
-                        {
-                            remarks: state.remarks,
-                            amount: state.amount,
-                        },
                         "partial"
                     )
                 }

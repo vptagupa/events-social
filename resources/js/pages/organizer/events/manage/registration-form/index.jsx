@@ -78,7 +78,7 @@ export default function RegistrationForm({ event, errors }) {
                     onClick={(e) => save(!event.is_published)}
                 >
                     <FontAwesomeIcon icon={faCheckCircle} />{" "}
-                    {event.is_published ? "Draft" : "Publish"}
+                    {event.is_published ? "Unpublish" : "Publish"}
                 </SecondaryButton>
             </div>
         </div>

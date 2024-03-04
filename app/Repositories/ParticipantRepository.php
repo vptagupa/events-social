@@ -54,7 +54,7 @@ class ParticipantRepository extends Repository
                 return $model->currentWorkshop($data['event_id']);
             };
 
-            $payment = Payment::calculate($data['event_id'], $data['price'], $data['tax']);
+            $payment = Payment::calculate($data['event_id'], $data['price'], $data['tax'] ?? 0);
             $transaction = $workshop()->transactions()->save(
                 new Transaction([
                     'expected_price' => $payment['total'],
@@ -184,7 +184,7 @@ class ParticipantRepository extends Repository
             $registrationValuesParser = function ($registration) {
                 if ($registration['value'] instanceof UploadedFile) {
                     $registration['value'] = $this->saveFile($registration['value'], "participants")->id;
-                } elseif (isset($registration['value']['id'])) {
+                } elseif (isset ($registration['value']['id'])) {
                     $registration['value'] = $registration['value']['id'];
                 }
 
@@ -198,7 +198,7 @@ class ParticipantRepository extends Repository
                 $where = $row;
                 $row = $registrationValuesParser($row);
 
-                unset($where['name'], $where['value']);
+                unset ($where['name'], $where['value']);
 
                 $registraion = $workshop->registrations()->where($where);
 

@@ -9,58 +9,43 @@ import Processing from "./processing";
 
 import Drawer from "./drawer";
 
+import { useForm } from "@/js/helpers/form";
+
 export default memo(function Confirm({ value: _value }) {
-    const stateRaw = {
-        amount: "",
-        remarks: _value?.remarks ?? "",
-        errors: null,
-        processing: {
-            confirmed: false,
-            rejected: false,
-            cancelled: false,
-            partial: false,
-            info: false,
+    const [processing, setProcessing] = useState(false);
+    const { form } = useForm({
+        method: "post",
+        route: "",
+        data: {
+            amount: "",
+            remarks: _value?.remarks ?? "",
+            file: "",
         },
-    };
+    });
+
     const [value, setValue] = useState(_value);
     const [meta, setMeta] = useState(null);
-    const [state, setState] = useState({ ...stateRaw });
 
     const setStateValue = (key, value) => {
-        setState((state) => ({
-            ...state,
+        form.setData({
+            ...form.data,
             [key]: value,
-        }));
+        });
     };
 
-    const setProcessing = (key, value) => {
-        setState((state) => ({
-            ...state,
-            processing: {
-                ...state.processing,
-                [key]: value,
-            },
-        }));
-    };
+    const submit = (route) => {
+        if (form.processing) return;
 
-    const submit = (route, data, process) => {
         return new Promise((resolve, reject) => {
-            router.patch(route, data, {
+            form.submit("post", route, {
                 onError: (errors) => {
-                    setStateValue("errors", errors);
                     resolve(false);
-                },
-                onBefore: () => {
-                    setProcessing(process, true);
                 },
                 onSuccess: async () => {
                     await getInfo();
-                    setState(stateRaw);
+                    form.reset();
                     Event.emit("payments.reload");
                     resolve(true);
-                },
-                onFinish: () => {
-                    setProcessing(process, false);
                 },
                 preserveScroll: true,
                 preserveState: true,
@@ -69,7 +54,7 @@ export default memo(function Confirm({ value: _value }) {
     };
 
     const getInfo = useCallback(async () => {
-        setProcessing("info", true);
+        setProcessing(true);
         try {
             const res = await axios.get(
                 route("organizer.participants.payments.info", _value.id)
@@ -81,7 +66,7 @@ export default memo(function Confirm({ value: _value }) {
         } catch (error) {
         } finally {
             setTimeout(() => {
-                setProcessing("info", false);
+                setProcessing(false);
             }, 500);
         }
     }, [_value]);
@@ -93,19 +78,11 @@ export default memo(function Confirm({ value: _value }) {
     }, [_value]);
 
     return (
-        <div className="w-full relative flex items-center justify-center">
+        <div className="w-full min-h-[500px] relative flex items-center justify-center">
             {!value.has_submitted && <Status value={value} />}
-            <Processing
-                show={
-                    state.processing.cancelled ||
-                    state.processing.rejected ||
-                    state.processing.confirmed ||
-                    state.processing.partial ||
-                    state.processing.info
-                }
-            />
+            <Processing show={form.processing || processing ? true : false} />
             <Drawer
-                state={state}
+                form={form}
                 meta={meta}
                 value={value}
                 setStateValue={setStateValue}

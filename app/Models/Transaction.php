@@ -28,6 +28,7 @@ class Transaction extends Model
         'is_gateway',
         'remarks',
         'file_id',
+        'official_receipt_id',
         'reference',
         'status'
     ];
@@ -102,6 +103,11 @@ class Transaction extends Model
     }
 
     public function file()
+    {
+        return $this->belongsTo(File::class);
+    }
+
+    public function officialReceipt()
     {
         return $this->belongsTo(File::class);
     }

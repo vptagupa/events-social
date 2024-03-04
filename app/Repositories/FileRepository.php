@@ -15,7 +15,7 @@ class FileRepository extends Repository
     {
         $file = $data['file'];
 
-        $path = $file->store('public/files' . (empty($directory) ? '' : '/' . $directory));
+        $path = $file->store('public/files' . (empty($directory) ? '' : (str($directory)->startsWith('/') ? $directory : '/' . $directory)));
 
         return parent::create([
             'filename' => $file->hashName(),

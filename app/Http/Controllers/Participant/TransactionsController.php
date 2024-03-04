@@ -86,7 +86,7 @@ class TransactionsController extends Controller
      */
     public function info(Request $request, Transaction $transaction)
     {
-        return (
+        return(
             new TransactionResource(
                 $transaction->load([
                     'workshop.participant',

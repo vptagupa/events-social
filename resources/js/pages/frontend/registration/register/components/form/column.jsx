@@ -11,7 +11,7 @@ export default function Column({ value }) {
 
                 return (
                     <div
-                        className={`py-6 px-6 rounded-xl bg-white m-4 border  ${
+                        className={`py-6 px-6 rounded-xl bg-white ml-0 mb-4 mr-0 md:m-4 border  ${
                             component?.error
                                 ? "border-[#BF3131]"
                                 : "border-slate-300"

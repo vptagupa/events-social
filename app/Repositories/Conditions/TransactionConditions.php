@@ -69,7 +69,7 @@ trait TransactionConditions
     public function endDateCondition(&$builder, $query)
     {
         return $builder->when(isset($query['end_date']) && $query['end_date'], function ($builder) use ($query) {
-            $builder->where(\DB::raw('date(created_at)'), '<=', $query['end_date']);
+            $builder->where(\DB::raw('xdate(created_at)'), '<=', $query['end_date']);
         });
     }
 

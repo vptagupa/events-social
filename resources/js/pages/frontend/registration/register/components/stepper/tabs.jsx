@@ -39,7 +39,7 @@ export default function Tabs() {
                         <Tab.Panel
                             key={flex.flex}
                             className={classNames(
-                                "rounded-xl p-3",
+                                "rounded-xl md:p-3",
                                 " ring-white/60 ring-offset-2 ring-offset-[#BF3131] focus:outline-none focus:ring-2"
                             )}
                         >

@@ -34,7 +34,7 @@ trait WorkshopGenerator
                 return $names->map(function ($v) use ($explodes) {
                     foreach ($explodes as $name) {
                         if (str($name)->contains($v->name)) {
-                            if (preg_match('/{.}/', $name)) {
+                            if (preg_match('/{.}/', $name) && !str($v->value)->endsWith('.')) {
                                 $v->value = $v->value . '.';
                             }
                         }

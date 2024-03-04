@@ -12,6 +12,7 @@ use App\Notifications\Participant\{
 };
 use App\Models\Certificate as Cert;
 use App\Notifications\Participant\Partial;
+use App\Notifications\Participant\Payment;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Notification;
 
@@ -60,5 +61,12 @@ trait WorkshopNotification
         Notification::route('mail', [
             $this->participant->email
         ])->notify(new Certificate($this, $certificate));
+    }
+
+    public function sendPaymentForm()
+    {
+        Notification::route('mail', [
+            $this->participant->email
+        ])->notify(new Payment($this));
     }
 }

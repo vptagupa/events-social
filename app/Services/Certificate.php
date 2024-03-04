@@ -61,9 +61,9 @@ class Certificate
     public static function download(array|int $ids)
     {
         $ids = is_array($ids) ? $ids : [$ids];
-
+        $service = self::construct();
         if (count($ids) > 1) {
-            return self::construct()->zipped($ids);
+            return $service->zipped($ids);
         }
 
         return $service->file($ids[0]);

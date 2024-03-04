@@ -59,6 +59,15 @@ trait ParticipantCondition
         });
     }
 
+    public function workshopsWithCertificatesCondition(&$builder, $query)
+    {
+        return $builder->when(isset($query['workshops.certificates']) && $query['workshops.certificates'], function ($builder) use ($query) {
+            $builder->with([
+                'workshops.certificates'
+            ]);
+        });
+    }
+
     public function filterCondition(&$builder, $query)
     {
         return $builder->when(isset($query['filter']) && $query['filter'], function ($builder) use ($query) {

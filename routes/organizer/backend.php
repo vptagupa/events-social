@@ -107,6 +107,8 @@ Route::middleware(['auth:organizer,admin', RedirectIfTemporaryPassword::class])-
             Route::post('/registrationForm', 'registrationForm')->name('registrationForm');
             Route::patch('/cancelled', 'cancelled')->name('cancelled');
             Route::patch('/confirmed', 'confirmed')->name('confirmed');
+            Route::get('/resend-invite', 'resendInvitation')->name('resend-invite');
+            Route::get('/resend-payment', 'resendPaymentForm')->name('resend-payment');
         });
     });
 

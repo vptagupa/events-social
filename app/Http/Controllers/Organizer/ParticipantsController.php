@@ -11,6 +11,7 @@ use App\Http\Requests\Participant\UpdateUserRequest;
 use App\Http\Resources\Participant\ParticipantResource;
 use App\Models\Event;
 use App\Models\Participant;
+use App\Models\Workshop;
 use App\Repositories\ParticipantRepository;
 use Illuminate\Http\Request;
 
@@ -118,13 +119,6 @@ class ParticipantsController extends Controller
         ]), $participant->id);
     }
 
-    /**
-     * Show event statistics
-     */
-    public function statistics(Event $event)
-    {
-
-    }
 
     /**
      * Remove the specified resource from storage.

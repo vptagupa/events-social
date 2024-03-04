@@ -92,4 +92,20 @@ class ParticipantController extends Controller
 
         $this->repository->registerUpdate($request->only('flexis', 'event_id', 'note'), $workshop->participant->id);
     }
+
+    /**
+     * Resend invitation mail
+     */
+    public function resendInvitation(Workshop $workshop)
+    {
+        $workshop->sendInvitation();
+    }
+
+    /**
+     * Resend invitation mail
+     */
+    public function resendPaymentForm(Workshop $workshop)
+    {
+        $workshop->sendPaymentForm();
+    }
 }

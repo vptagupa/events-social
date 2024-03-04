@@ -5,7 +5,10 @@ const INITIAL_PARAMS = { search: "", filter: false, page: 0, perPage: 10 };
 
 const Component = ({ event }) => {
     const { data, searching, setSearch, pagination, searchHandler } = useTable({
-        initialParams: INITIAL_PARAMS,
+        initialParams: {
+            ...INITIAL_PARAMS,
+            with: { "workshops.certificates": true },
+        },
         listRoute: route("organizer.events.participants.list", event.id),
     });
 

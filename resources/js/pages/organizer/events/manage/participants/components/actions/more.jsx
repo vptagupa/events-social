@@ -19,8 +19,6 @@ export default function More({ value }) {
         <DownloadCert value={value} />,
         <ResendInvitation value={value} />,
         <ResendPaymentForm value={value} />,
-        <ResetPassword value={value} />,
-        <Delete value={value} />,
     ];
     return (
         <div className="w-2 text-right">

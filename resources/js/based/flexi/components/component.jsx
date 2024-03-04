@@ -91,6 +91,7 @@ export default function Component({
                                         e.target.value
                                     )
                                 }
+                                isRequired={component.config?.is_required}
                                 title={component.config?.name}
                             />
                         )}
@@ -109,6 +110,7 @@ export default function Component({
                                     )
                                 }
                                 title={component.config?.name}
+                                isRequired={component.config?.is_required}
                             />
                         )}
                         {component.type == "textarea" && (
@@ -124,6 +126,7 @@ export default function Component({
                                     )
                                 }
                                 title={component.config?.name}
+                                isRequired={component.config?.is_required}
                             />
                         )}
                         {component.type == "file" && (
@@ -138,6 +141,7 @@ export default function Component({
                                     )
                                 }
                                 title={component.config?.name}
+                                isRequired={component.config?.is_required}
                             />
                         )}
                         {component.type == "radio" && (
@@ -158,6 +162,7 @@ export default function Component({
                                         e.target.checked
                                     )
                                 }
+                                isRequired={component.config?.is_required}
                             />
                         )}
                         {component.type == "checkbox" && (
@@ -178,6 +183,7 @@ export default function Component({
                                         e.target.checked
                                     )
                                 }
+                                isRequired={component.config?.is_required}
                             />
                         )}
                         {component.type == "contract" && (
@@ -193,6 +199,7 @@ export default function Component({
                                         e.target.checked
                                     )
                                 }
+                                isRequired={component.config?.is_required}
                             />
                         )}
                     </div>

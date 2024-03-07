@@ -21,7 +21,26 @@ export default function RegistrationForm({ event, errors }) {
         flexia.update(event.registration_form?.schema || flexs);
     }, [event.registration_form?.schema]);
 
-    const save = async (published = false) => {
+    const save = async () => {
+        router.post(
+            route("organizer.events.registration-form.store", event.id),
+            {
+                schema: flexia.data,
+            },
+            {
+                onBefore: () =>
+                    setProcessing({
+                        regular: true,
+                    }),
+                onFinish: () =>
+                    setProcessing({
+                        regular: false,
+                    }),
+            }
+        );
+    };
+
+    const published = async (published = false) => {
         router.post(
             route("organizer.events.registration-form.store", event.id),
             {
@@ -31,12 +50,10 @@ export default function RegistrationForm({ event, errors }) {
             {
                 onBefore: () =>
                     setProcessing({
-                        regular: !published,
-                        published,
+                        published: true,
                     }),
                 onFinish: () =>
                     setProcessing({
-                        regular: false,
                         published: false,
                     }),
             }
@@ -51,15 +68,7 @@ export default function RegistrationForm({ event, errors }) {
             >
                 The form is required before publishing.
             </Transition>
-            <Transition
-                show={
-                    (processing.regular || processing.published) &&
-                    Object.keys(errors).length <= 0
-                }
-                className="text-xs"
-            >
-                Successfully save.
-            </Transition>
+
             <div>
                 <PrimaryButton
                     processing={processing.regular}
@@ -75,7 +84,7 @@ export default function RegistrationForm({ event, errors }) {
                     processing={processing.published}
                     type="button"
                     className="flex items-center gap-x-1"
-                    onClick={(e) => save(!event.is_published)}
+                    onClick={(e) => published(!event.is_published)}
                 >
                     <FontAwesomeIcon icon={faCheckCircle} />{" "}
                     {event.is_published ? "Unpublish" : "Publish"}

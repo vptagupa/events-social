@@ -34,10 +34,14 @@ class RegistrationFormController extends Controller
     public function store(StoreRegistrationForm $request, Event $event)
     {
         $now = Carbon::now();
+
+        if ($request->has('published')) {
+            $event->published_at = $request->published == true ? $now : null;
+        }
+
         if (!$event->registrationForm) {
             $event->registrationForm()->save(new RegistrationForm($request->only(['schema'])));
 
-            $event->published_at = $request->published == true ? $now : null;
             $event->save();
 
             return;
@@ -55,7 +59,6 @@ class RegistrationFormController extends Controller
         $event->registrationForm->schema = $request->schema;
         $event->registrationForm->save();
 
-        $event->published_at = $request->published == true ? $now : null;
         $event->save();
     }
 

@@ -14,11 +14,11 @@ export default function Event({ event }) {
             >
                 <div className="h-screen w-full  flex flex-col items-center justify-center transition-all ease-in-out delay-200 duration-1000">
                     <div className="relative antialiased  w-full md:w-1/2 flex flex-col items-center justify-center transition-all ease-in-out delay-75 duration-150">
-                        <div className="z-10 text-white py-4 px-7 rounded-3xl shadow-md shadow-slate-400/50 bg-gradient-to-t from-[#BF3131] to-[#BF3131] absolute w-[88%] md:w-2/3 min-h-[300px] max-h-[200px] md:-translate-x-[40%] -translate-y-[60%] md:-translate-y-[50%] border-box border-0 border-red-700">
-                            <div className="w-full mb-5 text-2xl text-center flex items-center justify-between">
+                        <div className="z-10 text-white  rounded-3xl shadow-md shadow-slate-400/50 bg-gradient-to-t from-[#BF3131] to-[#BF3131] absolute w-[88%] md:w-2/3 min-h-[300px] max-h-[200px] md:-translate-x-[40%] -translate-y-[60%] md:-translate-y-[50%] border-box border-0 border-red-700">
+                            <div className="w-full bg-black/70 p-4 mt-5 mb-5 text-lg md:text-xl text-center flex items-center justify-center">
                                 {event.title}
                             </div>
-                            <div className="w-full gap-y-1 flex flex-col items-center justify-start">
+                            <div className="w-full py-4 px-7 gap-y-1 flex flex-col items-center justify-start">
                                 <div className="text-sm md:text-lg w-full flex items-center justify-start gap-x-2">
                                     <FontAwesomeIcon
                                         icon={faCalendar}
@@ -28,7 +28,7 @@ export default function Event({ event }) {
                                         {" "}
                                         {dateDisplay(
                                             event.expected_start_at,
-                                            "MMMM DD, YYYY"
+                                            "MMMM DD, YYYY h:mm A"
                                         )}
                                     </div>
                                 </div>

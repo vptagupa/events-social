@@ -15,7 +15,7 @@ class AccountLogin extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct(protected Organizer $organizer, protected string $password)
+    public function __construct(protected Organizer $organizer, protected string $password, protected bool $notifyPassword = false)
     {
         $this->afterCommit();
     }
@@ -35,12 +35,13 @@ class AccountLogin extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage)
+        return(new MailMessage)
             ->subject('Welcome to ' . config('app.name') . ': Your Account Login Details!')
             ->greeting('Hi ' . $this->organizer->name)
             ->line('Congratulations on joining us! Your login details have been created. Log in now to start exploring our platform.')
             ->line("Email Address: " . $this->organizer->email)
-            ->line("Password: " . $this->password)
+            ->line("Login Details: ")
+            ->lineIf($this->notifyPassword, "Password: " . $this->password)
             ->action('Login', url(route('organizer.login.index')))
             ->line('Thank you!');
     }

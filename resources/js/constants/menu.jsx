@@ -7,6 +7,7 @@ import {
     faHammer,
     faUserGroup,
     faReceipt,
+    faShieldHalved,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default [
@@ -74,5 +75,12 @@ export default [
         icon: <FontAwesomeIcon icon={faUser} className="text-lg" />,
         route: "admin.backend.users.index",
         permission: "USERS",
+    },
+    {
+        id: "audit",
+        name: "Audit Trails",
+        icon: <FontAwesomeIcon icon={faShieldHalved} className="text-lg" />,
+        route: "admin.backend.audit.index",
+        permission: "AUDIT_TRAILS",
     },
 ];

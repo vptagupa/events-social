@@ -14,12 +14,23 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Enums\UserType;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Participant extends Authenticatable
+class Participant extends Authenticatable implements Auditable
 {
     use HasApiTokens, HasFactory, Notifiable;
     use Notifications\ParticipantNotification;
     use Relations\Permission;
+    use \OwenIt\Auditing\Auditable;
+
+    /**
+     * Attributes to exclude from the Audit.
+     *
+     * @var array
+     */
+    protected $auditExclude = [
+        'password',
+    ];
 
     /**
      * The attributes that are mass assignable.

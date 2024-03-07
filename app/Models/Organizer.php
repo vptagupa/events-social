@@ -5,15 +5,27 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\UserType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Organizer extends Authenticatable
+class Organizer extends Authenticatable implements Auditable
 {
     use HasApiTokens, HasFactory, Notifiable;
     use Notifications\OrganizerNotification;
     use Relations\Permission;
+    use \OwenIt\Auditing\Auditable;
+
+    /**
+     * Attributes to exclude from the Audit.
+     *
+     * @var array
+     */
+    protected $auditExclude = [
+        'password',
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -81,5 +93,10 @@ class Organizer extends Authenticatable
     public function exports()
     {
         return $this->morphMany(Export::class, 'creator');
+    }
+
+    public function auditLogs(): MorphMany
+    {
+        return $this->morphMany(Audit::class, 'user');
     }
 }

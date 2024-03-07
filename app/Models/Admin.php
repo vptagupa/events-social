@@ -6,15 +6,27 @@ namespace App\Models;
 use App\Enums\Role;
 use App\Enums\UserType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Admin extends Authenticatable
+class Admin extends Authenticatable implements Auditable
 {
     use HasApiTokens, HasFactory, Notifiable;
     use Notifications\AdminNotification;
     use Relations\Permission;
+    use \OwenIt\Auditing\Auditable;
+
+    /**
+     * Attributes to exclude from the Audit.
+     *
+     * @var array
+     */
+    protected $auditExclude = [
+        'password',
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -63,4 +75,9 @@ class Admin extends Authenticatable
     protected $appends = [
         'access'
     ];
+
+    public function auditLogs(): MorphMany
+    {
+        return $this->morphMany(Audit::class, 'user');
+    }
 }

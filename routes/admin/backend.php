@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\Backend\AuditController;
 use App\Http\Controllers\Admin\Backend\ImportController;
 use App\Http\Controllers\Admin\Backend\OrganizersController;
 use App\Http\Controllers\Admin\Backend\SystemFeesController;
@@ -65,6 +66,10 @@ Route::middleware(['auth:admin', RedirectIfTemporaryPassword::class])->name('adm
 
         Route::controller(ImportController::class)->prefix('import')->name('import.')->group(function () {
             Route::get('/', 'import')->name('import');
+        });
+        Route::controller(AuditController::class)->prefix('audit-trails')->name('audit.')->group(function () {
+            Route::post('/list', 'list')->name('list');
+            Route::get('/', 'index')->name('index');
         });
     });
 });

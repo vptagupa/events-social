@@ -9,12 +9,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Workshop extends Model
+class Workshop extends Model implements Auditable
 {
     use HasFactory, HasUuids, Notifiable;
     use Generators\WorkshopGenerator;
     use Notifications\WorkshopNotification;
+    use \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
         'code',

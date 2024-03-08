@@ -20,7 +20,7 @@ export default function Index(props) {
             <div className="bg-slate-100 text-slate-500 w-full min-h-screen flex xs:max-sm:pl-4 md:pl-6 pt-4 pr-4">
                 <div className="md:w-[13%] flex flex-col z-[99999]">
                     <div className="xs:max-sm:hidden h-12 flex gap-x-3 items-center justify-center text-xs">
-                        <img src={Logo} className="h-6 w-6" />{" "}
+                        <img src={Logo} className="w-12" />{" "}
                         {import.meta.env.VITE_APP_NAME}
                     </div>
                     <div className="xs:max-sm:hidden flex items-center justify-center">
@@ -46,7 +46,7 @@ export default function Index(props) {
                             />
                         </div>
                         <div className="md:hidden flex gap-x-3 items-center justify-center text-xs">
-                            <img src={Logo} className="h-6 w-6" />
+                            <img src={Logo} className="w-12" />
                         </div>
                         <div className="xs:max-sm:hidden">
                             <ol>

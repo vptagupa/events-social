@@ -67,7 +67,7 @@ export default memo(function Component() {
                     <div className="text-center !mt-10">
                         <Button
                             processing={form.processing}
-                            className="flex justify-center w-full text-center text-white font-bold uppercase bg-gradient-to-r  from-purple-400 to-indigo-400"
+                            className="flex justify-center w-full text-center text-white font-bold uppercase bg-[#36a4a9]"
                         >
                             Send
                         </Button>

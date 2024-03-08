@@ -97,12 +97,12 @@ export default function Component({ setTab }) {
                         <div className="text-center !mt-10">
                             <Button
                                 processing={form.processing}
-                                className="flex justify-center w-full text-center text-white font-bold uppercase bg-gradient-to-r  from-purple-400 to-indigo-400"
+                                className="flex justify-center w-full text-center text-white font-bold uppercase bg-[#36a4a9]"
                             >
                                 <span>Signup</span>
                             </Button>
                         </div>
-                        <div className="flex flex-col gap-y-2">
+                        <div className="flex-col gap-y-2 hidden">
                             <span className="text-xs border-b border-slate-200 pb-1">
                                 For a quick access, sign-up as:
                             </span>

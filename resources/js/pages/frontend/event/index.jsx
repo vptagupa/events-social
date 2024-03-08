@@ -13,9 +13,9 @@ export default function Event({ event }) {
                 Fallback={<p>There was an error while accessing the form</p>}
             >
                 <div className="h-screen w-full  flex flex-col items-center justify-center transition-all ease-in-out delay-200 duration-1000">
-                    <div className="relative antialiased  w-full md:w-1/2 flex flex-col items-center justify-center transition-all ease-in-out delay-75 duration-150">
-                        <div className="z-10 text-white  rounded-3xl shadow-md shadow-slate-400/50 bg-gradient-to-t from-[#BF3131] to-[#BF3131] absolute w-[88%] md:w-2/3 min-h-[300px] max-h-[200px] md:-translate-x-[40%] -translate-y-[60%] md:-translate-y-[50%] border-box border-0 border-red-700">
-                            <div className="w-full bg-black/70 p-4 mt-5 mb-5 text-lg md:text-xl text-center flex items-center justify-center">
+                    <div className="relative antialiased w-full md:w-1/2 flex flex-col items-center justify-center transition-all ease-in-out delay-75 duration-150">
+                        <div className="z-10 text-white  rounded-3xl shadow-md shadow-slate-400/50 bg-gradient-to-t from-[#BF3131] to-[#BF3131] absolute w-[93%] md:w-2/3 min-h-[300px] max-h-[200px]  -translate-y-[60%] md:-translate-y-[55%] border-box border-0 border-red-700">
+                            <div className="w-full bg-black/70 p-4 mt-5 text-lg md:text-xl text-center flex items-center justify-center">
                                 {event.title}
                             </div>
                             <div className="w-full py-4 px-7 gap-y-1 flex flex-col items-center justify-start">

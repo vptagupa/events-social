@@ -24,11 +24,11 @@ export default function Component() {
 
     return (
         <Layout>
-            <div className="h-screen w-screen md:p-4 text-slate-500 flex items-center justify-center bg-gradient-to-r from-indigo-400  to-purple-400">
-                <div className="hidden lg:visible lg:w-[60%] xl:w-[72%] lg:flex flex-col items-center justify-start">
-                    <div className="text-center p-10 w-full h-full backdrop-saturate-125 bg-white/30">
-                        <h1 className="text-9xl">
-                            {import.meta.env.VITE_APP_NAME}
+            <div className="h-screen w-screen md:p-4 text-slate-500 flex xs:max-sm:flex-col items-center justify-center bg-gradient-to-b from-[#36a4a9]  to-[#263c76]">
+                <div className="visible h-[11rem] md:h-auto lg:w-[60%] xl:w-[72%] lg:flex flex-col items-center justify-start">
+                    <div className="text-center md:p-10 w-full h-full backdrop-saturate-125 text-white">
+                        <h1 className="text-2xl md:text-7xl">
+                            37th Annual AACCUP National Conference
                         </h1>
                     </div>
                 </div>
@@ -36,19 +36,19 @@ export default function Component() {
                     className={`w-[90%] p-2 md:p-2 lg:p-4 md:w-[50%] lg:w-[40%] xl:w-[28%]  flex items-center justify-center`}
                 >
                     <div className="w-full pb-2 px-2 lg:px-4 bg-white rounded-2xl">
-                        <div className="flex flex-col space-y-1 text-center mb-5 mt-4">
-                            <span>
-                                <img className="h-[3rem] inline" src={Logo} />
+                        <div className="w-full relative flex flex-items-center justify-center space-y-1 text-center mb-5 mt-4">
+                            <span className="absolute -top-[7rem]">
+                                <img className="h-[8rem]" src={Logo} />
                             </span>
                         </div>
                         <div
                             className={`${(() => {
                                 if (defferTab == "login") {
-                                    return "h-[400px]";
+                                    return "h-[290px]";
                                 } else if (defferTab == "forgot") {
                                     return "h-[175px]";
                                 } else if (defferTab == "registration") {
-                                    return "h-[400px]";
+                                    return "h-[280px]";
                                 }
                             })()} transition-all ease-in-out delay-100`}
                         >

@@ -143,6 +143,7 @@ export default function Component({ value, column }) {
         contract: (value) => (
             <Contract
                 {...props}
+                isRequired={value?.config?.is_required ?? false}
                 checked={value?.value ?? false}
                 title={value.config?.name ?? ""}
                 content={value.config?.content ?? ""}

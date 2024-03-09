@@ -36,21 +36,23 @@ export default function Verifier({ event }) {
                                         })
                                     }
                                 />
-                                <Search
-                                    onChange={setWorkshop}
-                                    value={workshop}
-                                    event={event}
-                                    isOpen={state.search}
-                                    onChangeState={(open) =>
-                                        setState({
-                                            ...state,
-                                            search: open,
-                                            scanner: open
-                                                ? false
-                                                : state.scanner,
-                                        })
-                                    }
-                                />
+                                {!state.scanner && (
+                                    <Search
+                                        onChange={setWorkshop}
+                                        value={workshop}
+                                        event={event}
+                                        isOpen={state.search}
+                                        onChangeState={(open) =>
+                                            setState({
+                                                ...state,
+                                                search: open,
+                                                scanner: open
+                                                    ? false
+                                                    : state.scanner,
+                                            })
+                                        }
+                                    />
+                                )}
                             </div>
                         )}
 

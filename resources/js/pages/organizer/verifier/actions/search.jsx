@@ -30,7 +30,7 @@ export default function Search({
                 <Button
                     onClick={(e) => setOpen(!open)}
                     type="button"
-                    className="text-2xl md:!text-6xl !shadow-none bg-slate-500 hover:!bg-slate-600 uppercase"
+                    className="!text-3xl md:!text-6xl !shadow-none bg-slate-500 hover:!bg-slate-600 uppercase"
                 >
                     {open ? "Close Search Box" : "Search"}
                 </Button>

@@ -9,22 +9,23 @@ export default function Participant({ workshop, onChange }) {
 
     return (
         <div className="relative w-full flex flex-col items-center justify-center gap-y-3">
-            <div className="w-full flex items-center justify-center p-2 bg-slate-200 text-black rounded-lg text-base">
-                <Attendance data={workshop?.attendance ?? []} />
+            {(workshop?.attendance ?? []).length > 0 && (
+                <div className="w-full flex items-center justify-center p-2 bg-slate-200 text-black rounded-lg text-base">
+                    <Attendance data={workshop?.attendance ?? []} />
+                </div>
+            )}
+
+            <div className="w-full flex items-center justify-center p-2 text-slate-200 rounded-lg text-base">
+                <div className="w-1/2">Code:</div>
+                <div className="w-1/2 text-end text-2xl">{workshop.code}</div>
             </div>
-            <div className="w-full flex items-center justify-center p-2 border-[3px] border-slate-200 rounded-lg text-base">
-                <div className="w-1/2">Name:</div>
-                <div className="w-1/2  text-end text-2xl">
+            <div className="w-full flex items-center justify-center p-2 bg-slate-200 rounded-lg text-black text-base">
+                <div className="w-full text-end text-2xl">
                     {workshop.participant.name}
                 </div>
             </div>
-            <div className="w-full flex items-center justify-center p-2 border-[3px] border-slate-200 rounded-lg text-base">
-                <div className="w-1/2">Code:</div>
-                <div className="w-1/2  text-end text-2xl">{workshop.code}</div>
-            </div>
-            <div className="w-full p-2 flex items-center justify-center border-[3px] border-slate-200 rounded-lg text-base">
-                <div className="w-1/2">Status:</div>
-                <div className="w-1/2 text-end uppercase text-2xl">
+            <div className="w-full p-2 flex items-center justify-center bg-slate-200 rounded-lg text-black text-base">
+                <div className="w-full text-end uppercase text-2xl">
                     {workshop.statuses[0]?.status}
                 </div>
             </div>
@@ -33,7 +34,7 @@ export default function Participant({ workshop, onChange }) {
                 <Button
                     onClick={(e) => onChange(null)}
                     type="button"
-                    className="!shadow-none bg-gradient-to-b from-slate-500 to-slate-600 text-white"
+                    className="!shadow-none bg-gradient-to-b from-slate-400 to-slate-500 text-slate-300"
                 >
                     <FontAwesomeIcon icon={faReply} className="text-3xl" />
                 </Button>

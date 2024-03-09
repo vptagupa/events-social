@@ -7,6 +7,8 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use chillerlan\QRCode\QRCode;
+
 
 class TrackingLink extends Notification
 {
@@ -39,14 +41,10 @@ class TrackingLink extends Notification
     {
         return(new MailMessage)
             ->subject($this->event->title . ' - Tracking Link.')
-            ->line('Thank you for participating for this coming event on '
-                . $this->event->expected_start_at->format('F j, Y, h:i a ') . '.')
-            ->line('Event: ' . $this->event->title)
-            ->line('Place: ' . $this->event->place)
-            ->line('Address: ' . $this->event->address)
-            ->line('To continue editing or checking the status of your application, please use the link below.')
-            ->action('Continue', url(route('registration.index', $this->workshop->uuid)))
-            ->line('See you!');
+            ->markdown('mail.tracking-link', [
+                'workshop' => $this->workshop,
+                'qrcode' => (new QRCode)->render($this->workshop->uuid)
+            ]);
     }
 
     /**

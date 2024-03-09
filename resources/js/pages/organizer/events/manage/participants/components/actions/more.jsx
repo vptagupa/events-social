@@ -12,6 +12,7 @@ import ResendInvitation from "./resend-invite";
 import ResendPaymentForm from "./resend-payment";
 import ResetPassword from "./reset";
 import Tracker from "./tracker";
+import ResendTrackingLink from "./resend-tracking-link";
 
 export default function More({ value }) {
     const actions = [
@@ -19,6 +20,7 @@ export default function More({ value }) {
         <DownloadCert value={value} />,
         <ResendInvitation value={value} />,
         <ResendPaymentForm value={value} />,
+        <ResendTrackingLink value={value} />,
     ];
     return (
         <div className="w-2 text-right">

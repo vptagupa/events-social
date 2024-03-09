@@ -117,6 +117,7 @@ Route::middleware(['auth:organizer,admin', RedirectIfTemporaryPassword::class])-
             Route::patch('/confirmed', 'confirmed')->name('confirmed');
             Route::get('/resend-invite', 'resendInvitation')->name('resend-invite');
             Route::get('/resend-payment', 'resendPaymentForm')->name('resend-payment');
+            Route::get('/resend-tracking-link', 'resendTrackingLink')->name('resend-tracking-link');
         });
     });
 

@@ -49,8 +49,7 @@ export default function Scanner({
                                     "organizer.events.participants.verifier.verify",
                                     {
                                         event: event.id,
-                                        workshop:
-                                            "9b7bc635-736e-4e95-8269-778ecc4b07a5",
+                                        workshop: result,
                                     }
                                 )
                             )

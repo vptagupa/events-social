@@ -108,4 +108,12 @@ class ParticipantController extends Controller
     {
         $workshop->sendPaymentForm();
     }
+
+    /**
+     * Resend tracking link mail
+     */
+    public function resendTrackingLink(Workshop $workshop)
+    {
+        $workshop->sendTrackingLink();
+    }
 }

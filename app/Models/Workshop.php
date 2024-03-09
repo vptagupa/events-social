@@ -219,4 +219,9 @@ class Workshop extends Model implements Auditable
     {
         return $this->hasMany(Certificate::class);
     }
+
+    public function attendance()
+    {
+        return $this->hasMany(Attendance::class);
+    }
 }

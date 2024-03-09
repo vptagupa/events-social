@@ -3,6 +3,7 @@
 namespace App\Repositories\Conditions;
 
 use App\Enums\RegistrationStatus;
+use Carbon\Carbon;
 
 trait ParticipantCondition
 {
@@ -64,6 +65,26 @@ trait ParticipantCondition
         return $builder->when(isset($query['workshops.certificates']) && $query['workshops.certificates'], function ($builder) use ($query) {
             $builder->with([
                 'workshops.certificates'
+            ]);
+        });
+    }
+
+    public function workshopsWithAttendanceCondition(&$builder, $query)
+    {
+        return $builder->when(isset($query['workshops.attendance']) && $query['workshops.attendance'], function ($builder) use ($query) {
+            $builder->with([
+                'workshops.attendance'
+            ]);
+        });
+    }
+
+    public function workshopsWithTodaysAttendanceCondition(&$builder, $query)
+    {
+        return $builder->when(isset($query['workshops.todays_attendance']) && $query['workshops.todays_attendance'], function ($builder) use ($query) {
+            $builder->with([
+                'workshops.attendance' => function ($builder) {
+                    return $builder->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'));
+                }
             ]);
         });
     }

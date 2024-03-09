@@ -11,6 +11,7 @@ use App\Http\Controllers\Organizer\OffersController;
 use App\Http\Controllers\Organizer\OrganizerController;
 use App\Http\Controllers\Organizer\ParticipantsController;
 use App\Http\Controllers\Organizer\RegistrationFormController;
+use App\Http\Controllers\Organizer\VerifierController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Participant\ParticipantController;
@@ -62,6 +63,13 @@ Route::middleware(['auth:organizer,admin', RedirectIfTemporaryPassword::class])-
                 Route::post('/list', 'list')->name('list');
                 Route::post('/invite', 'invite')->name('invite');
                 Route::post('{participant}/upload-proof-of-payment', 'uploadProofOfPayment')->name('upp');
+
+                // Verifier
+                Route::controller(VerifierController::class)->prefix('verifier')->name('verifier.')->group(function () {
+                    Route::get('/', 'index')->name('index');
+                    Route::post('/{workshop:uuid}/verify', 'verify')->name('verify');
+                    Route::post('/{workshop}', 'store')->name('store');
+                });
             });
             Route::resource('participants', ParticipantsController::class)->except(['create', 'edit']);
             Route::name('export.')->prefix('export')->group(function () {

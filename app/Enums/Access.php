@@ -14,6 +14,7 @@ enum Access
     case SETUP_FEES;
     case USERS;
     case AUDIT_TRAILS;
+    case VERIFIER;
 
 
     public static function all(): array
@@ -34,6 +35,7 @@ enum Access
                 Access::SETUP->name => [Action::ALL->name],
                 Access::SETUP_FEES->name => [Action::ALL->name],
                 Access::USERS->name => [Action::ALL->name],
+                Access::VERIFIER->name => [Action::ALL->name],
                 Access::AUDIT_TRAILS->name => [Action::ALL->name],
 
             ],
@@ -50,6 +52,7 @@ enum Access
                 Access::FEES->name => [Action::ALL->name],
                 Access::PARTICIPANTS->name => [Action::ALL->name],
                 Access::PAYMENTS->name => [Action::ALL->name],
+                Access::VERIFIER->name => [Action::ALL->name],
             ],
             UserType::PARTICIPANT->name => [
                 Access::EVENTS->name => [Action::ALL->name],

@@ -31,7 +31,7 @@ export default function Component({ item }) {
                         <tbody>
                             <tr className={border}>
                                 <td className={styleName}>User:</td>
-                                <td className={style}>{item.user.name}</td>
+                                <td className={style}>{item?.user?.name}</td>
                             </tr>
                             <tr className={border}>
                                 <td className={styleName}>Date & Time:</td>

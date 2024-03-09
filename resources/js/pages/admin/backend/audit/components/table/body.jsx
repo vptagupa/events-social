@@ -57,7 +57,7 @@ const Component = ({ data, pagination, setSearch, handleSearch }) => {
                             {tableList.map((item) => {
                                 return (
                                     <Tr key={item.id}>
-                                        <Td>{item.user.name}</Td>
+                                        <Td>{item?.user?.name}</Td>
                                         <Td>{item.event}</Td>
                                         <Td>{item.auditable_type}</Td>
                                         <Td>{item.auditable_id}</Td>

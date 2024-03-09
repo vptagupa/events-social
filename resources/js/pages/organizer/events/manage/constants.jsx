@@ -121,16 +121,16 @@ export const menus = [
             />
         ),
     },
-    {
-        title: "Official Receipt",
-        url: () => "",
-        isActive: () => false,
-        icon: () => (
-            <FontAwesomeIcon
-                icon={faFileInvoice}
-                title="Official Receipt"
-                className={`${menuIconClasses}`}
-            />
-        ),
-    },
+    // {
+    //     title: "Official Receipt",
+    //     url: () => "",
+    //     isActive: () => false,
+    //     icon: () => (
+    //         <FontAwesomeIcon
+    //             icon={faFileInvoice}
+    //             title="Official Receipt"
+    //             className={`${menuIconClasses}`}
+    //         />
+    //     ),
+    // },
 ];

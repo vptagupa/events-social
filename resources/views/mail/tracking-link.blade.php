@@ -1,5 +1,5 @@
 <x-mail::message>
-# Introduction
+<p>Hello, </p>
 
 <p>Thank you for participating for this coming event on {{ $workshop->event->expected_start_at->format('F j, Y, h:i a ') }}.</p>
 <p>Event: {{ $workshop->event->title }}</p>

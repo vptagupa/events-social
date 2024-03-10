@@ -125,6 +125,8 @@ trait ParticipantCondition
                             $builder->whereNotNull('confirmed_at');
                         } elseif (RegistrationStatus::CANCELLED === RegistrationStatus::from($filter['value'])) {
                             $builder->whereNotNull('cancelled_at');
+                        } elseif (RegistrationStatus::ATTENDANCE === RegistrationStatus::from($filter['value'])) {
+                            $builder->whereHas('attendance');
                         }
 
                     } else {

@@ -24,7 +24,7 @@ export default function Attend({ value, onChange }) {
                             setTimeout(() => {
                                 onChange(null);
                                 setSuccess(false);
-                            }, 2000);
+                            }, 1000);
                         },
                         onFinish: () => setProcessing(false),
                     }

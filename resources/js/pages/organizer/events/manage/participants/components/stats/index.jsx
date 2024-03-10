@@ -9,7 +9,6 @@ export default function Stats({ event }) {
         axios
             .get(route("organizer.events.statistics", event.id))
             .then((res) => {
-                console.log(res.data);
                 setData((data) =>
                     data.map((d) => {
                         d.value =

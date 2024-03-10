@@ -41,7 +41,9 @@ class Certificate extends Notification
             ->line("We are pleased to inform you that your attendance certificate for the " . $this->workshop->event->title . " is now available for download.")
             ->line("Please find the attached file to access your certificate.")
             ->line("If you have any questions or encounter any issues while downloading your certificate, please don't hesitate to reach out to us. We're here to assist you.")
-            ->attach(storage_path('app/' . $this->certificate->file->path));
+            ->attach(storage_path('app/' . $this->certificate->file->path), [
+                'as' => 'certificate.' . $this->certificate->file->ext
+            ]);
     }
 
     /**

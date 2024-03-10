@@ -55,7 +55,9 @@ class Confirmed extends Notification
             ->line('We look forward to seeing you at the event!');
 
         if ($this->transaction->officialReceipt) {
-            $message->attach(storage_path('app/' . $this->transaction->officialReceipt->path));
+            $message->attach(storage_path('app/' . $this->transaction->officialReceipt->path), [
+                'as' => 'receipt.' . $this->transaction->officialReceipt->ext
+            ]);
         }
 
         return $message;

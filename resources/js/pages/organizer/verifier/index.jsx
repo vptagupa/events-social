@@ -20,9 +20,9 @@ export default function Verifier({ event }) {
                         {event.title} verifier
                     </div>
 
-                    <div className="min-h-screen rounded-2xl shadow-sm bg-gradient-to-t from-purple-500 to-purple-600 text-slate-100 pt-2 pb-3 flex flex-col items-center justify-center gap-y-2">
+                    <div className="min-h-[70vh] rounded-2xl shadow-sm bg-gradient-to-t from-purple-500 to-purple-600 text-slate-100 pt-2 pb-3 flex flex-col items-center justify-center gap-y-2">
                         {!workshop && (
-                            <div className="w-full md:w-1/2 p-2 flex flex-col items-center justify-center gap-y-2">
+                            <div className="relative w-full md:w-1/2 p-2 flex flex-col items-center justify-center gap-y-2">
                                 <Scanner
                                     onChange={setWorkshop}
                                     value={workshop}
@@ -36,7 +36,16 @@ export default function Verifier({ event }) {
                                         })
                                     }
                                 />
-                                {!state.scanner && (
+
+                                <Transition
+                                    show={!state.scanner}
+                                    enter="transition-opacity duration-1000"
+                                    enterFrom="opacity-0"
+                                    enterTo="opacity-100"
+                                    leave="transition-opacity duration-500"
+                                    leaveFrom="opacity-100"
+                                    leaveTo="opacity-0"
+                                >
                                     <Search
                                         onChange={setWorkshop}
                                         value={workshop}
@@ -52,13 +61,19 @@ export default function Verifier({ event }) {
                                             })
                                         }
                                     />
-                                )}
+                                </Transition>
                             </div>
                         )}
 
                         <Transition
                             show={workshop ? true : false}
                             className="w-full md:w-1/2 p-4"
+                            enter="transition-opacity duration-1000"
+                            enterFrom="opacity-0"
+                            enterTo="opacity-100"
+                            leave="transition-opacity duration-500"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
                         >
                             <Participant
                                 workshop={workshop}

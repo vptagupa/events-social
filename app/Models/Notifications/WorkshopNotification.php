@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Notification;
 
 trait WorkshopNotification
 {
-    public function notifyConfirmed(Transaction $transaction)
+    public function notifyConfirmed(?Transaction $transaction = null)
     {
         Notification::route('mail', [
             $this->participant->email

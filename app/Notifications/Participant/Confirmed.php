@@ -18,7 +18,7 @@ class Confirmed extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct(protected Workshop $workshop, protected Transaction $transaction)
+    public function __construct(protected Workshop $workshop, protected ?Transaction $transaction = null)
     {
         $this->event = $this->workshop->event;
     }
@@ -54,7 +54,7 @@ class Confirmed extends Notification
             ->line("If you have any questions or require further assistance, please feel free to reach out to us.")
             ->line('We look forward to seeing you at the event!');
 
-        if ($this->transaction->officialReceipt) {
+        if ($this->transaction && $this->transaction->officialReceipt) {
             $message->attach(storage_path('app/' . $this->transaction->officialReceipt->path), [
                 'as' => 'receipt.' . $this->transaction->officialReceipt->ext
             ]);

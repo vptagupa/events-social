@@ -56,6 +56,8 @@ Route::controller(ParticipantController::class)->group(function () {
         Route::get('/{event:slug}', 'index')->name('index');
         Route::post('/{event:slug}', 'join')->name('join');
     });
+
+    Route::get('/qrcode/{workshop:uuid}', 'qrCode')->name('qrcode');
 });
 
 Route::redirect('/', 'redirect');

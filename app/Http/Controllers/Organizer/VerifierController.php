@@ -20,7 +20,9 @@ class VerifierController extends Controller
 
     public function store(Request $request, Event $event, Workshop $workshop)
     {
-        $workshop->attendance()->save(new Attendance);
+        $request->user()->attendanceCreated()->save(new Attendance([
+            'workshop_id' => $workshop->id
+        ]));
     }
 
     public function verify(Request $request, Event $event, Workshop $workshop)

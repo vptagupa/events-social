@@ -42,8 +42,9 @@ class ParticipantsController extends Controller
         return ParticipantResource::collection(
             $this->repository->list(
                 query: [
-                    'query' => $request->get('query'),
+                    'query' => is_array($request->get('query')) ? $request->get('query')['query'] : $request->get('query'),
                     'event_id' => $event->id,
+                    'filter' => $request->get('query')['statuses'] ?? [],
                     ...($request->has('with') ? $request->get('with') : [])
                 ],
                 orderBy: ['id', 'desc'],

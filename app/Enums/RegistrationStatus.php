@@ -17,6 +17,7 @@ enum RegistrationStatus: string
     case CONFIRMED = "Confirmed";
     case CANCELLED = "Cancelled";
     case ATTENDANCE = "Attendance";
+    case NO_ATTENDANCE = "No Attendance";
 
 
     public static function all(): array

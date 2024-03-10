@@ -10,7 +10,9 @@ class Attendance extends Model
     use HasFactory;
 
     protected $fillable = [
-        'workshop_id'
+        'workshop_id',
+        'creator_type',
+        'creator_id'
     ];
 
     protected $casts = [
@@ -20,5 +22,10 @@ class Attendance extends Model
     public function workshop()
     {
         return $this->belongsTo(Workshop::class);
+    }
+
+    public function creator()
+    {
+        return $this->morphTo();
     }
 }

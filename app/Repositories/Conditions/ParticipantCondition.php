@@ -95,7 +95,7 @@ trait ParticipantCondition
             $builder->whereHas('workshops', function ($builder) use ($query) {
                 $builder->whereEventId($query['event_id']);
                 foreach ($query['filter'] as $filter) {
-                    if (strtolower($filter['name']) == 'status' && $filter['value'] != '') {
+                    if (RegistrationStatus::from($filter['value']) instanceof RegistrationStatus) {
                         if (RegistrationStatus::INVITED === RegistrationStatus::from($filter['value'])) {
                             $builder->whereNotNull('invited_at');
                         } elseif (RegistrationStatus::INVITED_ACCEPTED === RegistrationStatus::from($filter['value'])) {
@@ -127,6 +127,8 @@ trait ParticipantCondition
                             $builder->whereNotNull('cancelled_at');
                         } elseif (RegistrationStatus::ATTENDANCE === RegistrationStatus::from($filter['value'])) {
                             $builder->whereHas('attendance');
+                        } elseif (RegistrationStatus::NO_ATTENDANCE === RegistrationStatus::from($filter['value'])) {
+                            $builder->whereDoesntHave('attendance');
                         }
 
                     } else {

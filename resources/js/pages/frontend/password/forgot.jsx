@@ -5,7 +5,7 @@ import { AlertDanger, AlertSuccess } from "@/js/components/alerts";
 import { memo } from "react";
 
 export default memo(function Component() {
-    const form = useForm("post", route("organizer.forgot-password.send"), {
+    const form = useForm("post", route("forgot-password.send"), {
         email: "",
     });
 

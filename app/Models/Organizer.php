@@ -99,4 +99,9 @@ class Organizer extends Authenticatable implements Auditable
     {
         return $this->morphMany(Audit::class, 'user');
     }
+
+    public function attendanceCreated()
+    {
+        return $this->morphMany(Attendance::class, 'creator');
+    }
 }

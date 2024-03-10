@@ -28,6 +28,7 @@
         "@heroicons/react": "^2.1.1",
         "@inertiajs/react": "^1.0.15",
         "@table-library/react-table-library": "^4.1.7",
+        "@yudiel/react-qr-scanner": "^2.0.0-beta.3",
         "eventemitter3": "^5.0.1",
         "install": "^0.13.0",
         "jodit": "^4.0.6",

@@ -78,6 +78,9 @@ Route::controller(\App\Http\Controllers\Frontend\Auth\AuthController::class)->gr
         Route::post('/', 'attempt')->name('attempt');
     })->middleware('guest');
 
+    Route::controller(\App\Http\Controllers\Frontend\Auth\ForgotPasswordController::class)->prefix('forgot-password')->name('forgot-password.')->group(function () {
+        Route::post('/', 'send')->name('send');
+    });
     Route::post('/register', [\App\Http\Controllers\Frontend\Auth\RegisterController::class, 'store'])->name('register');
     Route::get('redirect', 'redirect')->name('redirect');
 });

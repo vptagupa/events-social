@@ -65,7 +65,9 @@ const Component = ({
                             <TrH>
                                 <Th>Organizer</Th>
                                 <Th>Title</Th>
-                                <Th>Description</Th>
+                                <Th className="hidden md:visible">
+                                    Description
+                                </Th>
                                 <Th>Start At</Th>
                                 <Th>End At</Th>
                                 <Th>Offer Price</Th>
@@ -88,7 +90,9 @@ const Component = ({
                                             </div>
                                         </Td>
                                         <Td>{item.title}</Td>
-                                        <Td>{item.description}</Td>
+                                        <Td className="hidden md:visible">
+                                            {item.description}
+                                        </Td>
                                         <Td>{item.expected_start_at}</Td>
                                         <Td>{item.expected_end_at}</Td>
                                         <Td className="text-center">

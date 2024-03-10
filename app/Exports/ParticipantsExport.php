@@ -42,7 +42,10 @@ class ParticipantsExport implements WithMapping, FromQuery, WithHeadings, WithEv
     public function map($participant): array
     {
         $this->data = [];
-        $registrations = RegistrationForm::populate($participant->id, $participant->workshops->first()->event_id);
+        $workshop = $participant->workshops->first();
+        $registrations = RegistrationForm::populate($participant->id, $workshop->event_id);
+
+        $this->data[] = $workshop->code;
 
         foreach ($registrations as $flex) {
             Griddable::grids($flex['grids'], function ($grid, $column, $component) {
@@ -54,19 +57,27 @@ class ParticipantsExport implements WithMapping, FromQuery, WithHeadings, WithEv
             });
         }
 
+        foreach ($workshop->attendance as $row) {
+            $this->data[] = $row->created_at;
+        }
+
         return $this->data;
     }
 
     public function headings(): array
     {
         $this->data = [];
-        $registrations = $this->events->find($this->filter['event_id'])?->registrationForm?->schema['flexis'] ?? [];
+        $event = $this->events->find($this->filter['event_id']);
+        $registrations = $event?->registrationForm?->schema['flexis'] ?? [];
 
+        $this->data[] = 'Code';
         foreach ($registrations as $flex) {
             Griddable::grids($flex['grids'], function ($grid, $column, $component) {
                 $this->data[] = $component['config']['name'] ?? '';
             });
         }
+
+        $this->data[] = 'Attendance';
 
         return $this->data;
     }

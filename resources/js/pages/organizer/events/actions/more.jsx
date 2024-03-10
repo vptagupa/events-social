@@ -8,6 +8,7 @@ import {
 
 import Delete from "./delete";
 import View from "./view";
+import Verifier from "./verifier";
 
 export default function More({ value, route }) {
     const actions = [
@@ -16,6 +17,7 @@ export default function More({ value, route }) {
             value={value}
             url={route.delete(value.organizer.id, value.id)}
         />,
+        <Verifier value={value} />,
     ];
     return (
         <div className="w-2 text-right">

@@ -128,6 +128,7 @@ class EventRepository extends Repository
                 ->whereNotNull('submitted_at')
                 ->count(),
             'failed' => $event->workshops()->where('payment_status', PaymentStatus::FAILED)->count(),
+            'attendance' => $event->workshops()->whereHas('attendance')->count(),
         ];
     }
 }

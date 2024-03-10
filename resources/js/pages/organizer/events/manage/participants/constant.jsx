@@ -4,9 +4,21 @@ import {
     faPesoSign,
     faUserPen,
     faCircleCheck,
+    faClipboardUser,
 } from "@fortawesome/free-solid-svg-icons";
 
 export const stats = [
+    {
+        title: "Attendance",
+        value: 0,
+        className: "",
+        icon: (
+            <FontAwesomeIcon
+                icon={faClipboardUser}
+                className="h-4 w-5  p-3 bg-white text-slate-600 rounded-md shadow-sm shadow-slate-800/40 border-transparent"
+            />
+        ),
+    },
     {
         title: "Registered",
         value: 0,

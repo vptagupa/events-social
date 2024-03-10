@@ -3,6 +3,7 @@
 namespace App\Repositories\Conditions;
 
 use App\Enums\RegistrationStatus;
+use Carbon\Carbon;
 
 trait ParticipantCondition
 {
@@ -68,13 +69,33 @@ trait ParticipantCondition
         });
     }
 
+    public function workshopsWithAttendanceCondition(&$builder, $query)
+    {
+        return $builder->when(isset($query['workshops.attendance']) && $query['workshops.attendance'], function ($builder) use ($query) {
+            $builder->with([
+                'workshops.attendance'
+            ]);
+        });
+    }
+
+    public function workshopsWithTodaysAttendanceCondition(&$builder, $query)
+    {
+        return $builder->when(isset($query['workshops.todays_attendance']) && $query['workshops.todays_attendance'], function ($builder) use ($query) {
+            $builder->with([
+                'workshops.attendance' => function ($builder) {
+                    return $builder->whereDate('created_at', '=', Carbon::now()->format('Y-m-d'));
+                }
+            ]);
+        });
+    }
+
     public function filterCondition(&$builder, $query)
     {
         return $builder->when(isset($query['filter']) && $query['filter'], function ($builder) use ($query) {
             $builder->whereHas('workshops', function ($builder) use ($query) {
                 $builder->whereEventId($query['event_id']);
                 foreach ($query['filter'] as $filter) {
-                    if (strtolower($filter['name']) == 'status' && $filter['value'] != '') {
+                    if (RegistrationStatus::from($filter['value']) instanceof RegistrationStatus) {
                         if (RegistrationStatus::INVITED === RegistrationStatus::from($filter['value'])) {
                             $builder->whereNotNull('invited_at');
                         } elseif (RegistrationStatus::INVITED_ACCEPTED === RegistrationStatus::from($filter['value'])) {
@@ -104,6 +125,10 @@ trait ParticipantCondition
                             $builder->whereNotNull('confirmed_at');
                         } elseif (RegistrationStatus::CANCELLED === RegistrationStatus::from($filter['value'])) {
                             $builder->whereNotNull('cancelled_at');
+                        } elseif (RegistrationStatus::ATTENDANCE === RegistrationStatus::from($filter['value'])) {
+                            $builder->whereHas('attendance');
+                        } elseif (RegistrationStatus::NO_ATTENDANCE === RegistrationStatus::from($filter['value'])) {
+                            $builder->whereDoesntHave('attendance');
                         }
 
                     } else {

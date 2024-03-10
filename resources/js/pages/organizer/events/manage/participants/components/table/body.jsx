@@ -23,6 +23,8 @@ import Upp from "../actions/upp";
 import Participant from "../actions/participant";
 import More from "../actions/more";
 
+import Statuses from "../statuses";
+
 const Component = ({
     event,
     data,
@@ -35,28 +37,40 @@ const Component = ({
 }) => {
     return (
         <>
-            <div className="flex xs:max-md:flex-col xs:gap-y-2 md:gap-y-0 justify-between p-2">
-                <div>
+            <div className="w-full flex xs:max-md:flex-col xs:gap-y-2 md:gap-y-0 justify-between p-2">
+                <div className="w-full md:w-2/5">
                     <Invite event={event} />
                 </div>
-                <div className="flex items-center">
-                    <Input
-                        type="text"
-                        placeholder="Search by name, email, or code"
-                        className="border-r-0 rounded-r-none lg:w-96"
-                        onChange={(e) => setSearch(e.target.value)}
-                    />
-                    <SecondaryButton
-                        onClick={(e) => handleSearch()}
-                        className="shadow-none border border-slate-300 rounded-l-none"
-                    >
-                        <FontAwesomeIcon
-                            icon={faMagnifyingGlass}
-                            className={`h-5 ${
-                                searching ? "animate-pulse text-amber-300" : ""
-                            }`}
+                <div className="w-full md:w-3/5 xs:max-sm:flex-col flex items-center xs:gap-y-2 md:gap-y-0 gap-x-2 justify-end">
+                    <div className="w-full md:w-52 z-20">
+                        <Statuses setSearch={setSearch} />
+                    </div>
+                    <div className="grow flex items-center">
+                        <Input
+                            type="text"
+                            placeholder="Search by name, email, or code"
+                            className="border-r-0 rounded-r-none w-full"
+                            onChange={(e) =>
+                                setSearch((search) => ({
+                                    ...search,
+                                    query: e.target.value,
+                                }))
+                            }
                         />
-                    </SecondaryButton>
+                        <SecondaryButton
+                            onClick={(e) => handleSearch()}
+                            className="shadow-none border border-slate-300 rounded-l-none"
+                        >
+                            <FontAwesomeIcon
+                                icon={faMagnifyingGlass}
+                                className={`h-5 ${
+                                    searching
+                                        ? "animate-pulse text-amber-300"
+                                        : ""
+                                }`}
+                            />
+                        </SecondaryButton>
+                    </div>
                 </div>
             </div>
             <Table

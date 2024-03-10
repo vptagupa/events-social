@@ -52,10 +52,14 @@ export default function Scanner({
                         container: error && {
                             backgroundColor: "#ec4899",
                             border: "4px solid #ec4899",
+                            width: "100%",
+                            height: "100%",
                         },
                         video: error && {
                             backgroundColor: "#ec4899",
                             border: "4px solid #ec4899",
+                            width: "100%",
+                            height: "100%",
                         },
                     }}
                     onResult={(result) => {

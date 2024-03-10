@@ -20,58 +20,57 @@ export default function Verifier({ event }) {
                         {event.title} verifier
                     </div>
 
-                    <div className="min-h-[70vh] rounded-2xl shadow-sm bg-gradient-to-t from-purple-500 to-purple-600 text-slate-100 pt-2 pb-3 flex flex-col items-center justify-center gap-y-2">
-                        {!workshop && (
-                            <div className="relative w-full md:w-1/2 p-2 flex flex-col items-center justify-center gap-y-2">
-                                <Scanner
+                    <div className="min-h-[70vh] relative  rounded-2xl shadow-sm bg-gradient-to-t from-purple-500 to-purple-600 text-slate-100 pt-2 pb-3 flex flex-col items-center justify-center gap-y-2">
+                        <Transition
+                            show={!workshop ? true : false}
+                            className="relative w-full md:w-1/2 p-2 flex flex-col items-center justify-center gap-y-2"
+                            enter="transition-opacity duration-200"
+                            enterFrom="opacity-0"
+                            enterTo="opacity-100"
+                            leave="transition-opacity duration-200"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
+                        >
+                            <Scanner
+                                onChange={setWorkshop}
+                                value={workshop}
+                                event={event}
+                                isOpen={state.scanner}
+                                onChangeState={(open) =>
+                                    setState({
+                                        ...state,
+                                        scanner: open,
+                                        search: open ? false : state.search,
+                                    })
+                                }
+                            />
+
+                            <Transition show={!state.scanner}>
+                                <Search
                                     onChange={setWorkshop}
                                     value={workshop}
                                     event={event}
-                                    isOpen={state.scanner}
+                                    isOpen={state.search}
                                     onChangeState={(open) =>
                                         setState({
                                             ...state,
-                                            scanner: open,
-                                            search: open ? false : state.search,
+                                            search: open,
+                                            scanner: open
+                                                ? false
+                                                : state.scanner,
                                         })
                                     }
                                 />
-
-                                <Transition
-                                    show={!state.scanner}
-                                    enter="transition-opacity duration-1000"
-                                    enterFrom="opacity-0"
-                                    enterTo="opacity-100"
-                                    leave="transition-opacity duration-500"
-                                    leaveFrom="opacity-100"
-                                    leaveTo="opacity-0"
-                                >
-                                    <Search
-                                        onChange={setWorkshop}
-                                        value={workshop}
-                                        event={event}
-                                        isOpen={state.search}
-                                        onChangeState={(open) =>
-                                            setState({
-                                                ...state,
-                                                search: open,
-                                                scanner: open
-                                                    ? false
-                                                    : state.scanner,
-                                            })
-                                        }
-                                    />
-                                </Transition>
-                            </div>
-                        )}
+                            </Transition>
+                        </Transition>
 
                         <Transition
                             show={workshop ? true : false}
-                            className="w-full md:w-1/2 p-4"
-                            enter="transition-opacity duration-1000"
+                            className="absolute w-full md:w-1/2 p-4"
+                            enter="transition-opacity duration-400"
                             enterFrom="opacity-0"
                             enterTo="opacity-100"
-                            leave="transition-opacity duration-500"
+                            leave="transition-opacity duration-400"
                             leaveFrom="opacity-100"
                             leaveTo="opacity-0"
                         >

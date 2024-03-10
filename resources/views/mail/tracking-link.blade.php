@@ -14,7 +14,7 @@ Continue
 
 <p>The organizer will scan the QR code below for verification and attendance.</p>
 <div style="width: 100%; text-align:center;">
-    <img src="{{$qrcode}}" alt="{{$qrcode}}" style="width: 200px;text-align:center;" />
+    <img src="{{route('qrcode', $workshop->uuid)}}" alt="{{$workshop->uuid}}" style="width: 200px;text-align:center;" />
 </div>
 
 <p>See you!</p>

@@ -241,7 +241,6 @@ class ParticipantController extends Controller
         $this->repository->storeForm($request->only(['flex', 'event_id']), $workshop->participant->id);
     }
 
-
     /**
      * Load Qr Code
      */
@@ -254,7 +253,7 @@ class ParticipantController extends Controller
 
         $out = (new QRCode($options))->render($workshop->uuid);
 
-        header('Content-type: image/svg+xml'); // the image type is SVG by default
+        header('Content-type: image/svg+xml');
 
         echo $out;
     }

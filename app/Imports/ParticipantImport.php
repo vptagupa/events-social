@@ -67,11 +67,13 @@ class ParticipantImport implements ToCollection, WithHeadingRow
             ])->first();
 
             if (!$participant) {
-                $exists = $this->participant->model()->where([
+                $model = $this->participant->model()->where([
                     'email' => $row['Email Address'],
-                ])->exists();
+                ]);
 
-                $email = $exists ? $row['Email Address'] . '-duplicate' : $row['Email Address'];
+                $exists = $model->exists();
+
+                $email = $exists ? $row['Email Address'] . '+' . ($model->count() + 1) : $row['Email Address'];
 
                 $exists = $this->participant->model()->where([
                     'email' => $email,

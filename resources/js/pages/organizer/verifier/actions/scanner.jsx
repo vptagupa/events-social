@@ -36,13 +36,12 @@ export default function Scanner({
                 </Button>
             ) : (
                 <div className="flex justify-end w-full">
-                    <Button
-                        type="button"
-                        className={`!text-6x !shadow-none bg-slate-500 hover:!bg-slate-600 uppercase`}
+                    <FontAwesomeIcon
+                        title="Back"
                         onClick={(e) => setOpen(false)}
-                    >
-                        <FontAwesomeIcon icon={faReply} className="text-3xl" />
-                    </Button>
+                        icon={faReply}
+                        className="text-3xl text-slate-300 cursor-pointer hover:scale-150 transition-all ease-in-out delay-100 duration-300"
+                    />
                 </div>
             )}
 

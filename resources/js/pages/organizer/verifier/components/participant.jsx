@@ -31,13 +31,13 @@ export default function Participant({ workshop, onChange }) {
             </div>
 
             <div className="w-full mt-10 p-2 flex items-center justify-between gap-x-4 border-0 border-slate-200 rounded-lg text-base">
-                <Button
+                <FontAwesomeIcon
+                    title="Back"
                     onClick={(e) => onChange(null)}
-                    type="button"
-                    className="!shadow-none bg-gradient-to-b from-slate-400 to-slate-500 text-slate-300"
-                >
-                    <FontAwesomeIcon icon={faReply} className="text-3xl" />
-                </Button>
+                    icon={faReply}
+                    className="text-3xl text-slate-300 cursor-pointer hover:scale-150 transition-all ease-in-out delay-100 duration-300"
+                />
+
                 <Attend value={workshop} onChange={onChange} />
             </div>
         </div>

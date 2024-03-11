@@ -163,7 +163,7 @@ const Component = ({
                                         </Cell>
                                         <Td>{item.name}</Td>
                                         <Td>{item?.workshop?.code ?? ""}</Td>
-                                        <Td>{item.file.orig_filename}</Td>
+                                        <Td>{item?.file?.orig_filename}</Td>
                                         <Td>{item.downloads}</Td>
                                         <Td>{item.prints}</Td>
                                         <Td>{item.sents}</Td>

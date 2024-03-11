@@ -47,6 +47,7 @@ class ParticipantImport implements ToCollection, WithHeadingRow
                     );
                 }
             });
+            \DB::commit();
         }
     }
 
@@ -130,7 +131,7 @@ class ParticipantImport implements ToCollection, WithHeadingRow
             Griddable::grids($flex['grids'], function ($grid, $column, $component, $flex) use ($row, $workshop) {
                 foreach ($row as $key => $value) {
                     if (trim($key) == trim(($component['config']['name'] ?? ''))) {
-                        $workshop->registrations()->saveQuietly(
+                        $workshop->registrations()->save(
                             new Registration([
                                 'flex' => $flex['flex'],
                                 'grid' => $grid['grid'],

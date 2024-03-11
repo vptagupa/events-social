@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Frontend\EventController;
 use App\Http\Controllers\Frontend\ParticipantController;
+use App\Http\Controllers\Organizer\CertificatesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\Auth\AuthController;
 
@@ -57,6 +58,8 @@ Route::controller(ParticipantController::class)->group(function () {
         Route::post('/{event:slug}', 'join')->name('join');
     });
 });
+
+Route::get('/certificate/{workshop:uuid}.jpeg', [CertificatesController::class, 'certificate'])->name('certificate');
 
 Route::redirect('/', 'redirect');
 

@@ -36,14 +36,23 @@ class Certificate extends Notification
      */
     public function toMail(object $notifiable): MailMessage
     {
-        return(new MailMessage)->subject('Your Event Attendance Certificate is Ready for Download!')
+        $message = (new MailMessage)->subject('Your Event Attendance Certificate is Ready for Download!')
             ->greeting("Hello " . $this->workshop->name)
             ->line("We are pleased to inform you that your attendance certificate for the " . $this->workshop->event->title . " is now available for download.")
             ->line("Please find the attached file to access your certificate.")
-            ->line("If you have any questions or encounter any issues while downloading your certificate, please don't hesitate to reach out to us. We're here to assist you.")
-            ->attach(storage_path('app/' . $this->certificate->file->path), [
+            ->line("If you have any questions or encounter any issues while downloading your certificate, please don't hesitate to reach out to us. We're here to assist you.");
+
+        if ($this->certificate->file) {
+            $message->attach(storage_path('app/' . $this->certificate->file->path), [
                 'as' => 'certificate.' . $this->certificate->file->ext
             ]);
+        } elseif (!$this->certificate->file) {
+            $message->attachData((string) \App\Services\Certificate::produce($this->certificate->name), 'certificate.jpeg', [
+                'mime' => 'image/jpeg'
+            ]);
+        }
+
+        return $message;
     }
 
     /**

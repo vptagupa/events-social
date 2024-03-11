@@ -77,10 +77,11 @@ class Workshop extends Model implements Auditable
             $model->save();
 
             if (!$model->saveQuitely) {
+                \Log::info($model->is_invited);
                 if ($model->is_invited) {
-                    $model->participant->sendInvitation($model);
+                    $model->sendInvitation();
                 } else {
-                    $model->participant->sendTrackingLink($model);
+                    $model->sendTrackingLink();
                 }
             }
 

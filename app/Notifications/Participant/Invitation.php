@@ -7,7 +7,6 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use chillerlan\QRCode\QRCode;
 
 class Invitation extends Notification
 {
@@ -42,7 +41,6 @@ class Invitation extends Notification
             ->subject('Invitation to Join ' . $this->workshop->event->title)
             ->markdown('mail.invitation', [
                 'workshop' => $this->workshop,
-                'qrcode' => (new QRCode)->render($this->workshop->uuid)
             ]);
 
     }

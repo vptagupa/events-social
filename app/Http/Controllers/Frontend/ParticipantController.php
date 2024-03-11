@@ -13,15 +13,6 @@ use App\Services\Payment;
 use App\Services\RegistrationForm;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use chillerlan\QRCode\{QRCode, QROptions};
-use chillerlan\QRCode\Data\QRMatrix;
-use chillerlan\QRCode\Output\QRGdImagePNG;
-use chillerlan\QRCode\Output\QRImagick;
-
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
-use Intervention\Image\Decoders\DataUriImageDecoder;
-use Intervention\Image\Decoders\Base64ImageDecoder;
 
 class ParticipantController extends Controller
 {
@@ -239,23 +230,6 @@ class ParticipantController extends Controller
         ]);
 
         $this->repository->storeForm($request->only(['flex', 'event_id']), $workshop->participant->id);
-    }
-
-    /**
-     * Load Qr Code
-     */
-    public function qrCode(Workshop $workshop)
-    {
-        $options = new QROptions;
-        $options->outputInterface = QRImagick::class;
-        $options->version = 7;
-        $options->outputBase64 = false;
-
-        $out = (new QRCode($options))->render($workshop->uuid);
-
-        header('Content-type: image/svg+xml');
-
-        echo $out;
     }
 
     /**

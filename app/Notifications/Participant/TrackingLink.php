@@ -7,7 +7,6 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use chillerlan\QRCode\QRCode;
 
 
 class TrackingLink extends Notification
@@ -43,7 +42,6 @@ class TrackingLink extends Notification
             ->subject($this->event->title . ' - Tracking Link.')
             ->markdown('mail.tracking-link', [
                 'workshop' => $this->workshop,
-                'qrcode' => (new QRCode)->render($this->workshop->uuid)
             ]);
     }
 

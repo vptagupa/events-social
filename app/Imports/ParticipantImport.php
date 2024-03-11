@@ -60,7 +60,7 @@ class ParticipantImport implements ToCollection, WithHeadingRow
     private function participant($row)
     {
         if (!empty($row['Email Address'])) {
-            $name = $row['Professional Title'] . ' ' . $row['Firstname'] . ' ' . $row['Middle Initial (M. I.)'] . ' ' . $row['Lastname'];
+            $name = trim($row['Professional Title'] . ' ' . $row['Firstname'] . ' ' . $row['Middle Initial (M. I.)'] . ' ' . $row['Lastname'] . (empty($row['Suffix (Jr., II, III, etc.)']) ? '' : ' ' . $row['Suffix (Jr., II, III, etc.)']));
             $participant = $this->participant->model()->where([
                 'email' => $row['Email Address'],
                 'name' => $name,
@@ -73,7 +73,7 @@ class ParticipantImport implements ToCollection, WithHeadingRow
 
                 $exists = $model->exists();
 
-                $email = $exists ? $row['Email Address'] . '+' . ($model->count() + 1) : $row['Email Address'];
+                $email = $exists ? str_replace('@', '+' . ($model->count() + 1) . '@', $row['Email Address']) : $row['Email Address'];
 
                 $exists = $this->participant->model()->where([
                     'email' => $email,

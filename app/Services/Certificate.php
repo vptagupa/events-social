@@ -63,7 +63,6 @@ class Certificate
             if ($path) {
                 $merger->addPDF(storage_path('app' . $path), 'all', "horizontal");
             }
-            \Log::info('x');
         }
 
         return $merger->merge('browser');
@@ -84,7 +83,8 @@ class Certificate
     }
 
     /**
-     * Return a single file path
+     *  Return a single file path or Encoded blob data
+     * @return null|string|\Intervention\Image\Interfaces\EncodedImageInterface
      */
     public function file(int $id): null|string|EncodedImageInterface
     {

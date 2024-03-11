@@ -93,7 +93,7 @@ class Certificate
         if ($model->file) {
             return $model->file->path;
         } elseif (!$model->file) {
-            return Certificate::produce($model->name);
+            return Certificate::produce(str($model->name)->title());
         }
 
         return null;

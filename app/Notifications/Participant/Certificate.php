@@ -47,7 +47,7 @@ class Certificate extends Notification
                 'as' => 'certificate.' . $this->certificate->file->ext
             ]);
         } elseif (!$this->certificate->file) {
-            $message->attachData((string) \App\Services\Certificate::produce($this->certificate->name), 'certificate.jpeg', [
+            $message->attachData((string) \App\Services\Certificate::produce(str($this->certificate->name)->title()), 'certificate.jpeg', [
                 'mime' => 'image/jpeg'
             ]);
         }

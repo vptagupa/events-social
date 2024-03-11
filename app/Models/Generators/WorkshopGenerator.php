@@ -124,7 +124,7 @@ trait WorkshopGenerator
         Cache::forget($key);
 
         $certificate = Cache::remember($key, Carbon::now()->addWeek(), function () {
-            return Certificate::produce($this->name);
+            return Certificate::produce(str($this->name)->title());
         });
 
         if (!$certificate) {

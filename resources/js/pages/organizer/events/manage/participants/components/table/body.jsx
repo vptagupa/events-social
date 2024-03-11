@@ -85,7 +85,7 @@ const Component = ({
                                 <Th>Code</Th>
                                 <Th>Name</Th>
                                 <Th>Email</Th>
-                                <Th>Accepted</Th>
+                                <Th>Submitted</Th>
                                 <Th>Confirmed</Th>
                                 <Th>Payment Status</Th>
                                 <Th>Action</Th>
@@ -108,7 +108,9 @@ const Component = ({
                                         </Td>
                                         <Td>{item.name}</Td>
                                         <Td>{item.email}</Td>
-                                        <Td>{item.workshops[0].accepted_at}</Td>
+                                        <Td>
+                                            {item.workshops[0].submitted_at}
+                                        </Td>
                                         <Td>
                                             {item.workshops[0].confirmed_at}
                                         </Td>

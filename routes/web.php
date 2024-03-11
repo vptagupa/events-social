@@ -59,7 +59,7 @@ Route::controller(ParticipantController::class)->group(function () {
     });
 });
 
-Route::get('/certificate/{workshop:uuid}.jpeg', [CertificatesController::class, 'certificate'])->name('certificate');
+Route::get('/certificate/{workshop:uuid}', [CertificatesController::class, 'certificate'])->name('certificate');
 
 Route::redirect('/', 'redirect');
 

@@ -47,6 +47,7 @@ class ParticipantImport implements ToCollection, WithHeadingRow
                     );
                 }
             });
+            \DB::commit();
         }
     }
 
@@ -59,18 +60,20 @@ class ParticipantImport implements ToCollection, WithHeadingRow
     private function participant($row)
     {
         if (!empty($row['Email Address'])) {
-            $name = $row['Professional Title'] . ' ' . $row['Firstname'] . ' ' . $row['Middle Initial (M. I.)'] . ' ' . $row['Lastname'];
+            $name = trim($row['Professional Title'] . ' ' . $row['Firstname'] . ' ' . $row['Middle Initial (M. I.)'] . ' ' . $row['Lastname'] . (empty($row['Suffix (Jr., II, III, etc.)']) ? '' : ' ' . $row['Suffix (Jr., II, III, etc.)']));
             $participant = $this->participant->model()->where([
                 'email' => $row['Email Address'],
                 'name' => $name,
             ])->first();
 
             if (!$participant) {
-                $exists = $this->participant->model()->where([
+                $model = $this->participant->model()->where([
                     'email' => $row['Email Address'],
-                ])->exists();
+                ]);
 
-                $email = $exists ? $row['Email Address'] . '-duplicate' : $row['Email Address'];
+                $exists = $model->exists();
+
+                $email = $exists ? str_replace('@', '+' . ($model->count() + 1) . '@', $row['Email Address']) : $row['Email Address'];
 
                 $exists = $this->participant->model()->where([
                     'email' => $email,
@@ -130,7 +133,7 @@ class ParticipantImport implements ToCollection, WithHeadingRow
             Griddable::grids($flex['grids'], function ($grid, $column, $component, $flex) use ($row, $workshop) {
                 foreach ($row as $key => $value) {
                     if (trim($key) == trim(($component['config']['name'] ?? ''))) {
-                        $workshop->registrations()->saveQuietly(
+                        $workshop->registrations()->save(
                             new Registration([
                                 'flex' => $flex['flex'],
                                 'grid' => $grid['grid'],

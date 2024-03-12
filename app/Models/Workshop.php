@@ -77,7 +77,6 @@ class Workshop extends Model implements Auditable
             $model->save();
 
             if (!$model->saveQuitely) {
-                \Log::info($model->is_invited);
                 if ($model->is_invited) {
                     $model->sendInvitation();
                 } else {
@@ -85,6 +84,10 @@ class Workshop extends Model implements Auditable
                 }
             }
 
+            $model->certificates()->save(new Certificate([
+                'name' => $model->primary_name,
+                'event_id' => $model->event_id
+            ]));
         });
     }
 

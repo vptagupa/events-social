@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDF</title>
+    <style type="text/css">
+        @page{ margin: 0; padding: 0;}
+    </style>
 </head>
-
-<body style="text-align: center;">
-    <img src="{{$src}}" style="width:100%;" />
+<body>
+    <img src="{{$src}}" style="width:99.9%;" />
 </body>
-
 </html>

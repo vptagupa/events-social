@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Intervention\Image\Interfaces\EncodedImageInterface;
 use Storage;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
@@ -9,6 +10,9 @@ use Dompdf\Options;
 use Jurosh\PDFMerge\PDFMerger;
 use App\Repositories\CertificateRepository;
 use PhpZip\ZipFile;
+
+use Intervention\Image\ImageManager;
+use Intervention\Image\Typography\FontFactory;
 
 class Certificate
 {
@@ -35,21 +39,32 @@ class Certificate
         $merger = new PDFMerger;
 
         foreach ($models as $model) {
-            $path = '/' . $model->file->path;
-            if ($model->file->is_image) {
+
+            $url = '';
+            $path = "";
+
+            if ($model->file && $model->file->is_image) {
+                $url = $model->file->url;
+            } elseif (!$model->file) {
+                $url = route('certificate', $model->workshop->uuid);
+            }
+
+            if ($url) {
                 $options = new Options();
                 $options->set('isRemoteEnabled', true);
                 $dompdf = new Dompdf($options);
 
-                $dompdf->loadHtml(view("components.pdf", ['src' => $model->file->url])->render());
-                $path = '/public/files/converted/' . $model->file->no_ext_filename . '.pdf';
+                $dompdf->loadHtml(trim(preg_replace('/>\s+</', "><", view("components.pdf", ['src' => $url])->render())));
+                $path = '/public/files/converted/' . $model->name ?: $model->workshop->name . '.pdf';
                 $dompdf->setPaper('A4', 'landscape');
                 $dompdf->render();
 
                 Storage::put($path, $dompdf->output());
             }
 
-            $merger->addPDF(storage_path('app' . $path), "all", "horizontal");
+            if ($path) {
+                $merger->addPDF(storage_path('app' . $path), 'all', "horizontal");
+            }
         }
 
         return $merger->merge('browser');
@@ -70,14 +85,17 @@ class Certificate
     }
 
     /**
-     * Return a single file path
+     *  Return a single file path or Encoded blob data
+     * @return null|string|\Intervention\Image\Interfaces\EncodedImageInterface
      */
-    public function file(int $id)
+    public function file(int $id): null|string|EncodedImageInterface
     {
         $model = $this->repository->model()->where('id', $id)->first();
 
         if ($model->file) {
             return $model->file->path;
+        } elseif (!$model->file) {
+            return Certificate::produce(str($model->name)->title());
         }
 
         return null;
@@ -93,15 +111,13 @@ class Certificate
 
         $zip = new ZipFile;
 
-        $zip->addAll(
-            $models->filter(fn($model) => $model->file ? true : false)
-                ->reduce(function ($files, $model) {
-                    if ($model->file) {
-                        $files[$model->file->id . '-' . $model->file->orig_filename] = new \SplFileInfo(storage_path("app/" . $model->file->path));
-                    }
-                    return $files;
-                })
-        );
+        foreach ($models->filter(fn($model) => $model->file ? true : false)->all() as $model) {
+            $zip->addFile(new \SplFileInfo(storage_path("app/" . $model->file->path)), $model->workshop->name . '-' . $model->id . '.' . $model->file->ext);
+        }
+
+        foreach ($models->filter(fn($model) => !$model?->file)->all() as $model) {
+            $zip->addFromString($model->name . '-' . $model->id . '.jpeg', file_get_contents(route('certificate', $model->workshop->uuid)));
+        }
 
         $dir = "public/zipped";
         if (!Storage::exists($dir)) {
@@ -135,13 +151,41 @@ class Certificate
         $this->repository->callableUpdate(function ($certificates) {
             foreach ($certificates as $certificate) {
                 if ($certificate->workshop) {
-                    $certificate->sends += 1;
+                    $certificate->sents += 1;
                     $certificate->save();
 
                     $certificate->workshop->sendCertificate($certificate);
                 }
             }
         }, $ids, 'id', 10);
+    }
+
+    /**
+     * Produce certificate
+     * 
+     * @return \Intervention\Image\Interfaces\EncodedImageInterface in jpeg
+     */
+    public static function produce(
+        $name,
+        $certificatePath = "app/images/certificate.jpg",
+        $fontPath = "app/fonts/edwardian-script-itc-bold.ttf",
+        $fontSize = 90
+    ): EncodedImageInterface {
+        $certificatePath = storage_path($certificatePath);
+        $fontPath = storage_path($fontPath);
+
+        $image = ImageManager::gd()->read($certificatePath);
+
+        $image->text($name, 850, 350, function (FontFactory $font) use ($fontPath, $fontSize) {
+            $font->filename($fontPath);
+            $font->color('#4f6069');
+            $font->size($fontSize);
+            $font->align('center');
+            $font->valign('middle');
+            $font->lineHeight(1);
+        });
+
+        return $image->toJpeg();
     }
 
     public static function construct()

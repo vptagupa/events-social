@@ -4,8 +4,10 @@ namespace App\Models\Generators;
 
 use App\Enums\PaymentStatus;
 use App\Models\Workshop;
+use App\Services\Certificate;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Support\Facades\Cache;
 
 trait WorkshopGenerator
 {
@@ -113,5 +115,22 @@ trait WorkshopGenerator
                 return array_values($statuses);
             }
         );
+    }
+
+    public function generateCertificate()
+    {
+        $key = \App\Enums\Cache::CERTIFICATE->value . '_' . str($this->name)->slug();
+
+        Cache::forget($key);
+
+        $certificate = Cache::remember($key, Carbon::now()->addWeek(), function () {
+            return Certificate::produce(str($this->name)->title());
+        });
+
+        if (!$certificate) {
+            Cache::forget($key);
+        }
+
+        return $certificate;
     }
 }

@@ -9,11 +9,14 @@ use App\Http\Resources\Event\CertificateResource;
 
 use App\Models\Certificate;
 use App\Models\Event;
+use App\Models\Workshop;
 use App\Services\Certificate as Service;
 
 use App\Repositories\CertificateRepository;
 
 use Illuminate\Http\Request;
+use Intervention\Image\Interfaces\EncodedImageInterface;
+
 
 class CertificatesController extends Controller
 {
@@ -109,7 +112,15 @@ class CertificatesController extends Controller
      */
     public function download(Request $request, Event $event)
     {
-        return \Storage::download(Service::download(json_decode($request->get('ids'))));
+        $downloadable = Service::download(json_decode($request->get('ids')));
+
+        if ($downloadable instanceof EncodedImageInterface) {
+            return response()->streamDownload(function () use ($downloadable) {
+                echo (string) $downloadable;
+            }, 'certificate.jpeg');
+        }
+
+        return \Storage::download($downloadable);
     }
 
     /**
@@ -127,4 +138,16 @@ class CertificatesController extends Controller
     {
         $this->repository->delete($certificate->id);
     }
+
+    /**
+     * Output certiticate in jpeg
+     */
+
+    public function certificate(Workshop $workshop)
+    {
+        header('Content-type: image/jpeg');
+
+        echo $workshop->generateCertificate();
+    }
 }
+

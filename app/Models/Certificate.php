@@ -16,7 +16,7 @@ class Certificate extends Model
         'name',
         'downloads',
         'prints',
-        'sends',
+        'sents',
         'creator_type',
         'creator_id'
     ];

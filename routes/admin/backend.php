@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Backend\UserController;
 use App\Http\Controllers\Admin\Backend\DashboardController;
 use App\Http\Controllers\Admin\Backend\ParticipantsController;
 
+use App\Http\Controllers\Organizer\CertificatesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\RedirectIfTemporaryPassword;
 

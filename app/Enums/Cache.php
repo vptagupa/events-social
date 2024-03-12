@@ -7,6 +7,7 @@ use Cache as facade;
 enum Cache: string
 {
     case SETTING = "setting";
+    case CERTIFICATE = 'certificate';
 
     public static function clearEvent(int $event)
     {

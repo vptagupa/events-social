@@ -234,7 +234,7 @@ class ParticipantController extends Controller
 
     /**
      * Restrict access to page at certain conditions
-     * @return \Illuminate\Http\RedirectResponse
+     * @return null|\Illuminate\Http\RedirectResponse
      */
     public function restrictIfPaid(Workshop $workshop)
     {
@@ -247,7 +247,7 @@ class ParticipantController extends Controller
 
     /**
      * Restrict access to page at certain conditions
-     * @return \Illuminate\Http\RedirectResponse
+     * @return null|\Illuminate\Http\RedirectResponse
      */
     public function restrictIfConfirmed(Workshop $workshop)
     {
@@ -260,7 +260,7 @@ class ParticipantController extends Controller
 
     /**
      * Restrict access to page at certain conditions
-     * @return \Illuminate\Http\RedirectResponse
+     * @return null|\Illuminate\Http\RedirectResponse
      */
     public function restrictIfNotFormSubmitted(Workshop $workshop)
     {

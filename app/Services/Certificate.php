@@ -37,10 +37,12 @@ class Certificate
         $models = $this->repository->model()->whereIn('id', $ids)->get();
 
         $merger = new PDFMerger;
-        $path = "";
 
         foreach ($models as $model) {
+
             $url = '';
+            $path = "";
+
             if ($model->file && $model->file->is_image) {
                 $url = $model->file->url;
             } elseif (!$model->file) {

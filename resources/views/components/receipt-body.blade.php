@@ -189,11 +189,13 @@
                                 <tr>
                                     <td class="no-border italic text-underline-signatory" data-value="{{ $workshop->event->official_receipt_signatory }}">By:</td>
                                 </tr>
+                                @if($workshop->event->officialReceiptSignature)
                                 <tr>
                                     <td class="no-border" style="position:relative;">
                                         <img src="{{ $workshop->event->officialReceiptSignature->url }}" style="position:absolute;top:-70px;left:50px;width:100px;" />
                                     </td>
                                 </tr>
+                                @endif
                                 <tr>
                                     <td class="no-border italic text-underline-signatory-label">&nbsp;</td>
                                 </tr>

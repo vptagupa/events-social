@@ -32,6 +32,7 @@ export const useTable = ({ initialParams, listRoute: _listRoute, name }) => {
             per_page: initialParams.perPage,
             extra: initialParams?.extra,
             with: initialParams?.with,
+            sort: params?.sort ?? [],
         });
 
         setData({
@@ -113,5 +114,6 @@ export const useTable = ({ initialParams, listRoute: _listRoute, name }) => {
         searchHandler,
         setListRoute,
         reload,
+        fetchData,
     };
 };

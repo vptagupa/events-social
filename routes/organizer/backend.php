@@ -63,6 +63,7 @@ Route::middleware(['auth:organizer,admin', RedirectIfTemporaryPassword::class])-
                 Route::post('/list', 'list')->name('list');
                 Route::post('/invite', 'invite')->name('invite');
                 Route::post('{participant}/upload-proof-of-payment', 'uploadProofOfPayment')->name('upp');
+                Route::get('/official-receipt/{workshop}', 'officialReceipt')->name('official-receipt');
 
                 // Verifier
                 Route::controller(VerifierController::class)->prefix('verifier')->name('verifier.')->group(function () {
@@ -88,6 +89,12 @@ Route::middleware(['auth:organizer,admin', RedirectIfTemporaryPassword::class])-
             });
             Route::resource('certificates', CertificatesController::class)->except(['edit', 'show', 'create']);
             Route::get('statistics', 'statistics')->name('statistics');
+            Route::name('settings.')->prefix('settings')->group(function () {
+                Route::get('/', 'settings')->name('index');
+                Route::name('or.')->prefix('or')->group(function () {
+                    Route::post('/update', 'updateOfficialReceiptSettings')->name('update');
+                });
+            });
         });
     });
     Route::controller(EventsController::class)->prefix('{organizer}/events')->name('events.')->group(function () {
@@ -118,6 +125,7 @@ Route::middleware(['auth:organizer,admin', RedirectIfTemporaryPassword::class])-
             Route::get('/resend-invite', 'resendInvitation')->name('resend-invite');
             Route::get('/resend-payment', 'resendPaymentForm')->name('resend-payment');
             Route::get('/resend-tracking-link', 'resendTrackingLink')->name('resend-tracking-link');
+            Route::patch('/update-or-number', 'updateORNumber')->name('update-orno');
         });
     });
 

@@ -5,6 +5,7 @@ import {
     faCircleInfo,
     faFileInvoice,
     faFileInvoiceDollar,
+    faGear,
     faPerson,
     faUserClock,
 } from "@fortawesome/free-solid-svg-icons";
@@ -121,16 +122,17 @@ export const menus = [
             />
         ),
     },
-    // {
-    //     title: "Official Receipt",
-    //     url: () => "",
-    //     isActive: () => false,
-    //     icon: () => (
-    //         <FontAwesomeIcon
-    //             icon={faFileInvoice}
-    //             title="Official Receipt"
-    //             className={`${menuIconClasses}`}
-    //         />
-    //     ),
-    // },
+    {
+        title: "Settings",
+        url: ({ organizer, event }) =>
+            route("organizer.events.settings.index", { event }),
+        isActive: () => false,
+        icon: () => (
+            <FontAwesomeIcon
+                icon={faGear}
+                title="Settings"
+                className={`${menuIconClasses}`}
+            />
+        ),
+    },
 ];

@@ -15,6 +15,8 @@ use App\Repositories\EventRepository;
 use App\Repositories\ExportRepository;
 use App\Repositories\SettingRepository;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Validation\Rule;
 
 class EventsController extends Controller
 {
@@ -23,7 +25,7 @@ class EventsController extends Controller
         private SettingRepository $settings,
         private ExportRepository $export
     ) {
-        // 
+
     }
 
     /**
@@ -100,6 +102,16 @@ class EventsController extends Controller
     {
         return $this->render('organizer/events/manage/edit/index', [
             'event' => $event->load('organizer')
+        ]);
+    }
+
+    /**
+     * Show the specific resource
+     */
+    public function settings(Organizer $organizer, Event $event)
+    {
+        return $this->render('organizer/events/manage/settings/index', [
+            'event' => $event->load('officialReceiptSignature')
         ]);
     }
 
@@ -211,5 +223,18 @@ class EventsController extends Controller
     public function statistics(Event $event)
     {
         return $this->repository->statistics($event->id);
+    }
+
+    public function updateOfficialReceiptSettings(Request $request, Event $event)
+    {
+        $request->validate([
+            'official_receipt_signatory' => 'nullable',
+            'signature' => Rule::when($request->signature instanceof UploadedFile, \App\Rules\Image::ensure())
+        ]);
+
+        $this->repository->updateOfficialReceipt($request->only([
+            'signature',
+            'official_receipt_signatory'
+        ]), $event->id);
     }
 }

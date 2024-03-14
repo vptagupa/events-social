@@ -35,6 +35,8 @@ class Event extends Model implements Auditable
         'banner_id',
         'certificate_file_id',
         'official_receipt_file_id',
+        'official_receipt_signatory_signature_id',
+        'official_receipt_signatory',
         'organizer_id',
         'active',
         'price',
@@ -134,7 +136,12 @@ class Event extends Model implements Auditable
 
     public function officialReceipt()
     {
-        return $this->hasOne(File::class, 'official_receipt_file_id');
+        return $this->belongsTo(File::class, 'official_receipt_file_id');
+    }
+
+    public function officialReceiptSignature()
+    {
+        return $this->belongsTo(File::class, 'official_receipt_signatory_signature_id');
     }
 
     public function registrationForm()

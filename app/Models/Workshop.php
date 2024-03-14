@@ -32,7 +32,8 @@ class Workshop extends Model implements Auditable
         'invited_at',
         'cancelled_at',
         'amount',
-        'note'
+        'note',
+        'or_no'
     ];
 
     protected $casts = [

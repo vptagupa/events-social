@@ -5,7 +5,7 @@ export default function Event({ event, action, children }) {
     return (
         <Layout>
             <div className="mt-5 pr-2">
-                <div className="flex items-center justify-between">
+                <div className="flex sm:max-sm:flex-col xs:max-sm:gap-y-1 items-center justify-between">
                     <div>
                         <div className="font-bold text-lg">
                             Manage [{event.title.toUpperCase()}] event
@@ -17,7 +17,7 @@ export default function Event({ event, action, children }) {
                     <div className="w-14 z-10 m-2">
                         <Sidebar event={event} />
                     </div>
-                    <div className="grow">{children}</div>
+                    <div className="grow overflow-x-auto">{children}</div>
                 </div>
             </div>
         </Layout>

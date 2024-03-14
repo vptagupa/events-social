@@ -11,14 +11,16 @@ use App\Exports\ParticipantsExport;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Str;
+use Illuminate\Http\UploadedFile;
 
 class EventRepository extends Repository
 {
     use Conditions\EventConditions;
+    use Creators\File;
 
     public function __construct(protected Event $model)
     {
-        // 
+        $this->file = app()->make(FileRepository::class);
     }
 
     public function activate(int $id)
@@ -130,5 +132,23 @@ class EventRepository extends Repository
             'failed' => $event->workshops()->where('payment_status', PaymentStatus::FAILED)->count(),
             'attendance' => $event->workshops()->whereHas('attendance')->count(),
         ];
+    }
+
+    /**
+     * Update official receipt settings
+     */
+    public function updateOfficialReceipt(array $data, int $event)
+    {
+        $model = $this->find($event);
+
+        if (isset($data['signature']) && $data['signature'] instanceof UploadedFile) {
+            $signature = $this->saveFile($data['signature'], 'events/signatures');
+            $model->officialReceiptSignature()->associate($signature);
+            $model->save();
+        }
+
+        unset($data['signature']);
+
+        $this->update($data, $event);
     }
 }

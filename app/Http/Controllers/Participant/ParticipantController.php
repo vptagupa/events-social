@@ -8,6 +8,7 @@ use App\Http\Resources\TransactionResource;
 use App\Models\Workshop;
 use App\Repositories\ParticipantRepository;
 use App\Repositories\TransactionRepository;
+use App\Services\OfficialReceipt;
 use App\Services\RegistrationForm;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -115,5 +116,14 @@ class ParticipantController extends Controller
     public function resendTrackingLink(Workshop $workshop)
     {
         $workshop->sendTrackingLink();
+    }
+
+    /**
+     * Update Order No#
+     */
+    public function updateORNumber(Request $request, Workshop $workshop)
+    {
+        $workshop->or_no = $request->get('orno');
+        $workshop->save();
     }
 }

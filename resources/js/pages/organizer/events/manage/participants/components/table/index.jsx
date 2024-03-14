@@ -9,7 +9,15 @@ const INITIAL_PARAMS = {
 };
 
 const Component = ({ event }) => {
-    const { data, searching, setSearch, pagination, searchHandler } = useTable({
+    const {
+        data,
+        searching,
+        search,
+        setSearch,
+        pagination,
+        searchHandler,
+        fetchData,
+    } = useTable({
         initialParams: {
             ...INITIAL_PARAMS,
             with: { "workshops.certificates": true },
@@ -21,10 +29,12 @@ const Component = ({ event }) => {
         <Body
             event={event}
             data={data}
+            search={search}
             searching={searching}
             pagination={pagination}
             setSearch={setSearch}
             handleSearch={searchHandler}
+            fetchData={fetchData}
         />
     );
 };

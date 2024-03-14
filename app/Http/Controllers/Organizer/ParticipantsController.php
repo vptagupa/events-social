@@ -13,6 +13,7 @@ use App\Models\Event;
 use App\Models\Participant;
 use App\Models\Workshop;
 use App\Repositories\ParticipantRepository;
+use App\Services\OfficialReceipt;
 use Illuminate\Http\Request;
 
 
@@ -39,15 +40,21 @@ class ParticipantsController extends Controller
      */
     public function list(Request $request, Event $event)
     {
+
+        $sort = $request->has('sort') ? $request->get('sort') : [['key' => 'id', 'asc' => false]];
+        $sortQuery = array_filter($sort, fn($sort) => str($sort['key'])->contains('.'));
+        $sortDirect = array_filter($sort, fn($sort) => !str($sort['key'])->contains('.'));
+
         return ParticipantResource::collection(
             $this->repository->list(
                 query: [
                     'query' => is_array($request->get('query')) ? $request->get('query')['query'] : $request->get('query'),
                     'event_id' => $event->id,
                     'filter' => $request->get('query')['statuses'] ?? [],
+                    'sort' => $sortQuery,
                     ...($request->has('with') ? $request->get('with') : [])
                 ],
-                orderBy: ['id', 'desc'],
+                orderBy: $sortDirect,
                 paginate: true,
                 perPage: $request->get('per_page'),
             )
@@ -127,5 +134,15 @@ class ParticipantsController extends Controller
     public function destroy(Event $event, Participant $participant)
     {
         $this->repository->delete($participant->id);
+    }
+
+    /**
+     * Update Order No#
+     */
+    public function officialReceipt(Request $request, Event $event, Workshop $workshop)
+    {
+        $pdf = OfficialReceipt::make($workshop->id, $workshop->event->id);
+
+        return $pdf->stream();
     }
 }

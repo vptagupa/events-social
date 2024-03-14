@@ -12,6 +12,12 @@ export default function Participants({ event, errors, registration_status }) {
                     registrationStatus={registration_status}
                 />
             </div>
+            <div>
+                <Export
+                    event={event}
+                    registrationStatus={registration_status}
+                />
+            </div>
         </div>
     );
     return (

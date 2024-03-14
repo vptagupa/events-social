@@ -139,4 +139,16 @@ trait ParticipantCondition
             });
         });
     }
+
+    public function sortCondition(&$builder, $query)
+    {
+        return $builder;
+        // return $builder->when(isset($query['sort']) && $query['sort'], function ($builder) use ($query) {
+        //     foreach ($query['sort'] as $sort) {
+        //         $builder->when($sort['key'] == 'workshops.submitted_at', function ($builder) use ($sort, $query) {
+        //             $builder->workshops()->orderBy('submitted_at', $sort['asc']);
+        //         });
+        //     }
+        // });
+    }
 }

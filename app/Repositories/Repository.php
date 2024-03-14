@@ -78,7 +78,13 @@ class Repository
         $builder = $this->conditions($builder, $query);
 
         if ($orderBy) {
-            $builder->orderBy($orderBy[0], $orderBy[1]);
+            if (is_array($orderBy[0])) {
+                foreach ($orderBy as $sort) {
+                    $builder->orderBy($sort['key'], $sort['asc'] ? 'asc' : 'desc');
+                }
+            } else {
+                $builder->orderBy($orderBy[0], $orderBy[1]);
+            }
         }
 
         if ($limit) {

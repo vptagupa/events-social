@@ -11,6 +11,7 @@ export const useControl = () => {
     const [data, setData] = useState([]);
     const [other, setOther] = useState({ note: "" });
     const [or, setOr] = useState({
+        or_check: false,
         or_no: "",
         or_bank: "",
         or_check_no: "",

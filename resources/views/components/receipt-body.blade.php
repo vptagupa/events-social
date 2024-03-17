@@ -10,7 +10,7 @@
     @if($workshop->or_check_no)
     <div style="font-size:20px; position:absolute; left:130px;top:290px;">{{ $workshop->or_bank }}</div>
     <div style="font-size:20px; position:absolute; left:130px;top:310px;">{{ $workshop->or_check_no }}</div>
-    <div style="font-size:20px; position:absolute; left:130px;top:330px;">{{ $workshop->or_check_date->format('m/d/Y') }}</div>
+    <div style="font-size:20px; position:absolute; left:130px;top:330px;">{{ $workshop->or_check_date ? $workshop->or_check_date->format('m/d/Y') : '' }}</div>
     <div style="font-size:20px; position:absolute; left:130px;top:350px;">{{ number_format($workshop->or_amount,2) }}</div>
     @endif
 </div>

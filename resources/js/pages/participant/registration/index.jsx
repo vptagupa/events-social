@@ -24,9 +24,10 @@ export default function Registration({ workshop, errors }) {
             });
             control.setOr({
                 ...control.or,
+                or_check: workshop.or_check_no ? true : false,
                 or_no: workshop.or_no ?? "",
                 or_bank: workshop.or_bank ?? "",
-                or_check_no: workshop.check_no ?? "",
+                or_check_no: workshop.or_check_no ?? "",
                 or_date: workshop.or_check_date ?? "",
                 or_amount: !workshop.or_amount
                     ? workshop.amount ?? 0

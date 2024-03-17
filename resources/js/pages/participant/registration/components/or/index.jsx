@@ -1,15 +1,25 @@
 import { Form } from "@/js/components/form";
 import { Input, Check } from "@/js/based/form";
 import { ControlContext } from "../../context";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 
 import { faReceipt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Or({ workshop }) {
-    const [check, isCheck] = useState(false);
     const context = useContext(ControlContext);
 
+    useEffect(() => {
+        if (!context.control.or.or_check) {
+            context.control.setOr({
+                ...context.control.or,
+                or_bank: "",
+                or_check_no: "",
+                or_check_date: "",
+            });
+        }
+    }, [context.control.or_check]);
+    console.log(context.control.or.or_check);
     return (
         <div className="flex flex-col gap-y-3">
             <div className="w-full text-xs flex flex-col gap-y-2">
@@ -17,7 +27,14 @@ export default function Or({ workshop }) {
                     <div className="flex items-center justify-between">
                         <Check
                             title="Check"
-                            onChange={(e) => isCheck(e.target.checked)}
+                            value={context.control.or.or_check}
+                            checked={context.control.or.or_check}
+                            onChange={(e) =>
+                                context.control.setOr({
+                                    ...context.control.or,
+                                    or_check: e.target.checked,
+                                })
+                            }
                         />
                         <FontAwesomeIcon
                             title="Print Official Receipt"
@@ -50,7 +67,7 @@ export default function Or({ workshop }) {
                         }
                     />
 
-                    {check && (
+                    {context.control.or.or_check && (
                         <>
                             <Input
                                 title="Bank."

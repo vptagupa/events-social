@@ -12,6 +12,7 @@ use App\Services\OfficialReceipt;
 use App\Services\RegistrationForm;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ParticipantController extends Controller
 {
@@ -99,6 +100,9 @@ class ParticipantController extends Controller
         $request->validate([
             'note' => 'max:250',
             'or_amount' => 'numeric',
+            'or_bank' => Rule::when($request->get('or_check') == true, 'required'),
+            'or_check_no' => Rule::when($request->get('or_check') == true, 'required'),
+            'or_check_date' => Rule::when($request->get('or_check') == true, 'required'),
         ]);
 
         $this->repository->registerUpdate($request->only([

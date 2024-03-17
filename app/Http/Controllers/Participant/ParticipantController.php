@@ -88,10 +88,29 @@ class ParticipantController extends Controller
      */
     public function update(RegisterRequest $request, Workshop $workshop)
     {
-        $request->merge(['note' => $request->get('note')]);
-        $request->validate(['note' => 'max:250']);
+        $request->merge([
+            'note' => $request->get('note'),
+            'or_no' => $request->get('or_no'),
+            'or_amount' => $request->get('or_amount'),
+            'or_bank' => $request->get('or_bank'),
+            'or_check_no' => $request->get('or_check_no'),
+            'or_check_date' => $request->get('or_check_date'),
+        ]);
+        $request->validate([
+            'note' => 'max:250',
+            'or_amount' => 'numeric',
+        ]);
 
-        $this->repository->registerUpdate($request->only('flexis', 'event_id', 'note'), $workshop->participant->id);
+        $this->repository->registerUpdate($request->only([
+            'flexis',
+            'event_id',
+            'note',
+            'or_no',
+            'or_amount',
+            'or_bank',
+            'or_check_no',
+            'or_check_date'
+        ]), $workshop->participant->id);
     }
 
     /**

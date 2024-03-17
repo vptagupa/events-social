@@ -25,7 +25,7 @@ class ParticipantRepository extends Repository
 
     public function create(array $data): ?Participant
     {
-        if (!isset($data['password'])) {
+        if (!isset ($data['password'])) {
             $data['password'] = bcrypt(config('auth.password_default'));
         }
 
@@ -317,7 +317,13 @@ class ParticipantRepository extends Repository
 
         $model = $this->find($id);
         $workshop = $model->workshops()->where('event_id', $data['event_id'])->first();
-        $workshop->note = $data['note'];
+
+        foreach ($data as $key => $value) {
+            if (!in_array($key, ['event_id', 'flexis'])) {
+                $workshop->$key = $value;
+            }
+        }
+
         $workshop->save();
 
         $model->name = $workshop->primary_name;

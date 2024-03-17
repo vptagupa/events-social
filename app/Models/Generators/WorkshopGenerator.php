@@ -74,6 +74,15 @@ trait WorkshopGenerator
         );
     }
 
+    public function institution(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->registrations()
+                ->where('name', 'Full Name of SUC or Institution')
+                ->first()?->value
+        );
+    }
+
     public function statusClasses(PaymentStatus $status)
     {
         return match (true) {

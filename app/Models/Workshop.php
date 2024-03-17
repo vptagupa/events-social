@@ -33,7 +33,11 @@ class Workshop extends Model implements Auditable
         'cancelled_at',
         'amount',
         'note',
-        'or_no'
+        'or_no',
+        'or_amount',
+        'or_bank',
+        'or_check_no',
+        'or_check_date'
     ];
 
     protected $casts = [
@@ -44,7 +48,8 @@ class Workshop extends Model implements Auditable
         'payment_at' => 'datetime:Y-m-d H:i:s',
         'accepted_at' => 'datetime:Y-m-d H:i:s',
         'cancelled_at' => 'datetime:Y-m-d H:i:s',
-        'amount' => 'decimal:2'
+        'amount' => 'decimal:2',
+        'or_check_date' => 'datetime:m/d/Y'
     ];
 
     protected $appends = [

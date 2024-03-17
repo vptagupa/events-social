@@ -37,6 +37,8 @@ export default function Component({ value, column }) {
         error: value?.error,
         className: value.config?.class ?? "",
         name: name(),
+        isRequired:
+            value.type == "contract" ? false : value.config?.is_required,
     };
 
     if (value?.value) {

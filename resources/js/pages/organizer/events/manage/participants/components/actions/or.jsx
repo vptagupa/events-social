@@ -17,11 +17,11 @@ export default memo(function OfficialReceipt({ value }) {
             className={`flex group items-center justify-start gap-x-1 
             relative before:content-[""] before:transition-all before:delay-150 before:duration-300
             before:absolute before:left-[0.7rem] before:bottom-0 before:border-opacity-50  before:w-full 
-            ${processing ? " before:border-b before:border-slate-200" : ""}
+            ${processing ? " before:border-b before:border-slate-400" : ""}
             ${
                 processing === false
                     ? " before:border-b before:border-green-600"
-                    : ""
+                    : "before:border-b before:border-slate-400"
             }
             ${error ? " before:border-b before:border-red-600" : ""}`}
         >
@@ -63,6 +63,7 @@ export default memo(function OfficialReceipt({ value }) {
                                     orno: e.target.value,
                                 }
                             );
+                            setProcessing(false);
                         } catch (error) {
                             setError(true);
                         } finally {

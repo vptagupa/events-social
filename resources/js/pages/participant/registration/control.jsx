@@ -10,6 +10,13 @@ import {
 export const useControl = () => {
     const [data, setData] = useState([]);
     const [other, setOther] = useState({ note: "" });
+    const [or, setOr] = useState({
+        or_no: "",
+        or_bank: "",
+        or_check_no: "",
+        or_check_date: "",
+        or_amount: "",
+    });
 
     const handleChange = (column, component, value) => {
         // Change all radio value to false in favor for the selected radio
@@ -63,6 +70,10 @@ export const useControl = () => {
                     return griddable(component.grids);
                 }
 
+                if (component.type == "contract") {
+                    component.config.is_required = false;
+                }
+
                 const valid = [
                     ensureConditionExpression(component),
                     ensureBasic(component),
@@ -89,8 +100,10 @@ export const useControl = () => {
     return {
         data,
         other,
+        or,
         setData,
         setOther,
+        setOr,
         handleChange,
         validateForm,
     };

@@ -37,7 +37,8 @@ export default function Save({ workshop }) {
                     route("organizer.participant.update", workshop.id),
                     {
                         flexis: context.control.data,
-                        note: context.control.other.note,
+                        ...context.control.other,
+                        ...context.control.or,
                     },
                     {
                         onBefore: () => setProcessing(true),

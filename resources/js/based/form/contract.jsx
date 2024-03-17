@@ -23,7 +23,7 @@ export default function Contract({
         <div className="block p-1">
             <div className="flex items-center gap-x-2">
                 <Checkbox
-                    disabled={!enabled && !checked}
+                    disabled={isRequired && !enabled && !checked}
                     checked={checked}
                     value={checked}
                     onChange={(e) => onAgree(e.target.checked)}

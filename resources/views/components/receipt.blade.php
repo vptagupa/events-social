@@ -23,11 +23,11 @@
         }
         td {
             padding: 0.3rem;
-            border-bottom: 1px solid #000;
+            /* border-bottom: 1px solid #000; */
         }
         table {
             width: 100%;
-            border: 1px solid #000;
+            /* border: 1px solid #000; */
         }
         .no-padding: {
             padding: 0 !important;
@@ -63,7 +63,7 @@
            top: 3px;
            margin-left:4px;
            text-align: center;
-           border-bottom: 1px solid #000;
+           /* border-bottom: 1px solid #000; */
         }
         .text-underline-receive-from {
            position: relative;
@@ -75,7 +75,7 @@
            top: 0px;
            margin-left:4px;
            text-align: center;
-           border-bottom: 1px solid #000;
+           /* border-bottom: 1px solid #000; */
         }
         .text-underline-address {
            position: relative;
@@ -87,7 +87,7 @@
             top: 0px;
             margin-left:4px;
             text-align: center;
-            border-bottom: 1px solid #000;
+            /* border-bottom: 1px solid #000; */
         }
         .text-underline-bus-style {
            position: relative;
@@ -99,7 +99,7 @@
             top: 0px;
             margin-left:4px;
             text-align: center;
-            border-bottom: 1px solid #000;
+            /* border-bottom: 1px solid #000; */
         }
         .text-underline-tin {
            position: relative;
@@ -111,7 +111,7 @@
             top: 12px;
             margin-left:4px;
             text-align: center;
-            border-bottom: 1px solid #000;
+            /* border-bottom: 1px solid #000; */
         }
         .text-underline-amount-words {
            position: relative;
@@ -123,7 +123,7 @@
             top: 0px;
             margin-left:4px;
             text-align: center;
-            border-bottom: 1px solid #000;
+            /* border-bottom: 1px solid #000; */
         }
         .text-underline-amount-words-2 {
            position: relative;
@@ -135,7 +135,7 @@
             top: 0px;
             margin-left:0px;
             text-align: center;
-            border-bottom: 1px solid #000;
+            /* border-bottom: 1px solid #000; */
         }
         .text-underline-amount {
            position: relative;
@@ -147,7 +147,7 @@
            top: 0px;
            margin-left:4px;
            text-align: left;
-           border-bottom: 1px solid #000;
+           /* border-bottom: 1px solid #000; */
         }
         .text-underline-partial-payment {
            position: relative;
@@ -159,7 +159,7 @@
             top: 0px;
             margin-left:4px;
             text-align: center;
-            border-bottom: 1px solid #000;
+            /* border-bottom: 1px solid #000; */
         }
         .text-underline-signatory {
            position: relative;
@@ -171,7 +171,7 @@
             top: 0px;
             margin-left:4px;
             text-align: center;
-            border-bottom: 1px solid #000;
+            /* border-bottom: 1px solid #000; */
         }
         .text-underline-signatory-label {
             position: relative;

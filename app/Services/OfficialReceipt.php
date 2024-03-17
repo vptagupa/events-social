@@ -47,11 +47,11 @@ class OfficialReceipt
             ]);
         });
 
-        return PDF::setPaper([0, 0, 600, 250])->loadView(
+        return PDF::setPaper([0, 0, 612, 306])->loadView(
             "components.receipt",
             [
                 'participants' => $participants,
-                'amountWords' => fn($amount) => NumberToWords::transformNumber('en', $amount)
+                'fnAmountToWordsTranslation' => fn($amount) => NumberToWords::transformNumber('en', $amount)
             ]
         );
     }
